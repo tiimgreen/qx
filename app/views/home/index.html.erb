@@ -1,0 +1,15 @@
+<div class="container mt-5">
+  <div class="alert alert-success">
+    <h1>Welcome to Rails!</h1>
+    <p>Bootstrap and jQuery are working if this is styled and the button works.</p>
+    <button class="btn btn-primary" id="test-button">Click me!</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    $('#test-button').click(function() {
+      alert('jQuery is working!');
+    });
+  });
+</script>
