@@ -1,0 +1,16 @@
+de:
+  site_title: "Ihr Website-Name"
+  language: "Sprache"
+  navigation:
+    home: "Startseite"
+    about: "Über uns"
+    contact: "Kontakt"
+  common:
+    save: "Speichern"
+    cancel: "Abbrechen"
+    edit: "Bearbeiten"
+    delete: "Löschen"
+    confirm: "Sind Sie sicher?"
+  flash:
+    success: "Vorgang erfolgreich abgeschlossen"
+    error: "Ein Fehler ist aufgetreten"
