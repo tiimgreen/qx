@@ -1,7 +1,7 @@
-.base-color {
-  color: #013a75;
+.base-color-bg-dark {
+  background-color: #013a75;
 }
 
-.base-color-bg {
+.base-color-bg-light {
   background-color: #83a2cd;
 }

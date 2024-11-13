@@ -19,16 +19,11 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <!-- Your existing navbar content -->
-        <div class="ms-auto"> <!-- This will push the language switcher to the right -->
-          <%= render 'language_switcher' %>
-        </div>
-      </div>
-    </nav>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container">
+      <%= render "navbar" %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "logo.svg", height: 40, alt: "Logo" %>
+    <% end %>
+    <div class="ms-auto">
+      <div class="dropdown" data-controller="language">
+        <button class="btn base-color-bg-dark text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= t('language') %>: <%= I18n.locale.to_s.upcase %>
+        </button>
+        <ul class="dropdown-menu">
+          <% I18n.available_locales.each do |locale| %>
+            <li>
+              <%= link_to locale.to_s.upcase,
+                params.permit(:locale).merge(locale: locale),
+                  class: "dropdown-item #{I18n.locale == locale ? 'active' : ''}" %>
+          </li>
+        <% end %>
+      </ul>
+      </div>
+    </div>
+  </div>
+</nav>
