@@ -14,3 +14,8 @@ de:
   flash:
     success: "Vorgang erfolgreich abgeschlossen"
     error: "Ein Fehler ist aufgetreten"
+  home:
+    title: "Willkommen bei Qualinox!"
+    industries: "Chemie-, Pharma-, Lebensmittel- und Getränkeindustrie"
+    construction: "Rohrleitungs- und Anlagenbau"
+    description: "Ihr kompetenter Ansprechpartner rund um die Realisierung und Inbetriebnahme von Anlagen - mit dem Ziel, Ihre Wünsche und Ansprüche zu erfüllen"
