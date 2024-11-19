@@ -3,7 +3,7 @@
     <%= link_to root_path, class: "navbar-brand" do %>
       <%= image_tag "logo.svg", height: 40, alt: "Logo" %>
     <% end %>
-    <div class="ms-auto">
+<div class="ms-auto">
       <div class="dropdown" data-controller="language">
         <button class="btn btn-outline-company dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <%= t('language') %>: <%= I18n.locale.to_s.upcase %>
@@ -13,10 +13,11 @@
             <li>
               <%= link_to locale.to_s.upcase,
                 params.permit(:locale).merge(locale: locale),
-                  class: "dropdown-item #{I18n.locale == locale ? 'active' : ''}" %>
-          </li>
-        <% end %>
-      </ul>
+                  class: "dropdown-item #{I18n.locale == locale ? 'active' : ''}",
+                  data: { "turbo-method": :patch } %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
