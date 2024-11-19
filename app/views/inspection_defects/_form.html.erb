@@ -1,0 +1,67 @@
+<!-- app/views/inspection_defects/_form.html.erb -->
+<%= form_with(model: [@quality_inspection, @inspection_defect], local: true) do |f| %>
+  <% if @inspection_defect.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@inspection_defect.errors.count, "error") %> prohibited this defect from being saved:</h4>
+      <ul>
+        <% @inspection_defect.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group mb-3">
+    <%= f.label :severity, class: 'form-label' %>
+    <%= f.select :severity,
+        options_for_select([
+          ['Critical', 'critical'],
+          ['Major', 'major'],
+          ['Minor', 'minor']
+        ], @inspection_defect.severity),
+        { prompt: 'Select severity' },
+        { class: 'form-select', required: true }
+    %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :description, class: 'form-label' %>
+    <%= f.text_area :description, class: 'form-control', rows: 4, required: true %>
+    <small class="form-text text-muted">Provide a detailed description of the defect</small>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :corrective_action, class: 'form-label' %>
+    <%= f.text_area :corrective_action, class: 'form-control', rows: 4 %>
+    <small class="form-text text-muted">Describe the recommended corrective action if any</small>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', inspection_defects_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>
+
+<!-- app/views/inspection_defects/new.html.erb -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>Record New Defect</h2>
+    </div>
+    <div class="card-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>
+
+<!-- app/views/inspection_defects/edit.html.erb -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>Edit Defect</h2>
+    </div>
+    <div class="card-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

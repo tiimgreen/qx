@@ -1,0 +1,35 @@
+<%# app/views/shared/_form.html.erb %>
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0"><%= title %></h5>
+  </div>
+
+  <div class="card-body">
+    <%= form_with(model: record, local: true, class: 'needs-validation') do |f| %>
+      <% if record.errors.any? %>
+        <div class="alert alert-danger">
+          <h6 class="alert-heading">
+            <%= pluralize(record.errors.count, "error") %> prohibited this record from being saved:
+          </h6>
+          <ul class="mb-0">
+            <% record.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% fields.each do |field| %>
+        <div class="mb-3">
+          <%= f.label field, class: 'form-label' %>
+          <%= render_form_field(f, field, local_assigns[:field_options]&.dig(field)) %>
+        </div>
+      <% end %>
+
+      <div class="form-actions">
+        <%= f.submit class: 'btn btn-primary' %>
+        <%= link_to 'Cancel', :back, class: 'btn btn-secondary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

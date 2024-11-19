@@ -1,0 +1,31 @@
+<!-- app/views/roughness_measurements/index.html.erb -->
+<div class="container mt-4">
+  <h1>Roughness Measurements</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Delivery Item</th>
+        <th>Measurement Date</th>
+        <th>Measured Value</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @roughness_measurements.each do |measurement| %>
+        <tr>
+          <td><%= measurement.delivery_item.identifier %></td>
+          <td><%= measurement.measurement_date.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= measurement.measured_value %></td>
+          <td>
+            <%= link_to 'View', measurement, class: 'btn btn-sm btn-info' %>
+            <%= link_to 'Edit', edit_roughness_measurement_path(measurement), class: 'btn btn-sm btn-primary' %>
+            <%= link_to 'Delete', measurement, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'New Measurement', new_roughness_measurement_path, class: 'btn btn-success' %>
+</div>

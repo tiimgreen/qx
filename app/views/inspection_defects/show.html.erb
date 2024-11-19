@@ -1,0 +1,34 @@
+<!-- app/views/inspection_defects/show.html.erb -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>
+        Defect Details
+        <span class="badge <%= severity_badge_class(@inspection_defect.severity) %> float-end">
+          <%= @inspection_defect.severity.upcase %>
+        </span>
+      </h2>
+    </div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">Inspection Reference:</dt>
+        <dd class="col-sm-9"><%= @inspection_defect.quality_inspection.reference_number %></dd>
+
+        <dt class="col-sm-3">Description:</dt>
+        <dd class="col-sm-9"><%= @inspection_defect.description %></dd>
+
+        <dt class="col-sm-3">Corrective Action:</dt>
+        <dd class="col-sm-9"><%= @inspection_defect.corrective_action || 'Not specified' %></dd>
+
+        <dt class="col-sm-3">Recorded At:</dt>
+        <dd class="col-sm-9"><%= @inspection_defect.created_at.strftime("%B %d, %Y %H:%M") %></dd>
+      </dl>
+    </div>
+    <div class="card-footer">
+      <div class="btn-group">
+        <%= link_to 'Edit', edit_inspection_defect_path(@inspection_defect), class: 'btn btn-primary' %>
+        <%= link_to 'Back', inspection_defects_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>

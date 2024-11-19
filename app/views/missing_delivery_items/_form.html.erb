@@ -1,0 +1,34 @@
+<!-- app/views/missing_delivery_items/_form.html.erb -->
+<%= form_with(model: [@incoming_delivery, @missing_delivery_item], local: true) do |f| %>
+  <% if @missing_delivery_item.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@missing_delivery_item.errors.count, "error") %> prohibited this item from being saved:</h4>
+      <ul>
+        <% @missing_delivery_item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group mb-3">
+    <%= f.label :expected_quantity, class: 'form-label' %>
+    <%= f.number_field :expected_quantity, class: 'form-control', required: true, min: 1 %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :order_line_reference, class: 'form-label' %>
+    <%= f.text_field :order_line_reference, class: 'form-control' %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :description, class: 'form-label' %>
+    <%= f.text_area :description, class: 'form-control', rows: 4, required: true %>
+    <small class="form-text text-muted">Please provide detailed description of the missing items</small>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', missing_delivery_items_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>

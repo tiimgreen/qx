@@ -19,10 +19,11 @@
   </head>
 
   <body>
+    <%= render "dashboard_navbar" %>
+    <!-- Main Content -->
     <div class="container">
-      <%= render "public_navbar" %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <%= render "flash_messages" %>
+
       <%= yield %>
     </div>
   </body>

@@ -1,0 +1,58 @@
+<!-- app/views/inspection_defects/index.html.erb -->
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Inspection Defects</h1>
+    <% if @quality_inspection %>
+      <%= link_to 'Record New Defect', new_quality_inspection_inspection_defect_path(@quality_inspection), class: 'btn btn-success' %>
+    <% end %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Inspection Ref</th>
+          <th>Severity</th>
+          <th>Description</th>
+          <th>Corrective Action</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @inspection_defects.each do |defect| %>
+          <tr class="<%= severity_class(defect.severity) %>">
+            <td><%= defect.quality_inspection.reference_number %></td>
+            <td><span class="badge <%= severity_badge_class(defect.severity) %>">
+              <%= defect.severity.upcase %>
+            </span></td>
+            <td><%= truncate(defect.description, length: 50) %></td>
+            <td><%= truncate(defect.corrective_action, length: 50) if defect.corrective_action %></td>
+            <td>
+              <div class="btn-group" role="group">
+                <%= link_to 'View', defect, class: 'btn btn-sm btn-info' %>
+                <%= link_to 'Edit', edit_inspection_defect_path(defect), class: 'btn btn-sm btn-primary' %>
+                <%= link_to 'Delete', defect,
+                    method: :delete,
+                    class: 'btn btn-sm btn-danger',
+                    data: { turbo_confirm: 'Are you sure?' } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+  <% if @inspection_defect.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@inspection_defect.errors.count, "error") %> prohibited this defect from being saved:</h4>
+      <ul>
+        <% @inspection_defect.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+

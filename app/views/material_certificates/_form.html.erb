@@ -1,0 +1,49 @@
+<!-- app/views/material_certificates/_form.html.erb -->
+<%= form_with(model: [@project, @material_certificate], local: true) do |f| %>
+  <% if @material_certificate.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@material_certificate.errors.count, "error") %> prohibited this certificate from being saved:</h4>
+      <ul>
+        <% @material_certificate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group mb-3">
+        <%= f.label :certificate_number, class: 'form-label' %>
+        <%= f.text_field :certificate_number, class: 'form-control', required: true %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= f.label :batch_number, class: 'form-label' %>
+        <%= f.text_field :batch_number, class: 'form-control', required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group mb-3">
+        <%= f.label :issue_date, class: 'form-label' %>
+        <%= f.date_field :issue_date, class: 'form-control', required: true %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= f.label :issuer_name, class: 'form-label' %>
+        <%= f.text_field :issuer_name, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :description, class: 'form-label' %>
+    <%= f.text_area :description, class: 'form-control', rows: 5 %>
+  </div>
+
+  <div class="form-group mt-4">
+    <%= f.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', material_certificates_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>

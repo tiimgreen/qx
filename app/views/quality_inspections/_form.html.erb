@@ -1,0 +1,75 @@
+
+<%# app/views/quality_inspections/_form.html.erb %>
+<%= form_with(model: [@delivery_item, @quality_inspection].compact, local: true, class: 'needs-validation') do |f| %>
+  <% if @quality_inspection.errors.any? %>
+    <div class="alert alert-danger">
+      <h6><%= pluralize(@quality_inspection.errors.count, "error") %> prohibited this inspection from being saved:</h6>
+      <ul>
+        <% @quality_inspection.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= f.label :inspection_type, class: 'form-label' %>
+        <%= f.select :inspection_type,
+            QualityInspection.inspection_types.keys.map { |t| [t.titleize, t] },
+            { prompt: 'Select type' },
+            { class: 'form-select' } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :inspector_name, class: 'form-label' %>
+        <%= f.text_field :inspector_name, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :inspection_date, class: 'form-label' %>
+        <%= f.datetime_local_field :inspection_date, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= f.label :status, class: 'form-label' %>
+        <%= f.select :status,
+            [['Passed', 'passed'], ['Failed', 'failed']],
+            { prompt: 'Select status' },
+            { class: 'form-select' } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :notes, class: 'form-label' %>
+        <%= f.text_area :notes, class: 'form-control', rows: 3 %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h6 class="mb-0">Inspection Defects</h6>
+    </div>
+    <div class="card-body">
+      <div id="inspection_defects">
+        <%= f.fields_for :inspection_defects do |defect| %>
+          <%= render 'inspection_defect_fields', f: defect %>
+        <% end %>
+
+        <div class="links mt-3">
+          <%= link_to_add_association 'Add Defect', f, :inspection_defects,
+              class: 'btn btn-outline-primary btn-sm',
+              partial: 'inspection_defect_fields' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions mt-4">
+    <%= f.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', :back, class: 'btn btn-secondary' %>
+  </div>
+<% end %>

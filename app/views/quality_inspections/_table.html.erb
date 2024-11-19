@@ -1,0 +1,41 @@
+<%# app/views/quality_inspections/_table.html.erb %>
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Inspector</th>
+        <th>Status</th>
+        <th>Defects</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% inspections.each do |inspection| %>
+        <tr>
+          <td><%= inspection.inspection_date.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= inspection.inspection_type.titleize %></td>
+          <td><%= inspection.inspector_name %></td>
+          <td>
+            <span class="badge <%= inspection.status == 'passed' ? 'bg-success' : 'bg-danger' %>">
+              <%= inspection.status.upcase %>
+            </span>
+          </td>
+          <td><%= inspection.inspection_defects.count %> found</td>
+          <td class="text-end">
+            <%= link_to 'View', quality_inspection_path(inspection), class: 'btn btn-sm btn-info' %>
+            <%= link_to 'Edit', edit_quality_inspection_path(inspection), class: 'btn btn-sm btn-primary' %>
+            <%= button_to 'Delete', quality_inspection_path(inspection),
+                method: :delete,
+                class: 'btn btn-sm btn-danger',
+                form: { style: 'display: inline' },
+                data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

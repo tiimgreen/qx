@@ -1,0 +1,30 @@
+
+
+<%# app/views/quality_inspections/_inspection_defect_fields.html.erb %>
+<div class="nested-fields border rounded p-3 mb-3">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= f.label :description, class: 'form-label' %>
+        <%= f.text_area :description, class: 'form-control', rows: 2 %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= f.label :severity, class: 'form-label' %>
+        <%= f.select :severity,
+            [['Minor', 'minor'], ['Major', 'major'], ['Critical', 'critical']],
+            { prompt: 'Select severity' },
+            { class: 'form-select' } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :corrective_action, class: 'form-label' %>
+    <%= f.text_area :corrective_action, class: 'form-control', rows: 2 %>
+  </div>
+
+  <%= link_to_remove_association 'Remove Defect', f, class: 'btn btn-danger btn-sm' %>
+</div>

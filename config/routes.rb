@@ -1,3 +1,4 @@
+# config/routes.rb
 Rails.application.routes.draw do
   devise_for :users
   devise_for :admins
@@ -10,15 +11,34 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
     get "/dashboard", to: "dashboard#index"
 
-    # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-    # Can be used by load balancers and uptime monitors to verify that the app is live.
-    get "up" => "rails/health#show", as: :rails_health_check
+    # Add standalone route for material certificates index
+    resources :material_certificates, only: [ :index ]
 
-    # Render dynamic PWA files from app/views/pwa/*
+    resources :projects do
+      resources :material_certificates, shallow: true
+    end
+
+    resources :incoming_deliveries do
+      resources :delivery_items, shallow: true
+      resources :missing_delivery_items, shallow: true
+    end
+
+    resources :delivery_items do
+      resources :quality_inspections, shallow: true
+      resource :roughness_measurement, shallow: true
+    end
+
+    resources :quality_inspections do
+      resources :inspection_defects, shallow: true
+    end
+
+    # Add standalone route for roughness measurements index
+    resources :roughness_measurements, only: [ :index ]
+
+    # Existing routes...
+    get "up" => "rails/health#show", as: :rails_health_check
     get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
     get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-
-    # Defines the root path route ("/")
     root "home#index"
   end
 end

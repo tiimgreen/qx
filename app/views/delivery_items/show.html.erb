@@ -1,0 +1,87 @@
+<%# app/views/delivery_items/show.html.erb %>
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Item Details</h5>
+    <div>
+      <%= link_to 'Edit', edit_delivery_item_path(@delivery_item), class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Back', incoming_delivery_path(@delivery_item.incoming_delivery), class: 'btn btn-secondary btn-sm' %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <dl class="row">
+          <dt class="col-sm-4">TAG Number</dt>
+          <dd class="col-sm-8"><%= @delivery_item.tag_number %></dd>
+
+          <dt class="col-sm-4">Batch Number</dt>
+          <dd class="col-sm-8"><%= @delivery_item.batch_number %></dd>
+
+          <dt class="col-sm-4">Quantity</dt>
+          <dd class="col-sm-8"><%= @delivery_item.quantity_received %></dd>
+
+          <dt class="col-sm-4">Description</dt>
+          <dd class="col-sm-8"><%= @delivery_item.item_description %></dd>
+        </dl>
+      </div>
+
+      <div class="col-md-6">
+        <h6>Specifications</h6>
+        <% if @delivery_item.specifications.present? %>
+          <dl class="row">
+            <% @delivery_item.specifications.each do |key, value| %>
+              <dt class="col-sm-4"><%= key.humanize %></dt>
+              <dd class="col-sm-8"><%= value %></dd>
+            <% end %>
+          </dl>
+        <% else %>
+          <p class="text-muted">No specifications recorded</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Quality Inspections Section -->
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Quality Inspections</h5>
+    <div>
+      <%= link_to 'New Inspection',
+          new_delivery_item_quality_inspection_path(@delivery_item),
+          class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <%= render 'quality_inspections/table', inspections: @quality_inspections %>
+  </div>
+</div>
+
+<!-- Ra Measurement Section -->
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Ra Measurement</h5>
+    <div>
+      <% if @roughness_measurement %>
+        <%= link_to 'Edit Measurement',
+            edit_roughness_measurement_path(@roughness_measurement),
+            class: 'btn btn-primary btn-sm' %>
+      <% else %>
+        <%= link_to 'Record Measurement',
+            new_delivery_item_roughness_measurement_path(@delivery_item),
+            class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <% if @roughness_measurement %>
+      <%= render 'roughness_measurements/details', measurement: @roughness_measurement %>
+    <% else %>
+      <p class="text-muted">No roughness measurement recorded yet.</p>
+    <% end %>
+  </div>
+</div>

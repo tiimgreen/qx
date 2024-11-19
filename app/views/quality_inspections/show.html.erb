@@ -1,0 +1,77 @@
+<%# app/views/quality_inspections/show.html.erb %>
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Inspection Details</h5>
+    <div>
+      <%= link_to 'Edit', edit_quality_inspection_path(@quality_inspection), class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Back', delivery_item_path(@quality_inspection.delivery_item), class: 'btn btn-secondary btn-sm' %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <dl class="row">
+          <dt class="col-sm-4">Inspection Type</dt>
+          <dd class="col-sm-8"><%= @quality_inspection.inspection_type.titleize %></dd>
+
+          <dt class="col-sm-4">Inspector</dt>
+          <dd class="col-sm-8"><%= @quality_inspection.inspector_name %></dd>
+
+          <dt class="col-sm-4">Date</dt>
+          <dd class="col-sm-8"><%= @quality_inspection.inspection_date.strftime("%Y-%m-%d %H:%M") %></dd>
+
+          <dt class="col-sm-4">Status</dt>
+          <dd class="col-sm-8">
+            <span class="badge <%= @quality_inspection.status == 'passed' ? 'bg-success' : 'bg-danger' %>">
+              <%= @quality_inspection.status.upcase %>
+            </span>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="col-md-6">
+        <dl class="row">
+          <dt class="col-sm-4">Notes</dt>
+          <dd class="col-sm-8"><%= @quality_inspection.notes.presence || 'No notes recorded' %></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Defects Found</h5>
+  </div>
+  <div class="card-body">
+    <% if @quality_inspection.inspection_defects.any? %>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Severity</th>
+              <th>Corrective Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @quality_inspection.inspection_defects.each do |defect| %>
+              <tr>
+                <td><%= defect.description %></td>
+                <td>
+                  <span class="badge bg-<%= defect.severity == 'critical' ? 'danger' : (defect.severity == 'major' ? 'warning' : 'info') %>">
+                    <%= defect.severity.upcase %>
+                  </span>
+                </td>
+                <td><%= defect.corrective_action.presence || 'Pending' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="text-muted">No defects recorded for this inspection.</p>
+    <% end %>
+  </div>
+</div>

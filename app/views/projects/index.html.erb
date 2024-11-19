@@ -1,0 +1,9 @@
+<%# app/views/projects/index.html.erb %>
+<%= render 'table',
+  title: 'Projects',
+  model_class: Project,
+  records: @projects,
+  columns: [:project_number, :name, :created_at],
+  new_link: new_project_path %>
+
+<%= render 'pagy' %>

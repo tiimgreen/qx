@@ -1,0 +1,82 @@
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+      <div class="container">
+        <%= link_to 'QMS', root_path, class: 'navbar-brand' %>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+          <ul class="navbar-nav me-auto">
+            <% if user_signed_in? %>
+              <!-- Projects -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                  Projects
+                </a>
+                <div class="dropdown-menu">
+                  <%= link_to 'List Projects', projects_path, class: 'dropdown-item' %>
+                  <%= link_to 'New Project', new_project_path, class: 'dropdown-item' %>
+                </div>
+              </li>
+
+              <!-- Incoming Goods -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                  Incoming Goods
+                </a>
+                <div class="dropdown-menu">
+                  <%= link_to 'Deliveries', incoming_deliveries_path, class: 'dropdown-item' %>
+                  <%= link_to 'New Delivery', new_incoming_delivery_path, class: 'dropdown-item'%>
+                  <%= link_to 'Material Certificates', material_certificates_path, class: 'dropdown-item' %>
+                </div>
+              </li>
+
+              <!-- Quality Control -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                  Quality Control
+                </a>
+                <div class="dropdown-menu">
+                  <%= link_to 'Quality Inspections', quality_inspections_path, class: 'dropdown-item' %>
+                  <%= link_to 'Roughness Measurements', roughness_measurements_path, class: 'dropdown-item' %>
+                </div>
+              </li>
+
+              <!-- Admin section if user has admin rights -->
+              <% if current_admin %>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    Admin
+                  </a>
+                  <div class="dropdown-menu">
+                    <%= link_to 'Users', users_path, class: 'dropdown-item' %>
+                    <%= link_to 'Roles', roles_path, class: 'dropdown-item' %>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+
+          <!-- User section -->
+          <ul class="navbar-nav">
+            <% if user_signed_in? %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                  <%= current_user.email %>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <%= link_to 'Profile', edit_user_registration_path, class: 'dropdown-item' %>
+                  <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                </div>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to 'Sign In', new_user_session_path, class: 'nav-link' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>

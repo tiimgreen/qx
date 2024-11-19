@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_19_050950) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_19_055508) do
   create_table "admins", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -33,11 +33,105 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_19_050950) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "delivery_items", force: :cascade do |t|
+    t.integer "incoming_delivery_id", null: false
+    t.string "tag_number"
+    t.string "batch_number", null: false
+    t.integer "quantity_received", null: false
+    t.string "item_description"
+    t.text "specifications"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["batch_number"], name: "index_delivery_items_on_batch_number"
+    t.index ["incoming_delivery_id", "tag_number"], name: "index_delivery_items_on_incoming_delivery_id_and_tag_number", unique: true, where: "tag_number IS NOT NULL"
+    t.index ["incoming_delivery_id"], name: "index_delivery_items_on_incoming_delivery_id"
+  end
+
+  create_table "incoming_deliveries", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.date "delivery_date", null: false
+    t.string "order_number", null: false
+    t.string "supplier_name", null: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_number"], name: "index_incoming_deliveries_on_order_number"
+    t.index ["project_id"], name: "index_incoming_deliveries_on_project_id"
+  end
+
+  create_table "inspection_defects", force: :cascade do |t|
+    t.integer "quality_inspection_id", null: false
+    t.text "description", null: false
+    t.string "severity", null: false
+    t.text "corrective_action"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quality_inspection_id"], name: "index_inspection_defects_on_quality_inspection_id"
+  end
+
+  create_table "material_certificates", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.string "certificate_number", null: false
+    t.string "batch_number", null: false
+    t.date "issue_date", null: false
+    t.string "issuer_name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["batch_number"], name: "index_material_certificates_on_batch_number"
+    t.index ["certificate_number"], name: "index_material_certificates_on_certificate_number", unique: true
+    t.index ["project_id"], name: "index_material_certificates_on_project_id"
+  end
+
+  create_table "missing_delivery_items", force: :cascade do |t|
+    t.integer "incoming_delivery_id", null: false
+    t.integer "expected_quantity", null: false
+    t.text "description", null: false
+    t.string "order_line_reference"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["incoming_delivery_id"], name: "index_missing_delivery_items_on_incoming_delivery_id"
+  end
+
   create_table "permissions", force: :cascade do |t|
     t.string "name"
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "project_number", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_number"], name: "index_projects_on_project_number", unique: true
+  end
+
+  create_table "quality_inspections", force: :cascade do |t|
+    t.integer "delivery_item_id", null: false
+    t.string "inspection_type", null: false
+    t.string "inspector_name", null: false
+    t.string "status", null: false
+    t.datetime "inspection_date", null: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_item_id"], name: "index_quality_inspections_on_delivery_item_id"
+    t.index ["inspection_type"], name: "index_quality_inspections_on_inspection_type"
+    t.index ["status"], name: "index_quality_inspections_on_status"
+  end
+
+  create_table "roughness_measurements", force: :cascade do |t|
+    t.integer "delivery_item_id", null: false
+    t.datetime "measurement_date", null: false
+    t.decimal "measured_value", precision: 10, scale: 2, null: false
+    t.text "measurement_parameters"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_item_id"], name: "index_roughness_measurements_on_delivery_item_id"
   end
 
   create_table "sector_permissions", force: :cascade do |t|
@@ -90,6 +184,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_19_050950) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "incoming_deliveries", "projects"
+  add_foreign_key "inspection_defects", "quality_inspections"
+  add_foreign_key "material_certificates", "projects"
+  add_foreign_key "missing_delivery_items", "incoming_deliveries"
+  add_foreign_key "quality_inspections", "delivery_items"
   add_foreign_key "sector_permissions", "permissions"
   add_foreign_key "sector_permissions", "user_sectors"
   add_foreign_key "user_sectors", "sectors"

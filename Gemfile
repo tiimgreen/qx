@@ -62,3 +62,5 @@ gem "devise", "~> 4.9"
 
 gem "rails_admin", "~> 3.2"
 gem "sass-rails"
+
+gem "pagy", "~> 9.3"

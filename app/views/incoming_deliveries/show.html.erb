@@ -1,0 +1,75 @@
+<%# app/views/incoming_deliveries/show.html.erb %>
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Delivery Details</h5>
+    <div>
+      <%= link_to 'Edit', edit_incoming_delivery_path(@incoming_delivery),
+          class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Back', incoming_deliveries_path, class: 'btn btn-secondary btn-sm' %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <dl class="row">
+          <dt class="col-sm-4">Order Number</dt>
+          <dd class="col-sm-8"><%= @incoming_delivery.order_number %></dd>
+
+          <dt class="col-sm-4">Delivery Date</dt>
+          <dd class="col-sm-8"><%= @incoming_delivery.delivery_date.strftime("%Y-%m-%d") %></dd>
+
+          <dt class="col-sm-4">Supplier</dt>
+          <dd class="col-sm-8"><%= @incoming_delivery.supplier_name %></dd>
+
+          <dt class="col-sm-4">Project</dt>
+          <dd class="col-sm-8"><%= @incoming_delivery.project.name %></dd>
+        </dl>
+      </div>
+
+      <div class="col-md-6">
+        <% if @incoming_delivery.delivery_note.attached? %>
+          <div class="mb-3">
+            <strong>Delivery Note:</strong><br>
+            <%= link_to "View Document",
+                rails_blob_path(@incoming_delivery.delivery_note, disposition: "inline"),
+                class: "btn btn-sm btn-secondary",
+                target: "_blank" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delivery Items Section -->
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Delivery Items</h5>
+    <div>
+      <%= link_to 'Add Item',
+          new_incoming_delivery_delivery_item_path(@incoming_delivery),
+          class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <%= render 'delivery_items/table', delivery_items: @delivery_items %>
+  </div>
+</div>
+
+<!-- Missing Items Section -->
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Missing Items</h5>
+    <div>
+      <%= link_to 'Record Missing Item',
+          new_incoming_delivery_missing_delivery_item_path(@incoming_delivery),
+          class: 'btn btn-warning btn-sm' %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <%= render 'missing_delivery_items/table', missing_items: @missing_items %>
+  </div>
+</div>
