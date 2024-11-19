@@ -40,4 +40,57 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+
+  config.model "UserSector" do
+    object_label_method do
+      :custom_label
+    end
+
+    list do
+      field :user do
+        formatted_value do
+          bindings[:object].user ? "#{bindings[:object].user.first_name} #{bindings[:object].user.last_name}" : "No user"
+        end
+      end
+      field :sector
+      field :permissions
+      field :created_at
+      field :updated_at
+    end
+
+    edit do
+      field :user
+      field :sector
+      field :sector_permissions
+    end
+  end
+
+  config.model "SectorPermission" do
+    object_label_method do
+      :custom_label
+    end
+
+    list do
+      field :user_sector do
+        formatted_value do
+          if bindings[:object].user_sector
+            user = bindings[:object].user_sector.user
+            sector = bindings[:object].user_sector.sector
+            "#{user.first_name} #{user.last_name} - #{sector.name}"
+          else
+            "No user sector"
+          end
+        end
+      end
+      field :permission
+      field :created_at
+      field :updated_at
+    end
+
+    edit do
+      field :user_sector
+      field :permission
+    end
+  end
 end

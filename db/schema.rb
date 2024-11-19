@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_12_134521) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_19_050950) do
   create_table "admins", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -32,4 +32,66 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_12_134521) do
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sector_permissions", force: :cascade do |t|
+    t.integer "user_sector_id", null: false
+    t.integer "permission_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_sector_permissions_on_permission_id"
+    t.index ["user_sector_id", "permission_id"], name: "index_sector_permissions_on_user_sector_id_and_permission_id", unique: true
+    t.index ["user_sector_id"], name: "index_sector_permissions_on_user_sector_id"
+  end
+
+  create_table "sectors", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_sectors", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "sector_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sector_id"], name: "index_user_sectors_on_sector_id"
+    t.index ["user_id", "sector_id"], name: "index_user_sectors_on_user_id_and_sector_id", unique: true
+    t.index ["user_id"], name: "index_user_sectors_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.boolean "active", default: true, null: false
+    t.string "email", default: "", null: false
+    t.string "phone", default: "", null: false
+    t.string "address", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "sector_permissions", "permissions"
+  add_foreign_key "sector_permissions", "user_sectors"
+  add_foreign_key "user_sectors", "sectors"
+  add_foreign_key "user_sectors", "users"
 end
