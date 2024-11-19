@@ -1,5 +1,4 @@
 
-<%# app/views/quality_inspections/_form.html.erb %>
 <%= form_with(model: [@delivery_item, @quality_inspection].compact, local: true, class: 'needs-validation') do |f| %>
   <% if @quality_inspection.errors.any? %>
     <div class="alert alert-danger">

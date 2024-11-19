@@ -1,5 +1,6 @@
 # app/controllers/quality_inspections_controller.rb
 class QualityInspectionsController < ApplicationController
+  layout "dashboard_layout"
   before_action :set_quality_inspection, only: [ :show, :edit, :update, :destroy ]
   before_action :set_delivery_item, only: [ :index, :new, :create ]
 

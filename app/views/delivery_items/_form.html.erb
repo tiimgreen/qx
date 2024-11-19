@@ -1,5 +1,4 @@
 
-<%# app/views/delivery_items/_form.html.erb %>
 <%= form_with(model: [@incoming_delivery, @delivery_item].compact, local: true, class: 'needs-validation') do |f| %>
   <% if @delivery_item.errors.any? %>
     <div class="alert alert-danger">

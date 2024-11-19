@@ -1,5 +1,6 @@
 # app/controllers/incoming_deliveries_controller.rb
 class IncomingDeliveriesController < ApplicationController
+  layout "dashboard_layout"
   before_action :set_incoming_delivery, only: [ :show, :edit, :update, :destroy ]
   before_action :set_project, only: [ :index, :new, :create ]
 

@@ -1,5 +1,6 @@
 # app/controllers/missing_delivery_items_controller.rb
 class MissingDeliveryItemsController < ApplicationController
+  layout "dashboard_layout"
   before_action :set_missing_delivery_item, only: [ :show, :edit, :update, :destroy ]
   before_action :set_incoming_delivery, only: [ :new, :create ]
 

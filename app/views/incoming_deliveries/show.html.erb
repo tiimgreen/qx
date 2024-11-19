@@ -1,4 +1,3 @@
-<%# app/views/incoming_deliveries/show.html.erb %>
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">Delivery Details</h5>
@@ -58,16 +57,6 @@
   </div>
 </div>
 
-<!-- Missing Items Section -->
-<div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Missing Items</h5>
-    <div>
-      <%= link_to 'Record Missing Item',
-          new_incoming_delivery_missing_delivery_item_path(@incoming_delivery),
-          class: 'btn btn-warning btn-sm' %>
-    </div>
-  </div>
 
   <div class="card-body">
     <%= render 'missing_delivery_items/table', missing_items: @missing_items %>

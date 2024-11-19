@@ -1,5 +1,6 @@
 # app/controllers/roughness_measurements_controller.rb
 class RoughnessMeasurementsController < ApplicationController
+  layout "dashboard_layout"
   before_action :set_roughness_measurement, only: [ :show, :edit, :update, :destroy ]
   before_action :set_delivery_item, only: [ :new, :create ]
 

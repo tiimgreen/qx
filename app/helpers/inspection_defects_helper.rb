@@ -1,4 +1,3 @@
-# app/helpers/inspection_defects_helper.rb
 module InspectionDefectsHelper
   def severity_badge_class(severity)
     case severity.to_s.downcase

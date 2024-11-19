@@ -1,0 +1,11 @@
+<%= render 'application/table',
+  title: 'Missing Delivery Items',
+  model_class: MissingDeliveryItem,
+  records: missing_items,
+  columns: [
+    :delivery_reference,
+    :expected_quantity,
+    :order_line_reference,
+    :description
+  ],
+  new_link: @incoming_delivery ? new_incoming_delivery_missing_delivery_item_path(@incoming_delivery) : nil %>

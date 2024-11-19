@@ -1,5 +1,6 @@
 # app/controllers/delivery_items_controller.rb
 class DeliveryItemsController < ApplicationController
+  layout "dashboard_layout"
   before_action :set_delivery_item, only: [ :show, :edit, :update, :destroy ]
   before_action :set_incoming_delivery, only: [ :index, :new, :create ]
 

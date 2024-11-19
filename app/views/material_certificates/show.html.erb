@@ -1,48 +1,60 @@
-<!-- app/views/material_certificates/show.html.erb -->
 <div class="container mt-4">
   <div class="card">
-    <div class="card-header bg-primary text-white">
-      <h2 class="mb-0">Certificate Details - <%= @material_certificate.certificate_number %></h2>
+    <div class="card-header">
+      <h2>Material Certificate Details</h2>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <dl class="row">
-            <dt class="col-sm-4">Project:</dt>
-            <dd class="col-sm-8"><%= @material_certificate.project.name %></dd>
-
-            <dt class="col-sm-4">Certificate Number:</dt>
-            <dd class="col-sm-8"><%= @material_certificate.certificate_number %></dd>
-
-            <dt class="col-sm-4">Batch Number:</dt>
-            <dd class="col-sm-8"><%= @material_certificate.batch_number %></dd>
-          </dl>
+          <p><strong>Certificate Number:</strong> <%= @material_certificate.certificate_number %></p>
+          <p><strong>Batch Number:</strong> <%= @material_certificate.batch_number %></p>
+          <p><strong>Issue Date:</strong> <%= @material_certificate.issue_date %></p>
+          <p><strong>Issuer:</strong> <%= @material_certificate.issuer_name %></p>
         </div>
         <div class="col-md-6">
-          <dl class="row">
-            <dt class="col-sm-4">Issue Date:</dt>
-            <dd class="col-sm-8"><%= @material_certificate.issue_date.strftime("%B %d, %Y") %></dd>
-
-            <dt class="col-sm-4">Issuer:</dt>
-            <dd class="col-sm-8"><%= @material_certificate.issuer_name %></dd>
-          </dl>
+          <% if @material_certificate.certificate_file.attached? %>
+            <p><strong>Certificate File:</strong>
+              <%= link_to "Download Certificate", rails_blob_path(@material_certificate.certificate_file, disposition: "attachment"), class: "btn btn-sm btn-primary" %>
+            </p>
+          <% end %>
         </div>
       </div>
+
+      <% if @material_certificate.description.present? %>
+        <div class="mt-3">
+          <h4>Description</h4>
+          <p><%= @material_certificate.description %></p>
+        </div>
+      <% end %>
 
       <div class="mt-4">
-        <h4>Description</h4>
-        <div class="card">
-          <div class="card-body bg-light">
-            <%= simple_format(@material_certificate.description) %>
+        <h4>Associated Delivery Items</h4>
+        <% if @delivery_items.any? %>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Tag Number</th>
+                  <th>Batch Number</th>
+                  <th>Delivery Order</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @delivery_items.each do |item| %>
+                  <tr>
+                    <td><%= item.tag_number %></td>
+                    <td><%= item.batch_number %></td>
+                    <td><%= item.incoming_delivery.order_number %></td>
+                    <td><%= item.quantity_received %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="btn-group">
-        <%= link_to 'Edit', edit_material_certificate_path(@material_certificate), class: 'btn btn-primary' %>
-        <%= link_to 'Back', material_certificates_path, class: 'btn btn-secondary' %>
-        <%= link_to 'Download PDF', material_certificate_path(@material_certificate, format: :pdf), class: 'btn btn-info' %>
+        <% else %>
+          <p class="text-muted">No delivery items associated with this certificate.</p>
+        <% end %>
       </div>
     </div>
   </div>

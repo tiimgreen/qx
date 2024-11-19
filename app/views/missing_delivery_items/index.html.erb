@@ -21,7 +21,7 @@
       <tbody>
         <% @missing_delivery_items.each do |item| %>
           <tr>
-            <td><%= item.incoming_delivery.reference_number %></td>
+            <td><%= item.incoming_delivery.order_number %></td>
             <td><%= item.expected_quantity %></td>
             <td><%= item.order_line_reference %></td>
             <td><%= truncate(item.description, length: 50) %></td>

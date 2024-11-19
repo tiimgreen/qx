@@ -1,5 +1,6 @@
 # app/controllers/inspection_defects_controller.rb
 class InspectionDefectsController < ApplicationController
+  layout "dashboard_layout"
   before_action :set_inspection_defect, only: [ :show, :edit, :update, :destroy ]
   before_action :set_quality_inspection, only: [ :new, :create ]
 

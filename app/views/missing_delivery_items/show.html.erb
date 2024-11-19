@@ -7,7 +7,7 @@
     <div class="card-body">
       <dl class="row">
         <dt class="col-sm-3">Delivery Reference:</dt>
-        <dd class="col-sm-9"><%= @missing_delivery_item.incoming_delivery.reference_number %></dd>
+        <dd class="col-sm-9"><%= @missing_delivery_item.incoming_delivery.order_number %></dd>
 
         <dt class="col-sm-3">Expected Quantity:</dt>
         <dd class="col-sm-9"><%= @missing_delivery_item.expected_quantity %></dd>
@@ -25,7 +25,7 @@
     <div class="card-footer">
       <div class="btn-group">
         <%= link_to 'Edit', edit_missing_delivery_item_path(@missing_delivery_item), class: 'btn btn-primary' %>
-        <%= link_to 'Back', missing_delivery_items_path, class: 'btn btn-secondary' %>
+        <%= link_to 'Back', incoming_delivery_missing_delivery_items_path(@missing_delivery_item.incoming_delivery), class: 'btn btn-secondary' %>
       </div>
     </div>
   </div>

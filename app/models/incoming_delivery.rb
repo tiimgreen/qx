@@ -3,6 +3,7 @@ class IncomingDelivery < ApplicationRecord
   has_one_attached :delivery_note
   has_many :delivery_items, dependent: :destroy
   has_many :missing_delivery_items, dependent: :destroy
+  has_many :material_certificates, through: :delivery_items
 
   validates :delivery_date, presence: true
   validates :order_number, presence: true
