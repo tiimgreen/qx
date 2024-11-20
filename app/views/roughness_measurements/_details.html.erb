@@ -1,0 +1,24 @@
+<dl class="row">
+  <dt class="col-sm-4">Measurement Date</dt>
+  <dd class="col-sm-8"><%= measurement.measurement_date&.strftime('%B %d, %Y') %></dd>
+
+  <dt class="col-sm-4">Measured Value</dt>
+  <dd class="col-sm-8"><%= measurement.measured_value %></dd>
+
+  <% if measurement.measurement_parameters.present? %>
+    <dt class="col-sm-4">Parameters</dt>
+    <dd class="col-sm-8"><%= measurement.measurement_parameters %></dd>
+  <% end %>
+
+  <% if measurement.notes.present? %>
+    <dt class="col-sm-4">Notes</dt>
+    <dd class="col-sm-8"><%= measurement.notes %></dd>
+  <% end %>
+
+  <% if measurement.measurement_report.attached? %>
+    <dt class="col-sm-4">Report</dt>
+    <dd class="col-sm-8">
+      <%= link_to "Download Report", rails_blob_path(measurement.measurement_report, disposition: "attachment") %>
+    </dd>
+  <% end %>
+</dl>
