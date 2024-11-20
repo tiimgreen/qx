@@ -38,7 +38,19 @@
       <div class="mb-3">
         <label class="form-label">Specifications</label>
         <div class="specifications-fields">
-          <!-- Add dynamic specification fields here if needed -->
+          <div class="specification-entries">
+            <% (@delivery_item.specifications || {}).each do |key, value| %>
+              <div class="specification-entry mb-2">
+                <div class="input-group">
+                  <input type="text" name="delivery_item[specifications][<%= key %>]" value="<%= value %>" class="form-control" placeholder="Value">
+                  <button type="button" class="btn btn-outline-danger remove-specification">&times;</button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <button type="button" class="btn btn-outline-secondary btn-sm add-specification">
+            <i class="bi bi-plus"></i> Add Specification
+          </button>
         </div>
       </div>
     </div>
@@ -49,3 +61,30 @@
     <%= link_to 'Cancel', :back, class: 'btn btn-secondary' %>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.specification-entries');
+    const addButton = document.querySelector('.add-specification');
+
+    addButton.addEventListener('click', function() {
+      const newKey = Date.now().toString().substr(-6);
+      const newEntry = document.createElement('div');
+      newEntry.className = 'specification-entry mb-2';
+      newEntry.innerHTML = `
+        <div class="input-group">
+          <input type="text" name="delivery_item[specifications][spec_${newKey}]" class="form-control" placeholder="Value">
+          <button type="button" class="btn btn-outline-danger remove-specification">&times;</button>
+        </div>
+      `;
+      container.appendChild(newEntry);
+    });
+
+    // Event delegation for remove buttons
+    container.addEventListener('click', function(e) {
+      if (e.target.classList.contains('remove-specification')) {
+        e.target.closest('.specification-entry').remove();
+      }
+    });
+  });
+</script>
