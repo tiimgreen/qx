@@ -40,15 +40,13 @@
             <td><%= certificate.batch_number %></td>
             <td><%= certificate.issue_date.strftime("%Y-%m-%d") %></td>
             <td><%= certificate.issuer_name %></td>
-            <td>
-              <div class="btn-group" role="group">
+            <td class="text-end">
                 <%= link_to 'View', certificate, class: 'btn btn-sm btn-info' %>
                 <%= link_to 'Edit', edit_material_certificate_path(certificate), class: 'btn btn-sm btn-primary' %>
                 <%= link_to 'Delete', certificate,
                     method: :delete,
                     class: 'btn btn-sm btn-danger',
                     data: { turbo_confirm: 'Are you sure?' } %>
-              </div>
             </td>
           </tr>
         <% end %>

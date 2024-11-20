@@ -15,7 +15,8 @@ module Qx
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-
+    config.time_zone = "Zurich"  # Switzerland uses the Zurich timezone
+    config.active_record.default_timezone = :local
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

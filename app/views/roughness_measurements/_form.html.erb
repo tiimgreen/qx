@@ -17,7 +17,7 @@
 
   <div class="form-group">
     <%= f.label :measurement_date %>
-    <%= f.datetime_local_field :measurement_date, class: 'form-control' %>
+    <%= f.datetime_local_field :measurement_date, class: 'form-control', value: Time.current.strftime('%Y-%m-%dT%H:%M') %>
   </div>
 
   <div class="form-group">

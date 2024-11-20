@@ -26,7 +26,7 @@
     <div class="col-md-6">
       <div class="form-group mb-3">
         <%= f.label :issue_date, class: 'form-label' %>
-        <%= f.date_field :issue_date, class: 'form-control', required: true %>
+        <%= f.date_field :issue_date, class: 'form-control', required: true, value: Date.current.strftime('%Y-%m-%d') %>
       </div>
 
       <div class="form-group mb-3">

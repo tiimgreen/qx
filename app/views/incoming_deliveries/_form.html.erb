@@ -25,7 +25,7 @@
 
       <div class="mb-3">
         <%= f.label :delivery_date, class: 'form-label' %>
-        <%= f.date_field :delivery_date, class: 'form-control' %>
+        <%= f.date_field :delivery_date, class: 'form-control', value: Date.current.strftime('%Y-%m-%d') %>
       </div>
 
       <div class="mb-3">
