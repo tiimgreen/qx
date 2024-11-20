@@ -5,7 +5,9 @@ import jQuery from "jquery";
 import "@popperjs/core";
 import * as bootstrap from "bootstrap";
 import "controllers/language_controller";
+import "controllers/nested_form_controller";
+import "controllers/image_preview_controller";
+import "controllers/modal_controller";
 
-// Make jQuery available globally
 window.jQuery = jQuery;
 window.$ = jQuery;

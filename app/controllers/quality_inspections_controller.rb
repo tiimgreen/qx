@@ -47,6 +47,17 @@ class QualityInspectionsController < ApplicationController
     redirect_to delivery_item, notice: "Inspection was successfully deleted."
   end
 
+  def remove_image
+    @quality_inspection = QualityInspection.find(params[:id])
+    image = @quality_inspection.images.find(params[:image_id])
+    image.purge
+
+    respond_to do |format|
+      format.html { redirect_to edit_quality_inspection_path(@quality_inspection), notice: t(".image_removed") }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(image)) }
+    end
+  end
+
   private
 
   def set_quality_inspection
@@ -59,8 +70,12 @@ class QualityInspectionsController < ApplicationController
 
   def quality_inspection_params
     params.require(:quality_inspection).permit(
-      :inspection_type, :inspector_name, :status,
-      :inspection_date, :notes,
+      :inspection_type,
+      :inspector_name,
+      :inspection_date,
+      :status,
+      :notes,
+      images: [],
       inspection_defects_attributes: [ :id, :description, :severity, :corrective_action, :_destroy ]
     )
   end

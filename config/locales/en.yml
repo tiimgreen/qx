@@ -19,3 +19,20 @@ en:
     industries: "Chemical, Pharmaceutical, Food and Beverage Industry"
     construction: "Pipeline and Plant Construction"
     description: "Your competent partner for the realization and commissioning of plants - with the goal of fulfilling your wishes and requirements"
+  quality_inspections:
+    inspection_defect_fields:
+      severity:
+        minor: Minor
+        major: Major
+        critical: Critical
+      select_severity: Select severity
+      corrective_action_placeholder: Enter any corrective actions taken or planned
+      remove_defect: Remove Defect
+      confirm_remove: Are you sure you want to remove this defect?
+    form:
+      inspection_images: Inspection Images
+      remove_image: Remove
+      confirm_remove_image: Are you sure you want to remove this image?
+      image_help_text: "Upload up to 10 images (PNG, JPEG, JPG). Maximum size: 5MB each."
+    remove_image:
+      image_removed: Image was successfully removed.

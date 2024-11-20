@@ -76,3 +76,20 @@
 }
 
  /* end pagy */
+
+/* modal */
+.modal-body img {
+  max-height: 80vh;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.img-thumbnail {
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+/* end modal */

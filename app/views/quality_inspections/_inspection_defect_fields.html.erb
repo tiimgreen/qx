@@ -1,27 +1,34 @@
-<div class="nested-fields border rounded p-3 mb-3">
+<div class="nested-fields border rounded p-3 mb-3" data-new-record="<%= f.object.new_record? %>">
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :description, class: 'form-label' %>
-        <%= f.text_area :description, class: 'form-control', rows: 2 %>
+        <%= f.label :description, class: 'form-label required' %>
+        <%= f.text_area :description, class: 'form-control', rows: 2, required: true %>
       </div>
     </div>
 
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :severity, class: 'form-label' %>
+        <%= f.label :severity, class: 'form-label required' %>
         <%= f.select :severity,
-            [['Minor', 'minor'], ['Major', 'major'], ['Critical', 'critical']],
-            { prompt: 'Select severity' },
-            { class: 'form-select' } %>
+            InspectionDefect::SEVERITY_LEVELS.map { |level| [t(".severity.#{level}"), level] },
+            { prompt: t('.select_severity') },
+            { class: 'form-select', required: true } %>
       </div>
     </div>
   </div>
 
   <div class="mb-3">
     <%= f.label :corrective_action, class: 'form-label' %>
-    <%= f.text_area :corrective_action, class: 'form-control', rows: 2 %>
+    <%= f.text_area :corrective_action, class: 'form-control', rows: 2,
+        placeholder: t('.corrective_action_placeholder') %>
   </div>
 
-  <%= link_to_remove_association 'Remove Defect', f, class: 'btn btn-danger btn-sm' %>
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "Remove Defect", "#",
+      class: "btn btn-danger btn-sm",
+      data: {
+        action: "click->nested-form#remove",
+        confirm: t('.confirm_remove')
+      } %>
 </div>

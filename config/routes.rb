@@ -24,7 +24,11 @@ Rails.application.routes.draw do
     end
 
     resources :delivery_items do
-      resources :quality_inspections, shallow: true
+resources :quality_inspections do
+        member do
+          delete :remove_image
+        end
+      end
       resource :roughness_measurement, shallow: true
     end
 

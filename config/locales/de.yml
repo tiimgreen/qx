@@ -19,3 +19,13 @@ de:
     industries: "Chemie-, Pharma-, Lebensmittel- und Getränkeindustrie"
     construction: "Rohrleitungs- und Anlagenbau"
     description: "Ihr kompetenter Ansprechpartner rund um die Realisierung und Inbetriebnahme von Anlagen - mit dem Ziel, Ihre Wünsche und Ansprüche zu erfüllen"
+  quality_inspections:
+    inspection_defect_fields:
+      severity:
+        minor: "Gering"
+        major: "Erheblich"
+        critical: "Kritisch"
+      select_severity: "Schweregrad auswählen"
+      corrective_action_placeholder: "Geben Sie alle ergriffenen oder geplanten Korrekturmaßnahmen ein"
+      remove_defect: "Mangel entfernen"
+      confirm_remove: "Sind Sie sicher, dass Sie diesen Mangel entfernen möchten?"

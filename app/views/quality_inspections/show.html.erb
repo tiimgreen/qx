@@ -39,6 +39,60 @@
   </div>
 </div>
 
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Inspection Images</h5>
+  </div>
+  <div class="card-body">
+    <% if @quality_inspection.images.attached? %>
+      <div class="row">
+        <% @quality_inspection.images.each do |image| %>
+          <div class="col-md-3 mb-3" data-controller="modal">
+            <%= image_tag image.variant(resize_to_limit: [150, 150]),
+                class: "img-thumbnail",
+                href: "#",
+                data: {
+                  action: "click->modal#open",
+                  modal_target: "trigger"
+                } %>
+
+            <!-- Modal for this image -->
+            <div class="modal fade"
+                data-modal-target="dialog"
+                tabindex="-1"
+                aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Inspection Image</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-action="modal#close"
+                            aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    <%= image_tag image, class: "img-fluid" %>
+                  </div>
+                  <div class="modal-footer">
+                    <%= link_to "Download",
+                        rails_blob_path(image, disposition: "attachment"),
+                        class: "btn btn-primary" %>
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-action="modal#close">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-muted">No images attached to this inspection.</p>
+    <% end %>
+  </div>
+</div>
+
 <div class="card">
   <div class="card-header">
     <h5 class="mb-0">Defects Found</h5>
