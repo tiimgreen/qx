@@ -73,3 +73,8 @@ de:
     title: "Ihre Arbeit, unsere Mission, eine Vision"
     subtitle: "Produktionsmanagementsystem"
     welcome_message: "Ihr täglicher Arbeitsbereich für Zeitpläne, Berichte und Sicherheitsinformationen"
+  helpers:
+    submit:
+      submit: "Speichern"
+    links:
+      cancel: "Abbrechen"

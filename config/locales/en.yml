@@ -80,3 +80,8 @@ en:
     title: "Your Work, Our Mission, United Vision"
     subtitle: "Production Management System"
     welcome_message: "Your daily workspace for schedules, reports, and safety information"
+  helpers:
+    submit:
+      submit: "Save"
+    links:
+      cancel: "Cancel"
