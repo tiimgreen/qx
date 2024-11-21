@@ -4,14 +4,6 @@
     <h2><%= t('home.industries') %></h2>
     <h3><%= t('home.construction') %></h3>
     <p class="mt-4"><%= t('home.description') %></p>
-    <button class="btn base-color-bg-dark text-white" id="test-button">Click me!</button>
+    <%= link_to 'Sign In', new_user_session_path, class: "btn base-color-bg-dark text-white" %>
   </div>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    $('#test-button').click(function() {
-      alert('jQuery is working!');
-    });
-  });
-</script>

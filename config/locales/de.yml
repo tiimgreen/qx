@@ -5,6 +5,20 @@ de:
     home: "Startseite"
     about: "Über uns"
     contact: "Kontakt"
+    menu:
+      projects:
+        title: "Projekte"
+        list: "Projekte auflisten"
+        new: "Neues Projekt"
+      incoming_goods:
+        title: "Wareneingänge"
+        deliveries: "Lieferungen"
+        new_delivery: "Neue Lieferung"
+        material_certificates: "Materialzertifikate"
+      quality_control:
+        title: "Qualitätskontrolle"
+        quality_inspections: "Qualitätsprüfungen"
+        roughness_measurements: "Rauheitsmessungen"
   common:
     save: "Speichern"
     cancel: "Abbrechen"

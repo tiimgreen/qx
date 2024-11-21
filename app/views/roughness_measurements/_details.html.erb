@@ -15,10 +15,48 @@
     <dd class="col-sm-8"><%= measurement.notes %></dd>
   <% end %>
 
-  <% if measurement.measurement_report.attached? %>
-    <dt class="col-sm-4">Report</dt>
+  <% if measurement.measurement_reports.attached? %>
+    <dt class="col-sm-4">Reports</dt>
     <dd class="col-sm-8">
-      <%= link_to "Download Report", rails_blob_path(measurement.measurement_report, disposition: "attachment") %>
+      <div class="row g-2">
+        <% measurement.measurement_reports.each_with_index do |report, index| %>
+          <% if report.content_type.start_with?('image/') %>
+            <div class="col-auto">
+              <%= image_tag report.representation(resize_to_limit: [100, 100]),
+                           class: "img-thumbnail cursor-pointer",
+                           data: {
+                             bs_toggle: "modal",
+                             bs_target: "#imageModal#{index}"
+                           } %>
+
+              <!-- Modal for this image -->
+              <div class="modal fade" id="imageModal<%= index %>" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title"><%= report.filename %></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                      <%= image_tag report.representation(resize_to_limit: [800, 800]), class: "img-fluid" %>
+                    </div>
+                    <div class="modal-footer">
+                      <%= link_to "Download", rails_blob_path(report, disposition: "attachment"),
+                          class: "btn btn-primary" %>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <div class="col-auto">
+              <%= link_to report.filename, rails_blob_path(report, disposition: "attachment"),
+                         class: "btn btn-outline-secondary btn-sm" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     </dd>
   <% end %>
 </dl>

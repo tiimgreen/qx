@@ -1,8 +1,9 @@
     <!-- Main Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
       <div class="container">
-        <%= link_to 'QMS', root_path, class: 'navbar-brand' %>
-
+        <%= link_to root_path, class: "navbar-brand" do %>
+          <%= image_tag "logo.svg", height: 40, alt: "Logo" %>
+        <% end %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,37 +11,38 @@
         <div class="collapse navbar-collapse" id="navbarMain">
           <ul class="navbar-nav me-auto">
             <% if user_signed_in? %>
+
               <!-- Projects -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                  Projects
+                  <%= t('navigation.menu.projects.title') %>
                 </a>
                 <div class="dropdown-menu">
-                  <%= link_to 'List Projects', projects_path, class: 'dropdown-item' %>
-                  <%= link_to 'New Project', new_project_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.projects.list'), projects_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.projects.new'), new_project_path, class: 'dropdown-item' %>
                 </div>
               </li>
 
               <!-- Incoming Goods -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                  Incoming Goods
+                  <%= t('navigation.menu.incoming_goods.title') %>
                 </a>
                 <div class="dropdown-menu">
-                  <%= link_to 'Deliveries', incoming_deliveries_path, class: 'dropdown-item' %>
-                  <%= link_to 'New Delivery', new_incoming_delivery_path, class: 'dropdown-item'%>
-                  <%= link_to 'Material Certificates', material_certificates_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.incoming_goods.deliveries'), incoming_deliveries_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.incoming_goods.new_delivery'), new_incoming_delivery_path, class: 'dropdown-item'%>
+                  <%= link_to t('navigation.menu.incoming_goods.material_certificates'), material_certificates_path, class: 'dropdown-item' %>
                 </div>
               </li>
 
               <!-- Quality Control -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                  Quality Control
+                  <%= t('navigation.menu.quality_control.title') %>
                 </a>
                 <div class="dropdown-menu">
-                  <%= link_to 'Quality Inspections', quality_inspections_path, class: 'dropdown-item' %>
-                  <%= link_to 'Roughness Measurements', roughness_measurements_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.quality_control.quality_inspections'), quality_inspections_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.quality_control.roughness_measurements'), roughness_measurements_path, class: 'dropdown-item' %>
                 </div>
               </li>
 
@@ -58,7 +60,26 @@
               <% end %>
             <% end %>
           </ul>
-
+            <div class="ms-auto">
+              <div class="dropdown" data-controller="language">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="fi fi-<%= I18n.locale == :en ? 'gb' : 'de' %>"></span>
+                  <%= I18n.locale.to_s.upcase %>
+                </button>
+                <ul class="dropdown-menu">
+                  <% { en: 'gb', de: 'de' }.each do |locale, flag| %>
+                    <li>
+                      <%= link_to params.permit(:locale).merge(locale: locale),
+                            class: "dropdown-item #{I18n.locale == locale ? 'active' : ''}",
+                            data: { "turbo-method": :patch } do %>
+                        <span class="fi fi-<%= flag %>"></span>
+                        <%= locale.to_s.upcase %>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
           <!-- User section -->
           <ul class="navbar-nav">
             <% if user_signed_in? %>

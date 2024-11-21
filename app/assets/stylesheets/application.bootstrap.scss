@@ -1,3 +1,6 @@
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "style";
+// @import "flag-icons/sass/flag-icons.scss";
+$flag-icons-path: "/assets/flags";
+@import "flag-icons/sass/flag-icons";

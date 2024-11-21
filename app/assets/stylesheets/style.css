@@ -1,3 +1,7 @@
+/* .bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: #013a75 !important;
+} */
 .base-color-bg-dark {
   background-color: #013a75;
 }

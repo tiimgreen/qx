@@ -5,6 +5,20 @@ en:
     home: "Home"
     about: "About"
     contact: "Contact"
+    menu:
+      projects:
+        title: "Projects"
+        list: "List Projects"
+        new: "New Project"
+      incoming_goods:
+        title: "Incoming Goods"
+        deliveries: "Deliveries"
+        new_delivery: "New Delivery"
+        material_certificates: "Material Certificates"
+      quality_control:
+        title: "Quality Control"
+        quality_inspections: "Quality Inspections"
+        roughness_measurements: "Roughness Measurements"
   common:
     save: "Save"
     cancel: "Cancel"

@@ -35,6 +35,11 @@
     <%= f.text_area :notes, class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :measurement_reports %>
+    <%= f.file_field :measurement_reports, multiple: true, class: 'form-control' %>
+  </div>
+
   <div class="form-group mt-3">
     <%= f.submit class: 'btn btn-primary' %>
     <%= link_to 'Back', roughness_measurements_path, class: 'btn btn-secondary' %>

@@ -27,6 +27,6 @@ module Qx
     config.i18n.available_locales = [ :en, :de ]
 
     # Default locale
-    config.i18n.default_locale = :en
+    config.i18n.default_locale = :de
   end
 end
