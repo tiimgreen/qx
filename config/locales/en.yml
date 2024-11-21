@@ -75,3 +75,7 @@ en:
       signed_out: "Signed out successfully."
       user:
         signed_out: "Signed out successfully."
+  dashboard:
+    title: "Your Work, Our Mission, United Vision"
+    subtitle: "Production Management System"
+    welcome_message: "Your daily workspace for schedules, reports, and safety information"

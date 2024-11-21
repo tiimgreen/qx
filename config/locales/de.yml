@@ -68,3 +68,7 @@ de:
       signed_out: "Erfolgreich abgemeldet."
       user:
         signed_out: "Erfolgreich abgemeldet."
+  dashboard:
+    title: "Ihre Arbeit, unsere Mission, eine Vision"
+    subtitle: "Produktionsmanagementsystem"
+    welcome_message: "Ihr täglicher Arbeitsbereich für Zeitpläne, Berichte und Sicherheitsinformationen"

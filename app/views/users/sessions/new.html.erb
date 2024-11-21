@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-md-6 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-5">
+          <div class="text-center mb-4">
+            <%= image_tag "logo.svg", class: "mb-4", height: "72", alt: "Logo" rescue nil %>
+            <h1 class="h3 mb-3 fw-normal"><%= t('devise.sessions.new.title') %></h1>
+          </div>
+
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-floating mb-3">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                  class: "form-control", placeholder: t('devise.sessions.new.email') %>
+              <%= f.label :email, t('devise.sessions.new.email') %>
+            </div>
+
+            <div class="form-floating mb-3">
+              <%= f.password_field :password, autocomplete: "current-password",
+                  class: "form-control", placeholder: t('devise.sessions.new.password') %>
+              <%= f.label :password, t('devise.sessions.new.password') %>
+            </div>
+
+            <% if devise_mapping.rememberable? %>
+              <div class="form-check mb-3">
+                <%= f.check_box :remember_me, class: "form-check-input" %>
+                <%= f.label :remember_me, t('devise.sessions.new.remember_me'), class: "form-check-label" %>
+              </div>
+            <% end %>
+
+            <%= f.submit t('devise.sessions.new.sign_in'), class: "w-100 btn btn-lg btn-primary mb-3" %>
+
+            <div class="text-center">
+              <%#= render "users/shared/links" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Styles remain the same */
+.form-floating > label {
+  z-index: 3;
+}
+
+.card {
+  border-radius: 1rem;
+  border: none;
+}
+
+.devise-links a {
+  color: #6c757d;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.devise-links a:hover {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+</style>
