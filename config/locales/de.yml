@@ -33,6 +33,7 @@ de:
     industries: "Chemie-, Pharma-, Lebensmittel- und Getränkeindustrie"
     construction: "Rohrleitungs- und Anlagenbau"
     description: "Ihr kompetenter Ansprechpartner rund um die Realisierung und Inbetriebnahme von Anlagen - mit dem Ziel, Ihre Wünsche und Ansprüche zu erfüllen"
+    sign_in: "Anmelden"
   quality_inspections:
     inspection_defect_fields:
       severity:

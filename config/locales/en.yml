@@ -33,6 +33,7 @@ en:
     industries: "Chemical, Pharmaceutical, Food and Beverage Industry"
     construction: "Pipeline and Plant Construction"
     description: "Your competent partner for the realization and commissioning of plants - with the goal of fulfilling your wishes and requirements"
+    sign_in: "Sign In"
   quality_inspections:
     inspection_defect_fields:
       severity:
