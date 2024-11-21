@@ -1,6 +1,6 @@
 class IncomingDelivery < ApplicationRecord
   belongs_to :project
-  has_one_attached :delivery_note
+  has_many_attached :delivery_notes
   has_many :delivery_items, dependent: :destroy
   has_many :missing_delivery_items, dependent: :destroy
   has_many :material_certificates, through: :delivery_items

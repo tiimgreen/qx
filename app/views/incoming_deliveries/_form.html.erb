@@ -47,8 +47,11 @@
       </div>
 
       <div class="mb-3">
-        <%= f.label :delivery_note, t('.labels.delivery_note'), class: 'form-label' %>
-        <%= f.file_field :delivery_note, class: 'form-control', direct_upload: true %>
+        <%= f.label :delivery_notes, t('.labels.delivery_notes'), class: 'form-label' %>
+        <%= f.file_field :delivery_notes,
+                         class: 'form-control',
+                         direct_upload: true,
+                         multiple: true %>
       </div>
     </div>
   </div>

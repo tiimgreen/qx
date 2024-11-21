@@ -36,13 +36,50 @@
       </div>
 
       <div class="col-md-6">
-        <% if @incoming_delivery.delivery_note.attached? %>
+        <% if @incoming_delivery.delivery_notes.attached? %>
           <div class="mb-3">
             <strong><%= t('.delivery_note') %>:</strong><br>
-            <%= link_to t('.view_document'),
-                rails_blob_path(@incoming_delivery.delivery_note, disposition: "inline"),
-                class: "btn btn-sm btn-secondary",
-                target: "_blank" %>
+            <div class="row g-2">
+              <% @incoming_delivery.delivery_notes.each_with_index do |note, index| %>
+                <% if note.content_type.start_with?('image/') %>
+                  <div class="col-auto">
+                    <%= image_tag note.representation(resize_to_limit: [100, 100]),
+                                class: "img-thumbnail cursor-pointer",
+                                data: {
+                                  bs_toggle: "modal",
+                                  bs_target: "#imageModal#{index}"
+                                } %>
+
+                    <!-- Modal for this image -->
+                    <div class="modal fade" id="imageModal<%= index %>" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title"><%= note.filename %></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body text-center">
+                            <%= image_tag note.representation(resize_to_limit: [800, 800]), class: "img-fluid" %>
+                          </div>
+                          <div class="modal-footer">
+                            <%= link_to t('.download'), rails_blob_path(note, disposition: "attachment"),
+                                class: "btn btn-primary" %>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                              <%= t('.close') %>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% else %>
+                  <div class="col-auto">
+                    <%= link_to note.filename, rails_blob_path(note, disposition: "attachment"),
+                              class: "btn btn-outline-secondary btn-sm" %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>

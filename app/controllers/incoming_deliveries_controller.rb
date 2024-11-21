@@ -63,7 +63,7 @@ class IncomingDeliveriesController < ApplicationController
     params.require(:incoming_delivery).permit(
       :project_id, :delivery_date, :order_number,
       :supplier_name, :notes,
-      delivery_note: []
+      delivery_notes: []
     )
   end
 end
