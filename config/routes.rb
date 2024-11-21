@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
 
     resources :delivery_items do
-resources :quality_inspections do
+      resources :quality_inspections do
         member do
           delete :remove_image
         end
@@ -34,6 +34,9 @@ resources :quality_inspections do
 
     resources :quality_inspections do
       resources :inspection_defects, shallow: true
+      member do
+        delete "remove_image/:image_id", action: :remove_image, as: :remove_image
+      end
     end
 
     # Add standalone route for roughness measurements index

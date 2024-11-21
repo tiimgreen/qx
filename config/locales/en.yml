@@ -70,3 +70,8 @@ en:
       - :year
       - :month
       - :day
+  devise:
+    sessions:
+      signed_out: "Signed out successfully."
+      user:
+        signed_out: "Signed out successfully."

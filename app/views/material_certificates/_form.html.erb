@@ -1,7 +1,7 @@
 <%= form_with(model: [@project, @material_certificate], local: true) do |f| %>
   <% if @material_certificate.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@material_certificate.errors.count, "error") %> prohibited this certificate from being saved:</h4>
+      <h4><%= t('.errors.header', count: @material_certificate.errors.count) %></h4>
       <ul>
         <% @material_certificate.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -13,7 +13,9 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group mb-3">
-        <%= f.label :certificate_number, "Certificate Number (Last: #{last_certificate_number(@project.id)})", class: 'form-label' %>
+        <%= f.label :certificate_number,
+            t('.certificate_number_last', number: last_certificate_number(@project.id)),
+            class: 'form-label' %>
         <%= f.text_field :certificate_number, class: 'form-control', required: true %>
       </div>
 
@@ -47,13 +49,16 @@
   </div>
 
   <div class="form-group mb-3">
-    <%= f.label :delivery_items, "Associated Delivery Items", class: 'form-label' %>
+    <%= f.label :delivery_items, t('.associated_items'), class: 'form-label' %>
     <div class="delivery-items-selection border p-3 rounded">
       <%= f.collection_check_boxes :delivery_item_ids, @delivery_items, :id, :tag_number do |b| %>
         <div class="form-check">
           <%= b.check_box(class: 'form-check-input') %>
           <%= b.label class: 'form-check-label' do %>
-            <%= "Tag: #{b.text} - Batch: #{b.object.batch_number} (Delivery: #{b.object.incoming_delivery.order_number})" %>
+            <%= t('.tag_batch_delivery',
+                  tag: b.text,
+                  batch: b.object.batch_number,
+                  delivery: b.object.incoming_delivery.order_number) %>
           <% end %>
         </div>
       <% end %>
@@ -61,8 +66,8 @@
   </div>
 
   <div class="form-group mt-4">
-    <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', material_certificates_path, class: 'btn btn-secondary' %>
+    <%= f.submit t('.submit'), class: 'btn btn-primary' %>
+    <%= link_to t('.cancel'), material_certificates_path, class: 'btn btn-secondary' %>
   </div>
 <% end %>
 

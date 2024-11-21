@@ -58,7 +58,8 @@ class RoughnessMeasurementsController < ApplicationController
       :measurement_date,
       :measured_value,
       :measurement_parameters,
-      :notes
+      :notes,
+      measurement_reports: []
     )
   end
 end

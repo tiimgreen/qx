@@ -1,22 +1,22 @@
 <dl class="row">
-  <dt class="col-sm-4">Measurement Date</dt>
-  <dd class="col-sm-8"><%= measurement.measurement_date&.strftime('%B %d, %Y') %></dd>
+  <dt class="col-sm-4"><%= t('.measurement_date') %></dt>
+  <dd class="col-sm-8"><%= l(measurement.measurement_date, format: :long) if measurement.measurement_date %></dd>
 
-  <dt class="col-sm-4">Measured Value</dt>
+  <dt class="col-sm-4"><%= t('.measured_value') %></dt>
   <dd class="col-sm-8"><%= measurement.measured_value %></dd>
 
   <% if measurement.measurement_parameters.present? %>
-    <dt class="col-sm-4">Parameters</dt>
+    <dt class="col-sm-4"><%= t('.parameters') %></dt>
     <dd class="col-sm-8"><%= measurement.measurement_parameters %></dd>
   <% end %>
 
   <% if measurement.notes.present? %>
-    <dt class="col-sm-4">Notes</dt>
+    <dt class="col-sm-4"><%= t('.notes') %></dt>
     <dd class="col-sm-8"><%= measurement.notes %></dd>
   <% end %>
 
   <% if measurement.measurement_reports.attached? %>
-    <dt class="col-sm-4">Reports</dt>
+  <dt class="col-sm-4"><%= t('.reports') %></dt>
     <dd class="col-sm-8">
       <div class="row g-2">
         <% measurement.measurement_reports.each_with_index do |report, index| %>
@@ -41,9 +41,11 @@
                       <%= image_tag report.representation(resize_to_limit: [800, 800]), class: "img-fluid" %>
                     </div>
                     <div class="modal-footer">
-                      <%= link_to "Download", rails_blob_path(report, disposition: "attachment"),
+                      <%= link_to t('.download'), rails_blob_path(report, disposition: "attachment"),
                           class: "btn btn-primary" %>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <%= t('.close') %>
+                      </button>
                     </div>
                   </div>
                 </div>

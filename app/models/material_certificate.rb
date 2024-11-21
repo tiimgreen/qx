@@ -7,4 +7,6 @@ class MaterialCertificate < ApplicationRecord
   validates :certificate_number, presence: true, uniqueness: true
   validates :batch_number, presence: true
   validates :issue_date, presence: true
+
+  scope :pending, -> { where(status: "pending") }
 end

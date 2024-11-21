@@ -7,7 +7,7 @@ en:
       inspection_defects: "Inspection Defects"
       image_help_text: "You can upload multiple images (PNG, JPEG)"
       add_defect: "Add Defect"
-      remove_image: "Remove"
+      remove_image: "Remove Image"
       confirm_remove_image: "Are you sure you want to remove this image?"
     show:
       title: "Inspection Details"
@@ -21,7 +21,7 @@ en:
         title: "Inspection Images"
         no_images: "No images attached to this inspection."
       defects:
-        title: "Defects Found"
+        title: "Identified Defects"
         no_defects: "No defects recorded for this inspection."
         description: "Description"
         severity: "Severity"
@@ -51,3 +51,5 @@ en:
       select_severity: "Select severity level"
       corrective_action_placeholder: "Enter corrective action details..."
       confirm_remove: "Are you sure you want to remove this defect?"
+    remove_image:
+      image_removed: "Image was successfully removed."

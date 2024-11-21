@@ -13,14 +13,19 @@ en:
       certificate_file: "Certificate File"
       download_certificate: "Download Certificate"
       description: "Description"
-      associated_items: "Associated Delivery Items"
-      no_items: "No delivery items associated with this certificate."
+      associated_items: "Associated Items"
+      no_items: "No items associated with this certificate"
+      table:
+        tag_number: "Tag Number"
+        batch_number: "Batch Number"
+        delivery_order: "Delivery Order"
+        quantity: "Quantity"
     index:
       title: "Material Certificates"
-      new_certificate: "New Material Certificate"
-      search_placeholder: "Search by certificate or batch number..."
-      search_button: "Search"
+      new_certificate: "New Certificate"
       select_project_first: "Please select a project first"
+      search_placeholder: "Search certificates..."
+      search_button: "Search"
     form:
       errors:
         header:
@@ -28,10 +33,11 @@ en:
           other: "%{count} errors prohibited this certificate from being saved:"
       certificate_number_last: "Certificate Number (Last: %{number})"
       associated_items: "Associated Delivery Items"
-      tag_batch_info: "Tag: %{tag} - Batch: %{batch} (Delivery: %{delivery})"
-      submit: "Save"
+      tag_batch_delivery: "Tag: %{tag} - Batch: %{batch} (Delivery: %{delivery})"
+      submit: "Save Certificate"
       cancel: "Cancel"
     buttons:
       view: "View"
       edit: "Edit"
       delete: "Delete"
+      back: "Back"

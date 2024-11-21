@@ -31,3 +31,12 @@ de:
       submit: "Speichern"
       close: "Schließen"
       download: "Herunterladen"
+    details:
+      measurement_date: "Messdatum"
+      measured_value: "Messwert"
+      parameters: "Parameter"
+      notes: "Anmerkungen"
+      reports: "Berichte"
+      download: "Herunterladen"
+      close: "Schließen"
+      not_specified: "Nicht angegeben"

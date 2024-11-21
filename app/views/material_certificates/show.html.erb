@@ -1,20 +1,22 @@
 <div class="container mt-4">
   <div class="card">
     <div class="card-header">
-      <h2>Material Certificate Details</h2>
+      <h2><%= t('.title') %></h2>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <p><strong>Certificate Number:</strong> <%= @material_certificate.certificate_number %></p>
-          <p><strong>Batch Number:</strong> <%= @material_certificate.batch_number %></p>
-          <p><strong>Issue Date:</strong> <%= @material_certificate.issue_date %></p>
-          <p><strong>Issuer:</strong> <%= @material_certificate.issuer_name %></p>
+          <p><strong><%= t('.certificate_number') %>:</strong> <%= @material_certificate.certificate_number %></p>
+          <p><strong><%= t('.batch_number') %>:</strong> <%= @material_certificate.batch_number %></p>
+          <p><strong><%= t('.issue_date') %>:</strong> <%= l(@material_certificate.issue_date, format: :long) %></p>
+          <p><strong><%= t('.issuer') %>:</strong> <%= @material_certificate.issuer_name %></p>
         </div>
         <div class="col-md-6">
           <% if @material_certificate.certificate_file.attached? %>
-            <p><strong>Certificate File:</strong>
-              <%= link_to "Download Certificate", rails_blob_path(@material_certificate.certificate_file, disposition: "attachment"), class: "btn btn-sm btn-primary" %>
+            <p><strong><%= t('.certificate_file') %>:</strong>
+              <%= link_to t('.download_certificate'),
+                  rails_blob_path(@material_certificate.certificate_file, disposition: "attachment"),
+                  class: "btn btn-sm btn-primary" %>
             </p>
           <% end %>
         </div>
@@ -22,22 +24,22 @@
 
       <% if @material_certificate.description.present? %>
         <div class="mt-3">
-          <h4>Description</h4>
+          <h4><%= t('.description') %></h4>
           <p><%= @material_certificate.description %></p>
         </div>
       <% end %>
 
       <div class="mt-4">
-        <h4>Associated Delivery Items</h4>
+        <h4><%= t('.associated_items') %></h4>
         <% if @delivery_items.any? %>
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Tag Number</th>
-                  <th>Batch Number</th>
-                  <th>Delivery Order</th>
-                  <th>Quantity</th>
+                  <th><%= t('.table.tag_number') %></th>
+                  <th><%= t('.table.batch_number') %></th>
+                  <th><%= t('.table.delivery_order') %></th>
+                  <th><%= t('.table.quantity') %></th>
                 </tr>
               </thead>
               <tbody>
@@ -53,7 +55,7 @@
             </table>
           </div>
         <% else %>
-          <p class="text-muted">No delivery items associated with this certificate.</p>
+          <p class="text-muted"><%= t('.no_items') %></p>
         <% end %>
       </div>
     </div>

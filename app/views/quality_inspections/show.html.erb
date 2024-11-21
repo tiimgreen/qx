@@ -41,7 +41,7 @@
 
 <div class="card mb-4">
   <div class="card-header">
-    <h5 class="mb-0"><%= t('.images') %></h5>
+    <h5 class="mb-0"><%= t('quality_inspections.show.images.title') %></h5>
   </div>
   <div class="card-body">
     <% if @quality_inspection.images.attached? %>
@@ -88,14 +88,14 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-muted"><%= t('.no_images') %></p>
+      <p class="text-muted"><%= t('quality_inspections.show.images.no_images') %></p>
     <% end %>
   </div>
 </div>
 
 <div class="card">
   <div class="card-header">
-    <h5 class="mb-0"><%= t('.defects') %></h5>
+    <h5 class="mb-0"><%= t('quality_inspections.show.defects.title') %></h5>
   </div>
   <div class="card-body">
     <% if @quality_inspection.inspection_defects.any? %>
@@ -103,9 +103,9 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th><%= t('.description') %></th>
-              <th><%= t('.severity') %></th>
-              <th><%= t('.corrective_action') %></th>
+              <th><%= t('quality_inspections.show.defects.description') %></th>
+              <th><%= t('quality_inspections.show.defects.severity') %></th>
+              <th><%= t('quality_inspections.show.defects.corrective_action') %></th>
             </tr>
           </thead>
           <tbody>
@@ -117,14 +117,14 @@
                     <%= defect.severity.upcase %>
                   </span>
                 </td>
-                <td><%= defect.corrective_action.presence || t('.pending') %></td>
+                <td><%= defect.corrective_action.presence || t('quality_inspections.show.defects.pending') %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     <% else %>
-      <p class="text-muted"><%= t('.no_defects') %></p>
+      <p class="text-muted"><%= t('quality_inspections.show.defects.no_defects') %></p>
     <% end %>
   </div>
 </div>

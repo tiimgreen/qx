@@ -2,11 +2,12 @@ de:
   activerecord:
     models:
       project: "Projekt"
-      incoming_delivery: "Eingehende Lieferung"
-      material_certificate: "Materialzertifikat"
+      incoming_delivery: "Wareneingang"
+      material_certificate: "Werkzeugnis"
       delivery_item: "Lieferposition"
       missing_delivery_item: "Fehlende Lieferposition"
       inspection_defect: "Prüfmangel"
+      roughness_measurement: "Rauheitsmessung"
     attributes:
       project:
         project_number: "Projektnummer"
@@ -14,20 +15,21 @@ de:
         description: "Beschreibung"
         created_at: "Erstellt am"
       incoming_delivery:
-        order_number: "Bestellnummer"
+        project_id: "Projekt"
         delivery_date: "Lieferdatum"
-        supplier_name: "Lieferant"
-        project: "Projekt"
+        order_number: "Bestellnummer"
+        supplier_name: "Lieferantenname"
         notes: "Anmerkungen"
         delivery_note: "Lieferschein"
       material_certificate:
         project: "Projekt"
-        certificate_number: "Zertifikatsnummer"
+        certificate_number: "Zertifikatnummer"
         batch_number: "Chargennummer"
         issue_date: "Ausstellungsdatum"
         issuer_name: "Aussteller"
         description: "Beschreibung"
         certificate_file: "Zertifikatsdatei"
+        delivery_items: "Lieferpositionen"
       delivery_item:
         tag_number: "TAG-Nummer"
         batch_number: "Chargennummer"
@@ -43,3 +45,9 @@ de:
         severity: "Schweregrad"
         description: "Beschreibung"
         corrective_action: "Korrekturmaßnahme"
+      roughness_measurement:
+        measurement_date: "Messdatum"
+        measured_value: "Messwert"
+        measurement_parameters: "Parameter"
+        notes: "Anmerkungen"
+        measurement_reports: "Berichte"

@@ -68,11 +68,7 @@
 </div>
 
 <!-- Missing Items Section -->
-<div class="card">
-  <div class="card-header">
-    <h5 class="mb-0"><%= t('.missing_items') %></h5>
-  </div>
+
   <div class="card-body">
     <%= render 'missing_delivery_items/table', missing_items: @missing_items %>
   </div>
-</div>

@@ -31,3 +31,12 @@ en:
       submit: "Save"
       close: "Close"
       download: "Download"
+    details:
+      measurement_date: "Measurement Date"
+      measured_value: "Measured Value"
+      parameters: "Parameters"
+      notes: "Notes"
+      reports: "Reports"
+      download: "Download"
+      close: "Close"
+      not_specified: "Not specified"

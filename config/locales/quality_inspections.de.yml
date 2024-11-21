@@ -7,7 +7,7 @@ de:
       inspection_defects: "Festgestellte Mängel"
       image_help_text: "Sie können mehrere Bilder hochladen (PNG, JPEG)"
       add_defect: "Mangel hinzufügen"
-      remove_image: "Entfernen"
+      remove_image: "Bild entfernen"
       confirm_remove_image: "Sind Sie sicher, dass Sie dieses Bild entfernen möchten?"
     show:
       title: "Inspektionsdetails"
@@ -51,3 +51,5 @@ de:
       select_severity: "Schweregrad auswählen"
       corrective_action_placeholder: "Korrekturmaßnahmen eingeben..."
       confirm_remove: "Sind Sie sicher, dass Sie diesen Mangel entfernen möchten?"
+    remove_image:
+      image_removed: "Bild wurde erfolgreich entfernt."

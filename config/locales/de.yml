@@ -63,3 +63,8 @@ de:
       - :day
       - :month
       - :year
+  devise:
+    sessions:
+      signed_out: "Erfolgreich abgemeldet."
+      user:
+        signed_out: "Erfolgreich abgemeldet."

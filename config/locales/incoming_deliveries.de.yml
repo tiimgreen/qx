@@ -7,14 +7,26 @@ de:
       select_project: "Projekt auswählen"
       errors:
         header:
-          one: "1 Fehler verhinderte das Speichern dieser Lieferung"
-          other: "%{count} Fehler verhinderten das Speichern dieser Lieferung"
+          one: "1 Fehler verhinderte das Speichern dieser Lieferung:"
+          other: "%{count} Fehler verhinderten das Speichern dieser Lieferung:"
+      labels:
+        project: "Projekt"
+        delivery_date: "Lieferdatum"
+        order_number: "Bestellnummer"
+        supplier_name: "Lieferantenname"
+        notes: "Anmerkungen"
+        delivery_note: "Lieferschein"
     show:
       title: "Lieferungsdetails"
+      order_number: "Bestellnummer"
+      delivery_date: "Lieferdatum"
+      supplier: "Lieferant"
+      project: "Projekt"
       delivery_note: "Lieferschein"
       view_document: "Dokument anzeigen"
-      items_section: "Lieferpositionen"
+      delivery_items: "Lieferpositionen"
       add_item: "Position hinzufügen"
+      missing_items: "Fehlende Positionen"
     index:
       title: "Alle Lieferungen"
       title_for_project: "Lieferungen für %{project}"

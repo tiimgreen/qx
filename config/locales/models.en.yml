@@ -7,6 +7,7 @@ en:
       delivery_item: "Delivery Item"
       missing_delivery_item: "Missing Delivery Item"
       inspection_defect: "Inspection Defect"
+      roughness_measurement: "Roughness Measurement"
     attributes:
       project:
         project_number: "Project Number"
@@ -14,10 +15,10 @@ en:
         description: "Description"
         created_at: "Created At"
       incoming_delivery:
-        order_number: "Order Number"
+        project_id: "Project"
         delivery_date: "Delivery Date"
-        supplier_name: "Supplier"
-        project: "Project"
+        order_number: "Order Number"
+        supplier_name: "Supplier Name"
         notes: "Notes"
         delivery_note: "Delivery Note"
       material_certificate:
@@ -28,6 +29,7 @@ en:
         issuer_name: "Issuer"
         description: "Description"
         certificate_file: "Certificate File"
+        delivery_items: "Delivery Items"
       delivery_item:
         tag_number: "TAG Number"
         batch_number: "Batch Number"
@@ -43,3 +45,9 @@ en:
         severity: "Severity"
         description: "Description"
         corrective_action: "Corrective Action"
+      roughness_measurement:
+        measurement_date: "Measurement Date"
+        measured_value: "Measured Value"
+        measurement_parameters: "Parameters"
+        notes: "Notes"
+        measurement_reports: "Reports"

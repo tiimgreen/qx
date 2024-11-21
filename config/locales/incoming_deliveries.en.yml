@@ -7,14 +7,26 @@ en:
       select_project: "Select Project"
       errors:
         header:
-          one: "1 error prohibited this delivery from being saved"
-          other: "%{count} errors prohibited this delivery from being saved"
+          one: "1 error prohibited this delivery from being saved:"
+          other: "%{count} errors prohibited this delivery from being saved:"
+      labels:
+        project: "Project"
+        delivery_date: "Delivery Date"
+        order_number: "Order Number"
+        supplier_name: "Supplier Name"
+        notes: "Notes"
+        delivery_note: "Delivery Note"
     show:
       title: "Delivery Details"
+      order_number: "Order Number"
+      delivery_date: "Delivery Date"
+      supplier: "Supplier"
+      project: "Project"
       delivery_note: "Delivery Note"
       view_document: "View Document"
-      items_section: "Delivery Items"
+      delivery_items: "Delivery Items"
       add_item: "Add Item"
+      missing_items: "Missing Items"
     index:
       title: "All Deliveries"
       title_for_project: "Deliveries for %{project}"

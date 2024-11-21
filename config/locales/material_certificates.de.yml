@@ -1,37 +1,43 @@
 de:
   material_certificates:
     new:
-      title: "Neues Materialzertifikat"
+      title: "Neues Werkzeugnis"
     edit:
-      title: "Materialzertifikat bearbeiten"
+      title: "Werkzeugnis bearbeiten"
     show:
-      title: "Materialzertifikat Details"
-      certificate_number: "Zertifikatsnummer"
+      title: "Werkzeugnis Details"
+      certificate_number: "Zertifikatnummer"
       batch_number: "Chargennummer"
       issue_date: "Ausstellungsdatum"
       issuer: "Aussteller"
       certificate_file: "Zertifikatsdatei"
       download_certificate: "Zertifikat herunterladen"
       description: "Beschreibung"
-      associated_items: "Zugehörige Lieferpositionen"
-      no_items: "Keine Lieferpositionen mit diesem Zertifikat verknüpft."
+      associated_items: "Zugeordnete Positionen"
+      no_items: "Keine Positionen diesem Zertifikat zugeordnet"
+      table:
+        tag_number: "TAG-Nummer"
+        batch_number: "Chargennummer"
+        delivery_order: "Lieferauftrag"
+        quantity: "Menge"
     index:
-      title: "Materialzertifikate"
-      new_certificate: "Neues Materialzertifikat"
-      search_placeholder: "Nach Zertifikats- oder Chargennummer suchen..."
-      search_button: "Suchen"
+      title: "Werkzeugnisse"
+      new_certificate: "Neues Zeugnis"
       select_project_first: "Bitte wählen Sie zuerst ein Projekt aus"
+      search_placeholder: "Zeugnisse suchen..."
+      search_button: "Suchen"
     form:
       errors:
         header:
-          one: "1 Fehler verhinderte das Speichern dieses Zertifikats:"
-          other: "%{count} Fehler verhinderten das Speichern dieses Zertifikats:"
-      certificate_number_last: "Zertifikatsnummer (Letzte: %{number})"
-      associated_items: "Zugehörige Lieferpositionen"
-      tag_batch_info: "Tag: %{tag} - Charge: %{batch} (Lieferung: %{delivery})"
-      submit: "Speichern"
+          one: "1 Fehler verhinderte das Speichern dieses Zeugnisses:"
+          other: "%{count} Fehler verhinderten das Speichern dieses Zeugnisses:"
+      certificate_number_last: "Zertifikatnummer (Letzte: %{number})"
+      associated_items: "Zugeordnete Lieferpositionen"
+      tag_batch_delivery: "Tag: %{tag} - Charge: %{batch} (Lieferung: %{delivery})"
+      submit: "Zeugnis speichern"
       cancel: "Abbrechen"
     buttons:
       view: "Anzeigen"
       edit: "Bearbeiten"
       delete: "Löschen"
+      back: "Zurück"
