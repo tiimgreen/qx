@@ -78,3 +78,8 @@ de:
       submit: "Speichern"
     links:
       cancel: "Abbrechen"
+  incoming_deliveries:
+    show:
+      download: "Herunterladen"
+      close: "Schließen"
+      delivery_notes: "Lieferscheine"

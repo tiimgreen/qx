@@ -85,3 +85,8 @@ en:
       submit: "Save"
     links:
       cancel: "Cancel"
+  incoming_deliveries:
+    show:
+      download: "Download"
+      close: "Close"
+      delivery_notes: "Delivery Notes"

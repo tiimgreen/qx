@@ -41,10 +41,10 @@
                       <%= image_tag report.representation(resize_to_limit: [800, 800]), class: "img-fluid" %>
                     </div>
                     <div class="modal-footer">
-                      <%= link_to t('.download'), rails_blob_path(report, disposition: "attachment"),
+                      <%= link_to t('roughness_measurements.show.download'), rails_blob_path(report, disposition: "attachment"),
                           class: "btn btn-primary" %>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <%= t('.close') %>
+                        <%= t('roughness_measurements.show.close') %>
                       </button>
                     </div>
                   </div>

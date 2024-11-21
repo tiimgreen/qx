@@ -12,6 +12,9 @@ de:
       parameters: "Parameter"
       notes: "Anmerkungen"
       reports: "Berichte"
+      download: "Herunterladen"
+      close: "Schließen"
+      delivery_notes: "Lieferscheine"
     form:
       errors:
         header:
