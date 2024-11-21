@@ -1,0 +1,29 @@
+en:
+  incoming_deliveries:
+    form:
+      title:
+        new: "New Delivery"
+        edit: "Edit Delivery"
+      select_project: "Select Project"
+      errors:
+        header:
+          one: "1 error prohibited this delivery from being saved"
+          other: "%{count} errors prohibited this delivery from being saved"
+    show:
+      title: "Delivery Details"
+      delivery_note: "Delivery Note"
+      view_document: "View Document"
+      items_section: "Delivery Items"
+      add_item: "Add Item"
+    index:
+      title: "All Deliveries"
+      title_for_project: "Deliveries for %{project}"
+      new_delivery: "New Delivery"
+      items_count: "Items"
+    buttons:
+      edit: "Edit"
+      back: "Back"
+      cancel: "Cancel"
+      submit: "Save"
+      delete: "Delete"
+      view: "View"

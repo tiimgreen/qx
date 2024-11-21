@@ -2,7 +2,8 @@
 <%= form_with(model: [@incoming_delivery, @missing_delivery_item], local: true) do |f| %>
   <% if @missing_delivery_item.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@missing_delivery_item.errors.count, "error") %> prohibited this item from being saved:</h4>
+      <h4><%= t('missing_delivery_items.form.errors.header',
+                count: @missing_delivery_item.errors.count) %></h4>
       <ul>
         <% @missing_delivery_item.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -24,11 +25,13 @@
   <div class="form-group mb-3">
     <%= f.label :description, class: 'form-label' %>
     <%= f.text_area :description, class: 'form-control', rows: 4, required: true %>
-    <small class="form-text text-muted">Please provide detailed description of the missing items</small>
+    <small class="form-text text-muted"><%= t('.description_hint') %></small>
   </div>
 
   <div class="form-group">
-    <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', incoming_delivery_missing_delivery_items_path(@incoming_delivery), class: 'btn btn-secondary' %>
+    <%= f.submit t('.submit'), class: 'btn btn-primary' %>
+    <%= link_to t('.cancel'),
+                incoming_delivery_missing_delivery_items_path(@incoming_delivery),
+                class: 'btn btn-secondary' %>
   </div>
 <% end %>

@@ -1,0 +1,24 @@
+de:
+  projects:
+    form:
+      title:
+        new: "Neues Projekt"
+        edit: "Projekt bearbeiten"
+    show:
+      title: "Projektdetails"
+      project_number: "Projektnummer"
+      name: "Name"
+      description: "Beschreibung"
+      created: "Erstellt am"
+    index:
+      title: "Projekte"
+      new: "Neues Projekt"
+    buttons:
+      edit: "Bearbeiten"
+      back: "Zurück"
+      new: "Neues Projekt"
+    attributes:
+      project_number: "Projektnummer"
+      name: "Name"
+      description: "Beschreibung"
+      created_at: "Erstellt am"

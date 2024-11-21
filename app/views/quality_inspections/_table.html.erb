@@ -2,12 +2,12 @@
   <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Inspector</th>
-        <th>Status</th>
-        <th>Defects</th>
-        <th class="text-end">Actions</th>
+        <th><%= t('.date') %></th>
+        <th><%= t('.type') %></th>
+        <th><%= t('.inspector') %></th>
+        <th><%= t('.status') %></th>
+        <th><%= t('.defects') %></th>
+        <th class="text-end"><%= t('.actions') %></th>
       </tr>
     </thead>
 
@@ -22,15 +22,35 @@
               <%= inspection.status.upcase %>
             </span>
           </td>
-          <td><%= inspection.inspection_defects.count %> found</td>
+          <td><%= t('.defects_found', count: inspection.inspection_defects.count) %></td>
           <td class="text-end">
-            <%= link_to 'View', quality_inspection_path(inspection), class: 'btn btn-sm btn-info' %>
-            <%= link_to 'Edit', edit_quality_inspection_path(inspection), class: 'btn btn-sm btn-primary' %>
-            <%= button_to 'Delete', quality_inspection_path(inspection),
-                method: :delete,
-                class: 'btn btn-sm btn-danger',
-                form: { style: 'display: inline' },
-                data: { confirm: 'Are you sure?' } %>
+            <div class="btn-group btn-group-sm">
+              <%= link_to quality_inspection_path(inspection),
+                         class: 'btn btn-outline-info',
+                         title: t('quality_inspections.buttons.view'),
+                         data: { bs_toggle: 'tooltip' } do %>
+                <i class="bi bi-eye"></i>
+              <% end %>
+
+              <%= link_to edit_quality_inspection_path(inspection),
+                         class: 'btn btn-outline-primary',
+                         title: t('quality_inspections.buttons.edit'),
+                         data: { bs_toggle: 'tooltip' } do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>
+
+              <%= button_to quality_inspection_path(inspection),
+                         method: :delete,
+                         class: 'btn btn-outline-danger',
+                         title: t('quality_inspections.buttons.delete'),
+                         form: { style: 'display: inline' },
+                         data: {
+                           confirm: t('.confirm_delete'),
+                           bs_toggle: 'tooltip'
+                         } do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>

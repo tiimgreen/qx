@@ -6,7 +6,7 @@
 ) do |f| %>
   <% if @roughness_measurement.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@roughness_measurement.errors.count, "error") %> prohibited this measurement from being saved:</h4>
+      <h4><%= t('.errors.header', count: @roughness_measurement.errors.count) %></h4>
       <ul>
         <% @roughness_measurement.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -41,7 +41,7 @@
   </div>
 
   <div class="form-group mt-3">
-    <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to 'Back', roughness_measurements_path, class: 'btn btn-secondary' %>
+    <%= f.submit t('roughness_measurements.buttons.submit'), class: 'btn btn-primary' %>
+    <%= link_to t('roughness_measurements.buttons.back'), roughness_measurements_path, class: 'btn btn-secondary' %>
   </div>
 <% end %>

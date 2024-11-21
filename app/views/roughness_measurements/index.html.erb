@@ -1,15 +1,15 @@
 <!-- app/views/roughness_measurements/index.html.erb -->
 <div class="container mt-4">
-  <h1>Roughness Measurements</h1>
+  <h1><%= t('.title') %></h1>
 
   <table class="table">
     <thead>
       <tr>
-        <th>Delivery Item</th>
-        <th>Measurement Date</th>
-        <th>Measured Value</th>
-        <th>Parameters</th>
-        <th>Actions</th>
+        <th><%= t('.delivery_item') %></th>
+        <th><%= t('.measurement_date') %></th>
+        <th><%= t('.measured_value') %></th>
+        <th><%= t('.parameters') %></th>
+        <th><%= t('.actions') %></th>
       </tr>
     </thead>
     <tbody>
@@ -20,8 +20,21 @@
           <td><%= measurement.measured_value %></td>
           <td><%= measurement.measurement_parameters %></td>
           <td>
-            <%= link_to 'View', delivery_item_path(measurement.delivery_item), class: 'btn btn-sm btn-info' %>
-            <%= link_to 'Edit', edit_delivery_item_roughness_measurement_path(measurement.delivery_item), class: 'btn btn-sm btn-primary' %>
+            <div class="btn-group btn-group-sm">
+              <%= link_to delivery_item_path(measurement.delivery_item),
+                         class: 'btn btn-outline-info',
+                         title: t('roughness_measurements.buttons.view'),
+                         data: { bs_toggle: 'tooltip' } do %>
+                <i class="bi bi-eye"></i>
+              <% end %>
+
+              <%= link_to edit_delivery_item_roughness_measurement_path(measurement.delivery_item),
+                         class: 'btn btn-outline-primary',
+                         title: t('roughness_measurements.buttons.edit'),
+                         data: { bs_toggle: 'tooltip' } do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>

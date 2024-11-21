@@ -1,0 +1,35 @@
+en:
+  inspection_defects:
+    new:
+      title: "Record New Defect"
+    edit:
+      title: "Edit Defect"
+    show:
+      title: "Defect Details"
+      inspection_reference: "Inspection Reference"
+      description: "Description"
+      corrective_action: "Corrective Action"
+      recorded_at: "Recorded At"
+      not_specified: "Not specified"
+    index:
+      title: "Inspection Defects"
+      record_new: "Record New Defect"
+    form:
+      errors:
+        header:
+          one: "1 error prohibited this defect from being saved:"
+          other: "%{count} errors prohibited this defect from being saved:"
+      select_severity: "Select severity"
+      description_hint: "Provide a detailed description of the defect"
+      corrective_action_hint: "Describe the recommended corrective action if any"
+      submit: "Save"
+      cancel: "Cancel"
+    severity:
+      critical: "Critical"
+      major: "Major"
+      minor: "Minor"
+    buttons:
+      view: "View"
+      edit: "Edit"
+      delete: "Delete"
+      back: "Back"

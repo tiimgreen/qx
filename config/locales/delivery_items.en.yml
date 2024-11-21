@@ -1,0 +1,33 @@
+en:
+  delivery_items:
+    new:
+      title: "New Delivery Item"
+    edit:
+      title: "Edit Delivery Item"
+    show:
+      title: "Item Details"
+      specifications: "Specifications"
+      no_specifications: "No specifications recorded"
+      quality_inspections: "Quality Inspections"
+      new_inspection: "New Inspection"
+      ra_measurement: "Ra Measurement"
+      edit_measurement: "Edit Measurement"
+      record_measurement: "Record Measurement"
+      no_measurement: "No roughness measurement recorded yet"
+      inspections_performed: "%{count} performed"
+      inspections_passed: "(%{count} passed)"
+    form:
+      errors:
+        header:
+          one: "1 error prohibited this item from being saved:"
+          other: "%{count} errors prohibited this item from being saved:"
+      specifications: "Specifications"
+      add_specification: "Add Specification"
+      value_placeholder: "Value"
+      submit: "Save"
+      cancel: "Cancel"
+    buttons:
+      view: "View"
+      edit: "Edit"
+      delete: "Delete"
+      back: "Back"

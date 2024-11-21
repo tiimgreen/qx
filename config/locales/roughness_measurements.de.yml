@@ -1,0 +1,33 @@
+de:
+  roughness_measurements:
+    new:
+      title: "Neue Rauheitsmessung"
+    edit:
+      title: "Rauheitsmessung bearbeiten"
+    show:
+      title: "Details der Rauheitsmessung"
+      delivery_item: "Liefergegenstand"
+      measurement_date: "Messdatum"
+      measured_value: "Messwert"
+      parameters: "Parameter"
+      notes: "Anmerkungen"
+      reports: "Berichte"
+    form:
+      errors:
+        header:
+          one: "1 Fehler verhinderte das Speichern dieser Messung"
+          other: "%{count} Fehler verhinderten das Speichern dieser Messung"
+    index:
+      title: "Rauheitsmessungen"
+      delivery_item: "Liefergegenstand"
+      measurement_date: "Messdatum"
+      measured_value: "Messwert"
+      parameters: "Parameter"
+      actions: "Aktionen"
+    buttons:
+      edit: "Bearbeiten"
+      back: "Zurück"
+      view: "Anzeigen"
+      submit: "Speichern"
+      close: "Schließen"
+      download: "Herunterladen"

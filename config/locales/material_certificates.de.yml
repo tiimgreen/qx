@@ -1,0 +1,37 @@
+de:
+  material_certificates:
+    new:
+      title: "Neues Materialzertifikat"
+    edit:
+      title: "Materialzertifikat bearbeiten"
+    show:
+      title: "Materialzertifikat Details"
+      certificate_number: "Zertifikatsnummer"
+      batch_number: "Chargennummer"
+      issue_date: "Ausstellungsdatum"
+      issuer: "Aussteller"
+      certificate_file: "Zertifikatsdatei"
+      download_certificate: "Zertifikat herunterladen"
+      description: "Beschreibung"
+      associated_items: "Zugehörige Lieferpositionen"
+      no_items: "Keine Lieferpositionen mit diesem Zertifikat verknüpft."
+    index:
+      title: "Materialzertifikate"
+      new_certificate: "Neues Materialzertifikat"
+      search_placeholder: "Nach Zertifikats- oder Chargennummer suchen..."
+      search_button: "Suchen"
+      select_project_first: "Bitte wählen Sie zuerst ein Projekt aus"
+    form:
+      errors:
+        header:
+          one: "1 Fehler verhinderte das Speichern dieses Zertifikats:"
+          other: "%{count} Fehler verhinderten das Speichern dieses Zertifikats:"
+      certificate_number_last: "Zertifikatsnummer (Letzte: %{number})"
+      associated_items: "Zugehörige Lieferpositionen"
+      tag_batch_info: "Tag: %{tag} - Charge: %{batch} (Lieferung: %{delivery})"
+      submit: "Speichern"
+      cancel: "Abbrechen"
+    buttons:
+      view: "Anzeigen"
+      edit: "Bearbeiten"
+      delete: "Löschen"

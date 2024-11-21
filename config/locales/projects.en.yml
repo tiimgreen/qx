@@ -1,0 +1,24 @@
+en:
+  projects:
+    form:
+      title:
+        new: "New Project"
+        edit: "Edit Project"
+    show:
+      title: "Project Details"
+      project_number: "Project Number"
+      name: "Name"
+      description: "Description"
+      created: "Created"
+    index:
+      title: "Projects"
+      new: "New Project"
+    buttons:
+      edit: "Edit"
+      back: "Back"
+      new: "New Project"
+    attributes:
+      project_number: "Project Number"
+      name: "Name"
+      description: "Description"
+      created_at: "Created At"

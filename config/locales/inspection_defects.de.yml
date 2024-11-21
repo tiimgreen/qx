@@ -1,0 +1,35 @@
+de:
+  inspection_defects:
+    new:
+      title: "Neuen Mangel erfassen"
+    edit:
+      title: "Mangel bearbeiten"
+    show:
+      title: "Mangeldetails"
+      inspection_reference: "Prüfreferenz"
+      description: "Beschreibung"
+      corrective_action: "Korrekturmaßnahme"
+      recorded_at: "Erfasst am"
+      not_specified: "Nicht angegeben"
+    index:
+      title: "Prüfmängel"
+      record_new: "Neuen Mangel erfassen"
+    form:
+      errors:
+        header:
+          one: "1 Fehler verhinderte das Speichern dieses Mangels:"
+          other: "%{count} Fehler verhinderten das Speichern dieses Mangels:"
+      select_severity: "Schweregrad auswählen"
+      description_hint: "Geben Sie eine detaillierte Beschreibung des Mangels an"
+      corrective_action_hint: "Beschreiben Sie die empfohlene Korrekturmaßnahme"
+      submit: "Speichern"
+      cancel: "Abbrechen"
+    severity:
+      critical: "Kritisch"
+      major: "Schwerwiegend"
+      minor: "Geringfügig"
+    buttons:
+      view: "Anzeigen"
+      edit: "Bearbeiten"
+      delete: "Löschen"
+      back: "Zurück"

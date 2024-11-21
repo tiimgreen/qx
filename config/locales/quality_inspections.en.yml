@@ -1,0 +1,53 @@
+en:
+  quality_inspections:
+    form:
+      select_type: "Select inspection type"
+      select_status: "Select status"
+      inspection_images: "Inspection Images"
+      inspection_defects: "Inspection Defects"
+      image_help_text: "You can upload multiple images (PNG, JPEG)"
+      add_defect: "Add Defect"
+      remove_image: "Remove"
+      confirm_remove_image: "Are you sure you want to remove this image?"
+    show:
+      title: "Inspection Details"
+      inspection_type: "Inspection Type"
+      inspector: "Inspector"
+      date: "Date"
+      status: "Status"
+      notes: "Notes"
+      no_notes: "No notes recorded"
+      images:
+        title: "Inspection Images"
+        no_images: "No images attached to this inspection."
+      defects:
+        title: "Defects Found"
+        no_defects: "No defects recorded for this inspection."
+        description: "Description"
+        severity: "Severity"
+        corrective_action: "Corrective Action"
+        pending: "Pending"
+    table:
+      date: "Date"
+      type: "Type"
+      inspector: "Inspector"
+      status: "Status"
+      defects: "Defects"
+      actions: "Actions"
+      defects_found: "%{count} found"
+      confirm_delete: "Are you sure?"
+    buttons:
+      view: "View"
+      edit: "Edit"
+      delete: "Delete"
+      back: "Back"
+      close: "Close"
+      download: "Download"
+    inspection_defect_fields:
+      severity:
+        minor: "Minor"
+        major: "Major"
+        critical: "Critical"
+      select_severity: "Select severity level"
+      corrective_action_placeholder: "Enter corrective action details..."
+      confirm_remove: "Are you sure you want to remove this defect?"

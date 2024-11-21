@@ -1,0 +1,53 @@
+de:
+  quality_inspections:
+    form:
+      select_type: "Inspektionstyp auswählen"
+      select_status: "Status auswählen"
+      inspection_images: "Inspektionsbilder"
+      inspection_defects: "Festgestellte Mängel"
+      image_help_text: "Sie können mehrere Bilder hochladen (PNG, JPEG)"
+      add_defect: "Mangel hinzufügen"
+      remove_image: "Entfernen"
+      confirm_remove_image: "Sind Sie sicher, dass Sie dieses Bild entfernen möchten?"
+    show:
+      title: "Inspektionsdetails"
+      inspection_type: "Inspektionstyp"
+      inspector: "Prüfer"
+      date: "Datum"
+      status: "Status"
+      notes: "Anmerkungen"
+      no_notes: "Keine Anmerkungen vorhanden"
+      images:
+        title: "Inspektionsbilder"
+        no_images: "Keine Bilder für diese Inspektion angehängt."
+      defects:
+        title: "Festgestellte Mängel"
+        no_defects: "Keine Mängel für diese Inspektion erfasst."
+        description: "Beschreibung"
+        severity: "Schweregrad"
+        corrective_action: "Korrekturmaßnahme"
+        pending: "Ausstehend"
+    table:
+      date: "Datum"
+      type: "Typ"
+      inspector: "Prüfer"
+      status: "Status"
+      defects: "Mängel"
+      actions: "Aktionen"
+      defects_found: "%{count} gefunden"
+      confirm_delete: "Sind Sie sicher?"
+    buttons:
+      view: "Anzeigen"
+      edit: "Bearbeiten"
+      delete: "Löschen"
+      back: "Zurück"
+      close: "Schließen"
+      download: "Herunterladen"
+    inspection_defect_fields:
+      severity:
+        minor: "Geringfügig"
+        major: "Schwerwiegend"
+        critical: "Kritisch"
+      select_severity: "Schweregrad auswählen"
+      corrective_action_placeholder: "Korrekturmaßnahmen eingeben..."
+      confirm_remove: "Sind Sie sicher, dass Sie diesen Mangel entfernen möchten?"

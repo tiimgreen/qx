@@ -1,0 +1,45 @@
+de:
+  activerecord:
+    models:
+      project: "Projekt"
+      incoming_delivery: "Eingehende Lieferung"
+      material_certificate: "Materialzertifikat"
+      delivery_item: "Lieferposition"
+      missing_delivery_item: "Fehlende Lieferposition"
+      inspection_defect: "Prüfmangel"
+    attributes:
+      project:
+        project_number: "Projektnummer"
+        name: "Name"
+        description: "Beschreibung"
+        created_at: "Erstellt am"
+      incoming_delivery:
+        order_number: "Bestellnummer"
+        delivery_date: "Lieferdatum"
+        supplier_name: "Lieferant"
+        project: "Projekt"
+        notes: "Anmerkungen"
+        delivery_note: "Lieferschein"
+      material_certificate:
+        project: "Projekt"
+        certificate_number: "Zertifikatsnummer"
+        batch_number: "Chargennummer"
+        issue_date: "Ausstellungsdatum"
+        issuer_name: "Aussteller"
+        description: "Beschreibung"
+        certificate_file: "Zertifikatsdatei"
+      delivery_item:
+        tag_number: "TAG-Nummer"
+        batch_number: "Chargennummer"
+        quantity_received: "Menge"
+        item_description: "Beschreibung"
+      missing_delivery_item:
+        delivery_reference: "Lieferreferenz"
+        expected_quantity: "Erwartete Menge"
+        order_line_reference: "Bestellpositionsreferenz"
+        description: "Beschreibung"
+      inspection_defect:
+        inspection_reference: "Prüfreferenz"
+        severity: "Schweregrad"
+        description: "Beschreibung"
+        corrective_action: "Korrekturmaßnahme"

@@ -14,7 +14,10 @@
         <thead>
           <tr>
             <% columns.each do |column| %>
-              <th><%= column.to_s.titleize %></th>
+              <th>
+                <%# This will look up the translation in activerecord.attributes.project.name %>
+                <%= t("activerecord.attributes.#{model_class.model_name.i18n_key}.#{column}") %>
+              </th>
             <% end %>
             <th class="text-end">Actions</th>
           </tr>

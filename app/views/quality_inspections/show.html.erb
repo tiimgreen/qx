@@ -1,9 +1,9 @@
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Inspection Details</h5>
+    <h5 class="mb-0"><%= t('.title') %></h5>
     <div>
-      <%= link_to 'Edit', edit_quality_inspection_path(@quality_inspection), class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Back', delivery_item_path(@quality_inspection.delivery_item), class: 'btn btn-secondary btn-sm' %>
+      <%= link_to t('quality_inspections.buttons.edit'), edit_quality_inspection_path(@quality_inspection), class: 'btn btn-primary btn-sm' %>
+      <%= link_to t('quality_inspections.buttons.back'), delivery_item_path(@quality_inspection.delivery_item), class: 'btn btn-secondary btn-sm' %>
     </div>
   </div>
 
@@ -11,16 +11,16 @@
     <div class="row">
       <div class="col-md-6">
         <dl class="row">
-          <dt class="col-sm-4">Inspection Type</dt>
+          <dt class="col-sm-4"><%= t('.inspection_type') %></dt>
           <dd class="col-sm-8"><%= @quality_inspection.inspection_type.titleize %></dd>
 
-          <dt class="col-sm-4">Inspector</dt>
+          <dt class="col-sm-4"><%= t('.inspector') %></dt>
           <dd class="col-sm-8"><%= @quality_inspection.inspector_name %></dd>
 
-          <dt class="col-sm-4">Date</dt>
+          <dt class="col-sm-4"><%= t('.date') %></dt>
           <dd class="col-sm-8"><%= @quality_inspection.inspection_date.strftime("%Y-%m-%d %H:%M") %></dd>
 
-          <dt class="col-sm-4">Status</dt>
+          <dt class="col-sm-4"><%= t('.status') %></dt>
           <dd class="col-sm-8">
             <span class="badge <%= @quality_inspection.status == 'passed' ? 'bg-success' : 'bg-danger' %>">
               <%= @quality_inspection.status.upcase %>
@@ -31,8 +31,8 @@
 
       <div class="col-md-6">
         <dl class="row">
-          <dt class="col-sm-4">Notes</dt>
-          <dd class="col-sm-8"><%= @quality_inspection.notes.presence || 'No notes recorded' %></dd>
+          <dt class="col-sm-4"><%= t('.notes') %></dt>
+          <dd class="col-sm-8"><%= @quality_inspection.notes.presence || t('.no_notes') %></dd>
         </dl>
       </div>
     </div>
@@ -41,7 +41,7 @@
 
 <div class="card mb-4">
   <div class="card-header">
-    <h5 class="mb-0">Inspection Images</h5>
+    <h5 class="mb-0"><%= t('.images') %></h5>
   </div>
   <div class="card-body">
     <% if @quality_inspection.images.attached? %>
@@ -74,7 +74,7 @@
                     <%= image_tag image, class: "img-fluid" %>
                   </div>
                   <div class="modal-footer">
-                    <%= link_to "Download",
+                    <%= link_to t('quality_inspections.buttons.download'),
                         rails_blob_path(image, disposition: "attachment"),
                         class: "btn btn-primary" %>
                     <button type="button"
@@ -88,14 +88,14 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-muted">No images attached to this inspection.</p>
+      <p class="text-muted"><%= t('.no_images') %></p>
     <% end %>
   </div>
 </div>
 
 <div class="card">
   <div class="card-header">
-    <h5 class="mb-0">Defects Found</h5>
+    <h5 class="mb-0"><%= t('.defects') %></h5>
   </div>
   <div class="card-body">
     <% if @quality_inspection.inspection_defects.any? %>
@@ -103,9 +103,9 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Description</th>
-              <th>Severity</th>
-              <th>Corrective Action</th>
+              <th><%= t('.description') %></th>
+              <th><%= t('.severity') %></th>
+              <th><%= t('.corrective_action') %></th>
             </tr>
           </thead>
           <tbody>
@@ -117,14 +117,14 @@
                     <%= defect.severity.upcase %>
                   </span>
                 </td>
-                <td><%= defect.corrective_action.presence || 'Pending' %></td>
+                <td><%= defect.corrective_action.presence || t('.pending') %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     <% else %>
-      <p class="text-muted">No defects recorded for this inspection.</p>
+      <p class="text-muted"><%= t('.no_defects') %></p>
     <% end %>
   </div>
 </div>

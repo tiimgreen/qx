@@ -2,29 +2,29 @@
 <div class="container mt-4">
   <div class="card">
     <div class="card-header">
-      <h2>Roughness Measurement Details</h2>
+      <h2><%= t('.title') %></h2>
     </div>
     <div class="card-body">
       <dl class="row">
-        <dt class="col-sm-3">Delivery Item:</dt>
+        <dt class="col-sm-3"><%= t('.delivery_item') %>:</dt>
         <dd class="col-sm-9"><%= @roughness_measurement.delivery_item.identifier %></dd>
 
-        <dt class="col-sm-3">Measurement Date:</dt>
+        <dt class="col-sm-3"><%= t('.measurement_date') %>:</dt>
         <dd class="col-sm-9"><%= @roughness_measurement.measurement_date.strftime("%Y-%m-%d %H:%M") %></dd>
 
-        <dt class="col-sm-3">Measured Value:</dt>
+        <dt class="col-sm-3"><%= t('.measured_value') %>:</dt>
         <dd class="col-sm-9"><%= @roughness_measurement.measured_value %></dd>
 
-        <dt class="col-sm-3">Parameters:</dt>
+        <dt class="col-sm-3"><%= t('.parameters') %>:</dt>
         <dd class="col-sm-9"><%= @roughness_measurement.measurement_parameters %></dd>
 
-        <dt class="col-sm-3">Notes:</dt>
+        <dt class="col-sm-3"><%= t('.notes') %>:</dt>
         <dd class="col-sm-9"><%= @roughness_measurement.notes %></dd>
       </dl>
     </div>
     <div class="card-footer">
-      <%= link_to 'Edit', edit_roughness_measurement_path(@roughness_measurement), class: 'btn btn-primary' %>
-      <%= link_to 'Back', roughness_measurements_path, class: 'btn btn-secondary' %>
+      <%= link_to t('roughness_measurements.buttons.edit'), edit_roughness_measurement_path(@roughness_measurement), class: 'btn btn-primary' %>
+      <%= link_to t('roughness_measurements.buttons.back'), roughness_measurements_path, class: 'btn btn-secondary' %>
     </div>
   </div>
 </div>

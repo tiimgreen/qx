@@ -19,9 +19,9 @@
       <% end %>
 
       <% fields.each do |field| %>
-        <div class="mb-3">
-          <%= f.label field, class: 'form-label' %>
-          <%= render_form_field(f, field, local_assigns[:field_options]&.dig(field)) %>
+        <div class="form-group">
+          <%= f.label field, t("activerecord.attributes.#{record.model_name.i18n_key}.#{field}") %>
+          <%= f.text_field field, class: 'form-control' %>
         </div>
       <% end %>
 

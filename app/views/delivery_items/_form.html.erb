@@ -1,8 +1,7 @@
-
 <%= form_with(model: [@incoming_delivery, @delivery_item].compact, local: true, class: 'needs-validation') do |f| %>
   <% if @delivery_item.errors.any? %>
     <div class="alert alert-danger">
-      <h6><%= pluralize(@delivery_item.errors.count, "error") %> prohibited this item from being saved:</h6>
+      <h6><%= t('delivery_items.form.errors.header', count: @delivery_item.errors.count) %></h6>
       <ul>
         <% @delivery_item.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -14,42 +13,48 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :tag_number, class: 'form-label' %>
+        <%= f.label :tag_number, t('activerecord.attributes.delivery_item.tag_number'), class: 'form-label' %>
         <%= f.text_field :tag_number, class: 'form-control' %>
       </div>
 
       <div class="mb-3">
-        <%= f.label :batch_number, class: 'form-label' %>
+        <%= f.label :batch_number, t('activerecord.attributes.delivery_item.batch_number'), class: 'form-label' %>
         <%= f.text_field :batch_number, class: 'form-control' %>
       </div>
 
       <div class="mb-3">
-        <%= f.label :quantity_received, class: 'form-label' %>
+        <%= f.label :quantity_received, t('activerecord.attributes.delivery_item.quantity_received'), class: 'form-label' %>
         <%= f.number_field :quantity_received, class: 'form-control' %>
       </div>
     </div>
 
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :item_description, class: 'form-label' %>
+        <%= f.label :item_description, t('activerecord.attributes.delivery_item.item_description'), class: 'form-label' %>
         <%= f.text_area :item_description, class: 'form-control', rows: 3 %>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Specifications</label>
+        <label class="form-label"><%= t('.specifications') %></label>
         <div class="specifications-fields">
           <div class="specification-entries">
             <% (@delivery_item.specifications || {}).each do |key, value| %>
               <div class="specification-entry mb-2">
                 <div class="input-group">
-                  <input type="text" name="delivery_item[specifications][<%= key %>]" value="<%= value %>" class="form-control" placeholder="Value">
-                  <button type="button" class="btn btn-outline-danger remove-specification">&times;</button>
+                  <input type="text"
+                         name="delivery_item[specifications][<%= key %>]"
+                         value="<%= value %>"
+                         class="form-control"
+                         placeholder="<%= t('.value_placeholder') %>">
+                  <button type="button" class="btn btn-outline-danger remove-specification">
+                    <i class="bi bi-x"></i>
+                  </button>
                 </div>
               </div>
             <% end %>
           </div>
           <button type="button" class="btn btn-outline-secondary btn-sm add-specification">
-            <i class="bi bi-plus"></i> Add Specification
+            <i class="bi bi-plus"></i> <%= t('.add_specification') %>
           </button>
         </div>
       </div>
@@ -57,8 +62,8 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', :back, class: 'btn btn-secondary' %>
+    <%= f.submit t('.submit'), class: 'btn btn-primary' %>
+    <%= link_to t('.cancel'), :back, class: 'btn btn-secondary' %>
   </div>
 <% end %>
 

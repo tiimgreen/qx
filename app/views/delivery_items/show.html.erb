@@ -1,9 +1,19 @@
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Item Details</h5>
-    <div>
-      <%= link_to 'Edit', edit_delivery_item_path(@delivery_item), class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Back', incoming_delivery_path(@delivery_item.incoming_delivery), class: 'btn btn-secondary btn-sm' %>
+    <h5 class="mb-0"><%= t('.title') %></h5>
+    <div class="btn-group btn-group-sm">
+      <%= link_to edit_delivery_item_path(@delivery_item),
+                  class: 'btn btn-outline-primary',
+                  title: t('delivery_items.buttons.edit'),
+                  data: { bs_toggle: 'tooltip' } do %>
+        <i class="bi bi-pencil"></i>
+      <% end %>
+      <%= link_to incoming_delivery_path(@delivery_item.incoming_delivery),
+                  class: 'btn btn-outline-secondary',
+                  title: t('delivery_items.buttons.back'),
+                  data: { bs_toggle: 'tooltip' } do %>
+        <i class="bi bi-arrow-left"></i>
+      <% end %>
     </div>
   </div>
 
@@ -11,22 +21,22 @@
     <div class="row">
       <div class="col-md-6">
         <dl class="row">
-          <dt class="col-sm-4">TAG Number</dt>
+          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.tag_number') %></dt>
           <dd class="col-sm-8"><%= @delivery_item.tag_number %></dd>
 
-          <dt class="col-sm-4">Batch Number</dt>
+          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.batch_number') %></dt>
           <dd class="col-sm-8"><%= @delivery_item.batch_number %></dd>
 
-          <dt class="col-sm-4">Quantity</dt>
+          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.quantity_received') %></dt>
           <dd class="col-sm-8"><%= @delivery_item.quantity_received %></dd>
 
-          <dt class="col-sm-4">Description</dt>
+          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.item_description') %></dt>
           <dd class="col-sm-8"><%= @delivery_item.item_description %></dd>
         </dl>
       </div>
 
       <div class="col-md-6">
-        <h6>Specifications</h6>
+        <h6><%= t('.specifications') %></h6>
         <% if @delivery_item.specifications.present? %>
           <dl class="row">
             <% @delivery_item.specifications.each do |key, value| %>
@@ -35,22 +45,22 @@
             <% end %>
           </dl>
         <% else %>
-          <p class="text-muted">No specifications recorded</p>
+          <p class="text-muted"><%= t('.no_specifications') %></p>
         <% end %>
       </div>
     </div>
   </div>
 </div>
 
-
 <!-- Quality Inspections Section -->
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Quality Inspections</h5>
+    <h5 class="mb-0"><%= t('.quality_inspections') %></h5>
     <div>
-      <%= link_to 'New Inspection',
-          new_delivery_item_quality_inspection_path(@delivery_item),
-          class: 'btn btn-primary btn-sm' %>
+      <%= link_to new_delivery_item_quality_inspection_path(@delivery_item),
+                  class: 'btn btn-primary btn-sm' do %>
+        <i class="bi bi-plus"></i> <%= t('.new_inspection') %>
+      <% end %>
     </div>
   </div>
 
@@ -62,16 +72,18 @@
 <!-- Ra Measurement Section -->
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Ra Measurement</h5>
+    <h5 class="mb-0"><%= t('.ra_measurement') %></h5>
     <div>
       <% if @roughness_measurement %>
-        <%= link_to 'Edit Measurement',
-            edit_delivery_item_roughness_measurement_path(@delivery_item),
-            class: 'btn btn-primary btn-sm' %>
+        <%= link_to edit_delivery_item_roughness_measurement_path(@delivery_item),
+                    class: 'btn btn-primary btn-sm' do %>
+          <i class="bi bi-pencil"></i> <%= t('.edit_measurement') %>
+        <% end %>
       <% else %>
-        <%= link_to 'Record Measurement',
-            new_delivery_item_roughness_measurement_path(@delivery_item),
-            class: 'btn btn-primary btn-sm' %>
+        <%= link_to new_delivery_item_roughness_measurement_path(@delivery_item),
+                    class: 'btn btn-primary btn-sm' do %>
+          <i class="bi bi-plus"></i> <%= t('.record_measurement') %>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -80,7 +92,7 @@
     <% if @roughness_measurement %>
       <%= render 'roughness_measurements/details', measurement: @roughness_measurement %>
     <% else %>
-      <p class="text-muted">No roughness measurement recorded yet.</p>
+      <p class="text-muted"><%= t('.no_measurement') %></p>
     <% end %>
   </div>
 </div>

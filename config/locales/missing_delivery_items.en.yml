@@ -1,0 +1,29 @@
+en:
+  missing_delivery_items:
+    new:
+      title: "Report Missing Items"
+    edit:
+      title: "Edit Missing Item Report"
+    show:
+      title: "Missing Item Details"
+      delivery_reference: "Delivery Reference"
+      expected_quantity: "Expected Quantity"
+      order_line_reference: "Order Line Reference"
+      description: "Description"
+      reported_at: "Reported At"
+    index:
+      title: "Missing Delivery Items"
+      report_missing: "Report Missing Item"
+    form:
+      errors:
+        header:
+          one: "1 error prohibited this item from being saved:"
+          other: "%{count} errors prohibited this item from being saved:"
+      description_hint: "Please provide detailed description of the missing items"
+      submit: "Save"
+      cancel: "Cancel"
+    buttons:
+      edit: "Edit"
+      back: "Back"
+      view: "View"
+      delete: "Delete"

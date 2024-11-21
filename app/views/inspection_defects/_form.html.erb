@@ -2,7 +2,7 @@
 <%= form_with(model: [@quality_inspection, @inspection_defect], local: true) do |f| %>
   <% if @inspection_defect.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@inspection_defect.errors.count, "error") %> prohibited this defect from being saved:</h4>
+      <h4><%= t('inspection_defects.form.errors.header', count: @inspection_defect.errors.count) %></h4>
       <ul>
         <% @inspection_defect.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -15,11 +15,11 @@
     <%= f.label :severity, class: 'form-label' %>
     <%= f.select :severity,
         options_for_select([
-          ['Critical', 'critical'],
-          ['Major', 'major'],
-          ['Minor', 'minor']
+          [t('inspection_defects.severity.critical'), 'critical'],
+          [t('inspection_defects.severity.major'), 'major'],
+          [t('inspection_defects.severity.minor'), 'minor']
         ], @inspection_defect.severity),
-        { prompt: 'Select severity' },
+        { prompt: t('.select_severity') },
         { class: 'form-select', required: true }
     %>
   </div>
@@ -27,18 +27,18 @@
   <div class="form-group mb-3">
     <%= f.label :description, class: 'form-label' %>
     <%= f.text_area :description, class: 'form-control', rows: 4, required: true %>
-    <small class="form-text text-muted">Provide a detailed description of the defect</small>
+    <small class="form-text text-muted"><%= t('.description_hint') %></small>
   </div>
 
   <div class="form-group mb-3">
     <%= f.label :corrective_action, class: 'form-label' %>
     <%= f.text_area :corrective_action, class: 'form-control', rows: 4 %>
-    <small class="form-text text-muted">Describe the recommended corrective action if any</small>
+    <small class="form-text text-muted"><%= t('.corrective_action_hint') %></small>
   </div>
 
   <div class="form-group">
-    <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', inspection_defects_path, class: 'btn btn-secondary' %>
+    <%= f.submit t('.submit'), class: 'btn btn-primary' %>
+    <%= link_to t('.cancel'), inspection_defects_path, class: 'btn btn-secondary' %>
   </div>
 <% end %>
 

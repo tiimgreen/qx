@@ -1,0 +1,29 @@
+de:
+  incoming_deliveries:
+    form:
+      title:
+        new: "Neue Lieferung"
+        edit: "Lieferung bearbeiten"
+      select_project: "Projekt auswählen"
+      errors:
+        header:
+          one: "1 Fehler verhinderte das Speichern dieser Lieferung"
+          other: "%{count} Fehler verhinderten das Speichern dieser Lieferung"
+    show:
+      title: "Lieferungsdetails"
+      delivery_note: "Lieferschein"
+      view_document: "Dokument anzeigen"
+      items_section: "Lieferpositionen"
+      add_item: "Position hinzufügen"
+    index:
+      title: "Alle Lieferungen"
+      title_for_project: "Lieferungen für %{project}"
+      new_delivery: "Neue Lieferung"
+      items_count: "Positionen"
+    buttons:
+      edit: "Bearbeiten"
+      back: "Zurück"
+      cancel: "Abbrechen"
+      submit: "Speichern"
+      delete: "Löschen"
+      view: "Anzeigen"

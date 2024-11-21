@@ -1,10 +1,19 @@
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Delivery Details</h5>
+    <h5 class="mb-0"><%= t('.title') %></h5>
     <div>
-      <%= link_to 'Edit', edit_incoming_delivery_path(@incoming_delivery),
-          class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Back', incoming_deliveries_path, class: 'btn btn-secondary btn-sm' %>
+      <%= link_to edit_incoming_delivery_path(@incoming_delivery),
+                  class: 'btn btn-outline-primary btn-sm',
+                  title: t('incoming_deliveries.buttons.edit'),
+                  data: { bs_toggle: 'tooltip' } do %>
+        <i class="bi bi-pencil"></i>
+      <% end %>
+      <%= link_to incoming_deliveries_path,
+                  class: 'btn btn-outline-secondary btn-sm',
+                  title: t('incoming_deliveries.buttons.back'),
+                  data: { bs_toggle: 'tooltip' } do %>
+        <i class="bi bi-arrow-left"></i>
+      <% end %>
     </div>
   </div>
 
@@ -12,16 +21,16 @@
     <div class="row">
       <div class="col-md-6">
         <dl class="row">
-          <dt class="col-sm-4">Order Number</dt>
+          <dt class="col-sm-4"><%= t('.order_number') %></dt>
           <dd class="col-sm-8"><%= @incoming_delivery.order_number %></dd>
 
-          <dt class="col-sm-4">Delivery Date</dt>
-          <dd class="col-sm-8"><%= @incoming_delivery.delivery_date.strftime("%Y-%m-%d") %></dd>
+          <dt class="col-sm-4"><%= t('.delivery_date') %></dt>
+          <dd class="col-sm-8"><%= l(@incoming_delivery.delivery_date, format: :long) %></dd>
 
-          <dt class="col-sm-4">Supplier</dt>
+          <dt class="col-sm-4"><%= t('.supplier') %></dt>
           <dd class="col-sm-8"><%= @incoming_delivery.supplier_name %></dd>
 
-          <dt class="col-sm-4">Project</dt>
+          <dt class="col-sm-4"><%= t('.project') %></dt>
           <dd class="col-sm-8"><%= @incoming_delivery.project.name %></dd>
         </dl>
       </div>
@@ -29,8 +38,8 @@
       <div class="col-md-6">
         <% if @incoming_delivery.delivery_note.attached? %>
           <div class="mb-3">
-            <strong>Delivery Note:</strong><br>
-            <%= link_to "View Document",
+            <strong><%= t('.delivery_note') %>:</strong><br>
+            <%= link_to t('.view_document'),
                 rails_blob_path(@incoming_delivery.delivery_note, disposition: "inline"),
                 class: "btn btn-sm btn-secondary",
                 target: "_blank" %>
@@ -44,11 +53,12 @@
 <!-- Delivery Items Section -->
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Delivery Items</h5>
+    <h5 class="mb-0"><%= t('.delivery_items') %></h5>
     <div>
-      <%= link_to 'Add Item',
-          new_incoming_delivery_delivery_item_path(@incoming_delivery),
-          class: 'btn btn-primary btn-sm' %>
+      <%= link_to new_incoming_delivery_delivery_item_path(@incoming_delivery),
+                  class: 'btn btn-primary btn-sm' do %>
+        <i class="bi bi-plus"></i> <%= t('.add_item') %>
+      <% end %>
     </div>
   </div>
 
@@ -57,7 +67,11 @@
   </div>
 </div>
 
-
+<!-- Missing Items Section -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0"><%= t('.missing_items') %></h5>
+  </div>
   <div class="card-body">
     <%= render 'missing_delivery_items/table', missing_items: @missing_items %>
   </div>

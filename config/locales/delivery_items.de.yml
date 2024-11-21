@@ -1,0 +1,33 @@
+de:
+  delivery_items:
+    new:
+      title: "Neue Lieferposition"
+    edit:
+      title: "Lieferposition bearbeiten"
+    show:
+      title: "Positionsdetails"
+      specifications: "Spezifikationen"
+      no_specifications: "Keine Spezifikationen erfasst"
+      quality_inspections: "Qualitätsprüfungen"
+      new_inspection: "Neue Prüfung"
+      ra_measurement: "Ra-Messung"
+      edit_measurement: "Messung bearbeiten"
+      record_measurement: "Messung erfassen"
+      no_measurement: "Noch keine Rauheitsmessung erfasst"
+      inspections_performed: "%{count} durchgeführt"
+      inspections_passed: "(%{count} bestanden)"
+    form:
+      errors:
+        header:
+          one: "1 Fehler verhinderte das Speichern dieser Position:"
+          other: "%{count} Fehler verhinderten das Speichern dieser Position:"
+      specifications: "Spezifikationen"
+      add_specification: "Spezifikation hinzufügen"
+      value_placeholder: "Wert"
+      submit: "Speichern"
+      cancel: "Abbrechen"
+    buttons:
+      view: "Anzeigen"
+      edit: "Bearbeiten"
+      delete: "Löschen"
+      back: "Zurück"
