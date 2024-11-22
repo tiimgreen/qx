@@ -46,14 +46,14 @@
                          value="<%= value %>"
                          class="form-control"
                          placeholder="<%= t('.value_placeholder') %>">
-                  <button type="button" class="btn btn-outline-danger remove-specification">
+                  <button type="button" class="btn btn-outline-danger m-1 remove-specification">
                     <i class="bi bi-x"></i>
                   </button>
                 </div>
               </div>
             <% end %>
           </div>
-          <button type="button" class="btn btn-outline-secondary btn-sm add-specification">
+          <button type="button" class="btn btn-outline-secondary m-1 btn-sm add-specification">
             <i class="bi bi-plus"></i> <%= t('.add_specification') %>
           </button>
         </div>
@@ -79,7 +79,7 @@
       newEntry.innerHTML = `
         <div class="input-group">
           <input type="text" name="delivery_item[specifications][spec_${newKey}]" class="form-control" placeholder="Value">
-          <button type="button" class="btn btn-outline-danger remove-specification">&times;</button>
+          <button type="button" class="btn btn-outline-danger m-1 remove-specification">&times;</button>
         </div>
       `;
       container.appendChild(newEntry);

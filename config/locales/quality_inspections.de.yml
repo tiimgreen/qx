@@ -9,6 +9,8 @@ de:
       add_defect: "Mangel hinzufügen"
       remove_image: "Bild entfernen"
       confirm_remove_image: "Sind Sie sicher, dass Sie dieses Bild entfernen möchten?"
+    index:
+      title: "Qualitätssicherungen"
     show:
       title: "Inspektionsdetails"
       inspection_type: "Inspektionstyp"

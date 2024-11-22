@@ -25,13 +25,13 @@
     <div class="card-footer">
       <div class="btn-group">
         <%= link_to edit_missing_delivery_item_path(@missing_delivery_item),
-                    class: 'btn btn-outline-primary',
+                    class: 'btn btn-outline-primary m-1',
                     title: t('missing_delivery_items.buttons.edit'),
                     data: { bs_toggle: 'tooltip' } do %>
           <i class="bi bi-pencil"></i>
         <% end %>
         <%= link_to incoming_delivery_missing_delivery_items_path(@missing_delivery_item.incoming_delivery),
-                    class: 'btn btn-outline-secondary',
+                    class: 'btn btn-outline-secondary m-1',
                     title: t('missing_delivery_items.buttons.back'),
                     data: { bs_toggle: 'tooltip' } do %>
           <i class="bi bi-arrow-left"></i>

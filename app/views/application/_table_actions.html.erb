@@ -1,20 +1,20 @@
 <div class="btn-group btn-group-sm">
     <%= link_to polymorphic_path(record),
-                class: 'btn btn-outline-info',
+                class: 'btn btn-outline-info m-1',
                 title: t('common.actions.show'),
                 data: { bs_toggle: 'tooltip' } do %>
       <i class="bi bi-eye"></i>
     <% end %>
 
     <%= link_to edit_polymorphic_path(record),
-                class: 'btn btn-outline-primary',
+                class: 'btn btn-outline-primary m-1',
                 title: t('common.actions.edit'),
                 data: { bs_toggle: 'tooltip' } do %>
       <i class="bi bi-pencil"></i>
     <% end %>
 
     <%= link_to polymorphic_path(record),
-                class: 'btn btn-outline-danger',
+                class: 'btn btn-outline-danger m-1',
                 title: t('common.actions.delete'),
                 data: {
                   turbo_method: :delete,

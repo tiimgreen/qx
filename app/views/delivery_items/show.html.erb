@@ -3,13 +3,13 @@
     <h5 class="mb-0"><%= t('.title') %></h5>
     <div class="btn-group btn-group-sm">
       <%= link_to edit_delivery_item_path(@delivery_item),
-                  class: 'btn btn-outline-primary',
+                  class: 'btn btn-outline-primary m-1',
                   title: t('delivery_items.buttons.edit'),
                   data: { bs_toggle: 'tooltip' } do %>
         <i class="bi bi-pencil"></i>
       <% end %>
       <%= link_to incoming_delivery_path(@delivery_item.incoming_delivery),
-                  class: 'btn btn-outline-secondary',
+                  class: 'btn btn-outline-secondary m-1',
                   title: t('delivery_items.buttons.back'),
                   data: { bs_toggle: 'tooltip' } do %>
         <i class="bi bi-arrow-left"></i>

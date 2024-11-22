@@ -9,6 +9,8 @@ en:
       add_defect: "Add Defect"
       remove_image: "Remove Image"
       confirm_remove_image: "Are you sure you want to remove this image?"
+    index:
+      title: "Quality Inspections"
     show:
       title: "Inspection Details"
       inspection_type: "Inspection Type"
