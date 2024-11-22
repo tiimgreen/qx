@@ -9,6 +9,8 @@ en:
       project_number: "Project Number"
       name: "Name"
       description: "Description"
+      project_manager: "Project Manager"
+      client_name: "Client"
       created: "Created"
     index:
       title: "Projects"

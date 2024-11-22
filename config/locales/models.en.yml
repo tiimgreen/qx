@@ -14,6 +14,8 @@ en:
         name: "Name"
         description: "Description"
         created_at: "Created At"
+        project_manager: "Project Manager"
+        client_name: "Client"
       incoming_delivery:
         project_id: "Project"
         delivery_date: "Delivery Date"

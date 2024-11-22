@@ -2,7 +2,7 @@
   title: t('.title'),
   model_class: Project,
   records: @projects,
-  columns: [:project_number, :name, :created_at],
+  columns: [:project_number, :name, :project_manager, :client_name, :created_at],
   new_link: new_project_path %>
 
 <%= render 'pagy' %>

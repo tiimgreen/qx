@@ -1,4 +1,4 @@
 <%= render 'application/form',
   title: t("projects.form.title.#{@project.new_record? ? 'new' : 'edit'}"),
   record: @project,
-  fields: [:project_number, :name, :description] %>
+  fields: [:project_number, :name, :description, :project_manager, :client_name] %>
