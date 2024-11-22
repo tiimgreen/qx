@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @pagy, @projects = pagy(Project.all)
+    @pagy, @projects = pagy(Project.search_by_term(params[:search]))
   end
 
   def show
