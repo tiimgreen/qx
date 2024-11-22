@@ -1,11 +1,10 @@
-# app/controllers/roughness_measurements_controller.rb
 class RoughnessMeasurementsController < ApplicationController
   layout "dashboard_layout"
-  before_action :set_delivery_item, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_roughness_measurement, only: [:edit, :update, :destroy]
+  before_action :set_delivery_item, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :set_roughness_measurement, only: [ :edit, :update, :destroy ]
 
   def index
-    @roughness_measurements = RoughnessMeasurement.includes(:delivery_item).all
+    @roughness_measurements = RoughnessMeasurement.includes(:delivery_item).search_by_term(params[:search])
   end
 
   def show

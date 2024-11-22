@@ -27,6 +27,8 @@ en:
       measured_value: "Measured Value"
       parameters: "Parameters"
       actions: "Actions"
+      search_placeholder: "Search roughness measurements..."
+      search_button: "Search"
     buttons:
       edit: "Edit"
       back: "Back"

@@ -27,6 +27,8 @@ de:
       measured_value: "Messwert"
       parameters: "Parameter"
       actions: "Aktionen"
+      search_placeholder: "Rauheitsmessungen suchen..."
+      search_button: "Suchen"
     buttons:
       edit: "Bearbeiten"
       back: "Zurück"
