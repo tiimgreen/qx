@@ -2,6 +2,7 @@ class MaterialCertificatesController < ApplicationController
   layout "dashboard_layout"
   before_action :set_material_certificate, only: [ :show, :edit, :update, :destroy ]
   before_action :set_project, only: [ :new, :create ]
+  before_action :ensure_project, only: [ :edit, :update ]
   before_action :load_delivery_items, only: [ :new, :edit, :create, :update ]
 
   def index
@@ -72,6 +73,10 @@ class MaterialCertificatesController < ApplicationController
     else
       @material_certificate.project.delivery_items.includes(:incoming_delivery)
     end
+  end
+
+  def ensure_project
+    @project = @material_certificate&.project
   end
 
   def material_certificate_params

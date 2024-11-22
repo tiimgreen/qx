@@ -31,7 +31,7 @@
   <div class="form-group">
     <%= f.submit t('.submit'), class: 'btn btn-primary' %>
     <%= link_to t('.cancel'),
-                incoming_delivery_missing_delivery_items_path(@incoming_delivery),
+                @missing_delivery_item.persisted? ? missing_delivery_item_path(@missing_delivery_item) : incoming_delivery_missing_delivery_items_path(@incoming_delivery),
                 class: 'btn btn-secondary' %>
   </div>
 <% end %>
