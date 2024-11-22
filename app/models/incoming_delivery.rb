@@ -8,4 +8,18 @@ class IncomingDelivery < ApplicationRecord
   validates :delivery_date, presence: true
   validates :order_number, presence: true, uniqueness: true
   validates :supplier_name, presence: true
+
+  scope :search_by_term, ->(search_term) {
+    return all unless search_term.present?
+
+    term = "%#{search_term}%"
+    left_joins(:project)
+      .where(
+        "incoming_deliveries.order_number LIKE :search OR
+        incoming_deliveries.supplier_name LIKE :search OR
+        projects.name LIKE :search OR
+        projects.project_number LIKE :search",
+        search: term
+      ).distinct
+  }
 end

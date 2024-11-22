@@ -10,7 +10,9 @@ class QualityInspectionsController < ApplicationController
     else
       QualityInspection.all
     end
-    @quality_inspections = @quality_inspections.includes(:delivery_item, :inspection_defects)
+    @quality_inspections = @quality_inspections
+      .includes(:delivery_item, :inspection_defects)
+      .search_by_term(params[:search])
   end
 
   def show
@@ -25,6 +27,7 @@ class QualityInspectionsController < ApplicationController
 
   def create
     @quality_inspection = @delivery_item.quality_inspections.build(quality_inspection_params)
+    @quality_inspection.inspector ||= current_user
 
     if @quality_inspection.save
       redirect_to @delivery_item, notice: "Inspection was successfully recorded."
@@ -71,7 +74,7 @@ class QualityInspectionsController < ApplicationController
   def quality_inspection_params
     params.require(:quality_inspection).permit(
       :inspection_type,
-      :inspector_name,
+      :inspector_id,
       :inspection_date,
       :status,
       :notes,

@@ -1,29 +1,27 @@
-<div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">
-      <% if @project %>
-        <%= t('.title_for_project', project: @project.name) %>
-      <% else %>
-        <%= t('.title') %>
-      <% end %>
-    </h5>
-    <div>
-      <%= link_to new_incoming_delivery_path(project_id: @project&.id),
-                  class: 'btn btn-primary btn-sm' do %>
-        <i class="bi bi-plus"></i> <%= t('.new_delivery') %>
-      <% end %>
-    </div>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><%= t('.title') %></h1>
   </div>
 
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-striped table-hover table-sm">
+  <%= form_tag incoming_deliveries_path, method: :get, class: 'mb-4' do %>
+    <div class="input-group">
+      <%= text_field_tag :search, params[:search],
+                        class: 'form-control',
+                        placeholder: t('common.labels.search_placeholder') %>
+      <div class="input-group-append">
+        <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-sm">
         <thead>
           <tr>
+            <th><%= t('activerecord.models.project') %></th>
             <th><%= t('activerecord.attributes.incoming_delivery.order_number') %></th>
             <th><%= t('activerecord.attributes.incoming_delivery.delivery_date') %></th>
             <th><%= t('activerecord.attributes.incoming_delivery.supplier_name') %></th>
-            <th><%= t('activerecord.attributes.incoming_delivery.project') %></th>
             <th><%= t('.items_count') %></th>
             <th class="text-end"><%= t('common.labels.actions') %></th>
           </tr>
@@ -32,10 +30,10 @@
         <tbody>
           <% @incoming_deliveries.each do |delivery| %>
             <tr>
+              <td><%= link_to delivery.project.name, project_path(delivery.project) %></td>
               <td><%= delivery.order_number %></td>
               <td><%= delivery.delivery_date.strftime("%Y-%m-%d") %></td>
               <td><%= delivery.supplier_name %></td>
-              <td><%= delivery.project.name %></td>
               <td><%= delivery.delivery_items.count %></td>
               <td class="text-end">
                 <div class="btn-group btn-group-sm">
@@ -70,7 +68,6 @@
           <% end %>
         </tbody>
       </table>
-    </div>
   </div>
 </div>
 

@@ -5,6 +5,9 @@ en:
     home: "Home"
     about: "About"
     contact: "Contact"
+    admin: "Admin"
+    profile: "Profile"
+    sign_out: "Sign Out"
     menu:
       projects:
         title: "Projects"

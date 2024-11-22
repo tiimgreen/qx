@@ -8,3 +8,6 @@ en:
       confirm_delete: "Are you sure you want to delete this %{model}?"
     labels:
       actions: "Actions"
+      search: "Search"
+      search_button: "Search"
+      search_placeholder: "Search for..."

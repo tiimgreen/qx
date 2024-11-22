@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_19_095148) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_22_085206) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -150,14 +150,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_19_095148) do
   create_table "quality_inspections", force: :cascade do |t|
     t.integer "delivery_item_id", null: false
     t.string "inspection_type", null: false
-    t.string "inspector_name", null: false
     t.string "status", null: false
     t.datetime "inspection_date", null: false
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "inspector_id"
     t.index ["delivery_item_id"], name: "index_quality_inspections_on_delivery_item_id"
     t.index ["inspection_type"], name: "index_quality_inspections_on_inspection_type"
+    t.index ["inspector_id"], name: "index_quality_inspections_on_inspector_id"
     t.index ["status"], name: "index_quality_inspections_on_status"
   end
 
@@ -231,6 +232,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_19_095148) do
   add_foreign_key "material_certificates", "projects"
   add_foreign_key "missing_delivery_items", "incoming_deliveries"
   add_foreign_key "quality_inspections", "delivery_items"
+  add_foreign_key "quality_inspections", "users", column: "inspector_id"
   add_foreign_key "sector_permissions", "permissions"
   add_foreign_key "sector_permissions", "user_sectors"
   add_foreign_key "user_sectors", "sectors"

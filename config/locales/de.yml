@@ -5,6 +5,9 @@ de:
     home: "Startseite"
     about: "Über uns"
     contact: "Kontakt"
+    admin: "Admin"
+    profile: "Profil"
+    sign_out: "Abmelden"
     menu:
       projects:
         title: "Projekte"

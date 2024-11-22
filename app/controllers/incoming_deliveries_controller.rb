@@ -10,7 +10,10 @@ class IncomingDeliveriesController < ApplicationController
     else
       IncomingDelivery.all
     end
-    @incoming_deliveries = @incoming_deliveries.includes(:project).order(delivery_date: :desc)
+    @incoming_deliveries = @incoming_deliveries
+      .includes(:project)
+      .search_by_term(params[:search])
+      .order(delivery_date: :desc)
   end
 
   def show

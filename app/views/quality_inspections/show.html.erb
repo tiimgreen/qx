@@ -15,7 +15,7 @@
           <dd class="col-sm-8"><%= @quality_inspection.inspection_type.titleize %></dd>
 
           <dt class="col-sm-4"><%= t('.inspector') %></dt>
-          <dd class="col-sm-8"><%= @quality_inspection.inspector_name %></dd>
+          <dd class="col-sm-8"><%= @quality_inspection.inspector.name %></dd>
 
           <dt class="col-sm-4"><%= t('.date') %></dt>
           <dd class="col-sm-8"><%= @quality_inspection.inspection_date.strftime("%Y-%m-%d %H:%M") %></dd>

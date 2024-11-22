@@ -25,8 +25,13 @@
       </div>
 
       <div class="mb-3">
-        <%= f.label :inspector_name, class: 'form-label required' %>
-        <%= f.text_field :inspector_name, class: 'form-control', required: true %>
+        <%= f.label :inspector_id, class: 'form-label required' %>
+        <%= f.collection_select :inspector_id,
+            User.all,
+            :id,
+            :name,
+            { prompt: t('.select_inspector') },
+            { class: 'form-select', required: true } %>
       </div>
 
       <div class="mb-3">
