@@ -14,6 +14,10 @@ class DeliveryItemsController < ApplicationController
   end
 
   def show
+    @delivery_item = DeliveryItem.includes(:quality_inspections,
+                                          :roughness_measurement,
+                                          :material_certificates)
+                              .find(params[:id])
     @quality_inspections = @delivery_item.quality_inspections.includes(:inspection_defects)
     @roughness_measurement = @delivery_item.roughness_measurement
   end

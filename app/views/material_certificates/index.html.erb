@@ -1,19 +1,6 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1><%= t('.title') %></h1>
-    <% if params[:project_id] %>
-      <%= link_to new_project_material_certificate_path(params[:project_id]),
-                  class: 'btn btn-success' do %>
-        <i class="bi bi-plus"></i> <%= t('.new_certificate') %>
-      <% end %>
-    <% else %>
-      <%= link_to new_project_material_certificate_path(Project.first),
-                  class: 'btn btn-success',
-                  data: { turbo_confirm: t('.select_project_first') },
-                  disabled: Project.none? do %>
-        <i class="bi bi-plus"></i> <%= t('.new_certificate') %>
-      <% end %>
-    <% end %>
   </div>
 
   <%= form_tag material_certificates_path, method: :get, class: 'mb-4' do %>

@@ -6,11 +6,9 @@ class MaterialCertificatesController < ApplicationController
   before_action :load_delivery_items, only: [ :new, :edit, :create, :update ]
 
   def index
-    @material_certificates = if params[:project_id]
-      Project.find(params[:project_id]).material_certificates.includes(:delivery_items)
-    else
-      MaterialCertificate.includes(:project, :delivery_items).all
-    end
+    @material_certificates = MaterialCertificate.includes(:project, :delivery_items)
+    @material_certificates = @material_certificates.where(project_id: params[:project_id]) if params[:project_id]
+    @material_certificates = @material_certificates.where("certificate_number LIKE ?", "%#{params[:search]}%") if params[:search].present?
   end
 
   def show
