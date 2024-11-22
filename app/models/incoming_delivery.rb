@@ -6,6 +6,6 @@ class IncomingDelivery < ApplicationRecord
   has_many :material_certificates, through: :delivery_items
 
   validates :delivery_date, presence: true
-  validates :order_number, presence: true
+  validates :order_number, presence: true, uniqueness: true
   validates :supplier_name, presence: true
 end

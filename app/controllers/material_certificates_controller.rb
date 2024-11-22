@@ -8,7 +8,7 @@ class MaterialCertificatesController < ApplicationController
   def index
     @material_certificates = MaterialCertificate.includes(:project, :delivery_items)
     @material_certificates = @material_certificates.where(project_id: params[:project_id]) if params[:project_id]
-    @material_certificates = @material_certificates.where("certificate_number LIKE ?", "%#{params[:search]}%") if params[:search].present?
+    @material_certificates = @material_certificates.search_by_term(params[:search])
   end
 
   def show
