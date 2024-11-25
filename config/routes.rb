@@ -14,10 +14,13 @@ Rails.application.routes.draw do
     resources :material_certificates, only: [ :index ]
 
     resources :projects do
-      resources :material_certificates, shallow: true
+      resources :incoming_deliveries do
+        resources :delivery_items
+        resources :missing_delivery_items, shallow: true
+      end
     end
 
-    resources :incoming_deliveries do
+    resources :incoming_deliveries, only: [] do  # Changed from full resources to only: []
       resources :delivery_items, shallow: true
       resources :missing_delivery_items, shallow: true
     end

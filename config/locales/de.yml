@@ -28,6 +28,10 @@ de:
     edit: "Bearbeiten"
     delete: "Löschen"
     confirm: "Sind Sie sicher?"
+    messages:
+      created: "%{model} wurde erfolgreich erstellt."
+      updated: "%{model} wurde erfolgreich aktualisiert."
+      deleted: "%{model} wurde erfolgreich gelöscht."
   flash:
     success: "Vorgang erfolgreich abgeschlossen"
     error: "Ein Fehler ist aufgetreten"

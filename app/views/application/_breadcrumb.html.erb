@@ -1,0 +1,16 @@
+<div class="mb-3">
+  <% breadcrumbs.each_with_index do |crumb, index| %>
+    <% if index == breadcrumbs.length - 1 %>
+      <%= link_to "#",
+                 class: "btn btn-sm btn-primary",
+                 disabled: true do %>
+        <%= crumb[:text] %>
+      <% end %>
+    <% else %>
+      <%= link_to crumb[:path],
+                 class: "btn btn-sm btn-outline-primary me-1" do %>
+        <%= crumb[:text] %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

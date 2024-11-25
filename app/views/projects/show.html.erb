@@ -28,7 +28,7 @@
       <dd class="col-sm-9"><%= @project.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
     </dl>
     <div class="row g-4">
-      <%= render 'application/sector_card', sectors: @sectors %>
+      <%= render 'application/sector_card', sectors: @sectors, project: @project %>
     </div>
   </div>
 </div>

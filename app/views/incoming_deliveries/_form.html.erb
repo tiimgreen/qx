@@ -1,4 +1,8 @@
-<%= form_with(model: @incoming_delivery, local: true, class: 'needs-validation') do |f| %>
+<%= form_with(
+      model: [@project, @incoming_delivery],
+      local: true,
+      class: 'needs-validation'
+    ) do |f| %>
   <% if @incoming_delivery.errors.any? %>
     <div class="alert alert-danger">
       <h6><%= t('.errors.header', count: @incoming_delivery.errors.count) %></h6>

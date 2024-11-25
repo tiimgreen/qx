@@ -6,6 +6,7 @@
         <th><%= t('activerecord.attributes.delivery_item.batch_number') %></th>
         <th><%= t('activerecord.attributes.delivery_item.quantity_received') %></th>
         <th><%= t('activerecord.attributes.delivery_item.item_description') %></th>
+        <th><%= t('activerecord.attributes.delivery_item.specifications') %></th>
         <th><%= t('delivery_items.show.quality_inspections') %></th>
         <th><%= t('delivery_items.show.ra_measurement') %></th>
         <th class="text-end"><%= t('common.labels.actions') %></th>
@@ -20,7 +21,15 @@
           <td><%= item.quantity_received %></td>
           <td><%= item.item_description %></td>
           <td>
-            <%= item.quality_inspections.count %> performed
+            <% if item.specifications.present? %>
+              <dl class="row">
+                <% item.specifications.each do |key, value| %>
+                  <dd class="col-sm-8"><%= value %></dd>
+                <% end %>
+              </dl>
+            <% end %>
+          </td>
+          <td>
             <% if item.quality_inspections.any? %>
               (<%= item.quality_inspections.where(status: 'passed').count %> passed)
             <% end %>
@@ -28,8 +37,6 @@
           <td>
             <% if item.roughness_measurement %>
               <%= number_with_precision(item.roughness_measurement.measured_value, precision: 2) %>
-            <% else %>
-              <%= t('delivery_items.show.no_measurement') %>
             <% end %>
           </td>
           <td class="text-end">

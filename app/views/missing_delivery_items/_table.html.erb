@@ -1,11 +1,8 @@
-<%= render 'application/table',
-  title: t('missing_delivery_items.index.title'),
-  model_class: MissingDeliveryItem,
-  records: missing_items,
-  columns: [
-    :delivery_reference,
-    :expected_quantity,
-    :order_line_reference,
-    :description
-  ],
-  new_link: @incoming_delivery ? new_incoming_delivery_missing_delivery_item_path(@incoming_delivery) : nil %>
+<% if missing_items&.any? %>
+  <%= render 'application/table',
+             records: missing_items,
+             columns: [:item_number, :description, :quantity, :unit, :created_at],
+             actions: [:show, :edit, :destroy] %>
+<% else %>
+  <p class="text-muted"><%= t('.no_missing_items') %></p>
+<% end %>

@@ -1,16 +1,14 @@
 # app/controllers/delivery_items_controller.rb
 class DeliveryItemsController < ApplicationController
   layout "dashboard_layout"
+  before_action :set_incoming_delivery
+  before_action :set_project
   before_action :set_delivery_item, only: [ :show, :edit, :update, :destroy ]
-  before_action :set_incoming_delivery, only: [ :index, :new, :create ]
 
   def index
-    @delivery_items = if @incoming_delivery
-      @incoming_delivery.delivery_items
-    else
-      DeliveryItem.all
-    end
-    @delivery_items = @delivery_items.includes(:incoming_delivery)
+    @delivery_items = @incoming_delivery.delivery_items
+                                      .includes(:quality_inspections)
+                                      .search_by_term(params[:search])
   end
 
   def show
@@ -33,7 +31,8 @@ class DeliveryItemsController < ApplicationController
     @delivery_item = @incoming_delivery.delivery_items.build(delivery_item_params)
 
     if @delivery_item.save
-      redirect_to @incoming_delivery, notice: "Item was successfully added to delivery."
+      redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                  notice: t("common.messages.created", model: DeliveryItem.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,32 +40,48 @@ class DeliveryItemsController < ApplicationController
 
   def update
     if @delivery_item.update(delivery_item_params)
-      redirect_to @delivery_item.incoming_delivery, notice: "Item was successfully updated."
+      redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                  notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    incoming_delivery = @delivery_item.incoming_delivery
     @delivery_item.destroy
-    redirect_to incoming_delivery, notice: "Item was successfully removed."
+    redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                notice: t("common.messages.deleted", model: DeliveryItem.model_name.human)
   end
 
   private
 
-  def set_delivery_item
-    @delivery_item = DeliveryItem.find(params[:id])
+  def set_incoming_delivery
+    @incoming_delivery = if params[:incoming_delivery_id]
+      IncomingDelivery.find(params[:incoming_delivery_id])
+    elsif params[:id]
+      DeliveryItem.find(params[:id]).incoming_delivery
+    end
   end
 
-  def set_incoming_delivery
-    @incoming_delivery = IncomingDelivery.find(params[:incoming_delivery_id]) if params[:incoming_delivery_id]
+  def set_project
+    @project = @incoming_delivery.project if @incoming_delivery
+  end
+
+  def set_delivery_item
+    @delivery_item = if params[:id]
+      DeliveryItem.find(params[:id])
+    else
+      @incoming_delivery.delivery_items.build
+    end
   end
 
   def delivery_item_params
     params.require(:delivery_item).permit(
-      :tag_number, :batch_number, :quantity_received,
-      :item_description, specifications: {}
+      :tag_number,
+      :batch_number,
+      :quantity_received,
+      :item_description,
+      specifications: {}
     )
   end
 end

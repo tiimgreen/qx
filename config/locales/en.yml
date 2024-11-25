@@ -28,6 +28,10 @@ en:
     edit: "Edit"
     delete: "Delete"
     confirm: "Are you sure?"
+    messages:
+      created: "%{model} was successfully created."
+      updated: "%{model} was successfully updated."
+      deleted: "%{model} was successfully deleted."
   flash:
     success: "Operation completed successfully"
     error: "An error occurred"
