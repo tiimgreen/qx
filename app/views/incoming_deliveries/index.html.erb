@@ -46,7 +46,7 @@
         <tbody>
           <% @incoming_deliveries.each do |delivery| %>
             <tr>
-              <td><%= delivery.work_location.location_type %></td>
+              <td><%= t("work_locations.types.#{delivery.work_location.location_type}") %></td>
               <td><%= delivery.delivery_note_number %></td>
               <td><%= link_to delivery.order_number, project_incoming_delivery_path(@project, delivery) %></td>
               <td><%= l(delivery.delivery_date, format: :long) %></td>
