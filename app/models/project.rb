@@ -11,7 +11,8 @@ class Project < ApplicationRecord
 
     term = "%#{search_term}%"
     where(
-      "projects.name LIKE :search OR
+      "projects.project_number LIKE :search OR
+       projects.name LIKE :search OR
        projects.description LIKE :search OR
        projects.project_manager LIKE :search OR
        projects.client_name LIKE :search",

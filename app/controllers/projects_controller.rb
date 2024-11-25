@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @sectors = Sector.where.not(id: Sector.find_by(key: :project).id)
   end
 
   def new

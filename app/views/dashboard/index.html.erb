@@ -28,52 +28,5 @@
       </div>
     </div>
 
-    <!-- Incoming Goods Card -->
-    <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">
-            <i class="bi bi-box-seam"></i> <%= t('navigation.menu.incoming_goods.title') %>
-          </h5>
-          <div class="row mb-3">
-            <div class="col-6">
-              <small class="text-muted"><%= t('dashboard.recent_deliveries') %></small>
-              <div class="h3"><%= IncomingDelivery.count %></div>
-            </div>
-            <div class="col-6">
-              <small class="text-muted"><%= t('dashboard.certificates_count') %></small>
-              <div class="h3"><%= MaterialCertificate.count %></div>
-            </div>
-          </div>
-          <%= link_to incoming_deliveries_path, class: 'btn btn-primary' do %>
-            <i class="bi bi-list"></i> <%= t('navigation.menu.incoming_goods.deliveries') %>
-          <% end %>
-        </div>
-      </div>
-    </div>
 
-    <!-- Quality Control Card -->
-    <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">
-            <i class="bi bi-clipboard-check"></i> <%= t('navigation.menu.quality_control.title') %>
-          </h5>
-          <div class="row mb-3">
-            <div class="col-6">
-              <small class="text-muted"><%= t('dashboard.inspections') %></small>
-              <div class="h3"><%= QualityInspection.count %></div>
-            </div>
-            <div class="col-6">
-              <small class="text-muted"><%= t('dashboard.measurements_today') %></small>
-              <div class="h3"><%= RoughnessMeasurement.where('created_at >= ?', Date.today).count %></div>
-            </div>
-          </div>
-          <%= link_to quality_inspections_path, class: 'btn btn-primary' do %>
-            <i class="bi bi-search"></i> <%= t('navigation.menu.quality_control.quality_inspections') %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

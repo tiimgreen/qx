@@ -1,16 +1,15 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  devise_for :users
-  devise_for :admins
-  authenticate :admin do
-    mount RailsAdmin::Engine => "/admin", as: "rails_admin"
-  end
-
   patch "/:locale", to: "application#switch_locale"
 
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
     get "/dashboard", to: "dashboard#index"
 
+    devise_for :users
+    devise_for :admins
+    authenticate :admin do
+      mount RailsAdmin::Engine => "/admin", as: "rails_admin"
+    end
     # Add standalone route for material certificates index
     resources :material_certificates, only: [ :index ]
 

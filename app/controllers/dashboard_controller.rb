@@ -4,7 +4,8 @@ class DashboardController < ApplicationController
   layout "dashboard_layout"
 
   def index
-    @sectors = current_user.sectors.distinct
+    @sectors = Sector.all
+    # @sectors = current_user.sectors.distinct
   end
 
   private

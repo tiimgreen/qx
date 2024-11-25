@@ -13,7 +13,7 @@ de:
         title: "Projekte"
         list: "Projekte auflisten"
         new: "Neues Projekt"
-      incoming_goods:
+      incoming_deliveries:
         title: "Wareneingänge"
         deliveries: "Lieferungen"
         new_delivery: "Neue Lieferung"
@@ -88,3 +88,45 @@ de:
       download: "Herunterladen"
       close: "Schließen"
       delivery_notes: "Lieferscheine"
+  sectors:
+    project: "Projekt"
+    project_description: "Projektbezogene Aktivitäten"
+
+    isometric: "Isometrie"
+    isometric_description: "Erfassung und Verwaltung von Isometrien"
+
+    incoming_delivery: "Wareneingang"
+    incoming_delivery_description: "Warenannahme und Eingangskontrolle"
+
+    work_preparation: "Arbeitsvorbereitung"
+    work_preparation_description: "Vorbereitung der Arbeitsprozesse"
+
+    prefabrication: "Vorfertigung"
+    prefabrication_description: "Bauteilefertigung"
+
+    welding: "Schweissen"
+    welding_description: "Schweissprozesse und Dokumentation"
+
+    final_inspection: "Endkontrolle"
+    final_inspection_description: "Qualitätskontrolle und Endprüfungen"
+
+    transport: "Transport"
+    transport_description: "Logistik und Transport"
+
+    site_delivery: "Baustellenlieferung"
+    site_delivery_description: "Verwaltung der Baustellenlieferungen"
+
+    assemblie: "Montage"
+    assemblie_description: "Bauteilmontage und Installation"
+
+    as_built: "As-Built"
+    as_built_description: "Finale Dokumentation des Bauzustands"
+
+    testing_and_pressur: "Prüfung und Druck"
+    testing_and_pressur_description: "Systemprüfung und Drucktests"
+
+    documentation: "Dokumentation"
+    documentation_description: "Projektdokumentation und Aufzeichnungen"
+
+    material_certificate: "Materialzertifikat"
+    material_certificate_description: "Materialzertifizierung und Dokumentation"
