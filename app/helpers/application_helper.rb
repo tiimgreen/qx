@@ -40,6 +40,11 @@ module ApplicationHelper
     end
   end
 
+  def sort_indicator(column)
+    return unless params[:sort] == column
+    params[:direction] == "asc" ? "\u2191" : "\u2193"
+  end
+
   private
 
   def infer_field_type(object, field)

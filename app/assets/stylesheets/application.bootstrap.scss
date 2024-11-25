@@ -5,6 +5,16 @@
 $flag-icons-path: "/assets/flags";
 @import "flag-icons/sass/flag-icons";
 
+th a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
 // Custom breadcrumb styling
 .breadcrumb {
   background: none;

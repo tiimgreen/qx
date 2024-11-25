@@ -33,12 +33,36 @@
     <table class="table table-striped table-hover table-sm">
         <thead>
           <tr>
-            <th><%= t('activerecord.attributes.incoming_delivery.work_location') %></th>
-            <th><%= t('activerecord.attributes.incoming_delivery.delivery_note_number') %></th>
-            <th><%= t('activerecord.attributes.incoming_delivery.order_number') %></th>
-            <th><%= t('activerecord.attributes.incoming_delivery.delivery_date') %></th>
-            <th><%= t('activerecord.attributes.incoming_delivery.supplier_name') %></th>
-            <th><%= t('.items_count') %></th>
+            <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.work_location'),
+                  request.params.merge(sort: 'work_location_id', direction: (params[:sort] == 'work_location_id' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('work_location_id') %>
+            </th>
+            <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.delivery_note_number'),
+                  request.params.merge(sort: 'delivery_note_number', direction: (params[:sort] == 'delivery_note_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('delivery_note_number') %>
+            </th>
+            <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.order_number'),
+                  request.params.merge(sort: 'order_number', direction: (params[:sort] == 'order_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('order_number') %>
+            </th>
+            <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.delivery_date'),
+                  request.params.merge(sort: 'delivery_date', direction: (params[:sort] == 'delivery_date' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('delivery_date') %>
+            </th>
+            <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.supplier_name'),
+                  request.params.merge(sort: 'supplier_name', direction: (params[:sort] == 'supplier_name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('supplier_name') %>
+            </th>
+            <th>
+              <%= link_to t('.items_count'),
+                  request.params.merge(sort: 'delivery_items_count', direction: (params[:sort] == 'delivery_items_count' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('delivery_items_count') %>
+            </th>
             <th class="text-end"><%= t('common.labels.actions') %></th>
           </tr>
         </thead>

@@ -2,7 +2,7 @@ class IncomingDelivery < ApplicationRecord
   belongs_to :project
   belongs_to :work_location
   has_many_attached :delivery_notes
-  has_many :delivery_items, dependent: :destroy
+  has_many :delivery_items, counter_cache: true, dependent: :destroy
   has_many :missing_delivery_items, dependent: :destroy
   has_many :material_certificates, through: :delivery_items
 
@@ -16,8 +16,8 @@ class IncomingDelivery < ApplicationRecord
 
     term = "%#{search_term}%"
     left_joins(:project)
-      .where(
-        "incoming_deliveries.order_number LIKE :search OR
+      .where("incoming_deliveries.delivery_note_number LIKE :search OR
+        incoming_deliveries.order_number LIKE :search OR
         incoming_deliveries.supplier_name LIKE :search OR
         projects.name LIKE :search OR
         projects.project_number LIKE :search",

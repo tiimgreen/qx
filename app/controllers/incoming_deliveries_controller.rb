@@ -4,15 +4,19 @@ class IncomingDeliveriesController < ApplicationController
   before_action :set_incoming_delivery, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @incoming_deliveries = if @project
+    base_scope = if @project
       @project.incoming_deliveries
     else
       IncomingDelivery.all
     end
-    @incoming_deliveries = @incoming_deliveries
-      .includes(:project)
+
+    sort_column = sort_params || "delivery_date"
+    sort_direction = params[:direction] || "desc"
+
+    @incoming_deliveries = base_scope
+      .includes(:project, :work_location)
       .search_by_term(params[:search])
-      .order(delivery_date: :desc)
+      .order(sort_column => sort_direction)
   end
 
   def show
@@ -58,6 +62,18 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   private
+
+  def sort_params
+    allowed_columns = %w[
+      work_location_id
+      delivery_note_number
+      order_number
+      delivery_date
+      supplier_name
+      delivery_items_count
+    ]
+    params[:sort] if allowed_columns.include?(params[:sort])
+  end
 
   def set_project
     @project = Project.find_by(id: params[:project_id])
