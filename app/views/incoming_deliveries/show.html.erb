@@ -33,6 +33,11 @@
             <dt class="col-sm-4"><%= t('.order_number') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.order_number %></dd>
 
+            <dt class="col-sm-4"><%= t('.work_location') %></dt>
+            <dd class="col-sm-8"><%= t("work_locations.types.#{@incoming_delivery.work_location.location_type}") %></dd>
+            <dt class="col-sm-4"><%= t('.delivery_note_number') %></dt>
+            <dd class="col-sm-8"><%= @incoming_delivery.delivery_note_number %></dd>
+
             <dt class="col-sm-4"><%= t('.delivery_date') %></dt>
             <dd class="col-sm-8"><%= l(@incoming_delivery.delivery_date, format: :long) %></dd>
 

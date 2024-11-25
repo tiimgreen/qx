@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_25_010541) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_25_050015) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -83,8 +83,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_010541) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "delivery_note_number"
+    t.integer "work_location_id"
+    t.index ["delivery_note_number"], name: "index_incoming_deliveries_on_delivery_note_number"
     t.index ["order_number"], name: "index_incoming_deliveries_on_order_number"
     t.index ["project_id"], name: "index_incoming_deliveries_on_project_id"
+    t.index ["work_location_id"], name: "index_incoming_deliveries_on_work_location_id"
   end
 
   create_table "inspection_defects", force: :cascade do |t|
@@ -226,9 +230,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_010541) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "work_locations", force: :cascade do |t|
+    t.string "key"
+    t.string "name"
+    t.string "location_type"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "incoming_deliveries", "projects"
+  add_foreign_key "incoming_deliveries", "work_locations"
   add_foreign_key "inspection_defects", "quality_inspections"
   add_foreign_key "material_certificate_items", "delivery_items"
   add_foreign_key "material_certificate_items", "material_certificates"

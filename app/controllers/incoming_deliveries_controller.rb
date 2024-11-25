@@ -83,6 +83,8 @@ class IncomingDeliveriesController < ApplicationController
       :order_number,
       :supplier_name,
       :notes,
+      :work_location_id,
+      :delivery_note_number,
       delivery_notes: []
     )
   end

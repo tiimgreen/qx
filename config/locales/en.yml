@@ -128,3 +128,8 @@ en:
     documentation_description: "Project documentation and records"
     material_certificate: "Material Certificate"
     material_certificate_description: "Material certification and documentation"
+  work_locations:
+    types:
+      workshop: "Workshop"
+      prefab_facility: "Prefabrication Facility"
+      construction_site: "Construction Site"

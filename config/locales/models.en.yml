@@ -20,6 +20,8 @@ en:
         project_id: "Project"
         delivery_date: "Delivery Date"
         order_number: "Order Number"
+        work_location: "Work Location"
+        delivery_note_number: "Delivery Note Number"
         supplier_name: "Supplier Name"
         notes: "Notes"
         delivery_note: "Delivery Note"
@@ -53,3 +55,9 @@ en:
         measurement_parameters: "Parameters"
         notes: "Notes"
         measurement_reports: "Reports"
+    errors:
+      models:
+        incoming_delivery:
+          attributes:
+            order_number:
+              taken: "has already been taken"
