@@ -77,10 +77,27 @@ class DeliveryItemsController < ApplicationController
 
   def delivery_item_params
     params.require(:delivery_item).permit(
+      :name,
       :tag_number,
       :batch_number,
-      :quantity_received,
+      :actual_quantity,
+      :target_quantity,
+      :quantity_check_status,
+      :quantity_check_comment,
+      :dimension_check_status,
+      :dimension_check_comment,
+      :visual_check_status,
+      :visual_check_comment,
+      :vt2_check_status,
+      :vt2_check_comment,
+      :ra_check_status,
+      :ra_check_comment,
       :item_description,
+      quantity_check_images: [],
+      dimension_check_images: [],
+      visual_check_images: [],
+      vt2_check_images: [],
+      ra_check_images: [],
       specifications: {}
     )
   end

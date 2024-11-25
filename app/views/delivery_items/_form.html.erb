@@ -1,8 +1,9 @@
-<%= form_with(model: [@incoming_delivery, @delivery_item].compact, local: true, class: 'needs-validation') do |f| %>
+<%= form_with(model: [@project, @incoming_delivery, @delivery_item].compact,
+              local: true,
+              class: 'needs-validation') do |f| %>
   <% if @delivery_item.errors.any? %>
     <div class="alert alert-danger">
-      <h6><%= t('delivery_items.form.errors.header', count: @delivery_item.errors.count) %></h6>
-      <ul>
+      <h6><%= t('delivery_items.form.errors.header', count: @delivery_item.errors.count) %></h6><ul>
         <% @delivery_item.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
@@ -13,6 +14,10 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
+        <%= f.label :name, t('activerecord.attributes.delivery_item.name'), class: 'form-label' %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="mb-3">
         <%= f.label :tag_number, t('activerecord.attributes.delivery_item.tag_number'), class: 'form-label' %>
         <%= f.text_field :tag_number, class: 'form-control' %>
       </div>
@@ -21,10 +26,14 @@
         <%= f.label :batch_number, t('activerecord.attributes.delivery_item.batch_number'), class: 'form-label' %>
         <%= f.text_field :batch_number, class: 'form-control' %>
       </div>
+      <div class="mb-3">
+        <%= f.label :target_quantity, t('activerecord.attributes.delivery_item.target_quantity'), class: 'form-label' %>
+        <%= f.number_field :target_quantity, class: 'form-control' %>
+      </div>
 
       <div class="mb-3">
-        <%= f.label :quantity_received, t('activerecord.attributes.delivery_item.quantity_received'), class: 'form-label' %>
-        <%= f.number_field :quantity_received, class: 'form-control' %>
+        <%= f.label :actual_quantity, t('activerecord.attributes.delivery_item.actual_quantity'), class: 'form-label' %>
+        <%= f.number_field :actual_quantity, class: 'form-control' %>
       </div>
     </div>
 
@@ -61,6 +70,74 @@
     </div>
   </div>
 
+  <div class="row">
+    <h3 class="my-5"><%= t('.quality_control') %></h3>
+
+    <div class="col-md-6">
+      <!-- Quantity Check -->
+      <div class="mb-5">
+        <div class="form-check">
+          <%= f.check_box :quantity_check_status, class: 'form-check-input' %>
+          <%= f.label :quantity_check_status, t('activerecord.attributes.delivery_item.quantity_check_status'), class: 'form-check-label' %>
+        </div>
+        <%= f.text_area :quantity_check_comment, class: 'form-control mt-2', rows: 2,
+            placeholder: t('activerecord.attributes.delivery_item.quantity_check_comment') %>
+        <small class="text-muted"><%= t('common.image_upload_note') %></small>
+        <%= f.file_field :quantity_check_images, multiple: true, class: 'form-control mt-2' %>
+      </div>
+
+      <!-- Dimension Check -->
+      <div class="mb-5">
+        <div class="form-check">
+          <%= f.check_box :dimension_check_status, class: 'form-check-input' %>
+          <%= f.label :dimension_check_status, t('activerecord.attributes.delivery_item.dimension_check_status'), class: 'form-check-label' %>
+        </div>
+        <%= f.text_area :dimension_check_comment, class: 'form-control mt-2', rows: 2,
+            placeholder: t('activerecord.attributes.delivery_item.dimension_check_comment') %>
+        <small class="text-muted"><%= t('common.image_upload_note') %></small>
+        <%= f.file_field :dimension_check_images, multiple: true, class: 'form-control mt-2' %>
+      </div>
+
+      <!-- Visual Check -->
+      <div class="mb-5">
+        <div class="form-check">
+          <%= f.check_box :visual_check_status, class: 'form-check-input' %>
+          <%= f.label :visual_check_status, t('activerecord.attributes.delivery_item.visual_check_status'), class: 'form-check-label' %>
+        </div>
+        <%= f.text_area :visual_check_comment, class: 'form-control mt-2', rows: 2,
+            placeholder: t('activerecord.attributes.delivery_item.visual_check_comment') %>
+        <small class="text-muted"><%= t('common.image_upload_note') %></small>
+        <%= f.file_field :visual_check_images, multiple: true, class: 'form-control mt-2' %>
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+      <!-- VT2 Check -->
+      <div class="mb-5">
+        <div class="form-check">
+          <%= f.check_box :vt2_check_status, class: 'form-check-input' %>
+          <%= f.label :vt2_check_status, t('activerecord.attributes.delivery_item.vt2_check_status'), class: 'form-check-label' %>
+        </div>
+        <%= f.text_area :vt2_check_comment, class: 'form-control mt-2', rows: 2,
+            placeholder: t('activerecord.attributes.delivery_item.vt2_check_comment') %>
+        <small class="text-muted"><%= t('common.image_upload_note') %></small>
+        <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control mt-2' %>
+      </div>
+
+      <!-- Ra Check -->
+      <div class="mb-5">
+        <div class="form-check">
+          <%= f.check_box :ra_check_status, class: 'form-check-input' %>
+          <%= f.label :ra_check_status, t('activerecord.attributes.delivery_item.ra_check_status'), class: 'form-check-label' %>
+        </div>
+        <%= f.text_area :ra_check_comment, class: 'form-control mt-2', rows: 2,
+            placeholder: t('activerecord.attributes.delivery_item.ra_check_comment') %>
+        <small class="text-muted"><%= t('common.image_upload_note') %></small>
+        <%= f.file_field :ra_check_images, multiple: true, class: 'form-control mt-2' %>
+      </div>
+    </div>
+  </div>
   <div class="form-actions">
     <%= f.submit t('.submit'), class: 'btn btn-primary' %>
     <%= link_to t('.cancel'), :back, class: 'btn btn-secondary' %>

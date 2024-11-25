@@ -26,6 +26,10 @@ de:
       value_placeholder: "Wert"
       submit: "Speichern"
       cancel: "Abbrechen"
+      quality_control: "Qualitätskontrolle"
+      target_quantity: "Soll-Ist-Menge"
+      actual_quantity: "Ist-Menge"
+      name: "Name"
     buttons:
       view: "Anzeigen"
       edit: "Bearbeiten"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_25_054339) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_25_060642) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -65,14 +65,30 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_054339) do
     t.integer "incoming_delivery_id", null: false
     t.string "tag_number"
     t.string "batch_number", null: false
-    t.integer "quantity_received", null: false
     t.string "item_description"
     t.text "specifications"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.integer "actual_quantity"
+    t.integer "target_quantity"
+    t.boolean "quantity_check_status", default: false
+    t.text "quantity_check_comment"
+    t.boolean "dimension_check_status", default: false
+    t.text "dimension_check_comment"
+    t.boolean "visual_check_status", default: false
+    t.text "visual_check_comment"
+    t.boolean "vt2_check_status", default: false
+    t.text "vt2_check_comment"
+    t.boolean "ra_check_status", default: false
+    t.text "ra_check_comment"
+    t.datetime "completion_time"
+    t.datetime "total_time"
+    t.integer "user_id"
     t.index ["batch_number"], name: "index_delivery_items_on_batch_number"
     t.index ["incoming_delivery_id", "tag_number"], name: "index_delivery_items_on_incoming_delivery_id_and_tag_number", unique: true, where: "tag_number IS NOT NULL"
     t.index ["incoming_delivery_id"], name: "index_delivery_items_on_incoming_delivery_id"
+    t.index ["user_id"], name: "index_delivery_items_on_user_id"
   end
 
   create_table "incoming_deliveries", force: :cascade do |t|

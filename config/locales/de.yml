@@ -32,6 +32,8 @@ de:
       created: "%{model} wurde erfolgreich erstellt."
       updated: "%{model} wurde erfolgreich aktualisiert."
       deleted: "%{model} wurde erfolgreich gelöscht."
+    image_upload_note: "Bei Bedarf laden Sie bitte unten ein Bild hoch"
+    comment: "Kommentar"
   flash:
     success: "Vorgang erfolgreich abgeschlossen"
     error: "Ein Fehler ist aufgetreten"
@@ -126,3 +128,6 @@ de:
       workshop: "Werkstatt"
       prefab_facility: "Prefab"
       construction_site: "Baustelle"
+  status:
+    passed: "Bestanden"
+    failed: "Nicht bestanden"

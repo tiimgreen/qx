@@ -26,6 +26,10 @@ en:
       value_placeholder: "Value"
       submit: "Save"
       cancel: "Cancel"
+      quality_control: "Quality Control"
+      target_quantity: "Target Quantity"
+      actual_quantity: "Actual Quantity"
+      name: "Name"
     buttons:
       view: "View"
       edit: "Edit"

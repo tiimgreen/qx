@@ -45,6 +45,16 @@ module ApplicationHelper
     params[:direction] == "asc" ? "\u2191" : "\u2193"
   end
 
+  def status_label(boolean_value)
+    if boolean_value
+      content_tag(:span, t("status.passed"),
+        class: "badge bg-success text-white")
+    else
+      content_tag(:span, t("status.failed"),
+        class: "badge bg-danger text-white")
+    end
+  end
+
   private
 
   def infer_field_type(object, field)
