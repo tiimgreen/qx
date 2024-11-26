@@ -23,7 +23,7 @@ class IncomingDeliveriesController < ApplicationController
 
   def show
     if @project && @incoming_delivery
-      @delivery_items = @incoming_delivery.delivery_items.includes(:quality_inspections)
+      @delivery_items = @incoming_delivery.delivery_items.includes(:quality_inspections).order(created_at: :desc)
     else
       flash[:alert] = "Delivery not found"
       redirect_to project_incoming_deliveries_path(@project)
@@ -54,7 +54,7 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
-    attributes = process_hold_attributes(@incoming_delivery, incoming_delivery_params.to_h)
+      attributes = process_hold_attributes(@incoming_delivery, incoming_delivery_params.to_h)
 
       if @incoming_delivery.update(attributes)
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
@@ -85,21 +85,6 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   private
-
-  def set_on_hold_date(delivery)
-    incoming_delivery_attributes = incoming_delivery_params.to_h
-    new_on_hold = incoming_delivery_attributes[:on_hold] == "1"
-    current_on_hold = delivery.on_hold?
-
-    if new_on_hold && !current_on_hold
-      # Switching from not on hold to on hold
-      delivery.on_hold_date = Time.current
-    elsif !new_on_hold && current_on_hold
-      # Switching from on hold to not on hold
-      delivery.on_hold_date = nil
-      delivery.on_hold_reason = nil
-    end
-  end
 
   def sort_params
     allowed_columns = %w[

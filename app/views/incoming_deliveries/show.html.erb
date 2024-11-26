@@ -29,11 +29,13 @@
       <div class="row">
         <div class="col-md-6">
           <dl class="row">
+
             <dt class="col-sm-4"><%= t('.order_number') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.order_number %></dd>
 
             <dt class="col-sm-4"><%= t('.work_location') %></dt>
             <dd class="col-sm-8"><%= t("work_locations.types.#{@incoming_delivery.work_location.location_type}") %></dd>
+
             <dt class="col-sm-4"><%= t('.delivery_note_number') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.delivery_note_number %></dd>
 
@@ -52,17 +54,7 @@
             <dt class="col-sm-4"><%= t('.completed') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.completed ? t('common.yes') : t('common.no') %></dd>
 
-
-            <dt class="col-sm-4"><%= t('.on_hold') %></dt>
-            <dd class="col-sm-8"><%= @incoming_delivery.on_hold ? t('common.yes') : t('common.no') %></dd>
-
-
-            <dt class="col-sm-4"><%= t('.on_hold_reason') %></dt>
-            <dd class="col-sm-8"><%= @incoming_delivery.on_hold_reason %></dd>
-
-
-            <dt class="col-sm-4"><%= t('.on_hold_at') %></dt>
-            <dd class="col-sm-8"><%= l(@incoming_delivery.on_hold_date, format: :long) if @incoming_delivery.on_hold_date %></dd>
+          <%= render 'hold_info', record: @incoming_delivery %>
           </dl>
         </div>
 

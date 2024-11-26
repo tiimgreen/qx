@@ -1,0 +1,10 @@
+<dt class="col-sm-4"><%= t('common.messages.on_hold') %></dt>
+<dd class="col-sm-8"><%= record.on_hold ? t('common.yes') : t('common.no') %></dd>
+
+<% if record.on_hold? %>
+  <dt class="col-sm-4"><%= t('common.messages.on_hold_reason') %></dt>
+  <dd class="col-sm-8"><%= record.on_hold_reason %></dd>
+
+  <dt class="col-sm-4"><%= t('common.messages.on_hold_at') %></dt>
+  <dd class="col-sm-8"><%= l(record.on_hold_date, format: :long) if record.on_hold_date %></dd>
+<% end %>

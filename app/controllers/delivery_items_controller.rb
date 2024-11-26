@@ -1,5 +1,7 @@
 # app/controllers/delivery_items_controller.rb
 class DeliveryItemsController < ApplicationController
+  include HoldableController
+
   layout "dashboard_layout"
   before_action :set_incoming_delivery
   before_action :set_project
@@ -28,7 +30,9 @@ class DeliveryItemsController < ApplicationController
   end
 
   def create
-    @delivery_item = @incoming_delivery.delivery_items.build(delivery_item_params)
+    attributes = process_hold_attributes(@delivery_item, delivery_item_params.to_h)
+
+    @delivery_item = @incoming_delivery.delivery_items.build(attributes)
     @delivery_item.user = current_user
 
     if @delivery_item.save
@@ -64,8 +68,8 @@ class DeliveryItemsController < ApplicationController
       :vt2_check_images,
       :ra_check_images
     )
-
-    if @delivery_item.update(params_without_images)
+    attributes = process_hold_attributes(@delivery_item, params_without_images)
+    if @delivery_item.update(attributes)
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                   notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
     else
@@ -158,6 +162,7 @@ class DeliveryItemsController < ApplicationController
       :ra_check_status,
       :ra_check_comment,
       :user_id,
+      *holdable_params,
       :item_description,
       {
         quantity_check_images: [],

@@ -44,6 +44,8 @@
 
             <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.created_by') %></dt>
             <dd class="col-sm-8"><%= @delivery_item.user&.name %></dd>
+
+            <%= render 'hold_info', record: @delivery_item %>
           </dl>
         </div>
       </div>

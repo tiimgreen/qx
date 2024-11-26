@@ -1,4 +1,6 @@
 class DeliveryItem < ApplicationRecord
+  include Holdable
+
   belongs_to :incoming_delivery
   belongs_to :user, optional: true
 

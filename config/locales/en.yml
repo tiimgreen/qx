@@ -37,6 +37,9 @@ en:
       hold_failed: "Failed to put %{model} on hold"
       removed_from_hold: "%{model} has been removed from hold"
       remove_hold_failed: "Failed to remove %{model} from hold"
+      on_hold: "On Hold"
+      on_hold_reason: "Hold Reason"
+      on_hold_at: "On Hold Since"
 
       file_deleted: "File was successfully deleted"
       unauthorized: "You are not authorized to perform this action"
