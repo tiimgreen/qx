@@ -39,8 +39,9 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   def create
+    @incoming_delivery = @project.incoming_deliveries.build
     attributes = process_hold_attributes(incoming_delivery_params.to_h)
-    @incoming_delivery = @project.incoming_deliveries.build(attributes)
+    @incoming_delivery.assign_attributes(attributes)
     @incoming_delivery.user = current_user
 
     if @incoming_delivery.save
@@ -55,7 +56,7 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
-      attributes = process_hold_attributes(incoming_delivery_params.to_h, @incoming_delivery)
+      attributes = process_hold_attributes(incoming_delivery_params.to_h)
 
       if @incoming_delivery.update(attributes)
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),

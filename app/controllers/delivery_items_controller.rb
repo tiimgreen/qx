@@ -1,6 +1,6 @@
-# app/controllers/delivery_items_controller.rb
 class DeliveryItemsController < ApplicationController
   include HoldableController
+  include CompletableController
 
   layout "dashboard_layout"
   before_action :set_incoming_delivery
@@ -17,7 +17,7 @@ class DeliveryItemsController < ApplicationController
     @delivery_item = DeliveryItem.includes(:quality_inspections,
                                           :roughness_measurement,
                                           :material_certificates)
-                              .find(params[:id])
+                                .find(params[:id])
     @quality_inspections = @delivery_item.quality_inspections.includes(:inspection_defects)
     @roughness_measurement = @delivery_item.roughness_measurement
   end
@@ -30,9 +30,9 @@ class DeliveryItemsController < ApplicationController
   end
 
   def create
-    attributes = process_hold_attributes(@delivery_item, delivery_item_params.to_h)
-
-    @delivery_item = @incoming_delivery.delivery_items.build(attributes)
+    @delivery_item = @incoming_delivery.delivery_items.build
+    attributes = process_hold_attributes(delivery_item_params.to_h)
+    @delivery_item.assign_attributes(attributes)
     @delivery_item.user = current_user
 
     if @delivery_item.save
@@ -44,36 +44,22 @@ class DeliveryItemsController < ApplicationController
   end
 
   def update
-    if delivery_item_params[:quantity_check_images].present?
-      @delivery_item.quantity_check_images.attach(delivery_item_params[:quantity_check_images])
-    end
-    if delivery_item_params[:dimension_check_images].present?
-      @delivery_item.dimension_check_images.attach(delivery_item_params[:dimension_check_images])
-    end
-    if delivery_item_params[:visual_check_images].present?
-      @delivery_item.visual_check_images.attach(delivery_item_params[:visual_check_images])
-    end
-    if delivery_item_params[:vt2_check_images].present?
-      @delivery_item.vt2_check_images.attach(delivery_item_params[:vt2_check_images])
-    end
-    if delivery_item_params[:ra_check_images].present?
-      @delivery_item.ra_check_images.attach(delivery_item_params[:ra_check_images])
-    end
-
-    # Remove image parameters before updating other attributes
-    params_without_images = delivery_item_params.except(
-      :quantity_check_images,
-      :dimension_check_images,
-      :visual_check_images,
-      :vt2_check_images,
-      :ra_check_images
-    )
-    attributes = process_hold_attributes(@delivery_item, params_without_images)
-    if @delivery_item.update(attributes)
-      redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
+    if params[:complete_delivery_item]
+      complete
     else
-      render :edit, status: :unprocessable_entity
+      # Handle image attachments first
+      attach_images if images_present_in_params?
+
+      # Process remaining attributes
+      params_without_images = remove_image_params(delivery_item_params)
+      attributes = process_hold_attributes(params_without_images.to_h)
+
+      if @delivery_item.update(attributes)
+        redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                  notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 
@@ -83,21 +69,19 @@ class DeliveryItemsController < ApplicationController
                 notice: t("common.messages.deleted", model: DeliveryItem.model_name.human)
   end
 
+  def complete
+    complete_resource(
+      @delivery_item,
+      project_incoming_delivery_delivery_item_path(@project, @incoming_delivery, @delivery_item),
+      delivery_item_params
+    )
+  end
+
   def delete_image
     image_type = params[:image_type]
-
-    valid_image_types = %w[
-      quantity_check_images
-      dimension_check_images
-      visual_check_images
-      vt2_check_images
-      ra_check_images
-    ]
-
-    return redirect_to_delivery_item(alert: t("common.messages.unauthorized")) unless valid_image_types.include?(image_type)
+    return handle_invalid_image_type unless valid_image_type?(image_type)
 
     image = @delivery_item.send(image_type).find_by(id: params[:image_id])
-
     if image
       image.purge
       redirect_to_delivery_item(notice: t("common.messages.file_deleted"))
@@ -117,7 +101,10 @@ class DeliveryItemsController < ApplicationController
   end
 
   def set_project
-    @project = @incoming_delivery.project if @incoming_delivery
+    @project = @incoming_delivery&.project
+    unless @project
+      redirect_to root_path, alert: t("common.messages.project_not_found")
+    end
   end
 
   def set_delivery_item
@@ -127,6 +114,38 @@ class DeliveryItemsController < ApplicationController
       @incoming_delivery.delivery_items.build
     end
   end
+
+  def attach_images
+    IMAGE_TYPES.each do |image_type|
+      if delivery_item_params[image_type].present?
+        @delivery_item.send(image_type).attach(delivery_item_params[image_type])
+      end
+    end
+  end
+
+  def images_present_in_params?
+    IMAGE_TYPES.any? { |type| delivery_item_params[type].present? }
+  end
+
+  def remove_image_params(params)
+    params.except(*IMAGE_TYPES)
+  end
+
+  def valid_image_type?(image_type)
+    IMAGE_TYPES.include?(image_type)
+  end
+
+  def handle_invalid_image_type
+    redirect_to_delivery_item(alert: t("common.messages.unauthorized"))
+  end
+
+  IMAGE_TYPES = %w[
+    quantity_check_images
+    dimension_check_images
+    visual_check_images
+    vt2_check_images
+    ra_check_images
+  ].freeze
 
   def delivery_item_path_params
     {
@@ -162,6 +181,7 @@ class DeliveryItemsController < ApplicationController
       :ra_check_status,
       :ra_check_comment,
       :user_id,
+      *completable_params,
       *holdable_params,
       :item_description,
       {
@@ -172,6 +192,6 @@ class DeliveryItemsController < ApplicationController
         ra_check_images: []
       },
       specifications: {}
-      )
+    )
   end
 end

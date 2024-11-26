@@ -72,10 +72,10 @@
       </div>
 
 
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center my-5">
         <%= f.submit t('incoming_deliveries.buttons.submit'), class: 'btn btn-primary' %>
         <%= link_to t('incoming_deliveries.buttons.cancel'), :back, class: 'btn btn-secondary' %>
-        <% unless @incoming_delivery.new_record? %>
+        <% unless @incoming_delivery.new_record? || @incoming_delivery.completed? || @incoming_delivery.on_hold? %>
           <%= f.submit t('incoming_deliveries.buttons.complete'),
                       name: 'complete_delivery',
                       class: 'btn btn-success' %>

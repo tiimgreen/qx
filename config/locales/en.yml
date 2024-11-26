@@ -25,6 +25,8 @@ en:
   common:
     save: "Save"
     cancel: "Cancel"
+    completed: "Completed"
+    complete: "Complete?"
     edit: "Edit"
     delete: "Delete"
     confirm: "Are you sure?"
@@ -154,4 +156,18 @@ en:
   status:
     passed: "Passed"
     failed: "Failed"
+  activerecord:
+    errors:
+      models:
+        delivery_item:
+          attributes:
+            actual_quantity:
+              blank: "Actual quantity can't be blank"
+              not_a_number: "Actual quantity must be a number"
+              greater_than: "Actual quantity must be greater than %{count}"
+            target_quantity:
+              blank: "Target quantity can't be blank"
+              not_a_number: "Target quantity must be a number"
+              greater_than: "Target quantity must be greater than %{count}"
+
 

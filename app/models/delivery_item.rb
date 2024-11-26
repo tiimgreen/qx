@@ -17,6 +17,9 @@ class DeliveryItem < ApplicationRecord
   has_many_attached :vt2_check_images
   has_many_attached :ra_check_images
 
+  validates :on_hold_date, presence: true, if: :on_hold?
+  validates :on_hold_reason, presence: true, if: :on_hold?
+
   validates :name, presence: true
   validates :tag_number, presence: true, uniqueness: { scope: :incoming_delivery_id }
   validates :batch_number, presence: true
@@ -25,6 +28,9 @@ class DeliveryItem < ApplicationRecord
 
 
   serialize :specifications, coder: JSON
+
+  before_save :ensure_hold_consistency
+
 
   scope :search_by_term, ->(search_term) {
     return all unless search_term.present?
@@ -37,4 +43,15 @@ class DeliveryItem < ApplicationRecord
       search: term
     )
   }
+
+  private
+
+  def ensure_hold_consistency
+    if on_hold?
+      self.on_hold_date ||= Time.current
+    else
+      self.on_hold_date = nil
+      self.on_hold_reason = nil
+    end
+  end
 end

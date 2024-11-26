@@ -25,6 +25,8 @@ de:
   common:
     save: "Speichern"
     cancel: "Abbrechen"
+    completed: "Abgeschlossen"
+    complete: "Abschließen?"
     edit: "Bearbeiten"
     delete: "Löschen"
     confirm: "Sind Sie sicher?"
@@ -148,3 +150,16 @@ de:
   status:
     passed: "Bestanden"
     failed: "Nicht bestanden"
+  activerecord:
+    errors:
+      models:
+        delivery_item:
+          attributes:
+            actual_quantity:
+              blank: "Ist-Menge darf nicht leer sein"
+              not_a_number: "Ist-Menge muss eine Zahl sein"
+              greater_than: "Ist-Menge muss größer als %{count} sein"
+            target_quantity:
+              blank: "Soll-Ist-Menge darf nicht leer sein"
+              not_a_number: "Soll-Ist-Menge muss eine Zahl sein"
+              greater_than: "Soll-Ist-Menge muss größer als %{count} sein"
