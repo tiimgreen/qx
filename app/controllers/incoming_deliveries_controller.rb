@@ -37,7 +37,7 @@ class IncomingDeliveriesController < ApplicationController
 
   def create
     @incoming_delivery = @project.incoming_deliveries.build(incoming_delivery_params)
-
+    @incoming_delivery.user = current_user
     if @incoming_delivery.save
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                   notice: "Delivery was successfully created."

@@ -1,8 +1,0 @@
-<% if missing_items&.any? %>
-  <%= render 'application/table',
-             records: missing_items,
-             columns: [:item_number, :description, :quantity, :unit, :created_at],
-             actions: [:show, :edit, :destroy] %>
-<% else %>
-  <p class="text-muted"><%= t('.no_missing_items') %></p>
-<% end %>

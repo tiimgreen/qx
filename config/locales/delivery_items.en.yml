@@ -5,7 +5,7 @@ en:
     edit:
       title: "Edit Delivery Item"
     show:
-      title: "Item Details"
+      title: "Delivery Item Details"
       specifications: "Specifications"
       no_specifications: "No specifications recorded"
       quality_inspections: "Quality Inspections"
@@ -16,6 +16,9 @@ en:
       no_measurement: "No roughness measurement recorded yet"
       inspections_performed: "%{count} performed"
       inspections_passed: "(%{count} passed)"
+      basic_info: "Basic Information"
+      description: "Description"
+      quality_checks: "Quality Checks"
     form:
       errors:
         header:

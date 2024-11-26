@@ -16,6 +16,9 @@ de:
       no_measurement: "Noch keine Rauheitsmessung erfasst"
       inspections_performed: "%{count} durchgeführt"
       inspections_passed: "(%{count} bestanden)"
+      basic_info: "Grundinformationen"
+      description: "Beschreibung"
+      quality_checks: "Qualitätsprüfungen"
     form:
       errors:
         header:

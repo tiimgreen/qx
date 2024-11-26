@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_25_060642) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_26_044733) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -102,9 +102,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_060642) do
     t.string "delivery_note_number"
     t.integer "work_location_id"
     t.integer "delivery_items_count", default: 0, null: false
+    t.integer "user_id"
     t.index ["delivery_note_number"], name: "index_incoming_deliveries_on_delivery_note_number"
     t.index ["order_number"], name: "index_incoming_deliveries_on_order_number"
     t.index ["project_id"], name: "index_incoming_deliveries_on_project_id"
+    t.index ["user_id"], name: "index_incoming_deliveries_on_user_id"
     t.index ["work_location_id"], name: "index_incoming_deliveries_on_work_location_id"
   end
 
@@ -142,16 +144,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_060642) do
     t.index ["project_id"], name: "index_material_certificates_on_project_id"
   end
 
-  create_table "missing_delivery_items", force: :cascade do |t|
-    t.integer "incoming_delivery_id", null: false
-    t.integer "expected_quantity", null: false
-    t.text "description", null: false
-    t.string "order_line_reference"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["incoming_delivery_id"], name: "index_missing_delivery_items_on_incoming_delivery_id"
-  end
-
   create_table "permissions", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -167,7 +159,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_060642) do
     t.datetime "updated_at", null: false
     t.string "project_manager"
     t.string "client_name"
+    t.integer "user_id"
     t.index ["project_number"], name: "index_projects_on_project_number", unique: true
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "quality_inspections", force: :cascade do |t|
@@ -259,12 +253,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_25_060642) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "incoming_deliveries", "projects"
+  add_foreign_key "incoming_deliveries", "users"
   add_foreign_key "incoming_deliveries", "work_locations"
   add_foreign_key "inspection_defects", "quality_inspections"
   add_foreign_key "material_certificate_items", "delivery_items"
   add_foreign_key "material_certificate_items", "material_certificates"
   add_foreign_key "material_certificates", "projects"
-  add_foreign_key "missing_delivery_items", "incoming_deliveries"
+  add_foreign_key "projects", "users"
   add_foreign_key "quality_inspections", "delivery_items"
   add_foreign_key "quality_inspections", "users", column: "inspector_id"
   add_foreign_key "sector_permissions", "permissions"

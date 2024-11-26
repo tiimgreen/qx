@@ -29,6 +29,7 @@ class DeliveryItemsController < ApplicationController
 
   def create
     @delivery_item = @incoming_delivery.delivery_items.build(delivery_item_params)
+    @delivery_item.user = current_user
 
     if @delivery_item.save
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),

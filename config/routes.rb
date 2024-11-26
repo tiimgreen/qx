@@ -18,13 +18,11 @@ Rails.application.routes.draw do
         resources :delivery_items do
           delete "delete_image", on: :member
         end
-        resources :missing_delivery_items, shallow: true
       end
     end
 
     resources :incoming_deliveries, only: [] do  # Changed from full resources to only: []
       resources :delivery_items, shallow: true
-      resources :missing_delivery_items, shallow: true
     end
 
     resources :delivery_items do
