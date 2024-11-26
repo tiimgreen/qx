@@ -40,16 +40,33 @@ class IncomingDeliveriesController < ApplicationController
     @incoming_delivery.user = current_user
     if @incoming_delivery.save
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: "Delivery was successfully created."
+                  notice: t("common.messages.created", model: "Delivery ")
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if @incoming_delivery.update(incoming_delivery_params)
+    if params[:complete_delivery]
+      complete
+    else
+      if @incoming_delivery.update(incoming_delivery_params)
+        redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                    notice: t("common.messages.updated", model: "Delivery")
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+  end
+
+  def complete
+    @incoming_delivery.assign_attributes(incoming_delivery_params)
+    @incoming_delivery.completed = true
+    @incoming_delivery.total_time = (Time.current - @incoming_delivery.created_at) / 60.0
+
+    if @incoming_delivery.save
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: "Delivery was successfully updated."
+                  notice: t("common.messages.completed", model: "Delivery")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -58,7 +75,7 @@ class IncomingDeliveriesController < ApplicationController
   def destroy
     @incoming_delivery.destroy
     redirect_to project_incoming_deliveries_path(@project),
-                notice: "Delivery was successfully deleted."
+                notice: t("common.messages.deleted", model: "Delivery")
   end
 
   private

@@ -48,6 +48,9 @@
 
             <dt class="col-sm-4"><%= t('.created_by') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.user&.name %></dd>
+
+            <dt class="col-sm-4"><%= t('.completed') %></dt>
+            <dd class="col-sm-8"><%= @incoming_delivery.completed ? t('common.yes') : t('common.no') %></dd>
           </dl>
         </div>
 

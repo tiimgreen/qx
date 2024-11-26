@@ -32,11 +32,15 @@ de:
       created: "%{model} wurde erfolgreich erstellt."
       updated: "%{model} wurde erfolgreich aktualisiert."
       deleted: "%{model} wurde erfolgreich gelöscht."
+      completed: "%{model} wurde erfolgreich abgeschlossen."
       file_deleted: "Datei wurde erfolgreich gelöscht"
       unauthorized: "Sie sind nicht berechtigt, diese Aktion auszuführen"
       confirm_delete: "Sind Sie sicher, dass Sie dieses Bild löschen möchten?"
+
     image_upload_note: "Bei Bedarf laden Sie bitte unten ein Bild hoch"
     comment: "Kommentar"
+    'yes': "Ja"
+    'no': "Nein"
   flash:
     success: "Vorgang erfolgreich abgeschlossen"
     error: "Ein Fehler ist aufgetreten"

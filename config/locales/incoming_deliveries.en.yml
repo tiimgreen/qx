@@ -32,6 +32,7 @@ en:
       work_location: "Work Location"
       delivery_note_number: "Delivery Note Number"
       created_by: "Created By"
+      completed: "Completed"
     index:
       title: "All Deliveries"
       title_for_project: "Deliveries for %{project}"
@@ -44,3 +45,4 @@ en:
       submit: "Save"
       delete: "Delete"
       view: "View"
+      complete: "Complete"
