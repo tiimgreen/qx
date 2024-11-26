@@ -79,22 +79,25 @@ class DeliveryItemsController < ApplicationController
   end
 
   def delete_image
-    image = ActiveStorage::Attachment.find(params[:image_id])
     image_type = params[:image_type]
 
-    if image.record == @delivery_item && @delivery_item.send(image_type).include?(image.blob)
+    valid_image_types = %w[
+      quantity_check_images
+      dimension_check_images
+      visual_check_images
+      vt2_check_images
+      ra_check_images
+    ]
+
+    return redirect_to_delivery_item(alert: t("common.messages.unauthorized")) unless valid_image_types.include?(image_type)
+
+    image = @delivery_item.send(image_type).find_by(id: params[:image_id])
+
+    if image
       image.purge
-      redirect_to project_incoming_delivery_delivery_item_path(
-        project_id: @project.id,
-        incoming_delivery_id: @incoming_delivery.id,
-        id: @delivery_item.id
-      ), notice: t("common.messages.file_deleted")
+      redirect_to_delivery_item(notice: t("common.messages.file_deleted"))
     else
-      redirect_to project_incoming_delivery_delivery_item_path(
-        project_id: @project.id,
-        incoming_delivery_id: @incoming_delivery.id,
-        id: @delivery_item.id
-      ), alert: t("common.messages.unauthorized")
+      redirect_to_delivery_item(alert: t("common.messages.unauthorized"))
     end
   end
 
@@ -120,33 +123,49 @@ class DeliveryItemsController < ApplicationController
     end
   end
 
-  def delivery_item_params
-  params.require(:delivery_item).permit(
-    :name,
-    :tag_number,
-    :batch_number,
-    :actual_quantity,
-    :target_quantity,
-    :quantity_check_status,
-    :quantity_check_comment,
-    :dimension_check_status,
-    :dimension_check_comment,
-    :visual_check_status,
-    :visual_check_comment,
-    :vt2_check_status,
-    :vt2_check_comment,
-    :ra_check_status,
-    :ra_check_comment,
-    :user_id,
-    :item_description,
+  def delivery_item_path_params
     {
-      quantity_check_images: [],
-      dimension_check_images: [],
-      visual_check_images: [],
-      vt2_check_images: [],
-      ra_check_images: []
-    },
-    specifications: {}
+      project_id: @project.id,
+      incoming_delivery_id: @incoming_delivery.id,
+      id: @delivery_item.id
+    }
+  end
+
+  def redirect_to_delivery_item(notice: nil, alert: nil)
+    redirect_to(
+      project_incoming_delivery_delivery_item_path(delivery_item_path_params),
+      notice: notice,
+      alert: alert
     )
+  end
+
+  def delivery_item_params
+    params.require(:delivery_item).permit(
+      :name,
+      :tag_number,
+      :batch_number,
+      :actual_quantity,
+      :target_quantity,
+      :quantity_check_status,
+      :quantity_check_comment,
+      :dimension_check_status,
+      :dimension_check_comment,
+      :visual_check_status,
+      :visual_check_comment,
+      :vt2_check_status,
+      :vt2_check_comment,
+      :ra_check_status,
+      :ra_check_comment,
+      :user_id,
+      :item_description,
+      {
+        quantity_check_images: [],
+        dimension_check_images: [],
+        visual_check_images: [],
+        vt2_check_images: [],
+        ra_check_images: []
+      },
+      specifications: {}
+      )
   end
 end
