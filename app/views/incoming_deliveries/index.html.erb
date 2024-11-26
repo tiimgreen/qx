@@ -63,6 +63,11 @@
                   request.params.merge(sort: 'delivery_items_count', direction: (params[:sort] == 'delivery_items_count' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
               <%= sort_indicator('delivery_items_count') %>
             </th>
+            <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.completed'),
+                  request.params.merge(sort: 'completed', direction: (params[:sort] == 'completed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('completed') %>
+            </th>
             <th><%= t('activerecord.attributes.incoming_delivery.created_by') %></th>
             <th class="text-end"><%= t('common.labels.actions') %></th>
           </tr>
@@ -77,6 +82,7 @@
               <td><%= l(delivery.delivery_date, format: :long) %></td>
               <td><%= delivery.supplier_name %></td>
               <td><%= delivery.delivery_items.count %></td>
+              <td><%= delivery.completed ? t('common.yes') : t('common.no') %></td>
               <td><%= delivery.user&.name %></td>
               <td class="text-end">
                 <div class="btn-group btn-group-sm">

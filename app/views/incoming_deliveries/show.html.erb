@@ -51,6 +51,18 @@
 
             <dt class="col-sm-4"><%= t('.completed') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.completed ? t('common.yes') : t('common.no') %></dd>
+
+
+            <dt class="col-sm-4"><%= t('.on_hold') %></dt>
+            <dd class="col-sm-8"><%= @incoming_delivery.on_hold ? t('common.yes') : t('common.no') %></dd>
+
+
+            <dt class="col-sm-4"><%= t('.on_hold_reason') %></dt>
+            <dd class="col-sm-8"><%= @incoming_delivery.on_hold_reason %></dd>
+
+
+            <dt class="col-sm-4"><%= t('.on_hold_at') %></dt>
+            <dd class="col-sm-8"><%= l(@incoming_delivery.on_hold_date, format: :long) if @incoming_delivery.on_hold_date %></dd>
           </dl>
         </div>
 

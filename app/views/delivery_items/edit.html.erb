@@ -2,7 +2,7 @@
   { text: @project.name, path: project_path(@project) },
   { text: t('navigation.menu.incoming_deliveries.deliveries'),
     path: project_incoming_deliveries_path(@project) },
-  { text: t('delivery_items.edit.title') }
+  { text: t('common.edit_title', model: DeliveryItem.model_name.human) }
 ] %>
 
 <%= render "form" %>

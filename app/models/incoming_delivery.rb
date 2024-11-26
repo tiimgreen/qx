@@ -1,4 +1,6 @@
 class IncomingDelivery < ApplicationRecord
+  include Holdable
+
   belongs_to :project
   belongs_to :work_location
   belongs_to :user, optional: true

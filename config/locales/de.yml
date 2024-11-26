@@ -33,6 +33,11 @@ de:
       updated: "%{model} wurde erfolgreich aktualisiert."
       deleted: "%{model} wurde erfolgreich gelöscht."
       completed: "%{model} wurde erfolgreich abgeschlossen."
+      put_on_hold: "%{model} wurde erfolgreich auf den Halt gesetzt"
+      hold_failed: "Fehler beim Setzen von %{model} auf den Halt"
+      removed_from_hold: "%{model} wurde erfolgreich aus dem Halt entfernt"
+      remove_hold_failed: "Fehler beim Entfernen von %{model} aus dem Halt"
+
       file_deleted: "Datei wurde erfolgreich gelöscht"
       unauthorized: "Sie sind nicht berechtigt, diese Aktion auszuführen"
       confirm_delete: "Sind Sie sicher, dass Sie dieses Bild löschen möchten?"
@@ -41,6 +46,8 @@ de:
     comment: "Kommentar"
     'yes': "Ja"
     'no': "Nein"
+    new_title: "Neu %{model}"
+    edit_title: "Bearbeiten %{model}"
   flash:
     success: "Vorgang erfolgreich abgeschlossen"
     error: "Ein Fehler ist aufgetreten"
