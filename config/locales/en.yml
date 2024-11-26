@@ -161,6 +161,12 @@ en:
       models:
         delivery_item:
           attributes:
+            name:
+              blank: "Name can't be blank"
+            tag_number:
+              blank: "TAG-Number can't be blank"
+            batch_number:
+              blank: "Batch number can't be blank"
             actual_quantity:
               blank: "Actual quantity can't be blank"
               not_a_number: "Actual quantity must be a number"

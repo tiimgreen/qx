@@ -155,6 +155,12 @@ de:
       models:
         delivery_item:
           attributes:
+            name:
+              blank: "Name darf nicht leer sein"
+            tag_number:
+              blank: "TAG-Nummer darf nicht leer sein"
+            batch_number:
+              blank: "Chargennummer darf nicht leer sein"
             actual_quantity:
               blank: "Ist-Menge darf nicht leer sein"
               not_a_number: "Ist-Menge muss eine Zahl sein"
