@@ -15,7 +15,9 @@ Rails.application.routes.draw do
 
     resources :projects do
       resources :incoming_deliveries do
-        resources :delivery_items
+        resources :delivery_items do
+          delete "delete_image", on: :member
+        end
         resources :missing_delivery_items, shallow: true
       end
     end

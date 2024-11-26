@@ -27,57 +27,129 @@
   </div>
 
   <div class="card-body">
-        <dl class="row">
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.name') %></dt>
-          <dd class="col-sm-8"><%= @delivery_item.name %></dd>
+    <!-- Basic Information -->
+    <div class="mb-4">
+      <h6 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h6>
+      <dl class="row">
+        <dt class="col-sm-3"><%= t('activerecord.attributes.delivery_item.name') %></dt>
+        <dd class="col-sm-9"><%= @delivery_item.name %></dd>
 
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.tag_number') %></dt>
-          <dd class="col-sm-8"><%= @delivery_item.tag_number %></dd>
+        <dt class="col-sm-3"><%= t('activerecord.attributes.delivery_item.tag_number') %></dt>
+        <dd class="col-sm-9"><%= @delivery_item.tag_number %></dd>
 
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.batch_number') %></dt>
-          <dd class="col-sm-8"><%= @delivery_item.batch_number %></dd>
+        <dt class="col-sm-3"><%= t('activerecord.attributes.delivery_item.batch_number') %></dt>
+        <dd class="col-sm-9"><%= @delivery_item.batch_number %></dd>
+      </dl>
+    </div>
 
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.quantity_check') %></dt>
-          <dd class="col-sm-8"><%= status_label(@delivery_item.quantity_check_status) %></dd>
+    <!-- Quality Checks -->
+    <div class="mb-4">
+      <h6 class="border-bottom pb-2 mb-3"><%= t('.quality_checks') %></h6>
 
-          <dt class="col-sm-4"><%= t('common.comment') %></dt>
-          <dd class="col-sm-8"><%= @delivery_item.quantity_check_comment %></dd>
+      <% checks = [
+        { name: 'quantity_check', status: @delivery_item.quantity_check_status, comment: @delivery_item.quantity_check_comment, images: @delivery_item.quantity_check_images },
+        { name: 'dimension_check', status: @delivery_item.dimension_check_status, comment: @delivery_item.dimension_check_comment, images: @delivery_item.dimension_check_images },
+        { name: 'visual_check', status: @delivery_item.visual_check_status, comment: @delivery_item.visual_check_comment, images: @delivery_item.visual_check_images },
+        { name: 'vt2_check', status: @delivery_item.vt2_check_status, comment: @delivery_item.vt2_check_comment, images: @delivery_item.vt2_check_images },
+        { name: 'ra_check', status: @delivery_item.ra_check_status, comment: @delivery_item.ra_check_comment, images: @delivery_item.ra_check_images }
+      ] %>
 
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.dimension_check') %></dt>
-          <dd class="col-sm-8"><%= status_label(@delivery_item.dimension_check_status) %></dd>
+      <div class="row g-3">
+        <% checks.each do |check| %>
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h6 class="card-title d-flex justify-content-between align-items-center">
+                  <%= t("activerecord.attributes.delivery_item.#{check[:name]}") %>
+                  <%= status_label(check[:status]) %>
+                </h6>
+                <% if check[:comment].present? %>
+                  <p class="card-text text-muted mb-0">
+                    <small><%= check[:comment] %></small>
+                  </p>
+                <% end %>
 
-          <dt class="col-sm-4"><%= t('common.comment') %></dt>
-          <dd class="col-sm-8"><%= @delivery_item.dimension_check_comment %></dd>
-
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.visual_check') %></dt>
-          <dd class="col-sm-8"><%= status_label(@delivery_item.visual_check_status) %></dd>
-
-          <dt class="col-sm-4"><%= t('common.comment') %></dt>
-          <dd class="col-sm-8"><%= @delivery_item.visual_check_comment %></dd>
-
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.vt2_check') %></dt>
-          <dd class="col-sm-8"><%= status_label(@delivery_item.vt2_check_status) %></dd>
-
-          <dt class="col-sm-4"><%= t('common.comment')%></dt>
-          <dd class="col-sm-8"><%= @delivery_item.vt2_check_comment %></dd>
-
-          <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.item_description') %></dt>
-          <dd class="col-sm-8"><%= @delivery_item.item_description %></dd>
-
-        <h6><%= t('.specifications') %></h6>
-        <% if @delivery_item.specifications.present? %>
-          <dl class="row">
-            <% @delivery_item.specifications.each do |key, value| %>
-              <dt class="col-sm-4"><%= key.humanize %></dt>
-              <dd class="col-sm-8"><%= value %></dd>
-            <% end %>
-          </dl>
-        <% else %>
-          <p class="text-muted"><%= t('.no_specifications') %></p>
+                <!-- Image attachments section -->
+                <% if check[:images].attached? %>
+                  <div class="mt-3">
+                    <div class="row g-2">
+                      <% check[:images].each do |image| %>
+                        <div class="col-6">
+                          <%= image_tag image, class: "img-thumbnail w-100",
+                              data: {
+                                bs_toggle: "modal",
+                                bs_target: "#imageModal#{image.id}"
+                              } %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
         <% end %>
-    </dl>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-4">
+      <h6 class="border-bottom pb-2 mb-3"><%= t('.description') %></h6>
+      <p class="mb-0"><%= @delivery_item.item_description %></p>
+    </div>
+
+    <!-- Specifications -->
+    <div>
+      <h6 class="border-bottom pb-2 mb-3"><%= t('.specifications') %></h6>
+      <% if @delivery_item.specifications.present? %>
+        <dl class="row">
+          <% @delivery_item.specifications.each do |key, value| %>
+            <dt class="col-sm-3"><%= key.humanize %></dt>
+            <dd class="col-sm-9"><%= value %></dd>
+          <% end %>
+        </dl>
+      <% else %>
+        <p class="text-muted"><%= t('.no_specifications') %></p>
+      <% end %>
+    </div>
   </div>
 </div>
+
+<!-- Image Modals -->
+<% %w[quantity_check_images dimension_check_images visual_check_images vt2_check_images ra_check_images].each do |image_type| %>
+  <% @delivery_item.send(image_type).each do |image| %>
+    <div class="modal fade" id="imageModal<%= image.id %>" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><%= image_type.humanize %></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <%= image_tag image, class: "img-fluid w-100" %>
+          </div>
+          <div class="modal-footer">
+            <%= button_to delete_image_project_incoming_delivery_delivery_item_path(
+                  project_id: @project,
+                  incoming_delivery_id: @incoming_delivery,
+                  id: @delivery_item,
+                  image_id: image.id,
+                  image_type: image_type
+                ),
+                method: :delete,
+                class: "btn btn-danger",
+                data: {
+                  turbo_confirm: t('common.messages.confirm_delete'),
+                  bs_dismiss: "modal"
+                } do %>
+              <i class="bi bi-trash"></i> <%= t('common.buttons.delete') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 
 <!-- Quality Inspections Section -->
 <div class="card mb-4">

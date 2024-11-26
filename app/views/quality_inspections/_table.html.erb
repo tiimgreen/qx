@@ -19,7 +19,7 @@
       <% inspections.each do |inspection| %>
         <tr>
           <td><%= link_to inspection.delivery_item.incoming_delivery.project.name, project_path(inspection.delivery_item.incoming_delivery.project) %></td>
-          <td><%= link_to inspection.delivery_item.incoming_delivery.order_number, incoming_delivery_path(inspection.delivery_item.incoming_delivery) %></td>
+          <td><%= link_to inspection.delivery_item.incoming_delivery.order_number, project_incoming_delivery_path(inspection.delivery_item.incoming_delivery.project, inspection.delivery_item.incoming_delivery) %></td>
           <td><%= link_to inspection.delivery_item.tag_number, delivery_item_path(inspection.delivery_item) %></td>
           <td><%= inspection.delivery_item.batch_number %></td>
           <td><%= inspection.inspection_date.strftime("%Y-%m-%d %H:%M") %></td>
