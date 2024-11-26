@@ -1,5 +1,6 @@
 class IncomingDeliveriesController < ApplicationController
   include HoldableController
+  include CompletableController
 
   layout "dashboard_layout"
   before_action :set_project
@@ -38,7 +39,7 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   def create
-    attributes = process_hold_attributes(@incoming_delivery, incoming_delivery_params.to_h)
+    attributes = process_hold_attributes(incoming_delivery_params.to_h)
     @incoming_delivery = @project.incoming_deliveries.build(attributes)
     @incoming_delivery.user = current_user
 
@@ -54,7 +55,7 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
-      attributes = process_hold_attributes(@incoming_delivery, incoming_delivery_params.to_h)
+      attributes = process_hold_attributes(incoming_delivery_params.to_h, @incoming_delivery)
 
       if @incoming_delivery.update(attributes)
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
@@ -65,23 +66,19 @@ class IncomingDeliveriesController < ApplicationController
     end
   end
 
-  def complete
-    @incoming_delivery.assign_attributes(incoming_delivery_params)
-    @incoming_delivery.completed = true
-    @incoming_delivery.total_time = (Time.current - @incoming_delivery.created_at) / 60.0
-
-    if @incoming_delivery.save
-      redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: t("common.messages.completed", model: "Delivery")
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
 
   def destroy
     @incoming_delivery.destroy
     redirect_to project_incoming_deliveries_path(@project),
                 notice: t("common.messages.deleted", model: "Delivery")
+  end
+
+  def complete
+    complete_resource(
+      @incoming_delivery,
+      project_incoming_delivery_path(@project, @incoming_delivery),
+      incoming_delivery_params
+    )
   end
 
   private
@@ -124,6 +121,7 @@ class IncomingDeliveriesController < ApplicationController
       :notes,
       :work_location_id,
       :delivery_note_number,
+      *completable_params,
       *holdable_params,
       delivery_notes: []
     )

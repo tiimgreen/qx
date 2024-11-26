@@ -3,19 +3,22 @@ module HoldableController
 
   private
 
-  def process_hold_attributes(model, attributes)
+  def process_hold_attributes(attributes, model = nil)
     return attributes unless attributes.has_key?(:on_hold)
 
     # Convert to boolean more explicitly
     new_on_hold = attributes[:on_hold].to_s == "1" || attributes[:on_hold].to_s.downcase == "true"
-    current_on_hold = model.on_hold?
 
     # Create a new hash to avoid modifying the original params
     processed_attributes = attributes.dup
 
-    if new_on_hold && !current_on_hold
-      processed_attributes[:on_hold_date] = Time.current
-    elsif !new_on_hold # If turning off hold, always clear the fields
+    if new_on_hold
+      # If it's a new record or switching from not on hold to on hold
+      if model.nil? || !model.on_hold?
+        processed_attributes[:on_hold_date] = Time.current
+      end
+    else
+      # If turning off hold, always clear the fields
       processed_attributes[:on_hold] = false
       processed_attributes[:on_hold_date] = nil
       processed_attributes[:on_hold_reason] = nil
