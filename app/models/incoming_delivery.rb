@@ -1,6 +1,7 @@
 class IncomingDelivery < ApplicationRecord
   belongs_to :project
   belongs_to :work_location
+  belongs_to :user, optional: true
   has_many_attached :delivery_notes
   has_many :delivery_items, counter_cache: true, dependent: :destroy
   has_many :material_certificates, through: :delivery_items

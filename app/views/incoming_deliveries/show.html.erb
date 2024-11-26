@@ -45,6 +45,9 @@
 
             <dt class="col-sm-4"><%= t('.project') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.project.name %></dd>
+
+            <dt class="col-sm-4"><%= t('.created_by') %></dt>
+            <dd class="col-sm-8"><%= @incoming_delivery.user&.name %></dd>
           </dl>
         </div>
 

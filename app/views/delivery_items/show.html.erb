@@ -31,7 +31,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="mb-4">
-          <h4 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h4>
+          <h5 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h5>
           <dl class="row">
             <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.name') %></dt>
             <dd class="col-sm-8"><%= @delivery_item.name %></dd>
@@ -41,13 +41,16 @@
 
             <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.batch_number') %></dt>
             <dd class="col-sm-8"><%= @delivery_item.batch_number %></dd>
+
+            <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.created_by') %></dt>
+            <dd class="col-sm-8"><%= @delivery_item.user&.name %></dd>
           </dl>
         </div>
       </div>
       <div class="col-md-6">
           <!-- Description -->
         <div class="mb-4">
-          <h4 class="border-bottom pb-2 mb-3"><%= t('.description') %></h4>
+          <h5 class="border-bottom pb-2 mb-3"><%= t('.description') %></h5>
           <p class="mb-0"><%= @delivery_item.item_description %></p>
         </div>
       </div>
@@ -55,7 +58,7 @@
 
     <!-- Quality Checks -->
     <div class="mb-4">
-      <h4 class="border-bottom pb-2 mb-3"><%= t('.quality_checks') %></h4>
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.quality_checks') %></h5>
 
       <% checks = [
         { name: 'quantity_check', status: @delivery_item.quantity_check_status, comment: @delivery_item.quantity_check_comment, images: @delivery_item.quantity_check_images },

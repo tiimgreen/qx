@@ -11,6 +11,7 @@ de:
       description: "Beschreibung"
       project_manager: "Projektmanager"
       client_name: "Kunde"
+      created_by: "Erstellt von"
       created: "Erstellt am"
     index:
       title: "Projekte"

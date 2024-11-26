@@ -24,6 +24,7 @@
           <th><%= t('activerecord.attributes.project.project_manager') %></th>
           <th><%= t('activerecord.attributes.project.client_name') %></th>
           <th><%= t('activerecord.attributes.project.created_at') %></th>
+          <th><%= t('activerecord.attributes.project.created_by') %></th>
           <th class="text-end"><%= t('common.labels.actions') %></th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
             <td><%= project.project_manager %></td>
             <td><%= project.client_name %></td>
             <td><%= project.created_at.strftime("%Y-%m-%d") %></td>
+            <td><%= project.user&.name %></td>
             <td class="text-end">
               <div class="btn-group btn-group-sm">
                 <%= link_to project,

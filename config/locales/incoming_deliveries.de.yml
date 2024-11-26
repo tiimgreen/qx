@@ -31,6 +31,7 @@ de:
       delivery_items: "Lieferpositionen"
       add_item: "Position hinzufügen"
       missing_items: "Fehlende Positionen"
+      created_by: "Erstellt von"
     index:
       title: "Alle Lieferungen"
       title_for_project: "Lieferungen für %{project}"

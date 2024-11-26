@@ -118,30 +118,3 @@
     <%= link_to t('.cancel'), :back, class: 'btn btn-secondary' %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const container = document.querySelector('.specification-entries');
-    const addButton = document.querySelector('.add-specification');
-
-    addButton.addEventListener('click', function() {
-      const newKey = Date.now().toString().substr(-6);
-      const newEntry = document.createElement('div');
-      newEntry.className = 'specification-entry mb-2';
-      newEntry.innerHTML = `
-        <div class="input-group">
-          <input type="text" name="delivery_item[specifications][spec_${newKey}]" class="form-control" placeholder="Value">
-          <button type="button" class="btn btn-outline-danger m-1 remove-specification">&times;</button>
-        </div>
-      `;
-      container.appendChild(newEntry);
-    });
-
-    // Event delegation for remove buttons
-    container.addEventListener('click', function(e) {
-      if (e.target.classList.contains('remove-specification')) {
-        e.target.closest('.specification-entry').remove();
-      }
-    });
-  });
-</script>

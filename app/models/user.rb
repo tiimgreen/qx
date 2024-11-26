@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :trackable
 
+
   validates :first_name, :last_name, :phone, :address, :city, presence: true
   # validates :phone, format: { with: /\A\d{8,15}\z/, message: "must be between 8 and 15 digits" }, allow_blank: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }

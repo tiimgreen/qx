@@ -52,11 +52,7 @@ de:
         target_quantity: "Soll-Ist-Menge"
         actual_quantity: "Ist-Menge"
         name: "Name"
-      missing_delivery_item:
-        delivery_reference: "Lieferreferenz"
-        expected_quantity: "Erwartete Menge"
-        order_line_reference: "Bestellpositionsreferenz"
-        description: "Beschreibung"
+        created_by: "Erstellt von"
       inspection_defect:
         inspection_reference: "Prüfreferenz"
         severity: "Schweregrad"

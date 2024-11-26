@@ -31,6 +31,7 @@ en:
       missing_items: "Missing Items"
       work_location: "Work Location"
       delivery_note_number: "Delivery Note Number"
+      created_by: "Created By"
     index:
       title: "All Deliveries"
       title_for_project: "Deliveries for %{project}"

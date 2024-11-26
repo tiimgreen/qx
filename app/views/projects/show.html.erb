@@ -24,6 +24,9 @@
       <dt class="col-sm-3"><%= t('.client_name') %></dt>
       <dd class="col-sm-9"><%= @project.client_name %></dd>
 
+      <dt class="col-sm-3"><%= t('.created_by') %></dt>
+      <dd class="col-sm-9"><%= @project.user&.name %></dd>
+
       <dt class="col-sm-3"><%= t('.created') %></dt>
       <dd class="col-sm-9"><%= @project.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
     </dl>

@@ -63,6 +63,7 @@
                   request.params.merge(sort: 'delivery_items_count', direction: (params[:sort] == 'delivery_items_count' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
               <%= sort_indicator('delivery_items_count') %>
             </th>
+            <th><%= t('activerecord.attributes.incoming_delivery.created_by') %></th>
             <th class="text-end"><%= t('common.labels.actions') %></th>
           </tr>
         </thead>
@@ -76,6 +77,7 @@
               <td><%= l(delivery.delivery_date, format: :long) %></td>
               <td><%= delivery.supplier_name %></td>
               <td><%= delivery.delivery_items.count %></td>
+              <td><%= delivery.user&.name %></td>
               <td class="text-end">
                 <div class="btn-group btn-group-sm">
                   <%= link_to project_incoming_delivery_path(@project, delivery),
