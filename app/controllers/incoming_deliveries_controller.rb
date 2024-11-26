@@ -1,4 +1,6 @@
 class IncomingDeliveriesController < ApplicationController
+  include HoldableController
+
   layout "dashboard_layout"
   before_action :set_project
   before_action :set_incoming_delivery, only: [ :show, :edit, :update, :destroy ]
@@ -36,11 +38,13 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   def create
-    @incoming_delivery = @project.incoming_deliveries.build(incoming_delivery_params)
+    attributes = process_hold_attributes(@incoming_delivery, incoming_delivery_params.to_h)
+    @incoming_delivery = @project.incoming_deliveries.build(attributes)
     @incoming_delivery.user = current_user
+
     if @incoming_delivery.save
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: t("common.messages.created", model: "Delivery ")
+                  notice: t("common.messages.created", model: "Delivery")
     else
       render :new, status: :unprocessable_entity
     end
@@ -50,7 +54,9 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
-      if @incoming_delivery.update(incoming_delivery_params)
+    attributes = process_hold_attributes(@incoming_delivery, incoming_delivery_params.to_h)
+
+      if @incoming_delivery.update(attributes)
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                     notice: t("common.messages.updated", model: "Delivery")
       else
@@ -79,6 +85,21 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   private
+
+  def set_on_hold_date(delivery)
+    incoming_delivery_attributes = incoming_delivery_params.to_h
+    new_on_hold = incoming_delivery_attributes[:on_hold] == "1"
+    current_on_hold = delivery.on_hold?
+
+    if new_on_hold && !current_on_hold
+      # Switching from not on hold to on hold
+      delivery.on_hold_date = Time.current
+    elsif !new_on_hold && current_on_hold
+      # Switching from on hold to not on hold
+      delivery.on_hold_date = nil
+      delivery.on_hold_reason = nil
+    end
+  end
 
   def sort_params
     allowed_columns = %w[
@@ -118,6 +139,7 @@ class IncomingDeliveriesController < ApplicationController
       :notes,
       :work_location_id,
       :delivery_note_number,
+      *holdable_params,
       delivery_notes: []
     )
   end
