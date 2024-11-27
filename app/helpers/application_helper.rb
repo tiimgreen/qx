@@ -45,14 +45,19 @@ module ApplicationHelper
     params[:direction] == "asc" ? "\u2191" : "\u2193"
   end
 
-  def status_label(boolean_value)
-    if boolean_value
-      content_tag(:span, t("status.passed"),
-        class: "badge bg-success text-white")
+  def status_label(status)
+    return if status.blank?
+
+    css_class = case status.downcase
+    when "ok", "accepted", "passed", "n/a"
+                  "bg-success"
+    when "not ok", "rejected", "failed"
+                  "bg-danger"
     else
-      content_tag(:span, t("status.failed"),
-        class: "badge bg-danger text-white")
+                  "bg-warning"
     end
+
+    content_tag(:span, status, class: "badge #{css_class} text-white")
   end
 
   private

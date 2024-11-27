@@ -51,38 +51,59 @@
     <div class="col-md-6">
       <!-- Quantity Check -->
       <div class="mb-5">
-        <div class="form-check">
-          <%= f.check_box :quantity_check_status, class: 'form-check-input' %>
-          <%= f.label :quantity_check_status, t('activerecord.attributes.delivery_item.quantity_check'), class: 'form-check-label' %>
+        <%= f.label :quantity_check_status, t('activerecord.attributes.delivery_item.quantity_check'), class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.select :quantity_check_status,
+                        DeliveryItem::CHECK_STATUSES,
+                        { include_blank: false },
+                        class: 'form-control' %>
+          </div>
+          <div class="col-md-6">
+            <%= f.file_field :quantity_check_images, multiple: true, class: 'form-control' %>
+            <small class="text-muted"><%= t('common.image_upload_note') %></small>
+          </div>
         </div>
         <%= f.text_area :quantity_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.quantity_check_comment') %>
-        <small class="text-muted"><%= t('common.image_upload_note') %></small>
-        <%= f.file_field :quantity_check_images, multiple: true, class: 'form-control mt-2' %>
       </div>
 
       <!-- Dimension Check -->
       <div class="mb-5">
-        <div class="form-check">
-          <%= f.check_box :dimension_check_status, class: 'form-check-input' %>
-          <%= f.label :dimension_check_status, t('activerecord.attributes.delivery_item.dimension_check'), class: 'form-check-label' %>
+        <%= f.label :dimension_check_status, t('activerecord.attributes.delivery_item.dimension_check'), class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.select :dimension_check_status,
+                        DeliveryItem::CHECK_STATUSES,
+                        { include_blank: false },
+                        class: 'form-control' %>
+          </div>
+          <div class="col-md-6">
+            <%= f.file_field :dimension_check_images, multiple: true, class: 'form-control' %>
+            <small class="text-muted"><%= t('common.image_upload_note') %></small>
+          </div>
         </div>
         <%= f.text_area :dimension_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.dimension_check_comment') %>
-        <small class="text-muted"><%= t('common.image_upload_note') %></small>
-        <%= f.file_field :dimension_check_images, multiple: true, class: 'form-control mt-2' %>
       </div>
 
       <!-- Visual Check -->
       <div class="mb-5">
-        <div class="form-check">
-          <%= f.check_box :visual_check_status, class: 'form-check-input' %>
-          <%= f.label :visual_check_status, t('activerecord.attributes.delivery_item.visual_check'), class: 'form-check-label' %>
+        <%= f.label :visual_check_status, t('activerecord.attributes.delivery_item.visual_check'), class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.select :visual_check_status,
+                        DeliveryItem::VISUAL_STATUSES,
+                        { include_blank: false },
+                        class: 'form-control' %>
+          </div>
+          <div class="col-md-6">
+            <%= f.file_field :visual_check_images, multiple: true, class: 'form-control' %>
+            <small class="text-muted"><%= t('common.image_upload_note') %></small>
+          </div>
         </div>
         <%= f.text_area :visual_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.visual_check_comment') %>
-        <small class="text-muted"><%= t('common.image_upload_note') %></small>
-        <%= f.file_field :visual_check_images, multiple: true, class: 'form-control mt-2' %>
       </div>
 
     </div>
@@ -90,26 +111,55 @@
     <div class="col-md-6">
       <!-- VT2 Check -->
       <div class="mb-5">
-        <div class="form-check">
-          <%= f.check_box :vt2_check_status, class: 'form-check-input' %>
-          <%= f.label :vt2_check_status, t('activerecord.attributes.delivery_item.vt2_check'), class: 'form-check-label' %>
+        <%= f.label :vt2_check_status, t('activerecord.attributes.delivery_item.vt2_check'), class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.select :vt2_check_status,
+                        DeliveryItem::CHECK_STATUSES,
+                        { include_blank: false },
+                        class: 'form-control' %>
+          </div>
+          <div class="col-md-6">
+            <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control' %>
+            <small class="text-muted"><%= t('common.image_upload_note') %></small>
+          </div>
         </div>
         <%= f.text_area :vt2_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.vt2_check_comment') %>
-        <small class="text-muted"><%= t('common.image_upload_note') %></small>
-        <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control mt-2' %>
       </div>
 
       <!-- Ra Check -->
       <div class="mb-5">
-        <div class="form-check">
-          <%= f.check_box :ra_check_status, class: 'form-check-input' %>
-          <%= f.label :ra_check_status, t('activerecord.attributes.delivery_item.ra_check'), class: 'form-check-label' %>
+        <%= f.label :ra_check_status, t('activerecord.attributes.delivery_item.ra_check'), class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.select :ra_check_status,
+                        DeliveryItem::CHECK_STATUSES,
+                        { include_blank: false },
+                        class: 'form-control' %>
+          </div>
+          <div class="col-md-6">
+            <%= f.file_field :ra_check_images, multiple: true, class: 'form-control' %>
+            <small class="text-muted"><%= t('common.image_upload_note') %></small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <%= f.label :ra_date, t('activerecord.attributes.delivery_item.ra_date'), class: 'form-label' %>
+            <%= f.date_field :ra_date, class: 'form-control', value: Date.current %>
+          </div>
+          <div class="col-md-4">
+            <%= f.label :ra_parameters, t('activerecord.attributes.delivery_item.ra_parameters'), class: 'form-label' %>
+            <%= f.text_field :ra_parameters, class: 'form-control' %>
+          </div>
+          <div class="col-md-4">
+            <%= f.label :ra_value, t('activerecord.attributes.delivery_item.ra_value'), class: 'form-label' %>
+            <%= f.text_field :ra_value, class: 'form-control' %>
+          </div>
         </div>
         <%= f.text_area :ra_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.ra_check_comment') %>
-        <small class="text-muted"><%= t('common.image_upload_note') %></small>
-        <%= f.file_field :ra_check_images, multiple: true, class: 'form-control mt-2' %>
       </div>
 
       <%= render 'hold_fields', f: f %>

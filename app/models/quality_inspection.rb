@@ -1,5 +1,4 @@
 class QualityInspection < ApplicationRecord
-  belongs_to :delivery_item
   belongs_to :inspector, class_name: "User"
   has_many :inspection_defects, dependent: :destroy
   has_many_attached :images

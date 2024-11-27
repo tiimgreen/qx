@@ -53,6 +53,9 @@ en:
         actual_quantity: "Actual Quantity"
         delivery_note_position: "Delivery Note Position"
         created_by: "Created By"
+        ra_date: "Ra Date"
+        ra_parameters: "Ra Parameters"
+        ra_value: "Ra Value"
       inspection_defect:
         inspection_reference: "Inspection Reference"
         severity: "Severity"

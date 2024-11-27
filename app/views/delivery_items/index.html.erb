@@ -38,7 +38,6 @@
           <th><%= t('activerecord.attributes.delivery_item.description') %></th>
           <th><%= t('activerecord.attributes.delivery_item.quantity_received') %></th>
           <th><%= t('activerecord.attributes.delivery_item.specifications') %></th>
-          <th><%= t('.inspections_count') %></th>
           <th class="text-end"><%= t('common.labels.actions') %></th>
         </tr>
       </thead>
@@ -51,7 +50,6 @@
             <td><%= item.item_description %></td>
             <td><%= item.quantity_received %></td>
             <td><%= item.specifications %></td>
-            <td><%= item.quality_inspections.count %></td>
             <td class="text-end">
               <div class="btn-group btn-group-sm">
                 <%= link_to delivery_item_path(item),

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_27_094539) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_095149) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,6 +88,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_094539) do
     t.datetime "on_hold_date"
     t.boolean "completed", default: false
     t.decimal "total_time", precision: 10, scale: 2
+    t.datetime "ra_date"
+    t.decimal "ra_value", precision: 10, scale: 2
+    t.text "ra_parameters"
     t.index ["batch_number"], name: "index_delivery_items_on_batch_number"
     t.index ["incoming_delivery_id", "tag_number"], name: "index_delivery_items_on_incoming_delivery_id_and_tag_number", unique: true, where: "tag_number IS NOT NULL"
     t.index ["incoming_delivery_id"], name: "index_delivery_items_on_incoming_delivery_id"
@@ -186,17 +189,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_094539) do
     t.index ["inspection_type"], name: "index_quality_inspections_on_inspection_type"
     t.index ["inspector_id"], name: "index_quality_inspections_on_inspector_id"
     t.index ["status"], name: "index_quality_inspections_on_status"
-  end
-
-  create_table "roughness_measurements", force: :cascade do |t|
-    t.integer "delivery_item_id", null: false
-    t.datetime "measurement_date", null: false
-    t.decimal "measured_value", precision: 10, scale: 2, null: false
-    t.text "measurement_parameters"
-    t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["delivery_item_id"], name: "index_roughness_measurements_on_delivery_item_id"
   end
 
   create_table "sectors", force: :cascade do |t|

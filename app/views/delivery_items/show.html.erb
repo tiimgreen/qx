@@ -4,7 +4,7 @@
     path: project_incoming_deliveries_path(@project) },
   { text: @incoming_delivery.order_number,
     path: project_incoming_delivery_path(@project, @incoming_delivery) },
-  { text: @delivery_item.name || @delivery_item.tag_number }
+  { text: @delivery_item.delivery_note_position || @delivery_item.tag_number }
 ] %>
 
 <div class="card mb-4">
@@ -33,8 +33,8 @@
         <div class="mb-4">
           <h5 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h5>
           <dl class="row">
-            <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.name') %></dt>
-            <dd class="col-sm-8"><%= @delivery_item.name %></dd>
+            <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.delivery_note_position') %></dt>
+            <dd class="col-sm-8"><%= @delivery_item.delivery_note_position %></dd>
 
             <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.tag_number') %></dt>
             <dd class="col-sm-8"><%= @delivery_item.tag_number %></dd>
@@ -47,7 +47,6 @@
 
             <dt class="col-sm-4"><%= t('common.completed') %></dt>
             <dd class="col-sm-8"><%= @delivery_item.completed? ? t('common.yes') : t('common.no') %></dd>
-
             <%= render 'hold_info', record: @delivery_item %>
           </dl>
         </div>
@@ -61,55 +60,80 @@
       </div>
     </div>
 
-    <!-- Quality Checks -->
-    <div class="mb-4">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.quality_checks') %></h5>
+<!-- Quality Checks -->
+<div class="mb-4">
+  <h5 class="border-bottom pb-2 mb-3"><%= t('.quality_checks') %></h5>
 
-      <% checks = [
-        { name: 'quantity_check', status: @delivery_item.quantity_check_status, comment: @delivery_item.quantity_check_comment, images: @delivery_item.quantity_check_images },
-        { name: 'dimension_check', status: @delivery_item.dimension_check_status, comment: @delivery_item.dimension_check_comment, images: @delivery_item.dimension_check_images },
-        { name: 'visual_check', status: @delivery_item.visual_check_status, comment: @delivery_item.visual_check_comment, images: @delivery_item.visual_check_images },
-        { name: 'vt2_check', status: @delivery_item.vt2_check_status, comment: @delivery_item.vt2_check_comment, images: @delivery_item.vt2_check_images },
-        { name: 'ra_check', status: @delivery_item.ra_check_status, comment: @delivery_item.ra_check_comment, images: @delivery_item.ra_check_images }
-      ] %>
+  <% checks = [
+    { name: 'quantity_check', status: @delivery_item.quantity_check_status, comment: @delivery_item.quantity_check_comment, images: @delivery_item.quantity_check_images },
+    { name: 'dimension_check', status: @delivery_item.dimension_check_status, comment: @delivery_item.dimension_check_comment, images: @delivery_item.dimension_check_images },
+    { name: 'visual_check', status: @delivery_item.visual_check_status, comment: @delivery_item.visual_check_comment, images: @delivery_item.visual_check_images },
+    { name: 'vt2_check', status: @delivery_item.vt2_check_status, comment: @delivery_item.vt2_check_comment, images: @delivery_item.vt2_check_images },
+    {
+      name: 'ra_check',
+      status: @delivery_item.ra_check_status,
+      comment: @delivery_item.ra_check_comment,
+      images: @delivery_item.ra_check_images,
+      additional_fields: {
+        ra_date: @delivery_item.ra_date ? @delivery_item.ra_date&.strftime("%Y-%m-%d") : nil,
+        ra_value: @delivery_item.ra_value,
+        ra_parameters: @delivery_item.ra_parameters
+      }
+    }
+  ] %>
 
-      <div class="row g-3">
-        <% checks.each do |check| %>
-          <div class="col-md-6">
-            <div class="card h-100">
-              <div class="card-body">
-                <h6 class="card-title d-flex justify-content-between align-items-center">
-                  <%= t("activerecord.attributes.delivery_item.#{check[:name]}") %>
-                  <%= status_label(check[:status]) %>
-                </h6>
-                <% if check[:comment].present? %>
-                  <p class="card-text text-muted mb-0">
-                    <small><%= check[:comment] %></small>
-                  </p>
-                <% end %>
+  <div class="row g-3">
+    <% checks.each do |check| %>
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h6 class="card-title d-flex justify-content-between align-items-center">
+              <%= t("activerecord.attributes.delivery_item.#{check[:name]}") %>
+              <%= status_label(check[:status]) %>
+            </h6>
 
-                <!-- Image attachments section -->
-                <% if check[:images].attached? %>
-                  <div class="mt-3">
-                    <div class="row g-2">
-                      <% check[:images].each do |image| %>
-                        <div class="col-6">
-                          <%= image_tag image, class: "img-thumbnail w-100",
-                              data: {
-                                bs_toggle: "modal",
-                                bs_target: "#imageModal#{image.id}"
-                              } %>
-                        </div>
-                      <% end %>
+
+            <% if check[:additional_fields].present? %>
+              <div class="mt-3">
+                <% check[:additional_fields].each do |field, value| %>
+                  <% if value.present? %>
+                    <div class="d-flex justify-content-between">
+                      <small class="text-muted"><%= t("activerecord.attributes.delivery_item.#{field}") %>:</small>
+                      <small><%= value %></small>
                     </div>
-                  </div>
+                  <% end %>
                 <% end %>
               </div>
-            </div>
+            <% end %>
+
+            <% if check[:comment].present? %>
+              <p class="card-text text-muted mb-0">
+                <small>Comment: <%= check[:comment] %></small>
+              </p>
+            <% end %>
+
+            <!-- Image attachments section -->
+            <% if check[:images].attached? %>
+              <div class="mt-3">
+                <div class="row g-2">
+                  <% check[:images].each do |image| %>
+                    <div class="col-6">
+                      <%= image_tag image, class: "img-thumbnail w-100",
+                          data: {
+                            bs_toggle: "modal",
+                            bs_target: "#imageModal#{image.id}"
+                          } %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
+    <% end %>
     </div>
+  </div>
 
   </div>
 </div>

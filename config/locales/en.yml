@@ -51,7 +51,7 @@ en:
       file_deleted: "File was successfully deleted"
       unauthorized: "You are not authorized to perform this action"
       confirm_delete: "Are you sure you want to delete this image?"
-    image_upload_note: "Please upload image below if needed"
+    image_upload_note: "Upload document if needed"
     comment: "Comment"
     'yes': "Yes"
     'no': "No"

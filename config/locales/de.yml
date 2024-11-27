@@ -52,7 +52,8 @@ de:
       unauthorized: "Sie sind nicht berechtigt, diese Aktion auszuführen"
       confirm_delete: "Sind Sie sicher, dass Sie dieses Bild löschen möchten?"
 
-    image_upload_note: "Bei Bedarf laden Sie bitte unten ein Bild hoch"
+    image_upload_note: "Dokument hochladen, wenn nötig"
+
     comment: "Kommentar"
     'yes': "Ja"
     'no': "Nein"

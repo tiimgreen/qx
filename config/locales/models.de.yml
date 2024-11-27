@@ -53,6 +53,9 @@ de:
         actual_quantity: "IST"
         delivery_note_position: "Lieferscheinposition"
         created_by: "Erstellt von"
+        ra_date: "Messdatum"
+        ra_parameters: "Parameter"
+        ra_value: "Messwert"
       inspection_defect:
         inspection_reference: "Prüfreferenz"
         severity: "Schweregrad"

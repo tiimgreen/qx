@@ -9,17 +9,12 @@ class DeliveryItemsController < ApplicationController
 
   def index
     @delivery_items = @incoming_delivery.delivery_items
-                                      .includes(:quality_inspections)
                                       .search_by_term(params[:search])
   end
 
   def show
-    @delivery_item = DeliveryItem.includes(:quality_inspections,
-                                          :roughness_measurement,
-                                          :material_certificates)
+    @delivery_item = DeliveryItem.includes(:material_certificates)
                                 .find(params[:id])
-    @quality_inspections = @delivery_item.quality_inspections.includes(:inspection_defects)
-    @roughness_measurement = @delivery_item.roughness_measurement
   end
 
   def new
@@ -31,8 +26,7 @@ class DeliveryItemsController < ApplicationController
 
   def create
     @delivery_item = @incoming_delivery.delivery_items.build
-    attributes = process_hold_attributes(delivery_item_params.to_h)
-    @delivery_item.assign_attributes(attributes)
+    @delivery_item.assign_attributes(delivery_item_params.to_h)
     @delivery_item.user = current_user
 
     if @delivery_item.save
@@ -52,9 +46,8 @@ class DeliveryItemsController < ApplicationController
 
       # Process remaining attributes
       params_without_images = remove_image_params(delivery_item_params)
-      attributes = process_hold_attributes(params_without_images.to_h)
 
-      if @delivery_item.update(attributes)
+      if @delivery_item.update(params_without_images)
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                   notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
       else
@@ -180,9 +173,12 @@ class DeliveryItemsController < ApplicationController
       :vt2_check_comment,
       :ra_check_status,
       :ra_check_comment,
+      :ra_date,
+      :ra_value,
+      :ra_parameters,
       :user_id,
       *completable_params,
-      *holdable_params,
+      # *holdable_params,
       :item_description,
       {
         quantity_check_images: [],
