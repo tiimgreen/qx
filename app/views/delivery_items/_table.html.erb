@@ -2,7 +2,7 @@
   <table class="table table-striped table-hover table-sm">
     <thead>
       <tr>
-        <th><%= t('activerecord.attributes.delivery_item.name') %></th>
+        <th><%= t('activerecord.attributes.delivery_item.delivery_note_position') %></th>
         <th><%= t('activerecord.attributes.delivery_item.tag_number') %></th>
         <th><%= t('activerecord.attributes.delivery_item.batch_number') %></th>
         <th><%= t('common.completed') %></th>
@@ -19,7 +19,7 @@
     <tbody>
       <% delivery_items.each do |item| %>
         <tr>
-          <td><%= item.name %></td>
+          <td><%= item.delivery_note_position %></td>
           <td><%= item.tag_number %></td>
           <td><%= item.batch_number %></td>
           <td><%= item.completed? ? t('common.yes') : t('common.no') %></td>

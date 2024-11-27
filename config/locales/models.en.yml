@@ -38,7 +38,7 @@ en:
         tag_number: "TAG Number"
         batch_number: "Batch Number"
         quantity_received: "Quantity"
-        item_description: "Description"
+        item_description: "Item Description"
         quantity_check: "Quantity Check"
         quantity_check_comment: "Quantity Check Comment"
         dimension_check: "Dimension Check"
@@ -51,7 +51,7 @@ en:
         ra_check_comment: "Ra Check Comment"
         target_quantity: "Target Quantity"
         actual_quantity: "Actual Quantity"
-        name: "Name"
+        delivery_note_position: "Delivery Note Position"
         created_by: "Created By"
       inspection_defect:
         inspection_reference: "Inspection Reference"

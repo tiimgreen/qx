@@ -165,7 +165,7 @@ class DeliveryItemsController < ApplicationController
 
   def delivery_item_params
     params.require(:delivery_item).permit(
-      :name,
+      :delivery_note_position,
       :tag_number,
       :batch_number,
       :actual_quantity,
