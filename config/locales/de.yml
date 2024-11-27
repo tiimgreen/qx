@@ -13,6 +13,11 @@ de:
         title: "Projekte"
         list: "Projekte auflisten"
         new: "Neues Projekt"
+      material_certificates:
+        title: "Materialzertifikate"
+        list: "Materialzertifikate auflisten"
+        new: "Neues Materialzertifikat"
+        total: "Gesamtzahl der Materialzertifikate"
       incoming_deliveries:
         title: "Wareneingänge"
         deliveries: "Lieferungen"

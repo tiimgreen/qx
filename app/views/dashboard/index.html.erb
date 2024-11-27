@@ -28,5 +28,27 @@
       </div>
     </div>
 
+    <!-- Material Certificates Card -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="bi bi-folder"></i> <%= t('navigation.menu.material_certificates.title') %>
+          </h5>
+          <p class="card-text">
+            <div class="h3 mb-2"><%= MaterialCertificate.count %></div>
+            <%= t('navigation.menu.material_certificates.total') %>
+          </p>
+          <div class="mt-3">
+            <%= link_to material_certificates_path, class: 'btn btn-outline-primary m-1 me-2' do %>
+              <i class="bi bi-list"></i> <%= t('navigation.menu.material_certificates.list') %>
+            <% end %>
+            <%= link_to new_material_certificate_path, class: 'btn btn-primary' do %>
+              <i class="bi bi-plus"></i> <%= t('navigation.menu.material_certificates.new') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>

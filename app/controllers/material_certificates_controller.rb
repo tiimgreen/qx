@@ -1,9 +1,9 @@
 class MaterialCertificatesController < ApplicationController
   layout "dashboard_layout"
   before_action :set_material_certificate, only: [ :show, :edit, :update, :destroy ]
-  before_action :set_project, only: [ :new, :create ]
-  before_action :ensure_project, only: [ :edit, :update ]
-  before_action :load_delivery_items, only: [ :new, :edit, :create, :update ]
+  # before_action :set_project, only: [ :new, :create ]
+  # before_action :ensure_project, only: [ :edit, :update ]
+  # before_action :load_delivery_items, only: [ :new, :edit, :create, :update ]
 
   def index
     @material_certificates = MaterialCertificate.includes(:project, :delivery_items)
@@ -20,7 +20,7 @@ class MaterialCertificatesController < ApplicationController
   end
 
   def new
-    @material_certificate = @project.material_certificates.build
+    @material_certificate = MaterialCertificate.new
   end
 
   def edit
@@ -61,21 +61,21 @@ class MaterialCertificatesController < ApplicationController
     @material_certificate = MaterialCertificate.find(params[:id])
   end
 
-  def set_project
-    @project = Project.find(params[:project_id])
-  end
+  # def set_project
+  #   @project = Project.find(params[:project_id])
+  # end
 
-  def load_delivery_items
-    @delivery_items = if @project
-      @project.delivery_items.includes(:incoming_delivery)
-    else
-      @material_certificate.project.delivery_items.includes(:incoming_delivery)
-    end
-  end
+  # def load_delivery_items
+  #   @delivery_items = if @project
+  #     @project.delivery_items.includes(:incoming_delivery)
+  #   else
+  #     @material_certificate.project.delivery_items.includes(:incoming_delivery)
+  #   end
+  # end
 
-  def ensure_project
-    @project = @material_certificate&.project
-  end
+  # def ensure_project
+  #   @project = @material_certificate&.project
+  # end
 
   def material_certificate_params
     params.require(:material_certificate).permit(

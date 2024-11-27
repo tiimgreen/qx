@@ -17,7 +17,7 @@
     <div class="col-md-6">
       <div class="form-group mb-3">
         <%= f.label :certificate_number,
-            t('.certificate_number_last', number: last_certificate_number(@project.id)),
+            t('.certificate_number_last', number: MaterialCertificate.last.certificate_number),
             class: 'form-label' %>
         <%= f.text_field :certificate_number, class: 'form-control', required: true %>
       </div>
@@ -52,19 +52,19 @@
   </div>
 
   <div class="form-group mb-3">
-    <%= f.label :delivery_items, t('.associated_items'), class: 'form-label' %>
+    <%#= f.label :delivery_items, t('.associated_items'), class: 'form-label' %>
     <div class="delivery-items-selection border p-3 rounded">
-      <%= f.collection_check_boxes :delivery_item_ids, @delivery_items, :id, :tag_number do |b| %>
+      <%#= f.collection_check_boxes :delivery_item_ids, @delivery_items, :id, :tag_number do |b| %>
         <div class="form-check">
-          <%= b.check_box(class: 'form-check-input') %>
-          <%= b.label class: 'form-check-label' do %>
-            <%= t('.tag_batch_delivery',
+          <%#= b.check_box(class: 'form-check-input') %>
+          <%#= b.label class: 'form-check-label' do %>
+            <%#= t('.tag_batch_delivery',
                   tag: b.text,
                   batch: b.object.batch_number,
                   delivery: b.object.incoming_delivery.order_number) %>
-          <% end %>
+          <%# end %>
         </div>
-      <% end %>
+      <%# end %>
     </div>
   </div>
 

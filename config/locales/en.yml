@@ -13,6 +13,11 @@ en:
         title: "Projects"
         list: "List Projects"
         new: "New Project"
+      material_certificates:
+        title: "Material Certificates"
+        list: "List Material Certificates"
+        new: "New Material Certificate"
+        total: "Total Material Certificates"
       incoming_deliveries:
         title: "Incoming Deliveries"
         deliveries: "Deliveries"
