@@ -51,7 +51,7 @@ module ApplicationHelper
     css_class = case status.downcase
     when "ok", "accepted", "passed", "n/a"
                   "bg-success"
-    when "not ok", "rejected", "failed"
+    when "not ok", "rejected", "failed", "yes", "false", "no"
                   "bg-danger"
     else
                   "bg-warning"

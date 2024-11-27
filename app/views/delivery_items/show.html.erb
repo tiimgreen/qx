@@ -47,7 +47,6 @@
 
             <dt class="col-sm-4"><%= t('common.completed') %></dt>
             <dd class="col-sm-8"><%= @delivery_item.completed? ? t('common.yes') : t('common.no') %></dd>
-            <%= render 'hold_info', record: @delivery_item %>
           </dl>
         </div>
       </div>
@@ -79,7 +78,8 @@
         ra_value: @delivery_item.ra_value,
         ra_parameters: @delivery_item.ra_parameters
       }
-    }
+    },
+    { name: 'on_hold', status: @delivery_item.on_hold_status, comment: @delivery_item.on_hold_comment, date: @delivery_item.on_hold_date, images: @delivery_item.on_hold_images }
   ] %>
 
   <div class="row g-3">

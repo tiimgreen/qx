@@ -56,6 +56,8 @@ en:
         ra_date: "Ra Date"
         ra_parameters: "Ra Parameters"
         ra_value: "Ra Value"
+        on_hold_status: "On Hold"
+        on_hold_comment: "On Hold Comment"
       inspection_defect:
         inspection_reference: "Inspection Reference"
         severity: "Severity"

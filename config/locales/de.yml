@@ -44,8 +44,8 @@ de:
       hold_failed: "Fehler beim Setzen von %{model} auf den Halt"
       removed_from_hold: "%{model} wurde erfolgreich aus dem Halt entfernt"
       remove_hold_failed: "Fehler beim Entfernen von %{model} aus dem Halt"
-      on_hold: "Auf Halt"
-      on_hold_reason: "Haltgrund"
+      on_hold_status: "Auf Halt"
+      on_hold_comment: "Haltkommentar"
       on_hold_at: "Auf Halt seit"
 
       file_deleted: "Datei wurde erfolgreich gelöscht"
@@ -175,3 +175,5 @@ de:
               blank: "Soll-Ist-Menge darf nicht leer sein"
               not_a_number: "Soll-Ist-Menge muss eine Zahl sein"
               greater_than: "Soll-Ist-Menge muss größer als %{count} sein"
+            on_hold:
+              inclusion: "muss einen gültigen Status haben"

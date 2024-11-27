@@ -61,7 +61,6 @@
           </div>
           <div class="col-md-6">
             <%= f.file_field :quantity_check_images, multiple: true, class: 'form-control' %>
-            <small class="text-muted"><%= t('common.image_upload_note') %></small>
           </div>
         </div>
         <%= f.text_area :quantity_check_comment, class: 'form-control mt-2', rows: 2,
@@ -80,7 +79,6 @@
           </div>
           <div class="col-md-6">
             <%= f.file_field :dimension_check_images, multiple: true, class: 'form-control' %>
-            <small class="text-muted"><%= t('common.image_upload_note') %></small>
           </div>
         </div>
         <%= f.text_area :dimension_check_comment, class: 'form-control mt-2', rows: 2,
@@ -99,7 +97,6 @@
           </div>
           <div class="col-md-6">
             <%= f.file_field :visual_check_images, multiple: true, class: 'form-control' %>
-            <small class="text-muted"><%= t('common.image_upload_note') %></small>
           </div>
         </div>
         <%= f.text_area :visual_check_comment, class: 'form-control mt-2', rows: 2,
@@ -121,7 +118,6 @@
           </div>
           <div class="col-md-6">
             <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control' %>
-            <small class="text-muted"><%= t('common.image_upload_note') %></small>
           </div>
         </div>
         <%= f.text_area :vt2_check_comment, class: 'form-control mt-2', rows: 2,
@@ -140,7 +136,6 @@
           </div>
           <div class="col-md-6">
             <%= f.file_field :ra_check_images, multiple: true, class: 'form-control' %>
-            <small class="text-muted"><%= t('common.image_upload_note') %></small>
           </div>
         </div>
 
@@ -163,6 +158,8 @@
       </div>
 
       <%= render 'hold_fields', f: f %>
+
+
       <div class="mb-3">
         <%= f.label :completed, t('common.completed'), class: 'form-label' %>
         <%= @delivery_item.completed? ? t('common.yes') : t('common.no') %>

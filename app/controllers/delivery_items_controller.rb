@@ -1,5 +1,4 @@
 class DeliveryItemsController < ApplicationController
-  include HoldableController
   include CompletableController
 
   layout "dashboard_layout"
@@ -138,6 +137,7 @@ class DeliveryItemsController < ApplicationController
     visual_check_images
     vt2_check_images
     ra_check_images
+    on_hold_images
   ].freeze
 
   def delivery_item_path_params
@@ -176,9 +176,10 @@ class DeliveryItemsController < ApplicationController
       :ra_date,
       :ra_value,
       :ra_parameters,
+      :on_hold_status,
+      :on_hold_comment,
       :user_id,
       *completable_params,
-      # *holdable_params,
       :item_description,
       {
         quantity_check_images: [],
@@ -187,7 +188,8 @@ class DeliveryItemsController < ApplicationController
         vt2_check_images: [],
         ra_check_images: []
       },
-      specifications: {}
+      specifications: {},
+      on_hold_images: []
     )
   end
 end
