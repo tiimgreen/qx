@@ -142,11 +142,11 @@ en:
     assemblie_description: "Component assembly and installation"
     as_built: "As-Built"
     as_built_description: "Final documentation of built state"
-    testing_and_pressur: "Testing and Pressure"
+    testing_and_pressur: "Pressure Testing / Testpack"
     testing_and_pressur_description: "System testing and pressure checks"
     documentation: "Documentation"
     documentation_description: "Project documentation and records"
-    material_certificate: "Material Certificate"
+    material_certificate: "Material Certificates"
     material_certificate_description: "Material certification and documentation"
   work_locations:
     types:

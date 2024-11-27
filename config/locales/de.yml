@@ -136,11 +136,11 @@ de:
     assemblie_description: "Bauteilmontage und Installation"
     as_built: "As-Built"
     as_built_description: "Finale Dokumentation des Bauzustands"
-    testing_and_pressur: "Prüfung und Druck"
+    testing_and_pressur: "Druck Prüfung / Testpack"
     testing_and_pressur_description: "Systemprüfung und Drucktests"
     documentation: "Dokumentation"
     documentation_description: "Projektdokumentation und Aufzeichnungen"
-    material_certificate: "Materialzertifikat"
+    material_certificate: "Materialzertifikate"
     material_certificate_description: "Materialzertifizierung und Dokumentation"
   work_locations:
     types:
