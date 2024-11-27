@@ -1,7 +1,6 @@
 class Sector < ApplicationRecord
   has_many :user_sectors, dependent: :destroy
   has_many :users, through: :user_sectors
-  has_many :sector_permissions, through: :user_sectors
 
   validates :key, presence: true, uniqueness: true
 
@@ -10,6 +9,6 @@ class Sector < ApplicationRecord
   end
 
   def description
-    I18n.t("sectors.#{key}_description", default: '')
+    I18n.t("sectors.#{key}_description", default: "")
   end
 end

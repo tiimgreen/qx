@@ -5,6 +5,7 @@ class IncomingDeliveriesController < ApplicationController
   layout "dashboard_layout"
   before_action :set_project
   before_action :set_incoming_delivery, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_action!
 
   def index
     base_scope = if @project
@@ -75,6 +76,11 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   def complete
+    # unless @incoming_delivery.can_complete?
+    #   flash[:alert] = "Please complete all delivery items before completing the delivery"
+    #   redirect_to project_incoming_delivery_path(@project, @incoming_delivery)
+    # end
+
     complete_resource(
       @incoming_delivery,
       project_incoming_delivery_path(@project, @incoming_delivery),
@@ -83,6 +89,51 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   private
+
+  def authorize_action!
+    case action_name
+    when "index", "show"
+      authorize_view!
+    when "new", "create"
+      authorize_create!
+    when "edit", "update"
+      authorize_edit!
+    when "destroy"
+      authorize_destroy!
+    end
+
+    if current_user.has_pending_deliveries?("IncomingDelivery", @project.id)
+      flash[:info] = "Please complete your existing deliveries before creating a new one"
+    end
+  end
+
+    def authorize_view!
+    unless current_user.can_view?("IncomingDelivery")
+      flash[:alert] = "You don't have permission to view deliveries"
+      redirect_to request.referer || projects_path
+    end
+  end
+
+  def authorize_create!
+    unless current_user.can_create?("IncomingDelivery")
+      flash[:alert] = "You don't have permission to create deliveries"
+      redirect_to request.referer || projects_path
+    end
+  end
+
+  def authorize_edit!
+    unless current_user.can_edit?("IncomingDelivery")
+      flash[:alert] = "You don't have permission to update deliveries"
+      redirect_to request.referer || projects_path
+    end
+  end
+
+  def authorize_destroy!
+    unless current_user.can_delete?("IncomingDelivery")
+      flash[:alert] = "You don't have permission to delete deliveries"
+      redirect_to request.referer || projects_path
+    end
+  end
 
   def sort_params
     allowed_columns = %w[

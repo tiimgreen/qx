@@ -23,8 +23,10 @@
       <% end %>
     </div>
     <div class="col-md-4 text-end">
-      <%= link_to new_project_incoming_delivery_path(@project), class: 'btn btn-primary' do %>
-        <i class="bi bi-plus"></i> <%= t('incoming_deliveries.buttons.new_delivery') %>
+      <% if current_user.can_create?("IncomingDelivery") && !current_user.has_pending_deliveries?("IncomingDelivery", @project.id) %>
+        <%= link_to new_project_incoming_delivery_path(@project), class: 'btn btn-primary' do %>
+          <i class="bi bi-plus"></i> <%= t('incoming_deliveries.buttons.new_delivery') %>
+        <% end %>
       <% end %>
     </div>
   </div>

@@ -26,4 +26,8 @@ class IncomingDelivery < ApplicationRecord
         search: term
       ).distinct
   }
+
+  def can_complete?
+    delivery_items.where(completed: false).none?
+  end
 end

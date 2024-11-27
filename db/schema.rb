@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_065801) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_054211) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -157,6 +157,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_065801) do
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_permissions_on_code"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -198,16 +199,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_065801) do
     t.index ["delivery_item_id"], name: "index_roughness_measurements_on_delivery_item_id"
   end
 
-  create_table "sector_permissions", force: :cascade do |t|
-    t.integer "user_sector_id", null: false
-    t.integer "permission_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["permission_id"], name: "index_sector_permissions_on_permission_id"
-    t.index ["user_sector_id", "permission_id"], name: "index_sector_permissions_on_user_sector_id_and_permission_id", unique: true
-    t.index ["user_sector_id"], name: "index_sector_permissions_on_user_sector_id"
-  end
-
   create_table "sectors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -216,13 +207,23 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_065801) do
     t.index ["key"], name: "index_sectors_on_key", unique: true
   end
 
+  create_table "user_resource_permissions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "permission_id", null: false
+    t.string "resource_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_user_resource_permissions_on_permission_id"
+    t.index ["user_id", "resource_name", "permission_id"], name: "index_user_resource_permissions_uniqueness", unique: true
+    t.index ["user_id"], name: "index_user_resource_permissions_on_user_id"
+  end
+
   create_table "user_sectors", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "sector_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sector_id"], name: "index_user_sectors_on_sector_id"
-    t.index ["user_id", "sector_id"], name: "index_user_sectors_on_user_id_and_sector_id", unique: true
     t.index ["user_id"], name: "index_user_sectors_on_user_id"
   end
 
@@ -270,8 +271,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_065801) do
   add_foreign_key "projects", "users"
   add_foreign_key "quality_inspections", "delivery_items"
   add_foreign_key "quality_inspections", "users", column: "inspector_id"
-  add_foreign_key "sector_permissions", "permissions"
-  add_foreign_key "sector_permissions", "user_sectors"
+  add_foreign_key "user_resource_permissions", "permissions"
+  add_foreign_key "user_resource_permissions", "users"
   add_foreign_key "user_sectors", "sectors"
   add_foreign_key "user_sectors", "users"
 end
