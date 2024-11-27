@@ -4,7 +4,13 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @pagy, @projects = pagy(Project.search_by_term(params[:search]))
+    sort_column = sort_params || "created_at"
+    sort_direction = params[:direction] || "desc"
+
+    @pagy, @projects = pagy(
+      Project.search_by_term(params[:search])
+            .order(sort_column => sort_direction)
+    )
   end
 
   def show
@@ -43,6 +49,18 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def sort_params
+    allowed_columns = %w[
+      project_number
+      name
+      description
+      project_manager
+      client_name
+      created_at
+    ]
+    params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
+  end
 
   def set_project
     @project = Project.find(params[:id])

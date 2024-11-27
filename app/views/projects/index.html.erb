@@ -18,12 +18,36 @@
     <table class="table table-striped table-hover table-sm">
       <thead>
         <tr>
-          <th><%= t('activerecord.attributes.project.project_number') %></th>
-          <th><%= t('activerecord.attributes.project.name') %></th>
-          <th><%= t('activerecord.attributes.project.description') %></th>
-          <th><%= t('activerecord.attributes.project.project_manager') %></th>
-          <th><%= t('activerecord.attributes.project.client_name') %></th>
-          <th><%= t('activerecord.attributes.project.created_at') %></th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.project_number'),
+                request.params.merge(sort: 'project_number', direction: (params[:sort] == 'project_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('project_number') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.name'),
+                request.params.merge(sort: 'name', direction: (params[:sort] == 'name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('name') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.description'),
+                request.params.merge(sort: 'description', direction: (params[:sort] == 'description' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('description') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.project_manager'),
+                request.params.merge(sort: 'project_manager', direction: (params[:sort] == 'project_manager' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('project_manager') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.client_name'),
+                request.params.merge(sort: 'client_name', direction: (params[:sort] == 'client_name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('client_name') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.created_at'),
+                request.params.merge(sort: 'created_at', direction: (params[:sort] == 'created_at' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('created_at') %>
+          </th>
           <th><%= t('activerecord.attributes.project.created_by') %></th>
           <th class="text-end"><%= t('common.labels.actions') %></th>
         </tr>

@@ -8,9 +8,9 @@ class IncomingDeliveriesController < ApplicationController
 
   def index
     base_scope = if @project
-      @project.incoming_deliveries.order(created_at: :desc)
+      @project.incoming_deliveries
     else
-      IncomingDelivery.order(created_at: :desc)
+      IncomingDelivery.all
     end
 
     sort_column = sort_params || "delivery_date"
@@ -91,9 +91,10 @@ class IncomingDeliveriesController < ApplicationController
       order_number
       delivery_date
       supplier_name
+      completed
       delivery_items_count
     ]
-    params[:sort] if allowed_columns.include?(params[:sort])
+    params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
   end
 
   def set_project
