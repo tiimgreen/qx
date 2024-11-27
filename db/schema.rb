@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_27_092232) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_094539) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -72,15 +72,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_092232) do
     t.string "delivery_note_position"
     t.integer "actual_quantity"
     t.integer "target_quantity"
-    t.boolean "quantity_check_status", default: false
+    t.text "quantity_check_status"
     t.text "quantity_check_comment"
-    t.boolean "dimension_check_status", default: false
+    t.text "dimension_check_status"
     t.text "dimension_check_comment"
-    t.boolean "visual_check_status", default: false
+    t.text "visual_check_status"
     t.text "visual_check_comment"
-    t.boolean "vt2_check_status", default: false
+    t.text "vt2_check_status"
     t.text "vt2_check_comment"
-    t.boolean "ra_check_status", default: false
+    t.text "ra_check_status"
     t.text "ra_check_comment"
     t.integer "user_id"
     t.boolean "on_hold", default: false
