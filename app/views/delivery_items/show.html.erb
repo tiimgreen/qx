@@ -46,7 +46,7 @@
             <dd class="col-sm-8"><%= @delivery_item.user&.name %></dd>
 
             <dt class="col-sm-4"><%= t('common.completed') %></dt>
-            <dd class="col-sm-8"><%= @delivery_item.completed? ? t('common.yes') : t('common.no') %></dd>
+            <dd class="col-sm-8"><%= status_label(@delivery_item.completed? ? t('common.yes') : t('common.no')) %></dd>
           </dl>
         </div>
       </div>

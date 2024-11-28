@@ -52,7 +52,7 @@
             <dd class="col-sm-8"><%= @incoming_delivery.user&.name %></dd>
 
             <dt class="col-sm-4"><%= t('.completed') %></dt>
-            <dd class="col-sm-8"><%= @incoming_delivery.completed ? t('common.yes') : t('common.no') %></dd>
+            <dd class="col-sm-8"><%= status_label(@incoming_delivery.completed ? t('common.yes') : t('common.no')) %></dd>
 
           <%= render 'hold_info', record: @incoming_delivery %>
           </dl>
