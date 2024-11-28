@@ -6,7 +6,6 @@ en:
       material_certificate: "Material Certificate"
       delivery_item: "Delivery Item"
       missing_delivery_item: "Missing Delivery Item"
-      inspection_defect: "Inspection Defect"
     attributes:
       project:
         project_number: "Project Number"
@@ -62,11 +61,6 @@ en:
         ra_value: "Ra Value"
         on_hold_status: "On Hold"
         on_hold_comment: "On Hold Comment"
-      inspection_defect:
-        inspection_reference: "Inspection Reference"
-        severity: "Severity"
-        description: "Description"
-        corrective_action: "Corrective Action"
     errors:
       models:
         incoming_delivery:

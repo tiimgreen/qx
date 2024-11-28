@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_28_051454) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_28_053252) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -121,16 +121,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_051454) do
     t.index ["work_location_id"], name: "index_incoming_deliveries_on_work_location_id"
   end
 
-  create_table "inspection_defects", force: :cascade do |t|
-    t.integer "quality_inspection_id", null: false
-    t.text "description", null: false
-    t.string "severity", null: false
-    t.text "corrective_action"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["quality_inspection_id"], name: "index_inspection_defects_on_quality_inspection_id"
-  end
-
   create_table "material_certificate_items", force: :cascade do |t|
     t.integer "material_certificate_id", null: false
     t.integer "delivery_item_id", null: false
@@ -160,7 +150,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_051454) do
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["code"], name: "index_permissions_on_code"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -176,26 +165,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_051454) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
-  create_table "quality_inspections", force: :cascade do |t|
-    t.integer "delivery_item_id", null: false
-    t.string "inspection_type", null: false
-    t.string "status", null: false
-    t.datetime "inspection_date", null: false
-    t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "inspector_id"
-    t.index ["delivery_item_id"], name: "index_quality_inspections_on_delivery_item_id"
-    t.index ["inspection_type"], name: "index_quality_inspections_on_inspection_type"
-    t.index ["inspector_id"], name: "index_quality_inspections_on_inspector_id"
-    t.index ["status"], name: "index_quality_inspections_on_status"
-  end
-
   create_table "sectors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "key"
     t.integer "position"
+    t.string "key"
     t.index ["key"], name: "index_sectors_on_key", unique: true
   end
 
@@ -216,6 +190,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_051454) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sector_id"], name: "index_user_sectors_on_sector_id"
+    t.index ["user_id", "sector_id"], name: "index_user_sectors_on_user_id_and_sector_id", unique: true
     t.index ["user_id"], name: "index_user_sectors_on_user_id"
   end
 
@@ -256,13 +231,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_051454) do
   add_foreign_key "incoming_deliveries", "projects"
   add_foreign_key "incoming_deliveries", "users"
   add_foreign_key "incoming_deliveries", "work_locations"
-  add_foreign_key "inspection_defects", "quality_inspections"
   add_foreign_key "material_certificate_items", "delivery_items"
   add_foreign_key "material_certificate_items", "material_certificates"
   add_foreign_key "material_certificates", "projects"
   add_foreign_key "projects", "users"
-  add_foreign_key "quality_inspections", "delivery_items"
-  add_foreign_key "quality_inspections", "users", column: "inspector_id"
   add_foreign_key "user_resource_permissions", "permissions"
   add_foreign_key "user_resource_permissions", "users"
   add_foreign_key "user_sectors", "sectors"
