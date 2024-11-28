@@ -2,10 +2,6 @@ class DeliveryItem < ApplicationRecord
   belongs_to :incoming_delivery
   belongs_to :user, optional: true
 
-
-  has_many :material_certificate_items, dependent: :destroy
-  has_many :material_certificates, through: :material_certificate_items
-
   has_one :project, through: :incoming_delivery
 
   has_many_attached :quantity_check_images
