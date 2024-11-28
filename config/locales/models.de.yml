@@ -1,12 +1,52 @@
 de:
   activerecord:
+    errors:
+      messages:
+        record_invalid: "Validierung fehlgeschlagen: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Datensatz kann nicht gelöscht werden, da ein abhängiger %{record}-Datensatz existiert"
+          has_many: "Datensatz kann nicht gelöscht werden, da abhängige %{record} existieren"
+        taken: "ist bereits vergeben"
+        blank: "darf nicht leer sein"
+        too_short: "ist zu kurz (mindestens %{count} Zeichen erforderlich)"
+        too_long: "ist zu lang (maximal %{count} Zeichen erlaubt)"
+        wrong_length: "hat eine falsche Länge (erlaubt sind %{count} Zeichen)"
+        not_a_number: "ist keine Zahl"
+        not_an_integer: "ist keine Ganzzahl"
+        greater_than: "muss größer als %{count} sein"
+        greater_than_or_equal_to: "muss größer oder gleich %{count} sein"
+        equal_to: "muss gleich %{count} sein"
+        less_than: "muss kleiner als %{count} sein"
+        less_than_or_equal_to: "muss kleiner oder gleich %{count} sein"
+        other_than: "muss anders als %{count} sein"
+        in: "ist nicht in der Liste"
+        not_in: "ist in der Liste"
+        odd: "muss ungerade sein"
+        even: "muss gerade sein"
+        confirmation: "stimmt nicht überein"
+        accepted: "muss akzeptiert werden"
+        empty: "darf nicht leer sein"
+        too_fast: "wurde zu schnell wiederholt. Bitte warte %{count} Sekunden."
+        wrong_recaptcha: "ist ungültig. Bitte überprüfe deine Eingabe."
+      models:
+        incoming_delivery:
+          attributes:
+            order_number:
+              taken: "ist bereits vergeben"
     models:
       project: "Projekt"
       incoming_delivery: "Wareneingang"
       material_certificate: "Werkzeugnis"
       delivery_item: "Lieferposition"
       missing_delivery_item: "Fehlende Lieferposition"
+      admin: "Administrator"
     attributes:
+      admin:
+        email: "E-Mail"
+        password: "Passwort"
+        password_confirmation: "Passwort bestätigen"
+        name: "Name"
+        active: "Aktiv"
       project:
         project_number: "Projektnummer"
         name: "Name"
@@ -61,10 +101,3 @@ de:
         ra_value: "Messwert"
         on_hold_status: "Auf Halt"
         on_hold_comment: "Haltkommentar"
-
-    errors:
-      models:
-        incoming_delivery:
-          attributes:
-            order_number:
-              taken: "ist bereits vergeben"

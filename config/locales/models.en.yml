@@ -1,12 +1,31 @@
 en:
   activerecord:
+    errors:
+      messages:
+        record_invalid: "Validation failed: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Cannot delete record because a dependent %{record} exists"
+          has_many: "Cannot delete record because dependent %{record} exist"
+        taken: "has already been taken"
+      models:
+        incoming_delivery:
+          attributes:
+            order_number:
+              taken: "has already been taken"
     models:
       project: "Project"
       incoming_delivery: "Incoming Delivery"
       material_certificate: "Material Certificate"
       delivery_item: "Delivery Item"
       missing_delivery_item: "Missing Delivery Item"
+      admin: "Administrator"
     attributes:
+      admin:
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+        name: "Name"
+        active: "Active"
       project:
         project_number: "Project Number"
         name: "Name"
@@ -61,9 +80,3 @@ en:
         ra_value: "Ra Value"
         on_hold_status: "On Hold"
         on_hold_comment: "On Hold Comment"
-    errors:
-      models:
-        incoming_delivery:
-          attributes:
-            order_number:
-              taken: "has already been taken"
