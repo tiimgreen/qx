@@ -1,7 +1,4 @@
-<%= form_with(
-      model: @material_certificate.new_record? ? [@project, @material_certificate] : @material_certificate,
-      local: true
-    ) do |f| %>
+<%= form_with(model: @material_certificate, local: true) do |f| %>
   <% if @material_certificate.errors.any? %>
     <div class="alert alert-danger">
       <h4><%= t('.errors.header', count: @material_certificate.errors.count) %></h4>
@@ -73,4 +70,3 @@
     <%= link_to t('.cancel'), material_certificates_path, class: 'btn btn-secondary' %>
   </div>
 <% end %>
-

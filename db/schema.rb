@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_28_053252) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_28_054321) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -121,18 +121,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_053252) do
     t.index ["work_location_id"], name: "index_incoming_deliveries_on_work_location_id"
   end
 
-  create_table "material_certificate_items", force: :cascade do |t|
-    t.integer "material_certificate_id", null: false
-    t.integer "delivery_item_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["delivery_item_id"], name: "index_material_certificate_items_on_delivery_item_id"
-    t.index ["material_certificate_id", "delivery_item_id"], name: "index_material_certificate_items_unique", unique: true
-    t.index ["material_certificate_id"], name: "index_material_certificate_items_on_material_certificate_id"
-  end
-
   create_table "material_certificates", force: :cascade do |t|
-    t.integer "project_id", null: false
     t.string "certificate_number", null: false
     t.string "batch_number", null: false
     t.date "issue_date", null: false
@@ -142,7 +131,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_053252) do
     t.datetime "updated_at", null: false
     t.index ["batch_number"], name: "index_material_certificates_on_batch_number"
     t.index ["certificate_number"], name: "index_material_certificates_on_certificate_number", unique: true
-    t.index ["project_id"], name: "index_material_certificates_on_project_id"
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -231,9 +219,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_053252) do
   add_foreign_key "incoming_deliveries", "projects"
   add_foreign_key "incoming_deliveries", "users"
   add_foreign_key "incoming_deliveries", "work_locations"
-  add_foreign_key "material_certificate_items", "delivery_items"
-  add_foreign_key "material_certificate_items", "material_certificates"
-  add_foreign_key "material_certificates", "projects"
   add_foreign_key "projects", "users"
   add_foreign_key "user_resource_permissions", "permissions"
   add_foreign_key "user_resource_permissions", "users"

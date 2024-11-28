@@ -1,13 +1,9 @@
 class MaterialCertificatesController < ApplicationController
   layout "dashboard_layout"
   before_action :set_material_certificate, only: [ :show, :edit, :update, :destroy ]
-  # before_action :set_project, only: [ :new, :create ]
-  # before_action :ensure_project, only: [ :edit, :update ]
-  # before_action :load_delivery_items, only: [ :new, :edit, :create, :update ]
 
   def index
-    @material_certificates = MaterialCertificate.includes(:project, :delivery_items)
-    @material_certificates = @material_certificates.where(project_id: params[:project_id]) if params[:project_id]
+    @material_certificates = MaterialCertificate.includes(:delivery_items)
     @material_certificates = @material_certificates.search_by_term(params[:search])
   end
 
@@ -27,32 +23,26 @@ class MaterialCertificatesController < ApplicationController
   end
 
   def create
-    @material_certificate = @project.material_certificates.build(material_certificate_params)
+    @material_certificate = MaterialCertificate.new(material_certificate_params)
 
     if @material_certificate.save
-      if params[:material_certificate][:delivery_item_ids].present?
-        @material_certificate.delivery_item_ids = params[:material_certificate][:delivery_item_ids]
-      end
-      redirect_to @material_certificate, notice: "Material certificate was successfully created."
+      redirect_to @material_certificate, notice: t('.success')
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
   def update
     if @material_certificate.update(material_certificate_params)
-      if params[:material_certificate][:delivery_item_ids].present?
-        @material_certificate.delivery_item_ids = params[:material_certificate][:delivery_item_ids]
-      end
-      redirect_to @material_certificate, notice: "Material certificate was successfully updated."
+      redirect_to @material_certificate, notice: t('.success')
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
   def destroy
     @material_certificate.destroy
-    redirect_to material_certificates_url, notice: "Material certificate was successfully deleted."
+    redirect_to material_certificates_url, notice: t('.success')
   end
 
   private
@@ -60,22 +50,6 @@ class MaterialCertificatesController < ApplicationController
   def set_material_certificate
     @material_certificate = MaterialCertificate.find(params[:id])
   end
-
-  # def set_project
-  #   @project = Project.find(params[:project_id])
-  # end
-
-  # def load_delivery_items
-  #   @delivery_items = if @project
-  #     @project.delivery_items.includes(:incoming_delivery)
-  #   else
-  #     @material_certificate.project.delivery_items.includes(:incoming_delivery)
-  #   end
-  # end
-
-  # def ensure_project
-  #   @project = @material_certificate&.project
-  # end
 
   def material_certificate_params
     params.require(:material_certificate).permit(
