@@ -1,4 +1,5 @@
 en:
+  search_placeholder: "Search..."
   site_title: "Qualinox AG | EN"
   language: "Language"
   navigation:
@@ -13,20 +14,10 @@ en:
         title: "Projects"
         list: "List Projects"
         new: "New Project"
-      material_certificates:
-        title: "Material Certificates"
-        list: "List Material Certificates"
-        new: "New Material Certificate"
-        total: "Total Material Certificates"
       incoming_deliveries:
         title: "Incoming Deliveries"
         deliveries: "Deliveries"
         new_delivery: "New Delivery"
-        material_certificates: "Material Certificates"
-      quality_control:
-        title: "Quality Control"
-        quality_inspections: "Quality Inspections"
-        roughness_measurements: "Roughness Measurements"
   common:
     save: "Save"
     cancel: "Cancel"
@@ -68,23 +59,6 @@ en:
     sign_in: "Sign In"
     users: "Users"
     admins: "Administrators"
-  quality_inspections:
-    inspection_defect_fields:
-      severity:
-        minor: Minor
-        major: Major
-        critical: Critical
-      select_severity: Select severity
-      corrective_action_placeholder: Enter any corrective actions taken or planned
-      remove_defect: Remove Defect
-      confirm_remove: Are you sure you want to remove this defect?
-    form:
-      inspection_images: Inspection Images
-      remove_image: Remove
-      confirm_remove_image: Are you sure you want to remove this image?
-      image_help_text: "Upload up to 10 images (PNG, JPEG, JPG). Maximum size: 5MB each."
-    remove_image:
-      image_removed: Image was successfully removed.
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
@@ -151,8 +125,6 @@ en:
     testing_and_pressur_description: "System testing and pressure checks"
     documentation: "Documentation"
     documentation_description: "Project documentation and records"
-    material_certificate: "Material Certificates"
-    material_certificate_description: "Material certification and documentation"
   work_locations:
     types:
       workshop: "Workshop"
@@ -182,5 +154,3 @@ en:
               greater_than: "Target quantity must be greater than %{count}"
             on_hold:
               inclusion: "must have a valid status"
-
-

@@ -1,12 +1,13 @@
 class MaterialCertificate < ApplicationRecord
   has_one_attached :certificate_file
-  has_many :delivery_items
 
   validates :certificate_number,
             presence: true,
             uniqueness: { case_sensitive: false, message: "already exists (case insensitive)" }
   validates :batch_number, presence: true
   validates :issue_date, presence: true
+
+  before_validation :upcase_certificate_number
 
   scope :pending, -> { where(status: "pending") }
   scope :search_by_term, ->(search_term) {
@@ -25,4 +26,10 @@ class MaterialCertificate < ApplicationRecord
         term, term, term, term, term, term
       ).distinct
   }
+
+  private
+
+  def upcase_certificate_number
+    self.certificate_number = certificate_number.upcase if certificate_number.present?
+  end
 end

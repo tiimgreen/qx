@@ -1,41 +1,69 @@
 de:
+  navigation:
+    menu:
+      material_certificates:
+        title: "Materialzertifikate"
+        list: "Materialzertifikate auflisten"
+        new: "Neues Materialzertifikat"
+        total: "Gesamtzahl der Materialzertifikate"
   material_certificates:
     new:
       title: "Neues Werkzeugnis"
     edit:
       title: "Werkzeugnis bearbeiten"
+    index:
+      title: "Materialzertifikate"
+      new_certificate: "Neues Zertifikat"
+      select_project_first: "Bitte wählen Sie zuerst ein Projekt aus"
+      search_placeholder: "Zertifikate suchen..."
+      search_button: "Suchen"
+      search: "Zertifikate suchen..."
+      download: "Herunterladen"
+      no_certificate: "Keine Datei"
+      delete_confirm: "Sind Sie sicher, dass Sie dieses Zertifikat löschen möchten?"
     show:
-      title: "Werkzeugnis Details"
-      certificate_number: "Zertifikatnummer"
+      title: "Materialzertifikat Details"
+      certificate_number: "Zertifikatsnummer"
       batch_number: "Chargennummer"
       issue_date: "Ausstellungsdatum"
       issuer: "Aussteller"
-      certificate_file: "Zertifikatsdatei"
-      download_certificate: "Zertifikat herunterladen"
+      certificate: "Zertifikat"
+      download: "Herunterladen"
       description: "Beschreibung"
       associated_items: "Zugeordnete Positionen"
       no_items: "Keine Positionen diesem Zertifikat zugeordnet"
+      back: "Zurück"
+      edit: "Bearbeiten"
+      delete: "Löschen"
+      delete_confirm: "Sind Sie sicher, dass Sie dieses Zertifikat löschen möchten?"
       table:
         tag_number: "TAG-Nummer"
         batch_number: "Chargennummer"
         delivery_order: "Lieferauftrag"
         quantity: "Menge"
-    index:
-      title: "Werkzeugnisse"
-      new_certificate: "Neues Zeugnis"
-      select_project_first: "Bitte wählen Sie zuerst ein Projekt aus"
-      search_placeholder: "Zeugnisse suchen..."
-      search_button: "Suchen"
+    create:
+      success: "Materialzertifikat wurde erfolgreich erstellt"
+    update:
+      success: "Materialzertifikat wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Materialzertifikat wurde erfolgreich gelöscht"
     form:
+      title: "Materialzertifikat"
       errors:
         header:
-          one: "1 Fehler verhinderte das Speichern dieses Zeugnisses:"
-          other: "%{count} Fehler verhinderten das Speichern dieses Zeugnisses:"
-      certificate_number_last: "Zertifikatnummer (Letzte: %{number})"
+          one: "1 Fehler verhinderte das Speichern dieses Zertifikats"
+          other: "%{count} Fehler verhinderten das Speichern dieses Zertifikats"
+      certificate_number_last: "Zertifikatsnummer (Letzte: %{number})"
+      batch_number: "Chargennummer"
+      issue_date: "Ausstellungsdatum"
+      issuer_name: "Aussteller Name"
+      description: "Beschreibung"
+      certificate: "Zertifikatsdatei"
       associated_items: "Zugeordnete Lieferpositionen"
       tag_batch_delivery: "Tag: %{tag} - Charge: %{batch} (Lieferung: %{delivery})"
-      submit: "Zeugnis speichern"
+      submit: "Zertifikat speichern"
       cancel: "Abbrechen"
+      search_placeholder: "Positionen suchen..."
     buttons:
       view: "Anzeigen"
       edit: "Bearbeiten"

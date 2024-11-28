@@ -1,41 +1,59 @@
 en:
+  navigation:
+    menu:
+      material_certificates:
+        title: "Material Certificates"
+        list: "List Material Certificates"
+        new: "New Material Certificate"
+        total: "Total Material Certificates"
   material_certificates:
-    new:
-      title: "New Material Certificate"
-    edit:
-      title: "Edit Material Certificate"
+    index:
+      title: "Material Certificates"
+      new_certificate: "New Certificate"
+      search_placeholder: "Search certificates..."
+      download: "Download"
+      no_certificate: "No file"
+      delete_confirm: "Are you sure you want to delete this certificate?"
     show:
       title: "Material Certificate Details"
       certificate_number: "Certificate Number"
       batch_number: "Batch Number"
       issue_date: "Issue Date"
       issuer: "Issuer"
-      certificate_file: "Certificate File"
-      download_certificate: "Download Certificate"
+      certificate: "Certificate"
+      download: "Download"
       description: "Description"
-      associated_items: "Associated Items"
-      no_items: "No items associated with this certificate"
-      table:
-        tag_number: "Tag Number"
-        batch_number: "Batch Number"
-        delivery_order: "Delivery Order"
-        quantity: "Quantity"
-    index:
-      title: "Material Certificates"
-      new_certificate: "New Certificate"
-      select_project_first: "Please select a project first"
-      search_placeholder: "Search certificates..."
-      search_button: "Search"
+      back: "Back"
+      edit: "Edit"
+      delete: "Delete"
+      delete_confirm: "Are you sure you want to delete this certificate?"
+    new:
+      title: "New Material Certificate"
+    edit:
+      title: "Edit Material Certificate"
+    create:
+      success: "Material certificate was successfully created"
+    update:
+      success: "Material certificate was successfully updated"
+    destroy:
+      success: "Material certificate was successfully deleted"
     form:
-      errors:
-        header:
-          one: "1 error prohibited this certificate from being saved:"
-          other: "%{count} errors prohibited this certificate from being saved:"
+      title: "Material Certificate"
       certificate_number_last: "Certificate Number (Last: %{number})"
+      batch_number: "Batch Number"
+      issue_date: "Issue Date"
+      issuer_name: "Issuer Name"
+      description: "Description"
+      certificate: "Certificate File"
       associated_items: "Associated Delivery Items"
       tag_batch_delivery: "Tag: %{tag} - Batch: %{batch} (Delivery: %{delivery})"
       submit: "Save Certificate"
       cancel: "Cancel"
+      search_placeholder: "Search..."
+      errors:
+        header:
+          one: "1 error prohibited this certificate from being saved"
+          other: "%{count} errors prohibited this certificate from being saved"
     buttons:
       view: "View"
       edit: "Edit"

@@ -56,6 +56,7 @@ en:
         description: "Description"
         certificate_file: "Certificate File"
         delivery_items: "Delivery Items"
+        certificate: "Certificate"
       delivery_item:
         tag_number: "TAG Number"
         batch_number: "Batch Number"
@@ -80,3 +81,12 @@ en:
         ra_value: "Ra Value"
         on_hold_status: "On Hold"
         on_hold_comment: "On Hold Comment"
+  material_certificates:
+    index:
+      title: "Material Certificates"
+    create:
+      success: "Material certificate was successfully created"
+    update:
+      success: "Material certificate was successfully updated"
+    destroy:
+      success: "Material certificate was successfully deleted"

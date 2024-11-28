@@ -77,6 +77,7 @@ de:
         description: "Beschreibung"
         certificate_file: "Zertifikatsdatei"
         delivery_items: "Lieferpositionen"
+        certificate: "Zertifikat"
       delivery_item:
         tag_number: "TAG-Nummer"
         batch_number: "Chargennummer"
@@ -101,3 +102,15 @@ de:
         ra_value: "Messwert"
         on_hold_status: "Auf Halt"
         on_hold_comment: "Haltkommentar"
+    material_certificates:
+      index:
+        title: "Materialzertifikate"
+        certificate: "Zertifikat"
+        download: "Herunterladen" 
+        no_certificate: "Keine Datei"
+      create:
+        success: "Materialzertifikat wurde erfolgreich erstellt"
+      update:
+        success: "Materialzertifikat wurde erfolgreich aktualisiert"
+      destroy:
+        success: "Materialzertifikat wurde erfolgreich gelöscht"

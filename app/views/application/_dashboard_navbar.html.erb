@@ -26,10 +26,11 @@
               <!-- Incoming Deliveries -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                  <%= t('navigation.menu.incoming_deliveries.title') %>
+                  <%= t('navigation.menu.material_certificates.title') %>
                 </a>
                 <div class="dropdown-menu">
-                  <%= link_to t('navigation.menu.incoming_deliveries.material_certificates'), material_certificates_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.material_certificates.list'), material_certificates_path, class: 'dropdown-item' %>
+                  <%= link_to t('navigation.menu.material_certificates.new'), new_material_certificate_path, class: 'dropdown-item' %>
                 </div>
               </li>
 

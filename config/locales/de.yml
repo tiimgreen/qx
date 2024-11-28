@@ -13,20 +13,10 @@ de:
         title: "Projekte"
         list: "Projekte auflisten"
         new: "Neues Projekt"
-      material_certificates:
-        title: "Materialzertifikate"
-        list: "Materialzertifikate auflisten"
-        new: "Neues Materialzertifikat"
-        total: "Gesamtzahl der Materialzertifikate"
       incoming_deliveries:
-        title: "Wareneingänge"
+        title: "Eingehende Lieferungen"
         deliveries: "Lieferungen"
         new_delivery: "Neue Lieferung"
-        material_certificates: "Materialzertifikate"
-      quality_control:
-        title: "Qualitätskontrolle"
-        quality_inspections: "Qualitätsprüfungen"
-        roughness_measurements: "Rauheitsmessungen"
   common:
     save: "Speichern"
     cancel: "Abbrechen"
@@ -70,16 +60,6 @@ de:
     sign_in: "Anmelden"
     users: "Benutzer"
     admins: "Administratoren"
-  quality_inspections:
-    inspection_defect_fields:
-      severity:
-        minor: "Gering"
-        major: "Erheblich"
-        critical: "Kritisch"
-      select_severity: "Schweregrad auswählen"
-      corrective_action_placeholder: "Geben Sie alle ergriffenen oder geplanten Korrekturmaßnahmen ein"
-      remove_defect: "Mangel entfernen"
-      confirm_remove: "Sind Sie sicher, dass Sie diesen Mangel entfernen möchten?"
   time:
     formats:
       default: "%d.%m.%Y %H:%M:%S"
@@ -146,8 +126,6 @@ de:
     testing_and_pressur_description: "Systemprüfung und Drucktests"
     documentation: "Dokumentation"
     documentation_description: "Projektdokumentation und Aufzeichnungen"
-    material_certificate: "Materialzertifikate"
-    material_certificate_description: "Materialzertifizierung und Dokumentation"
   work_locations:
     types:
       workshop: "Werkstatt"
