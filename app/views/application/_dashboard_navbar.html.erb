@@ -35,17 +35,6 @@
                 </div>
               </li>
 
-              <!-- Quality Control -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                  <%= t('navigation.menu.quality_control.title') %>
-                </a>
-                <div class="dropdown-menu">
-                  <%= link_to t('navigation.menu.quality_control.quality_inspections'), quality_inspections_path, class: 'dropdown-item' %>
-                  <%= link_to t('navigation.menu.quality_control.roughness_measurements'), roughness_measurements_path, class: 'dropdown-item' %>
-                </div>
-              </li>
-
               <!-- Admin section if user has admin rights -->
               <% if current_admin %>
                 <li class="nav-item dropdown">

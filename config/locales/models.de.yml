@@ -7,7 +7,6 @@ de:
       delivery_item: "Lieferposition"
       missing_delivery_item: "Fehlende Lieferposition"
       inspection_defect: "Prüfmangel"
-      roughness_measurement: "Rauheitsmessung"
     attributes:
       project:
         project_number: "Projektnummer"
@@ -68,12 +67,6 @@ de:
         severity: "Schweregrad"
         description: "Beschreibung"
         corrective_action: "Korrekturmaßnahme"
-      roughness_measurement:
-        measurement_date: "Messdatum"
-        measured_value: "Messwert"
-        measurement_parameters: "Parameter"
-        notes: "Anmerkungen"
-        measurement_reports: "Berichte"
     errors:
       models:
         incoming_delivery:

@@ -31,7 +31,6 @@ Rails.application.routes.draw do
           delete :remove_image
         end
       end
-      resource :roughness_measurement, shallow: true
     end
 
     resources :quality_inspections do
@@ -40,9 +39,6 @@ Rails.application.routes.draw do
         delete "remove_image/:image_id", action: :remove_image, as: :remove_image
       end
     end
-
-    # Add standalone route for roughness measurements index
-    resources :roughness_measurements, only: [ :index ]
 
     # Existing routes...
     get "up" => "rails/health#show", as: :rails_health_check
