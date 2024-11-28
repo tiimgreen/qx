@@ -66,6 +66,11 @@
               <%= sort_indicator('delivery_items_count') %>
             </th>
             <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.on_hold_status'),
+                  request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('on_hold_status') %>
+            </th>
+            <th>
               <%= link_to t('activerecord.attributes.incoming_delivery.completed'),
                   request.params.merge(sort: 'completed', direction: (params[:sort] == 'completed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
               <%= sort_indicator('completed') %>
@@ -84,7 +89,8 @@
               <td><%= l(delivery.delivery_date, format: :long) %></td>
               <td><%= delivery.supplier_name %></td>
               <td><%= delivery.delivery_items.count %></td>
-              <td><%= delivery.completed ? t('common.yes') : t('common.no') %></td>
+              <td><%= status_label(delivery.on_hold_status) %></td>
+              <td><%= status_label(delivery.completed ? t('common.yes') : t('common.no')) %></td>
               <td><%= delivery.user&.name %></td>
               <td class="text-end">
                 <div class="btn-group btn-group-sm">

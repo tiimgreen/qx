@@ -23,7 +23,7 @@ class DeliveryItem < ApplicationRecord
 
   CHECK_STATUSES = [ "N/A", "Passed", "Failed" ].freeze
   VISUAL_STATUSES = [ "Passed", "Failed" ].freeze
-  ON_HOLD_STATUSES = [ "N/A", "Yes" ].freeze
+  ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
 
   validates :quantity_check_status, inclusion: { in: CHECK_STATUSES, allow_nil: true }
   validates :dimension_check_status, inclusion: { in: CHECK_STATUSES, allow_nil: true }
@@ -47,6 +47,6 @@ class DeliveryItem < ApplicationRecord
   }
 
   def on_hold?
-    on_hold_status == 'Yes'
+    on_hold_status == "On Hold"
   end
 end

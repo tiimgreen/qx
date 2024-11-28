@@ -1,6 +1,4 @@
 class IncomingDelivery < ApplicationRecord
-  include Holdable
-
   belongs_to :project
   belongs_to :work_location
   belongs_to :user, optional: true
@@ -26,6 +24,10 @@ class IncomingDelivery < ApplicationRecord
         search: term
       ).distinct
   }
+
+  def on_hold?
+    on_hold_status == "On Hold"
+  end
 
   def can_complete?
     delivery_items.where(completed: false).none?

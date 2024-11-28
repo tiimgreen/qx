@@ -25,6 +25,11 @@ en:
         supplier_name: "Supplier Name"
         notes: "Notes"
         delivery_note: "Delivery Note"
+        created_by: "Created By"
+        completed: "Completed"
+        on_hold_status: "On Hold"
+        on_hold_comment: "On Hold Comment"
+        on_hold_date: "On Hold Date"
       material_certificate:
         project: "Project"
         certificate_number: "Certificate Number"

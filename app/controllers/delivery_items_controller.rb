@@ -28,6 +28,9 @@ class DeliveryItemsController < ApplicationController
     @delivery_item.assign_attributes(delivery_item_params.to_h)
     @delivery_item.user = current_user
 
+    # Set on_hold_date when status is On Hold
+    @delivery_item.on_hold_date = Time.current if @delivery_item.on_hold_status == "On Hold"
+
     if @delivery_item.save
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                   notice: t("common.messages.created", model: DeliveryItem.model_name.human)
@@ -45,6 +48,11 @@ class DeliveryItemsController < ApplicationController
 
       # Process remaining attributes
       params_without_images = remove_image_params(delivery_item_params)
+
+      # Set on_hold_date when status is On Hold
+      if params_without_images[:on_hold_status] == "On Hold"
+        params_without_images[:on_hold_date] = Time.current
+      end
 
       if @delivery_item.update(params_without_images)
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
@@ -178,6 +186,8 @@ class DeliveryItemsController < ApplicationController
       :ra_parameters,
       :on_hold_status,
       :on_hold_comment,
+      :on_hold_date,
+      :total_time,
       :user_id,
       *completable_params,
       :item_description,

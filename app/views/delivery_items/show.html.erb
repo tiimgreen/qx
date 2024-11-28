@@ -108,7 +108,8 @@
 
             <% if check[:comment].present? %>
               <p class="card-text text-muted mb-0">
-                <small>Comment: <%= check[:comment] %></small>
+                <small><b><%= t('common.messages.on_hold_comment') %></b>: <%= check[:comment] %></small><br>
+                <small><b><%= t('common.messages.on_hold_at') %></b>: <%= l(check[:date], format: :long) %></small>
               </p>
             <% end %>
 

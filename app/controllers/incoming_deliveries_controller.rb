@@ -1,5 +1,4 @@
 class IncomingDeliveriesController < ApplicationController
-  include HoldableController
   include CompletableController
 
   layout "dashboard_layout"
@@ -41,9 +40,11 @@ class IncomingDeliveriesController < ApplicationController
 
   def create
     @incoming_delivery = @project.incoming_deliveries.build
-    attributes = process_hold_attributes(incoming_delivery_params.to_h)
-    @incoming_delivery.assign_attributes(attributes)
+    @incoming_delivery.assign_attributes(incoming_delivery_params.to_h)
     @incoming_delivery.user = current_user
+
+    # Set on_hold_date when status is On Hold
+    @incoming_delivery.on_hold_date = Time.current if @incoming_delivery.on_hold_status == "On Hold"
 
     if @incoming_delivery.save
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
@@ -57,9 +58,13 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
-      attributes = process_hold_attributes(incoming_delivery_params.to_h)
+      # Set on_hold_date when status is On Hold
+      params_hash = incoming_delivery_params.to_h
+      if params_hash[:on_hold_status] == "On Hold"
+        params_hash[:on_hold_date] = Time.current
+      end
 
-      if @incoming_delivery.update(attributes)
+      if @incoming_delivery.update(params_hash)
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                     notice: t("common.messages.updated", model: "Delivery")
       else
@@ -107,7 +112,7 @@ class IncomingDeliveriesController < ApplicationController
     end
   end
 
-    def authorize_view!
+  def authorize_view!
     unless current_user.can_view?("IncomingDelivery")
       flash[:alert] = "You don't have permission to view deliveries"
       redirect_to request.referer || projects_path
@@ -142,6 +147,7 @@ class IncomingDeliveriesController < ApplicationController
       order_number
       delivery_date
       supplier_name
+      on_hold_status
       completed
       delivery_items_count
     ]
@@ -174,8 +180,12 @@ class IncomingDeliveriesController < ApplicationController
       :notes,
       :work_location_id,
       :delivery_note_number,
+      :completed,
+      :on_hold_status,
+      :on_hold_comment,
+      :on_hold_date,
+      :total_time,
       *completable_params,
-      *holdable_params,
       delivery_notes: []
     )
   end

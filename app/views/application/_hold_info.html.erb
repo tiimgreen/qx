@@ -1,5 +1,5 @@
 <dt class="col-sm-4"><%= t('activerecord.attributes.delivery_item.on_hold_status') %></dt>
-<dd class="col-sm-8"><%= record.on_hold_status ? t('common.yes') : t('common.no') %></dd>
+<dd class="col-sm-8"><%= status_label(record.on_hold_status) %></dd>
 
 <% if record.on_hold_status? %>
   <dt class="col-sm-4"><%= t('common.messages.on_hold_comment') %></dt>

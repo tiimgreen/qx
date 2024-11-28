@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_27_115133) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_28_032222) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -111,8 +111,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_115133) do
     t.integer "user_id"
     t.boolean "completed", default: false
     t.decimal "total_time", precision: 10, scale: 2
-    t.boolean "on_hold_status", default: false
-    t.text "on_hold_reason"
+    t.text "on_hold_status"
+    t.text "on_hold_comment"
     t.datetime "on_hold_date"
     t.index ["delivery_note_number"], name: "index_incoming_deliveries_on_delivery_note_number"
     t.index ["order_number"], name: "index_incoming_deliveries_on_order_number"
