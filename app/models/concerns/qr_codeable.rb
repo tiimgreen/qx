@@ -100,8 +100,8 @@ module QrCodeable
     coords = case position.to_s
     when "top_right"
       Rails.logger.info "Using top_right coordinates"
-      x = @page_width - qr_size - margin
-      y = @page_height - qr_size - margin
+      x = @page_width - qr_size - margin - 570
+      y = @page_height - qr_size - margin - 5
       [ x, y ]
     when "top_left"
       Rails.logger.info "Using top_left coordinates"
@@ -110,13 +110,13 @@ module QrCodeable
       [ x, y ]
     when "bottom_right"
       Rails.logger.info "Using bottom_right coordinates"
-      x = @page_width - qr_size - margin
-      y = qr_size + margin
+      x = @page_width - qr_size - margin - 570
+      y = qr_size + margin + 140
       [ x, y ]
     when "bottom_left"
       Rails.logger.info "Using bottom_left coordinates"
-      x = 60  # 100px from left
-      y = 245  # 400px from bottom
+      x = 60
+      y = 245
       [ x, y ]
     else
       Rails.logger.info "Using default (top_right) coordinates"
