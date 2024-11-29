@@ -105,8 +105,8 @@ module QrCodeable
       [ x, y ]
     when "top_left"
       Rails.logger.info "Using top_left coordinates"
-      x = margin
-      y = @page_height - qr_size - margin
+      x = 125
+      y = @page_height - qr_size - margin - 5
       [ x, y ]
     when "bottom_right"
       Rails.logger.info "Using bottom_right coordinates"
