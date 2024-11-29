@@ -7,6 +7,7 @@ class Isometry < ApplicationRecord
   has_many_attached :on_hold_images
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
+  PED_CATEGORIES = [ "N/A", "I", "II", "III", "IV" ].freeze
 
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
 

@@ -15,34 +15,49 @@
     <div class="col-md-6">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h5>
 
-      <div class="mb-3">
-        <%= f.label :received_date, class: "form-label" %>
-        <%= f.date_field :received_date, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :pid_number, class: "form-label" %>
-        <%= f.text_field :pid_number, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :pid_revision, class: "form-label" %>
-        <%= f.number_field :pid_revision, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :ped_category, class: "form-label" %>
-        <%= f.text_field :ped_category, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <div class="form-check form-check-inline">
-          <%= f.check_box :gmp, class: "form-check-input" %>
-          <%= f.label :gmp, class: "form-check-label" %>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <%= f.label :received_date, class: "form-label" %>
+          <%= f.date_field :received_date, class: "form-control", value: Date.current %>
         </div>
-        <div class="form-check form-check-inline">
-          <%= f.check_box :gdp, class: "form-check-input" %>
-          <%= f.label :gdp, class: "form-check-label" %>
+
+        <div class="col-md-4 mb-3">
+          <%= f.label :pid_number, class: "form-label" %>
+          <%= f.text_field :pid_number, class: "form-control" %>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <%= f.label :pid_revision, class: "form-label" %>
+          <%= f.number_field :pid_revision, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="row align-items-end">
+        <div class="col-md-4 mb-3">
+          <%= f.label :ped_category, class: "form-label" %>
+          <%= f.select :ped_category, Isometry::PED_CATEGORIES, { include_blank: true }, class: "form-select" %>
+        </div>
+        <div class="col-md-8 mb-3 d-flex align-items-center">
+          <div class="form-check form-check-inline mb-0">
+            <%= f.check_box :gmp, class: "form-check-input" %>
+            <%= f.label :gmp, class: "form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline mb-0">
+            <%= f.check_box :gdp, class: "form-check-input" %>
+            <%= f.label :gdp, class: "form-check-label" %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <%= f.label :pipe_class, class: "form-label" %>
+          <%= f.text_field :pipe_class, class: "form-control" %>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <%= f.label :material, class: "form-label" %>
+          <%= f.text_field :material, class: "form-control" %>
         </div>
       </div>
 
@@ -55,16 +70,6 @@
     <!-- Technical Specifications -->
     <div class="col-md-6">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.technical_specs') %></h5>
-
-      <div class="mb-3">
-        <%= f.label :pipe_class, class: "form-label" %>
-        <%= f.text_field :pipe_class, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :material, class: "form-label" %>
-        <%= f.text_field :material, class: "form-control" %>
-      </div>
 
       <div class="mb-3">
         <%= f.label :line_id, class: "form-label" %>
@@ -176,18 +181,15 @@
           <%= f.check_box :dip, class: "form-check-input" %>
           <%= f.label :dip, class: "form-check-label" %>
         </div>
+        <div class="form-check form-check-inline">
+          <%= f.check_box :isolation_required, class: "form-check-input" %>
+          <%= f.label :isolation_required, class: "form-check-label" %>
+        </div>
       </div>
 
       <div class="mb-3">
         <%= f.label :slope_if_needed, class: "form-label" %>
         <%= f.text_field :slope_if_needed, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <div class="form-check">
-          <%= f.check_box :isolation_required, class: "form-check-input" %>
-          <%= f.label :isolation_required, class: "form-check-label" %>
-        </div>
       </div>
 
       <div class="row">
@@ -275,8 +277,7 @@
     </div>
 
     <!-- Submit Buttons -->
-    <div class="d-flex justify-content-end align-items-center my-5">
-      <hr>
+    <div class="form-group my-5">
       <%= f.submit class: "btn btn-primary" %>
       <%= link_to t('common.actions.cancel'), :back, class: 'btn btn-secondary' %>
     </div>

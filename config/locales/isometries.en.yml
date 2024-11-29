@@ -23,6 +23,13 @@ en:
       status: "Status"
       comment: "Comment"
       date: "Date"
+    form:
+      basic_info: "Basic Info"
+      technical_specs: "Technical Specs"
+      measurements: "Measurements"
+      additional_specs: "Additional Specs"
+      on_hold_status: "On Hold Status"
+      notes: "Notes"
 
   activerecord:
     models:
@@ -31,6 +38,7 @@ en:
         other: "Isometries"
     attributes:
       isometry:
+        received_date: "Receipt Date"
         line_id: "Line ID"
         pid_number: "P&ID Number"
         pid_revision: "P&ID Revision"
@@ -54,19 +62,20 @@ en:
         total_sn: "Total SN"
         total_supports: "Total Supports"
         total_spools: "Total Spools"
-        rt: "RT %"
-        vt2: "VT2 %"
-        pt2: "PT2 %"
+        rt_percentage: "RT %"
+        vt2_percentage: "VT2 %"
+        pt2_percentage: "PT2 %"
         dp: "DP"
         dip: "DIP"
-        slope_if_needed: "Slope"
+        slope_if_needed: "Slope if needed"
         isolation_required: "Isolation Required"
         work_package_number: "Work Package"
-        test_pack_number: "Test Pack"
+        test_pack_number: "Test Package"
         on_hold_status: "Hold Status"
         on_hold_comment: "Hold Comment"
         on_hold_date: "Hold Date"
-        received_date: "Received Date"
+        on_hold_images: "Images"
+        isometry_images: "Isometry Images"
         notes: "Notes"
 
   sectors:
