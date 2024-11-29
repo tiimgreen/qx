@@ -4,6 +4,11 @@ class Isometry < ApplicationRecord
   belongs_to :user, optional: true
 
   has_many_attached :isometry_images
+  has_many_attached :on_hold_images
+
+  ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
+
+  validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
 
   # Validations
   validates :received_date, presence: true

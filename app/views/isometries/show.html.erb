@@ -40,9 +40,12 @@
       <dt class="col-sm-4"><%= t('.ped_category') %></dt>
       <dd class="col-sm-8"><%= @isometry.ped_category %></dd>
 
-      <dt class="col-sm-4"><%= t('.gmp_gdp') %></dt>
+      <dt class="col-sm-4"><%= t('.gmp') %></dt>
       <dd class="col-sm-8">
         <%= "GMP" if @isometry.gmp %>
+      </dd>
+      <dt class="col-sm-4"><%= t('.gdp') %></dt>
+      <dd class="col-sm-8">
         <%= "GDP" if @isometry.gdp %>
       </dd>
     </dl>
@@ -72,12 +75,27 @@
       <dt class="col-sm-4"><%= t('.page') %></dt>
       <dd class="col-sm-8"><%= @isometry.page_number %> / <%= @isometry.page_total %></dd>
 
-      <dt class="col-sm-4"><%= t('.dn') %></dt>
+      <dt class="col-sm-4"><%= t('.dn_measurements') %></dt>
       <dd class="col-sm-8">
-        <%= @isometry.dn1 %>
-        <%= " / #{@isometry.dn2}" if @isometry.dn2.present? %>
-        <%= " / #{@isometry.dn3}" if @isometry.dn3.present? %>
+        <% if @isometry.dn1.present? %>
+          <div class="mb-1">
+            DN1: <%= number_with_precision(@isometry.dn1, precision: 2) %> m
+          </div>
+        <% end %>
+        <% if @isometry.dn2.present? %>
+          <div class="mb-1">
+            DN2: <%= number_with_precision(@isometry.dn2, precision: 2) %> m
+          </div>
+        <% end %>
+        <% if @isometry.dn3.present? %>
+          <div class="mb-1">
+            DN3: <%= number_with_precision(@isometry.dn3, precision: 2) %> m
+          </div>
+        <% end %>
       </dd>
+
+      <dt class="col-sm-4"><%= t('.total_pipe_length') %></dt>
+      <dd class="col-sm-8"><%= number_with_precision(@isometry.pipe_length, precision: 2) %> m</dd>
 
       <dt class="col-sm-4"><%= t('.medium') %></dt>
       <dd class="col-sm-8"><%= @isometry.medium %></dd>
@@ -88,9 +106,6 @@
   <div class="col-md-6 mb-4">
     <h5 class="border-bottom pb-2 mb-3"><%= t('.measurements') %></h5>
     <dl class="row">
-      <dt class="col-sm-4"><%= t('.pipe_length') %></dt>
-      <dd class="col-sm-8"><%= number_with_precision(@isometry.pipe_length, precision: 2) %> m</dd>
-
       <dt class="col-sm-4"><%= t('.workshop_sn') %></dt>
       <dd class="col-sm-8"><%= @isometry.workshop_sn %></dd>
 
@@ -119,9 +134,12 @@
   <div class="col-md-6 mb-4">
     <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
     <dl class="row">
-      <dt class="col-sm-4"><%= t('.dp_dip') %></dt>
+      <dt class="col-sm-4"><%= t('.dp') %></dt>
       <dd class="col-sm-8">
         <%= "DP" if @isometry.dp %>
+      </dd>
+      <dt class="col-sm-4"><%= t('.dip') %></dt>
+      <dd class="col-sm-8">
         <%= "DIP" if @isometry.dip %>
       </dd>
 
