@@ -3,8 +3,12 @@ class Isometry < ApplicationRecord
   belongs_to :sector, optional: true
   belongs_to :user, optional: true
 
+  include QrCodeable
+
   has_many_attached :isometry_images
   has_many_attached :on_hold_images
+
+  after_commit :process_isometry_images, on: [:create, :update]
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   PED_CATEGORIES = [ "N/A", "I", "II", "III", "IV" ].freeze
@@ -60,6 +64,72 @@ class Isometry < ApplicationRecord
   }
 
   private
+
+  def process_isometry_images
+    return unless isometry_images.attached?
+    return if @processing_images # Add guard to prevent recursive processing
+
+    @processing_images = true # Set processing flag
+    begin
+      Rails.logger.info "Processing isometry images for isometry #{id}"
+      
+      isometry_images.each do |image|
+        Rails.logger.info "Processing attachment: #{image.filename} (#{image.content_type})"
+        
+        # Ensure the blob is persisted and analyzed
+        image.blob.analyze if !image.blob.analyzed?
+
+        case image.content_type
+        when "application/pdf"
+          Rails.logger.info "Processing PDF file"
+          # Process PDF file
+          processed_file = process_pdf_with_qr(image)
+          
+          # Create new blob and attach it
+          new_blob = ActiveStorage::Blob.create_and_upload!(
+            io: File.open(processed_file.path),
+            filename: image.filename.to_s,
+            content_type: "application/pdf"
+          )
+          
+          # Replace the old attachment with the new one
+          image.update!(blob: new_blob)
+          
+          # Clean up
+          processed_file.close
+          processed_file.unlink
+          
+          Rails.logger.info "PDF processing completed"
+        when /^image\//
+          Rails.logger.info "Processing image file"
+          # Process image file
+          processed_image = add_qr_code_to_image(image)
+          
+          # Create a temporary file with the processed image
+          temp_file = Tempfile.new([ "processed_image", ".png" ])
+          processed_image.write(temp_file.path)
+          
+          # Create new blob and attach it
+          new_blob = ActiveStorage::Blob.create_and_upload!(
+            io: File.open(temp_file.path),
+            filename: image.filename.to_s,
+            content_type: image.content_type
+          )
+          
+          # Replace the old attachment with the new one
+          image.update!(blob: new_blob)
+          
+          # Clean up
+          temp_file.close
+          temp_file.unlink
+          
+          Rails.logger.info "Image processing completed"
+        end
+      end
+    ensure
+      @processing_images = false # Reset processing flag
+    end
+  end
 
   def calculate_total_sn
     self.total_sn = (workshop_sn.to_i + assembly_sn.to_i) if workshop_sn.present? || assembly_sn.present?

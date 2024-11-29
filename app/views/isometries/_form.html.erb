@@ -257,8 +257,8 @@
         <%= f.file_field :isometry_images, multiple: true, class: "form-control" %>
       </div>
 
-      <% if @isometry.isometry_images.attached? %>
-        <div class="row g-3 mb-3">
+      <% if @isometry.persisted? && @isometry.isometry_images.attached? %>
+        <div class="row">
           <% @isometry.isometry_images.each do |image| %>
             <div class="col-md-3">
               <div class="card h-100">
@@ -266,7 +266,7 @@
                 <div class="card-footer">
                   <small class="text-muted">
                     <%= number_to_human_size(image.byte_size) %> •
-                    <%= l(image.created_at, format: :short) %>
+                    <%= image.filename %>
                   </small>
                 </div>
               </div>
