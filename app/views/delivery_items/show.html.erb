@@ -106,12 +106,15 @@
               </div>
             <% end %>
 
-            <% if check[:comment].present? %>
-              <p class="card-text text-muted mb-0">
-                <small><b><%= t('common.messages.on_hold_comment') %></b>: <%= check[:comment] %></small><br>
-                <small><b><%= t('common.messages.on_hold_at') %></b>: <%= l(check[:date], format: :long) %></small>
-              </p>
-            <% end %>
+            
+            <p class="card-text text-muted mb-0">
+              <% if check[:comment].present? %>
+                  <small><b><%= t('common.messages.on_hold_comment') %></b>: <%= check[:comment] %></small><br>
+              <% end %>
+              <% if check[:date].present? %>
+                  <small><b><%= t('common.messages.on_hold_at') %></b>: <%= l(check[:date], format: :long) %></small>
+              <% end %>
+            </p>
 
             <!-- Image attachments section -->
             <% if check[:images].attached? %>
