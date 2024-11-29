@@ -34,7 +34,7 @@ de:
       hold_failed: "Fehler beim Setzen von %{model} auf den Halt"
       removed_from_hold: "%{model} wurde erfolgreich aus dem Halt entfernt"
       remove_hold_failed: "Fehler beim Entfernen von %{model} aus dem Halt"
-      on_hold_status: "Auf Halt"
+      on_hold_status: "On Hold"
       on_hold_comment: "Haltkommentar"
       on_hold_at: "Auf Halt seit"
 
@@ -129,7 +129,7 @@ de:
   work_locations:
     types:
       workshop: "Werkstatt"
-      prefab_facility: "Prefab"
+      prefab_facility: "Vorfertigung"
       construction_site: "Baustelle"
   status:
     passed: "Bestanden"

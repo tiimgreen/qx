@@ -48,10 +48,10 @@
 # )
 # puts "added users"
 
-# # [ "workshop", "prefab", "site" ].each do |location_type|
+# # [ "workshop", "vorfertigung", "site" ].each do |location_type|
 # #   WorkLocation.find_or_create_by!(key: location_type, location_type: location_type)
 # # end
-# [ "workshop", "prefab", "site" ].each do |location_type|
+# [ "workshop", "vorfertigung", "site" ].each do |location_type|
 #   WorkLocation.find_or_create_by!(key: location_type, location_type: location_type)
 # end
 # puts "added work locations"
@@ -77,8 +77,7 @@
 #   { key: "assemblie", position: 10 },
 #   { key: "as_built", position: 11 },
 #   { key: "testing_and_pressur", position: 12 },
-#   { key: "documentation", position: 13 },
-#   { key: "material_certificate", position: 14 }
+#   { key: "material_certificate", position: 13 }
 # ]
 
 # count = 0

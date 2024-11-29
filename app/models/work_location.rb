@@ -1,7 +1,7 @@
 class WorkLocation < ApplicationRecord
   enum location_type: {
     workshop: "workshop",
-    prefab_facility: "prefab",
+    prefab_facility: "vorfertigung",
     construction_site: "site"
   }
 

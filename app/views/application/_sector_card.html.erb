@@ -32,6 +32,10 @@
             <%= link_to new_project_isometry_path(project), class: 'btn btn-primary' do %>
               <i class="bi bi-plus"></i> <%= t('navigation.menu.isometries.new') %>
             <% end %>
+          <% when 'material_certificate' %>
+            <%= link_to material_certificates_path, class: 'btn btn-outline-primary m-1 me-2' do %>
+              <i class="bi bi-list"></i> <%= t('navigation.menu.material_certificates.list') %>
+            <% end %>
           <% end %>
         </div>
       </div>
