@@ -115,8 +115,8 @@ module QrCodeable
       [ x, y ]
     when "bottom_left"
       Rails.logger.info "Using bottom_left coordinates"
-      x = 150  # Fixed distance from left
-      y = 150  # Fixed distance from bottom
+      x = 60  # 100px from left
+      y = 245  # 400px from bottom
       [ x, y ]
     else
       Rails.logger.info "Using default (top_right) coordinates"
