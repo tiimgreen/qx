@@ -1,0 +1,81 @@
+en:
+  isometries:
+    title: "Isometries"
+    buttons:
+      new_isometry: "New Isometry"
+    index:
+      title: "Isometries"
+      title_for_project: "Isometries for %{project}"
+      no_isometries: "No isometries found"
+    new:
+      title: "New Isometry"
+    edit:
+      title: "Edit Isometry"
+    show:
+      title: "Isometry Details"
+      basic_info: "Basic Information"
+      technical_specs: "Technical Specifications"
+      measurements: "Measurements"
+      additional_specs: "Additional Specifications"
+      on_hold_status: "On Hold Status"
+      images: "Isometry Images"
+      notes: "Notes"
+      status: "Status"
+      comment: "Comment"
+      date: "Date"
+
+  activerecord:
+    models:
+      isometry:
+        one: "Isometry"
+        other: "Isometries"
+    attributes:
+      isometry:
+        line_id: "Line ID"
+        pid_number: "P&ID Number"
+        pid_revision: "P&ID Revision"
+        system: "System"
+        ped_category: "PED Category"
+        gmp: "GMP"
+        gdp: "GDP"
+        pipe_class: "Pipe Class"
+        material: "Material"
+        revision_number: "Revision"
+        revision_last: "Latest Revision"
+        page_number: "Page"
+        page_total: "Total Pages"
+        dn1: "DN1"
+        dn2: "DN2"
+        dn3: "DN3"
+        medium: "Medium"
+        pipe_length: "Pipe Length"
+        workshop_sn: "Workshop SN"
+        assembly_sn: "Assembly SN"
+        total_sn: "Total SN"
+        total_supports: "Total Supports"
+        total_spools: "Total Spools"
+        rt: "RT %"
+        vt2: "VT2 %"
+        pt2: "PT2 %"
+        dp: "DP"
+        dip: "DIP"
+        slope_if_needed: "Slope"
+        isolation_required: "Isolation Required"
+        work_package_number: "Work Package"
+        test_pack_number: "Test Pack"
+        on_hold_status: "Hold Status"
+        on_hold_comment: "Hold Comment"
+        on_hold_date: "Hold Date"
+        received_date: "Received Date"
+        notes: "Notes"
+
+  sectors:
+    isometric: "Isometries"
+    isometric_description: "Manage piping isometry drawings and their technical specifications"
+
+  navigation:
+    menu:
+      isometries:
+        title: "Isometries"
+        list: "List Isometries"
+        new: "New Isometry"

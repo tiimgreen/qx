@@ -19,6 +19,9 @@ Rails.application.routes.draw do
           delete "delete_image", on: :member
         end
       end
+      resources :isometries do
+        delete "delete_image", on: :member
+      end
     end
 
     resources :incoming_deliveries, only: [] do  # Changed from full resources to only: []

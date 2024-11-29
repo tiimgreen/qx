@@ -6,6 +6,8 @@
           <% case sector.key %>
           <% when 'incoming_deliveries' %>
             <i class="bi bi-folder"></i> <%= project.incoming_deliveries.count %>
+          <% when 'isometries' %>
+            <i class="bi bi-diagram-3"></i> <%= project.isometries.count %>
           <% else %>
             <i class="bi bi-folder"></i> <%= sector.key.classify.constantize.count rescue 0 %>
           <% end %>
@@ -22,6 +24,13 @@
             <% end %>
             <%= link_to new_project_incoming_delivery_path(project), class: 'btn btn-primary' do %>
               <i class="bi bi-plus"></i> <%= t('navigation.menu.incoming_deliveries.new_delivery') %>
+            <% end %>
+          <% when 'isometric' %>
+            <%= link_to project_isometries_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
+              <i class="bi bi-list"></i> <%= t('navigation.menu.isometries.list') %>
+            <% end %>
+            <%= link_to new_project_isometry_path(project), class: 'btn btn-primary' do %>
+              <i class="bi bi-plus"></i> <%= t('navigation.menu.isometries.new') %>
             <% end %>
           <% end %>
         </div>

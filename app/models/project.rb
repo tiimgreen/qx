@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   has_many :incoming_deliveries
   has_many :material_certificates
   has_many :delivery_items, through: :incoming_deliveries
+  has_many :isometries
 
   belongs_to :user, optional: true
 

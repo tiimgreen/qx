@@ -1,0 +1,81 @@
+de:
+  isometries:
+    title: "Isometrien"
+    buttons:
+      new_isometry: "Neue Isometrie"
+    index:
+      title: "Isometrien"
+      title_for_project: "Isometrien für %{project}"
+      no_isometries: "Keine Isometrien gefunden"
+    new:
+      title: "Neue Isometrie"
+    edit:
+      title: "Isometrie bearbeiten"
+    show:
+      title: "Isometrie Details"
+      basic_info: "Grundinformationen"
+      technical_specs: "Technische Spezifikationen"
+      measurements: "Messungen"
+      additional_specs: "Zusätzliche Spezifikationen"
+      on_hold_status: "Zurückgestellt Status"
+      images: "Isometrie Bilder"
+      notes: "Notizen"
+      status: "Status"
+      comment: "Kommentar"
+      date: "Datum"
+
+  activerecord:
+    models:
+      isometry:
+        one: "Isometrie"
+        other: "Isometrien"
+    attributes:
+      isometry:
+        line_id: "Leitungs-ID"
+        pid_number: "R&I-Nummer"
+        pid_revision: "R&I-Revision"
+        system: "System"
+        ped_category: "PED Kategorie"
+        gmp: "GMP"
+        gdp: "GDP"
+        pipe_class: "Rohrklasse"
+        material: "Material"
+        revision_number: "Revision"
+        revision_last: "Letzte Revision"
+        page_number: "Seite"
+        page_total: "Gesamtseiten"
+        dn1: "DN1"
+        dn2: "DN2"
+        dn3: "DN3"
+        medium: "Medium"
+        pipe_length: "Rohrlänge"
+        workshop_sn: "Werkstatt SN"
+        assembly_sn: "Montage SN"
+        total_sn: "Gesamt SN"
+        total_supports: "Gesamthalterungen"
+        total_spools: "Gesamt Spools"
+        rt: "RT %"
+        vt2: "VT2 %"
+        pt2: "PT2 %"
+        dp: "DP"
+        dip: "DIP"
+        slope_if_needed: "Gefälle"
+        isolation_required: "Isolierung erforderlich"
+        work_package_number: "Arbeitspaket"
+        test_pack_number: "Testpaket"
+        on_hold_status: "Zurückgestellt Status"
+        on_hold_comment: "Zurückgestellt Kommentar"
+        on_hold_date: "Zurückgestellt Datum"
+        received_date: "Eingangsdatum"
+        notes: "Notizen"
+
+  sectors:
+    isometric: "Isometrien"
+    isometric_description: "Verwalten Sie Rohr-Isometrie-Zeichnungen und deren technische Spezifikationen"
+
+  navigation:
+    menu:
+      isometries:
+        title: "Isometrien"
+        list: "Isometrien auflisten"
+        new: "Neue Isometrie"

@@ -1,0 +1,191 @@
+<%= render 'breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.isometries.title'), path: project_isometries_path(@project) },
+  { text: @isometry.line_id }
+] %>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><%= @isometry.line_id %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <% if current_user.can_edit?("Isometry") %>
+      <%= link_to edit_project_isometry_path(@project, @isometry), class: "btn btn-sm btn-outline-secondary me-2" do %>
+        <i class="bi bi-pencil"></i> <%= t('common.actions.edit') %>
+      <% end %>
+    <% end %>
+    <% if current_user.can_delete?("Isometry") %>
+      <%= link_to project_isometry_path(@project, @isometry),
+            method: :delete,
+            data: { confirm: t('common.messages.confirm_delete') },
+            class: "btn btn-sm btn-outline-danger" do %>
+        <i class="bi bi-trash"></i> <%= t('common.actions.delete') %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <!-- Basic Information -->
+  <div class="col-md-6 mb-4">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h5>
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.received_date') %></dt>
+      <dd class="col-sm-8"><%= l(@isometry.received_date, format: :long) if @isometry.received_date %></dd>
+
+      <dt class="col-sm-4"><%= t('.pid_number') %></dt>
+      <dd class="col-sm-8"><%= @isometry.pid_number %> Rev. <%= @isometry.pid_revision %></dd>
+
+      <dt class="col-sm-4"><%= t('.system') %></dt>
+      <dd class="col-sm-8"><%= @isometry.system %></dd>
+
+      <dt class="col-sm-4"><%= t('.ped_category') %></dt>
+      <dd class="col-sm-8"><%= @isometry.ped_category %></dd>
+
+      <dt class="col-sm-4"><%= t('.gmp_gdp') %></dt>
+      <dd class="col-sm-8">
+        <%= "GMP" if @isometry.gmp %>
+        <%= "GDP" if @isometry.gdp %>
+      </dd>
+    </dl>
+  </div>
+
+  <!-- Technical Specifications -->
+  <div class="col-md-6 mb-4">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.technical_specs') %></h5>
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.pipe_class') %></dt>
+      <dd class="col-sm-8"><%= @isometry.pipe_class %></dd>
+
+      <dt class="col-sm-4"><%= t('.material') %></dt>
+      <dd class="col-sm-8"><%= @isometry.material %></dd>
+
+      <dt class="col-sm-4"><%= t('.line_id') %></dt>
+      <dd class="col-sm-8"><%= @isometry.line_id %></dd>
+
+      <dt class="col-sm-4"><%= t('.revision') %></dt>
+      <dd class="col-sm-8">
+        <%= @isometry.revision_number %>
+        <% if @isometry.revision_last %>
+          <span class="badge bg-success"><%= t('.latest_revision') %></span>
+        <% end %>
+      </dd>
+
+      <dt class="col-sm-4"><%= t('.page') %></dt>
+      <dd class="col-sm-8"><%= @isometry.page_number %> / <%= @isometry.page_total %></dd>
+
+      <dt class="col-sm-4"><%= t('.dn') %></dt>
+      <dd class="col-sm-8">
+        <%= @isometry.dn1 %>
+        <%= " / #{@isometry.dn2}" if @isometry.dn2.present? %>
+        <%= " / #{@isometry.dn3}" if @isometry.dn3.present? %>
+      </dd>
+
+      <dt class="col-sm-4"><%= t('.medium') %></dt>
+      <dd class="col-sm-8"><%= @isometry.medium %></dd>
+    </dl>
+  </div>
+
+  <!-- Measurements -->
+  <div class="col-md-6 mb-4">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.measurements') %></h5>
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.pipe_length') %></dt>
+      <dd class="col-sm-8"><%= number_with_precision(@isometry.pipe_length, precision: 2) %> m</dd>
+
+      <dt class="col-sm-4"><%= t('.workshop_sn') %></dt>
+      <dd class="col-sm-8"><%= @isometry.workshop_sn %></dd>
+
+      <dt class="col-sm-4"><%= t('.assembly_sn') %></dt>
+      <dd class="col-sm-8"><%= @isometry.assembly_sn %></dd>
+
+      <dt class="col-sm-4"><%= t('.total_sn') %></dt>
+      <dd class="col-sm-8"><%= @isometry.total_sn %></dd>
+
+      <dt class="col-sm-4"><%= t('.total_supports') %></dt>
+      <dd class="col-sm-8"><%= @isometry.total_supports %></dd>
+
+      <dt class="col-sm-4"><%= t('.total_spools') %></dt>
+      <dd class="col-sm-8"><%= @isometry.total_spools %></dd>
+
+      <dt class="col-sm-4"><%= t('.test_percentages') %></dt>
+      <dd class="col-sm-8">
+        RT: <%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %><br>
+        VT2: <%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %><br>
+        PT2: <%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %>
+      </dd>
+    </dl>
+  </div>
+
+  <!-- Additional Specifications -->
+  <div class="col-md-6 mb-4">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.dp_dip') %></dt>
+      <dd class="col-sm-8">
+        <%= "DP" if @isometry.dp %>
+        <%= "DIP" if @isometry.dip %>
+      </dd>
+
+      <dt class="col-sm-4"><%= t('.slope') %></dt>
+      <dd class="col-sm-8"><%= @isometry.slope_if_needed %></dd>
+
+      <dt class="col-sm-4"><%= t('.isolation') %></dt>
+      <dd class="col-sm-8"><%= @isometry.isolation_required? ? t('common.yes') : t('common.no') %></dd>
+
+      <dt class="col-sm-4"><%= t('.work_package') %></dt>
+      <dd class="col-sm-8"><%= @isometry.work_package_number %></dd>
+
+      <dt class="col-sm-4"><%= t('.test_pack') %></dt>
+      <dd class="col-sm-8"><%= @isometry.test_pack_number %></dd>
+    </dl>
+  </div>
+
+  <!-- On Hold Status -->
+  <% if @isometry.on_hold_status.present? %>
+    <div class="col-md-12 mb-4">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0"><%= t('.on_hold_status') %></h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <strong><%= t('.status') %>:</strong> <%= @isometry.on_hold_status %><br>
+            <strong><%= t('.comment') %>:</strong> <%= @isometry.on_hold_comment %><br>
+            <strong><%= t('.date') %>:</strong> <%= l(@isometry.on_hold_date, format: :long) if @isometry.on_hold_date %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Notes -->
+  <% if @isometry.notes.present? %>
+    <div class="col-md-12 mb-4">
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
+      <p class="text-muted"><%= @isometry.notes %></p>
+    </div>
+  <% end %>
+
+  <!-- Isometry Images -->
+  <% if @isometry.isometry_images.attached? %>
+    <div class="col-md-12 mb-4">
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.images') %></h5>
+      <div class="row g-3">
+        <% @isometry.isometry_images.each do |image| %>
+          <div class="col-md-3">
+            <div class="card h-100">
+              <%= link_to url_for(image), target: "_blank" do %>
+                <%= image_tag image, class: "card-img-top", style: "object-fit: cover; height: 200px;" %>
+              <% end %>
+              <div class="card-footer">
+                <small class="text-muted">
+                  <%= number_to_human_size(image.byte_size) %> •
+                  <%= l(image.created_at, format: :short) %>
+                </small>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -7,7 +7,10 @@ class UserResourcePermission < ApplicationRecord
 
   RESOURCE_NAMES = [
     "IncomingDelivery",
-    "DeliveryItem"
+    "DeliveryItem",
+    "Isometry",
+    "Project",
+    "MaterialCertificate"
   ].freeze
 
   validates :resource_name, inclusion: { in: RESOURCE_NAMES }

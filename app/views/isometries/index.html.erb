@@ -1,0 +1,118 @@
+<%= render 'breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.isometries.title') }
+] %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><%= t('.title_for_project', project: @project.name) %></h1>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <%= form_tag project_isometries_path(@project), method: :get do %>
+        <div class="input-group">
+          <%= text_field_tag :search, params[:search],
+                            class: 'form-control',
+                            placeholder: t('common.labels.search_placeholder') %>
+          <div class="input-group-append">
+            <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4 text-end">
+      <% if current_user.can_create?("Isometry") %>
+        <%= link_to new_project_isometry_path(@project), class: 'btn btn-primary' do %>
+          <i class="bi bi-plus"></i> <%= t('isometries.buttons.new_isometry') %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-sm">
+      <thead>
+        <tr>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.line_id'),
+                request.params.merge(sort: 'line_id', direction: (params[:sort] == 'line_id' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('line_id') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.pid_number'),
+                request.params.merge(sort: 'pid_number', direction: (params[:sort] == 'pid_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('pid_number') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.system'),
+                request.params.merge(sort: 'system', direction: (params[:sort] == 'system' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('system') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.revision_number'),
+                request.params.merge(sort: 'revision_number', direction: (params[:sort] == 'revision_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('revision_number') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.material'),
+                request.params.merge(sort: 'material', direction: (params[:sort] == 'material' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('material') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.received_date'),
+                request.params.merge(sort: 'received_date', direction: (params[:sort] == 'received_date' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('received_date') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.on_hold_status'),
+                request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('on_hold_status') %>
+          </th>
+          <th class="text-end"><%= t('common.actions.title') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @isometries.each do |isometry| %>
+          <tr class="<%= 'table-warning' if isometry.on_hold_status.present? %>">
+            <td><%= link_to isometry.line_id, project_isometry_path(@project, isometry) %></td>
+            <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>
+            <td><%= isometry.system %></td>
+            <td><%= isometry.revision_number %><%= ' (Latest)' if isometry.revision_last %></td>
+            <td><%= isometry.material %></td>
+            <td><%= l(isometry.received_date, format: :short) if isometry.received_date %></td>
+            <td>
+              <% if isometry.on_hold_status.present? %>
+                <span class="badge bg-warning text-dark">
+                  <i class="bi bi-pause-circle"></i> <%= isometry.on_hold_status %>
+                </span>
+              <% end %>
+            </td>
+            <td class="text-end">
+              <% if current_user.can_edit?("Isometry") %>
+                <%= link_to edit_project_isometry_path(@project, isometry), class: "btn btn-sm btn-outline-secondary", title: t('common.actions.edit') do %>
+                  <i class="bi bi-pencil"></i>
+                <% end %>
+              <% end %>
+              <% if current_user.can_delete?("Isometry") %>
+                <%= link_to project_isometry_path(@project, isometry),
+                      method: :delete,
+                      data: { confirm: t('common.messages.confirm_delete') },
+                      class: "btn btn-sm btn-outline-danger",
+                      title: t('common.actions.delete') do %>
+                  <i class="bi bi-trash"></i>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if @isometries.empty? %>
+    <div class="alert alert-info">
+      <%= t('.no_isometries') %>
+    </div>
+  <% end %>
+</div>

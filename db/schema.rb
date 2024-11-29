@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_28_054321) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_29_025037) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -121,6 +121,69 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_054321) do
     t.index ["work_location_id"], name: "index_incoming_deliveries_on_work_location_id"
   end
 
+  create_table "isometries", force: :cascade do |t|
+    t.datetime "received_date"
+    t.string "on_hold_status"
+    t.string "on_hold_comment"
+    t.datetime "on_hold_date"
+    t.string "pid_number"
+    t.integer "pid_revision"
+    t.string "ped_category"
+    t.boolean "gmp", default: false
+    t.boolean "gdp", default: false
+    t.string "system"
+    t.string "pipe_class"
+    t.string "material"
+    t.string "line_id"
+    t.integer "revision_number"
+    t.boolean "revision_last", default: true
+    t.integer "page_number"
+    t.integer "page_total"
+    t.string "dn1"
+    t.string "dn2"
+    t.string "dn3"
+    t.string "medium"
+    t.decimal "pipe_length", precision: 10, scale: 2
+    t.integer "workshop_sn"
+    t.integer "assembly_sn"
+    t.integer "total_sn"
+    t.integer "total_supports"
+    t.integer "total_spools"
+    t.decimal "rt", precision: 5, scale: 2
+    t.decimal "vt2", precision: 5, scale: 2
+    t.decimal "pt2", precision: 5, scale: 2
+    t.boolean "dp", default: false
+    t.boolean "dip", default: false
+    t.string "slope_if_needed"
+    t.boolean "isolation_required", default: false
+    t.integer "work_package_number"
+    t.integer "test_pack_number"
+    t.integer "project_id", null: false
+    t.integer "sector_id"
+    t.integer "user_id"
+    t.text "notes"
+    t.boolean "deleted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted"], name: "index_isometries_on_deleted"
+    t.index ["line_id"], name: "index_isometries_on_line_id", unique: true
+    t.index ["on_hold_status"], name: "index_isometries_on_on_hold_status"
+    t.index ["pid_number"], name: "index_isometries_on_pid_number"
+    t.index ["project_id", "deleted"], name: "index_isometries_on_project_id_and_deleted"
+    t.index ["project_id", "on_hold_status"], name: "index_isometries_on_project_id_and_on_hold_status"
+    t.index ["project_id", "revision_last"], name: "index_isometries_on_project_id_and_revision_last"
+    t.index ["project_id", "system"], name: "index_isometries_on_project_id_and_system"
+    t.index ["project_id"], name: "index_isometries_on_project_id"
+    t.index ["received_date"], name: "index_isometries_on_received_date"
+    t.index ["revision_last"], name: "index_isometries_on_revision_last"
+    t.index ["revision_number"], name: "index_isometries_on_revision_number"
+    t.index ["sector_id"], name: "index_isometries_on_sector_id"
+    t.index ["system"], name: "index_isometries_on_system"
+    t.index ["test_pack_number"], name: "index_isometries_on_test_pack_number"
+    t.index ["user_id"], name: "index_isometries_on_user_id"
+    t.index ["work_package_number"], name: "index_isometries_on_work_package_number"
+  end
+
   create_table "material_certificates", force: :cascade do |t|
     t.string "certificate_number", null: false
     t.string "batch_number", null: false
@@ -219,6 +282,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_054321) do
   add_foreign_key "incoming_deliveries", "projects"
   add_foreign_key "incoming_deliveries", "users"
   add_foreign_key "incoming_deliveries", "work_locations"
+  add_foreign_key "isometries", "projects"
+  add_foreign_key "isometries", "sectors"
+  add_foreign_key "isometries", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "user_resource_permissions", "permissions"
   add_foreign_key "user_resource_permissions", "users"
