@@ -1,8 +1,12 @@
 module QrCodeable
   extend ActiveSupport::Concern
 
+  included do
+    include Rails.application.routes.url_helpers
+  end
+
   def generate_qr_code_url
-    url = Rails.application.routes.url_helpers.project_isometry_url(
+    url = project_isometry_url(
       project_id: project_id,
       id: id,
       locale: I18n.locale,
@@ -63,86 +67,71 @@ module QrCodeable
     qr_temp_file = Tempfile.new([ "qr", ".png" ])
     pdf_temp_file = Tempfile.new([ "processed", ".pdf" ])
     input_pdf_file = Tempfile.new([ "input", ".pdf" ])
-    converted_image_file = Tempfile.new([ "converted", ".png" ])
 
     begin
-      # Download the PDF file to a temporary location
-      pdf_attachment.blob.open do |file|
-        Rails.logger.info "Copying PDF to temporary file: #{input_pdf_file.path}"
-        FileUtils.copy_file(file.path, input_pdf_file.path)
-      end
-
-      # Generate and save QR code
+      # Generate QR code
       Rails.logger.info "Generating QR code"
-      qr_code_png = generate_qr_code
-      qr_code_png.save(qr_temp_file.path)
+      qr_code_url = project_isometry_url(project, self, locale: I18n.locale)
+      Rails.logger.info "Generated QR URL: #{qr_code_url}"
 
-      # Convert PDF to image
-      Rails.logger.info "Converting PDF to image"
-      MiniMagick::Tool::Convert.new do |convert|
-        convert << input_pdf_file.path + "[0]"  # [0] means first page only
-        convert.resize("3000x3000")
-        convert.quality("100")
-        convert.density("300")
-        convert.background("white")
-        convert.alpha("remove")
-        convert << converted_image_file.path
+      qr = RQRCode::QRCode.new(qr_code_url)
+      qr.as_png(
+        bit_depth: 1,
+        border_modules: 0,
+        color_mode: ChunkyPNG::COLOR_GRAYSCALE,
+        color: "black",
+        file: qr_temp_file.path,
+        fill: "white",
+        module_px_size: 8,
+        resize_exactly_to: false,
+        resize_gte_to: false,
+        size: 200
+      ).save(qr_temp_file.path)
+
+      # Download and save the original PDF
+      Rails.logger.info "Downloading original PDF"
+      pdf_attachment.blob.open do |tempfile|
+        FileUtils.copy_file(tempfile.path, input_pdf_file.path)
       end
 
-      # Load the converted image
-      image = MiniMagick::Image.new(converted_image_file.path)
-      Rails.logger.info "Image dimensions: #{image.width}x#{image.height}"
+      # Get PDF dimensions from the first page
+      reader = PDF::Reader.new(input_pdf_file.path)
+      page = reader.pages.first
+      page_width = page.width
+      page_height = page.height
+      Rails.logger.info "PDF dimensions: #{page_width}x#{page_height}"
 
-      # Calculate QR code position (top right corner with padding)
-      x_position = image.width - 220  # QR size (200) + padding (20)
-      y_position = 20
-
+      # Calculate QR code position (top-right corner with 20pt padding)
+      qr_width = 200  # QR code width in points
+      qr_height = 200 # QR code height in points
+      x_position = page_width - qr_width - 20
+      y_position = page_height - qr_height - 20
       Rails.logger.info "Adding QR code at position: #{x_position},#{y_position}"
 
-      # Add QR code to the image
-      result = image.composite(MiniMagick::Image.new(qr_temp_file.path)) do |c|
-        c.compose "Over"
-        c.geometry "+#{x_position}+#{y_position}"
-      end
-
-      # Convert back to PDF
-      Rails.logger.info "Converting back to PDF"
-      result.format "pdf"
-      result.write pdf_temp_file.path
-
-      # If original PDF had multiple pages, merge them
-      page_count = PDF::Reader.new(input_pdf_file.path).page_count
-      Rails.logger.info "Original PDF has #{page_count} pages"
-
-      if page_count > 1
-        Rails.logger.info "Merging multiple pages"
-        combined_pdf = CombinePDF.new
-        # Add first page with QR code
-        combined_pdf << CombinePDF.load(pdf_temp_file.path)
-
-        # Add remaining pages from original PDF
-        original_pdf = CombinePDF.load(input_pdf_file.path)
-        original_pdf.pages[1..-1].each do |page|
-          combined_pdf << page
-        end
-
-        combined_pdf.save pdf_temp_file.path
+      # Create new PDF with QR code overlay
+      Prawn::Document.generate(pdf_temp_file.path, template: input_pdf_file.path) do |pdf|
+        # Move to the first page
+        pdf.go_to_page(1)
+        
+        # Add QR code image
+        pdf.image qr_temp_file.path, 
+                 at: [x_position, y_position],
+                 width: qr_width,
+                 height: qr_height
       end
 
       Rails.logger.info "PDF processing completed"
-      # Return processed PDF file
       pdf_temp_file
     rescue => e
       Rails.logger.error "Error processing PDF: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
       raise
     ensure
+      # Clean up temporary files
       qr_temp_file.close
       qr_temp_file.unlink
       input_pdf_file.close
       input_pdf_file.unlink
-      converted_image_file.close
-      converted_image_file.unlink
     end
   end
 end
