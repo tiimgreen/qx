@@ -43,9 +43,9 @@ Rails.application.configure do
 
   # Set default URL options for URL helpers
   routes.default_url_options = {
-    host: 'localhost',
+    host: "localhost",
     port: 3000,
-    protocol: 'http'
+    protocol: "http"
   }
 
   # Print deprecation notices to the Rails logger.
