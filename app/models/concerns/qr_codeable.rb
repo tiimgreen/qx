@@ -59,19 +59,19 @@ module QrCodeable
   end
 
   def generate_qr_code_image(url, output_path)
-    qr = RQRCode::QRCode.new(url)
-    qr.as_png(
+    qrcode = RQRCode::QRCode.new(url, size: 6, level: :m)  # Increased size, reduced error correction
+
+    # Generate PNG with higher quality settings
+    png = qrcode.as_png(
       bit_depth: 1,
-      border_modules: 0,
+      border_modules: 1,
       color_mode: ChunkyPNG::COLOR_GRAYSCALE,
       color: "black",
       file: output_path,
       fill: "white",
-      module_px_size: 8,
-      resize_exactly_to: false,
-      resize_gte_to: false,
-      size: 200
-    ).save(output_path)
+      module_px_size: 4,  # Reduced for smaller final size
+      resize_exactly_to: 200  # Reduced for better scaling to 100px
+    )
   end
 
   def add_qr_code_to_pdf(input_path:, output_path:, qr_path:)
@@ -85,8 +85,8 @@ module QrCodeable
       pdf.go_to_page(1)
       pdf.image qr_path,
                at: [ x, y ],
-               width: 200,
-               height: 200
+               width: 100,
+               height: 100
     end
   end
 
@@ -94,8 +94,8 @@ module QrCodeable
     Rails.logger.info "Calculating position for: #{position.inspect}"
     Rails.logger.info "Page dimensions: #{@page_width}x#{@page_height}"
 
-    margin = 20
-    qr_size = 200
+    margin = 10
+    qr_size = 100
 
     coords = case position.to_s
     when "top_right"
@@ -115,8 +115,8 @@ module QrCodeable
       [ x, y ]
     when "bottom_left"
       Rails.logger.info "Using bottom_left coordinates"
-      x = margin
-      y = qr_size + margin
+      x = 150  # Fixed distance from left
+      y = 150  # Fixed distance from bottom
       [ x, y ]
     else
       Rails.logger.info "Using default (top_right) coordinates"
