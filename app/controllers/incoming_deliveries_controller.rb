@@ -58,8 +58,13 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
+      # Handle delivery notes attachments first
+      attach_delivery_notes if delivery_notes_present_in_params?
+
+      # Process remaining attributes
+      params_hash = remove_delivery_notes_params(incoming_delivery_params.to_h)
+
       # Set on_hold_date when status is On Hold
-      params_hash = incoming_delivery_params.to_h
       if params_hash[:on_hold_status] == "On Hold"
         params_hash[:on_hold_date] = Time.current
       end
@@ -188,5 +193,19 @@ class IncomingDeliveriesController < ApplicationController
       *completable_params,
       delivery_notes: []
     )
+  end
+
+  def delivery_notes_present_in_params?
+    params.dig(:incoming_delivery, :delivery_notes)&.any?
+  end
+
+  def attach_delivery_notes
+    params[:incoming_delivery][:delivery_notes].each do |note|
+      @incoming_delivery.delivery_notes.attach(note)
+    end
+  end
+
+  def remove_delivery_notes_params(params_hash)
+    params_hash.except(:delivery_notes)
   end
 end

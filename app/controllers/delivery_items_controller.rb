@@ -12,8 +12,6 @@ class DeliveryItemsController < ApplicationController
   end
 
   def show
-    @delivery_item = DeliveryItem.includes(:material_certificates)
-                                .find(params[:id])
   end
 
   def new
