@@ -276,6 +276,19 @@
       <% end %>
     </div>
 
+    <div class="mb-3">
+      <%= f.label :qr_position, class: "form-label" %>
+      <%= f.select :qr_position, 
+                  [
+                    ["Top Left", "top_left"],
+                    ["Top Right", "top_right"],
+                    ["Bottom Left", "bottom_left"],
+                    ["Bottom Right", "bottom_right"]
+                  ],
+                  { include_blank: true },
+                  class: "form-select" %>
+    </div>
+
     <!-- Submit Buttons -->
     <div class="form-group my-5">
       <%= f.submit class: "btn btn-primary" %>

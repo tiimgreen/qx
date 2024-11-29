@@ -30,6 +30,15 @@ en:
       additional_specs: "Additional Specs"
       on_hold_status: "On Hold Status"
       notes: "Notes"
+      qr_code_settings: QR Code Settings
+      qr_position: Position
+      qr_x_coordinate: X Coordinate
+      qr_y_coordinate: Y Coordinate
+      qr_positions:
+        top-left: Top Left
+        top-right: Top Right
+        bottom-left: Bottom Left
+        bottom-right: Bottom Right
 
   activerecord:
     models:

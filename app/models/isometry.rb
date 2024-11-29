@@ -5,15 +5,27 @@ class Isometry < ApplicationRecord
 
   include QrCodeable
 
+  QR_POSITIONS = {
+    "top-left" => { x: 20, y: 20 },
+    "top-right" => { x: -220, y: 20 },
+    "bottom-left" => { x: 20, y: -220 },
+    "bottom-right" => { x: -220, y: -220 }
+  }.freeze
+
   has_many_attached :isometry_images
   has_many_attached :on_hold_images
 
-  after_commit :process_isometry_images, on: [:create, :update]
+  after_commit :process_isometry_images, on: [ :create, :update ]
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   PED_CATEGORIES = [ "N/A", "I", "II", "III", "IV" ].freeze
 
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
+  VALID_QR_POSITIONS = %w[top_left top_right bottom_left bottom_right].freeze
+  validates :qr_position, inclusion: { in: VALID_QR_POSITIONS }
+  after_initialize :set_default_qr_position, if: :new_record?
+
+  before_save :log_qr_position_change
 
   # Validations
   validates :received_date, presence: true
@@ -72,10 +84,10 @@ class Isometry < ApplicationRecord
     @processing_images = true # Set processing flag
     begin
       Rails.logger.info "Processing isometry images for isometry #{id}"
-      
+
       isometry_images.each do |image|
         Rails.logger.info "Processing attachment: #{image.filename} (#{image.content_type})"
-        
+
         # Ensure the blob is persisted and analyzed
         image.blob.analyze if !image.blob.analyzed?
 
@@ -84,45 +96,45 @@ class Isometry < ApplicationRecord
           Rails.logger.info "Processing PDF file"
           # Process PDF file
           processed_file = process_pdf_with_qr(image)
-          
+
           # Create new blob and attach it
           new_blob = ActiveStorage::Blob.create_and_upload!(
             io: File.open(processed_file.path),
             filename: image.filename.to_s,
             content_type: "application/pdf"
           )
-          
+
           # Replace the old attachment with the new one
           image.update!(blob: new_blob)
-          
+
           # Clean up
           processed_file.close
           processed_file.unlink
-          
+
           Rails.logger.info "PDF processing completed"
         when /^image\//
           Rails.logger.info "Processing image file"
           # Process image file
           processed_image = add_qr_code_to_image(image)
-          
+
           # Create a temporary file with the processed image
           temp_file = Tempfile.new([ "processed_image", ".png" ])
           processed_image.write(temp_file.path)
-          
+
           # Create new blob and attach it
           new_blob = ActiveStorage::Blob.create_and_upload!(
             io: File.open(temp_file.path),
             filename: image.filename.to_s,
             content_type: image.content_type
           )
-          
+
           # Replace the old attachment with the new one
           image.update!(blob: new_blob)
-          
+
           # Clean up
           temp_file.close
           temp_file.unlink
-          
+
           Rails.logger.info "Image processing completed"
         end
       end
@@ -131,11 +143,45 @@ class Isometry < ApplicationRecord
     end
   end
 
+  def qr_coordinates
+    x = send("qr_#{qr_position}_x")
+    y = send("qr_#{qr_position}_y")
+
+    if x.negative?
+      # Convert negative x (from right edge) to positive x based on page width
+      x = page_width + x
+    end
+
+    if y.negative?
+      # Convert negative y (from bottom edge) to positive y based on page height
+      y = page_height + y
+    end
+
+    [ x, y ]
+  end
+
   def calculate_total_sn
     self.total_sn = (workshop_sn.to_i + assembly_sn.to_i) if workshop_sn.present? || assembly_sn.present?
   end
 
   def set_on_hold_date
     self.on_hold_date = Time.current if on_hold_status_changed? && on_hold_status.present?
+  end
+
+  def log_qr_position_change
+    Rails.logger.info "========== QR Position Debug =========="
+    Rails.logger.info "Current QR Position: #{qr_position.inspect}"
+    Rails.logger.info "QR Position in database: #{qr_position_was.inspect}"
+    Rails.logger.info "QR Position changed?: #{qr_position_changed?}"
+    Rails.logger.info "All changes: #{changes.inspect}"
+    Rails.logger.info "Valid positions: #{VALID_QR_POSITIONS.inspect}"
+    Rails.logger.info "====================================="
+  end
+
+  def set_default_qr_position
+    Rails.logger.info "Setting default QR position"
+    Rails.logger.info "Current position before default: #{qr_position.inspect}"
+    self.qr_position = "top_right" if qr_position.blank?
+    Rails.logger.info "Position after default: #{qr_position.inspect}"
   end
 end

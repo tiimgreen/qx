@@ -32,17 +32,15 @@ module QrCodeable
       # Get PDF dimensions from the first page
       reader = PDF::Reader.new(input_pdf_file.path)
       page = reader.pages.first
-      page_width = page.width
-      page_height = page.height
-      Rails.logger.info "PDF dimensions: #{page_width}x#{page_height}"
+      @page_width = page.width
+      @page_height = page.height
+      Rails.logger.info "PDF dimensions: #{@page_width}x#{@page_height}"
 
       # Create new PDF with QR code overlay
       add_qr_code_to_pdf(
-        input_pdf_file.path,
-        pdf_temp_file.path,
-        qr_temp_file.path,
-        page_width,
-        page_height
+        input_path: input_pdf_file.path,
+        output_path: pdf_temp_file.path,
+        qr_path: qr_temp_file.path
       )
 
       Rails.logger.info "PDF processing completed"
@@ -76,21 +74,66 @@ module QrCodeable
     ).save(output_path)
   end
 
-  def add_qr_code_to_pdf(input_path, output_path, qr_path, page_width, page_height)
-    # Calculate QR code position (top-right corner with 20pt padding)
-    qr_width = 200  # QR code width in points
-    qr_height = 200 # QR code height in points
-    x_position = page_width - qr_width - 20
-    y_position = page_height - qr_height - 20
-    Rails.logger.info "Adding QR code at position: #{x_position},#{y_position}"
+  def add_qr_code_to_pdf(input_path:, output_path:, qr_path:)
+    # Calculate coordinates based on position
+    x, y = calculate_qr_position(qr_position)
+
+    Rails.logger.info "Adding QR code at position: #{x},#{y} (#{qr_position})"
 
     # Create new PDF with QR code overlay
     Prawn::Document.generate(output_path, template: input_path) do |pdf|
       pdf.go_to_page(1)
       pdf.image qr_path,
-               at: [ x_position, y_position ],
-               width: qr_width,
-               height: qr_height
+               at: [ x, y ],
+               width: 200,
+               height: 200
     end
+  end
+
+  def calculate_qr_position(position)
+    Rails.logger.info "Calculating position for: #{position.inspect}"
+    Rails.logger.info "Page dimensions: #{@page_width}x#{@page_height}"
+
+    margin = 20
+    qr_size = 200
+
+    coords = case position.to_s
+    when "top_right"
+      Rails.logger.info "Using top_right coordinates"
+      x = @page_width - qr_size - margin
+      y = @page_height - qr_size - margin
+      [ x, y ]
+    when "top_left"
+      Rails.logger.info "Using top_left coordinates"
+      x = margin
+      y = @page_height - qr_size - margin
+      [ x, y ]
+    when "bottom_right"
+      Rails.logger.info "Using bottom_right coordinates"
+      x = @page_width - qr_size - margin
+      y = qr_size + margin
+      [ x, y ]
+    when "bottom_left"
+      Rails.logger.info "Using bottom_left coordinates"
+      x = margin
+      y = qr_size + margin
+      [ x, y ]
+    else
+      Rails.logger.info "Using default (top_right) coordinates"
+      x = @page_width - qr_size - margin
+      y = @page_height - qr_size - margin
+      [ x, y ]
+    end
+
+    Rails.logger.info "Final coordinates: #{coords.inspect}"
+    coords
+  end
+
+  def page_width
+    @page_width
+  end
+
+  def page_height
+    @page_height
   end
 end

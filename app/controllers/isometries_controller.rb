@@ -3,7 +3,7 @@ class IsometriesController < ApplicationController
 
   layout "dashboard_layout"
   before_action :set_project
-  before_action :set_isometry, only: [:show, :edit, :update, :destroy]
+  before_action :set_isometry, only: [ :show, :edit, :update, :destroy ]
   before_action :authorize_action!
 
   def index
@@ -176,6 +176,7 @@ class IsometriesController < ApplicationController
       :test_pack_number,
       :sector_id,
       :notes,
+      :qr_position,
       isometry_images: []
     )
   end
