@@ -45,4 +45,28 @@ class DeliveryItem < ApplicationRecord
   def on_hold?
     on_hold_status == "On Hold"
   end
+
+  def update_completion_status
+    update(completed: all_checks_passed?)
+  end
+
+  private
+
+  def all_checks_passed?
+    return false if on_hold?
+
+    check_statuses = [
+      quantity_check_status,
+      dimension_check_status,
+      visual_check_status,
+      vt2_check_status,
+      ra_check_status
+    ].compact
+
+    # Return false if any status is Failed
+    return false if check_statuses.any? { |status| status == "Failed" }
+
+    # All remaining statuses must be either Passed or N/A
+    check_statuses.all? { |status| [ "Passed", "N/A" ].include?(status) }
+  end
 end
