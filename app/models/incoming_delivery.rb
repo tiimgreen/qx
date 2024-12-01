@@ -32,4 +32,36 @@ class IncomingDelivery < ApplicationRecord
   def can_complete?
     delivery_items.where(completed: false).none?
   end
+
+  def update_completion_status
+    update(completed: all_checks_passed?)
+  end
+
+  private
+
+  def all_checks_passed?
+    # First check if incoming delivery is on hold
+    return false if on_hold_status == "On Hold"
+
+    # Then check if any delivery items have failed status or are on hold
+    delivery_items.each do |item|
+      next unless item.present?
+
+      # Check if delivery item is on hold
+      return false if item.on_hold_status == "On Hold"
+
+      check_statuses = [
+        item.quantity_check_status,
+        item.dimension_check_status,
+        item.visual_check_status,
+        item.vt2_check_status,
+        item.ra_check_status
+      ].compact
+
+      # If any status is Failed, return false
+      return false if check_statuses.any? { |status| status == "Failed" }
+    end
+
+    true
+  end
 end

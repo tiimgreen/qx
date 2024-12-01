@@ -128,7 +128,7 @@ en:
   work_locations:
     types:
       workshop: "Workshop"
-      prefab_facility: "Prefabrication"
+      prefabrication: "Prefabrication"
       construction_site: "Construction Site"
   status:
     passed: "Passed"

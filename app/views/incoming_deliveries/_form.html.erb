@@ -1,5 +1,3 @@
-
-
 <%= form_with(
       model: [@project, @incoming_delivery],
       local: true,
@@ -25,9 +23,9 @@
         <%= f.collection_select :work_location_id,
                                 WorkLocation.all,
                                 :id,
-                           ->(wl) { t("work_locations.types.#{wl.location_type}") },
-                           { prompt: true },
-                           { class: "form-control" } %>
+                                ->(wl) { wl.location_type ? t("work_locations.types.#{wl.location_type}") : "" },
+                                { prompt: true },
+                                { class: "form-control" } %>
       </div>
       <div class="mb-3">
         <%= f.label :delivery_note_number, class: 'form-label' %>

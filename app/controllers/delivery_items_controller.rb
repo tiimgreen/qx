@@ -53,6 +53,7 @@ class DeliveryItemsController < ApplicationController
       end
 
       if @delivery_item.update(params_without_images)
+        @incoming_delivery.update_completion_status
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                   notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
       else

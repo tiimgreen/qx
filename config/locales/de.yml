@@ -129,7 +129,7 @@ de:
   work_locations:
     types:
       workshop: "Werkstatt"
-      prefab_facility: "Vorfertigung"
+      prefabrication: "Vorfertigung"
       construction_site: "Baustelle"
   status:
     passed: "Bestanden"

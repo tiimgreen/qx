@@ -48,10 +48,9 @@
 # )
 # puts "added users"
 
-# # [ "workshop", "vorfertigung", "site" ].each do |location_type|
-# #   WorkLocation.find_or_create_by!(key: location_type, location_type: location_type)
-# # end
-# [ "workshop", "vorfertigung", "site" ].each do |location_type|
+# # Create Work Locations
+# puts "Creating work locations..."
+# [ "workshop", "prefabrication", "construction_site" ].each do |location_type|
 #   WorkLocation.find_or_create_by!(key: location_type, location_type: location_type)
 # end
 # puts "added work locations"
