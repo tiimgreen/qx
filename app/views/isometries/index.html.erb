@@ -40,6 +40,16 @@
             <%= sort_indicator('line_id') %>
           </th>
           <th>
+            <%= link_to t('activerecord.attributes.isometry.work_package_number'),
+                request.params.merge(sort: 'work_package_number', direction: (params[:sort] == 'work_package_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('work_package_number') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.isometry.test_pack_number'),
+                request.params.merge(sort: 'test_pack_number', direction: (params[:sort] == 'test_pack_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('test_pack_number') %>
+          </th>
+          <th>
             <%= link_to t('activerecord.attributes.isometry.pid_number'),
                 request.params.merge(sort: 'pid_number', direction: (params[:sort] == 'pid_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('pid_number') %>
@@ -69,28 +79,37 @@
                 request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('on_hold_status') %>
           </th>
-          <th class="text-end"><%= t('common.actions.title') %></th>
         </tr>
       </thead>
       <tbody>
         <% @isometries.each do |isometry| %>
-          <tr class="<%= 'table-warning' if isometry.on_hold_status.present? %>">
+          <tr>
             <td><%= link_to isometry.line_id, project_isometry_path(@project, isometry) %></td>
+            <td><%= isometry.work_package_number %></td>
+            <td><%= isometry.test_pack_number %></td>
             <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>
             <td><%= isometry.system %></td>
             <td><%= isometry.revision_number %><%= ' (Latest)' if isometry.revision_last %></td>
             <td><%= isometry.material %></td>
             <td><%= l(isometry.received_date, format: :short) if isometry.received_date %></td>
             <td>
-              <% if isometry.on_hold_status.present? %>
-                <span class="badge bg-warning text-dark">
-                  <i class="bi bi-pause-circle"></i> <%= isometry.on_hold_status %>
-                </span>
-              <% end %>
+                <%= status_label(isometry.on_hold_status)  %>
             </td>
             <td class="text-end">
+              <div class="btn-group btn-group-sm">
+              <% if current_user.can_view?("Isometry") %>
+                <%= link_to project_isometry_path(@project, isometry), 
+                  class: 'btn btn-outline-info m-1',
+                  title: t('common.actions.edit'),
+                  data: { bs_toggle: 'tooltip' } do %>
+                  <i class="bi bi-eye"></i>
+                <% end %>
+              <% end %>
               <% if current_user.can_edit?("Isometry") %>
-                <%= link_to edit_project_isometry_path(@project, isometry), class: "btn btn-sm btn-outline-secondary", title: t('common.actions.edit') do %>
+                <%= link_to edit_project_isometry_path(@project, isometry), 
+                  class: 'btn btn-outline-primary m-1',
+                  title: t('common.actions.edit'),
+                  data: { bs_toggle: 'tooltip' } do %>
                   <i class="bi bi-pencil"></i>
                 <% end %>
               <% end %>
@@ -98,11 +117,12 @@
                 <%= link_to project_isometry_path(@project, isometry),
                       method: :delete,
                       data: { confirm: t('common.messages.confirm_delete') },
-                      class: "btn btn-sm btn-outline-danger",
+                      class: 'btn btn-outline-danger m-1',
                       title: t('common.actions.delete') do %>
                   <i class="bi bi-trash"></i>
                 <% end %>
               <% end %>
+              </div>
             </td>
           </tr>
         <% end %>
