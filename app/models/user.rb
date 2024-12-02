@@ -31,11 +31,13 @@ class User < ApplicationRecord
     user_sectors.exists?(sector: sector)
   end
 
-  # Check permission for specific model
   def has_permission?(action, model_name)
+    permission = Permission.find_by(code: action)
+    return false unless permission
+
     user_resource_permissions.exists?(
       resource_name: model_name,
-      permission: Permission.find_by(code: action)
+      permission: permission
     )
   end
 
