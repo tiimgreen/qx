@@ -12,7 +12,7 @@
 
   <div class="row g-3">
     <!-- Basic Information -->
-    <div class="col-md-6">
+    <div class="col-md-6 my-5">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h5>
 
       <div class="row">
@@ -68,7 +68,7 @@
     </div>
 
     <!-- Technical Specifications -->
-    <div class="col-md-6">
+    <div class="col-md-6 my-5">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.technical_specs') %></h5>
 
       <div class="mb-3">
@@ -77,24 +77,22 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
           <%= f.label :revision_number, class: "form-label" %>
           <%= f.number_field :revision_number, class: "form-control" %>
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
           <div class="form-check mt-4">
             <%= f.check_box :revision_last, class: "form-check-input" %>
             <%= f.label :revision_last, class: "form-check-label" %>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
           <%= f.label :page_number, class: "form-label" %>
           <%= f.number_field :page_number, class: "form-control" %>
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
           <%= f.label :page_total, class: "form-label" %>
           <%= f.number_field :page_total, class: "form-control" %>
         </div>
@@ -122,20 +120,21 @@
     </div>
 
     <!-- Measurements -->
-    <div class="col-md-6">
+    <div class="col-md-6 my-5">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.measurements') %></h5>
 
-      <div class="mb-3">
-        <%= f.label :pipe_length, class: "form-label" %>
-        <%= f.number_field :pipe_length, class: "form-control", step: "0.01" %>
-      </div>
-
       <div class="row">
-        <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
+          <%= f.label :pipe_length, class: "form-label" %>
+          <%= f.number_field :pipe_length, class: "form-control", step: "0.01" %>
+        </div>
+
+        <div class="col-md-4 mb-3">
           <%= f.label :workshop_sn, class: "form-label" %>
           <%= f.number_field :workshop_sn, class: "form-control" %>
         </div>
-        <div class="col-md-6 mb-3">
+
+        <div class="col-md-4 mb-3">
           <%= f.label :assembly_sn, class: "form-label" %>
           <%= f.number_field :assembly_sn, class: "form-control" %>
         </div>
@@ -169,7 +168,7 @@
     </div>
 
     <!-- Additional Specifications -->
-    <div class="col-md-6">
+    <div class="col-md-6 my-5">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
 
       <div class="mb-3">
@@ -204,7 +203,8 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- Hold Fields -->
+    <div class="row g-3">
       <div class="col-md-6">
         <h5 class="border-bottom pb-2 mb-3"><%= t('.on_hold_status') %></h5>
         <div class="row">
@@ -243,51 +243,61 @@
       <div class="col-md-6">
         <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
         <div class="mb-3">
-          <%= f.text_area :notes, class: "form-control", rows: 8 %>
+          <%= f.text_area :notes, class: "form-control", rows: 9 %>
         </div>
       </div>
     </div>
 
     <!-- Image Upload -->
-    <div class="col-md-12">
+    <div class="row g-3">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.images') %></h5>
+        <div class="col-md-8 my-5">   
+          <div class="mb-3">
+            <%= f.label :isometry_images, class: "form-label" %>
+            <%= f.file_field :isometry_images, multiple: true, class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-4 my-5">
+          <div class="mb-3">
+            <%= f.label :qr_position, class: "form-label" %>
+            <%= f.select :qr_position, 
+                        [
+                          ["Top Left", "top_left"],
+                          ["Top Right", "top_right"],
+                          ["Bottom Left", "bottom_left"],
+                          ["Bottom Right", "bottom_right"]
+                        ],
+                        { include_blank: true },
+                        class: "form-select" %>
+            </div>
+          </div>
 
-      <div class="mb-3">
-        <%= f.label :isometry_images, class: "form-label" %>
-        <%= f.file_field :isometry_images, multiple: true, class: "form-control" %>
-      </div>
-
-      <% if @isometry.persisted? && @isometry.isometry_images.attached? %>
-        <div class="row">
-          <% @isometry.isometry_images.each do |image| %>
-            <div class="col-md-3">
-              <div class="card h-100">
-                <%= image_tag image, class: "card-img-top", style: "object-fit: cover; height: 200px;" %>
-                <div class="card-footer">
-                  <small class="text-muted">
-                    <%= number_to_human_size(image.byte_size) %> •
-                    <%= image.filename %>
-                  </small>
+          <% if @isometry.persisted? && @isometry.isometry_images.attached? %>
+            <div class="row g-3">
+              <% @isometry.isometry_images.each do |image| %>
+                <div class="col-md-3">
+                  <div class="card h-100">
+                    <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
+                      <div class="card-body text-center">
+                        <i class="bi bi-file-pdf text-danger" style="font-size: 4rem;"></i>
+                        <h6 class="card-title mt-3 text-dark">
+                          <%= image.filename.to_s %>
+                        </h6>
+                      </div>
+                      <div class="card-footer text-center">
+                        <small class="text-muted">
+                          <%= number_to_human_size(image.byte_size) %> •
+                          <%= l(image.created_at, format: :short) %>
+                        </small>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
-              </div>
+              <% end %>
             </div>
           <% end %>
-        </div>
-      <% end %>
-    </div>
+      </div>
 
-    <div class="mb-3">
-      <%= f.label :qr_position, class: "form-label" %>
-      <%= f.select :qr_position, 
-                  [
-                    ["Top Left", "top_left"],
-                    ["Top Right", "top_right"],
-                    ["Bottom Left", "bottom_left"],
-                    ["Bottom Right", "bottom_right"]
-                  ],
-                  { include_blank: true },
-                  class: "form-select" %>
-    </div>
 
     <!-- Submit Buttons -->
     <div class="form-group my-5">
