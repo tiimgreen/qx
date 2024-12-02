@@ -18,14 +18,17 @@ module QrCodeable
     begin
       # Generate QR code
       Rails.logger.info "Generating QR code"
-      qr_code_url = project_isometry_url(project, self, locale: I18n.locale)
+      qr_code_url = project_isometry_url(project, isometry, locale: I18n.locale)
       Rails.logger.info "Generated QR URL: #{qr_code_url}"
 
       generate_qr_code_image(qr_code_url, qr_temp_file.path)
 
+      # Ensure the blob is persisted and analyzed
+      pdf_attachment.blob.analyze if !pdf_attachment.blob.analyzed?
+
       # Download and save the original PDF
       Rails.logger.info "Downloading original PDF"
-      pdf_attachment.blob.open do |tempfile|
+      pdf_attachment.open do |tempfile|
         FileUtils.copy_file(tempfile.path, input_pdf_file.path)
       end
 

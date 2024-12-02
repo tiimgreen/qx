@@ -187,6 +187,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_29_065428) do
     t.index ["work_package_number"], name: "index_isometries_on_work_package_number"
   end
 
+  create_table "isometry_documents", force: :cascade do |t|
+    t.integer "isometry_id", null: false
+    t.string "qr_position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["isometry_id"], name: "index_isometry_documents_on_isometry_id"
+  end
+
   create_table "material_certificates", force: :cascade do |t|
     t.string "certificate_number", null: false
     t.string "batch_number", null: false
@@ -288,6 +296,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_29_065428) do
   add_foreign_key "isometries", "projects"
   add_foreign_key "isometries", "sectors"
   add_foreign_key "isometries", "users"
+  add_foreign_key "isometry_documents", "isometries"
   add_foreign_key "projects", "users"
   add_foreign_key "user_resource_permissions", "permissions"
   add_foreign_key "user_resource_permissions", "users"

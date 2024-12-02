@@ -12,10 +12,12 @@ class Isometry < ApplicationRecord
     "bottom-right" => { x: -220, y: -220 }
   }.freeze
 
-  has_many_attached :isometry_images
+  has_many :isometry_documents, dependent: :destroy
+  accepts_nested_attributes_for :isometry_documents, allow_destroy: true
+
   has_many_attached :on_hold_images
 
-  after_commit :process_isometry_images, on: [ :create, :update ]
+  after_commit :process_isometry_documents, on: [ :create, :update ]
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   PED_CATEGORIES = [ "N/A", "I", "II", "III", "IV" ].freeze
@@ -49,6 +51,11 @@ class Isometry < ApplicationRecord
   validates :vt2, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
   validates :pt2, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
 
+  # Public method for backward compatibility
+  def isometry_images
+    isometry_documents.map(&:pdf)
+  end
+
   # Callbacks
   before_save :calculate_total_sn
   before_save :set_on_hold_date
@@ -77,69 +84,16 @@ class Isometry < ApplicationRecord
 
   private
 
-  def process_isometry_images
-    return unless isometry_images.attached?
-    return if @processing_images # Add guard to prevent recursive processing
+  def process_isometry_documents
+    return unless isometry_documents.any?
 
-    @processing_images = true # Set processing flag
-    begin
-      Rails.logger.info "Processing isometry images for isometry #{id}"
+    isometry_documents.each do |document|
+      next unless document.pdf.attached?
+      
+      Rails.logger.info "Processing isometry document: #{document.pdf.filename} (#{document.pdf.content_type})"
 
-      isometry_images.each do |image|
-        Rails.logger.info "Processing attachment: #{image.filename} (#{image.content_type})"
-
-        # Ensure the blob is persisted and analyzed
-        image.blob.analyze if !image.blob.analyzed?
-
-        case image.content_type
-        when "application/pdf"
-          Rails.logger.info "Processing PDF file"
-          # Process PDF file
-          processed_file = process_pdf_with_qr(image)
-
-          # Create new blob and attach it
-          new_blob = ActiveStorage::Blob.create_and_upload!(
-            io: File.open(processed_file.path),
-            filename: image.filename.to_s,
-            content_type: "application/pdf"
-          )
-
-          # Replace the old attachment with the new one
-          image.update!(blob: new_blob)
-
-          # Clean up
-          processed_file.close
-          processed_file.unlink
-
-          Rails.logger.info "PDF processing completed"
-        when /^image\//
-          Rails.logger.info "Processing image file"
-          # Process image file
-          processed_image = add_qr_code_to_image(image)
-
-          # Create a temporary file with the processed image
-          temp_file = Tempfile.new([ "processed_image", ".png" ])
-          processed_image.write(temp_file.path)
-
-          # Create new blob and attach it
-          new_blob = ActiveStorage::Blob.create_and_upload!(
-            io: File.open(temp_file.path),
-            filename: image.filename.to_s,
-            content_type: image.content_type
-          )
-
-          # Replace the old attachment with the new one
-          image.update!(blob: new_blob)
-
-          # Clean up
-          temp_file.close
-          temp_file.unlink
-
-          Rails.logger.info "Image processing completed"
-        end
-      end
-    ensure
-      @processing_images = false # Reset processing flag
+      # The actual processing is now handled by the IsometryDocument model
+      # through its after_commit callback
     end
   end
 

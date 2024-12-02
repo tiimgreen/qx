@@ -33,9 +33,11 @@ class IsometriesController < ApplicationController
   end
 
   def create
-    @isometry = @project.isometries.build
-    @isometry.assign_attributes(isometry_params.to_h)
+    @isometry = @project.isometries.build(isometry_params)
     @isometry.user = current_user
+
+    # Handle new PDF upload
+    handle_new_pdf_upload(@isometry)
 
     if @isometry.save
       redirect_to project_isometry_path(@project, @isometry),
@@ -46,13 +48,11 @@ class IsometriesController < ApplicationController
   end
 
   def update
-    # Handle image attachments first
-    attach_isometry_images if isometry_images_present_in_params?
+    # Handle new PDF upload first
+    handle_new_pdf_upload(@isometry)
 
-    # Process remaining attributes
-    params_hash = remove_isometry_images_params(isometry_params.to_h)
-
-    if @isometry.update(params_hash)
+    # Then update other attributes
+    if @isometry.update(isometry_params)
       redirect_to project_isometry_path(@project, @isometry),
                   notice: t("common.messages.updated", model: "Isometry")
     else
@@ -138,31 +138,53 @@ class IsometriesController < ApplicationController
     end
   end
 
+  def handle_new_pdf_upload(isometry)
+    if params.dig(:isometry, :new_pdf).present?
+      isometry.isometry_documents.build(
+        pdf: params[:isometry][:new_pdf],
+        qr_position: params[:isometry][:new_pdf_qr_position]
+      )
+    end
+  end
+
   def isometry_params
     params.require(:isometry).permit(
-      :received_date,
+      :line_id,
+      :line_id_2,
+      :line_id_3,
+      :line_id_4,
+      :line_id_5,
+      :line_id_6,
+      :line_id_7,
+      :line_id_8,
+      :line_id_9,
+      :line_id_10,
+      :pipe_length,
+      :workshop_sn,
+      :assembly_sn,
+      :total_sn,
+      :revision_number,
+      :revision_last,
+      :page_number,
+      :page_total,
+      :sector_id,
+      :notes,
+      :qr_position,
       :on_hold_status,
       :on_hold_comment,
+      :received_date,
       :pid_number,
       :pid_revision,
       :ped_category,
       :gmp,
       :gdp,
-      :system,
       :pipe_class,
       :material,
-      :line_id,
-      :revision_number,
-      :revision_last,
-      :page_number,
-      :page_total,
+      :system,
       :dn1,
       :dn2,
       :dn3,
       :medium,
-      :pipe_length,
-      :workshop_sn,
-      :assembly_sn,
       :total_supports,
       :total_spools,
       :rt,
@@ -170,14 +192,11 @@ class IsometriesController < ApplicationController
       :pt2,
       :dp,
       :dip,
-      :slope_if_needed,
       :isolation_required,
+      :slope_if_needed,
       :work_package_number,
       :test_pack_number,
-      :sector_id,
-      :notes,
-      :qr_position,
-      isometry_images: []
+      isometry_documents_attributes: [ :id, :qr_position, :_destroy ]
     )
   end
 

@@ -251,53 +251,83 @@
     <!-- Image Upload -->
     <div class="row g-3">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.images') %></h5>
-        <div class="col-md-8 my-5">   
-          <div class="mb-3">
-            <%= f.label :isometry_images, class: "form-label" %>
-            <%= f.file_field :isometry_images, multiple: true, class: "form-control" %>
+      
+      <!-- Initial PDF Upload -->
+      <div class="col-md-8 mb-3">   
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.label :new_pdf, t('.upload_new_pdf'), class: "form-label" %>
+            <%= f.file_field :new_pdf, class: "form-control" %>
+          </div>
+          
+          <div class="col-md-4">
+            <%= f.label :new_pdf_qr_position, t('.qr_position'), class: "form-label" %>
+            <%= f.select :new_pdf_qr_position, 
+                      [
+                        [t('.top_left'), "top_left"],
+                        [t('.top_right'), "top_right"],
+                        [t('.bottom_left'), "bottom_left"],
+                        [t('.bottom_right'), "bottom_right"]
+                      ],
+                      { include_blank: true },
+                      class: "form-select" %>
           </div>
         </div>
-        <div class="col-md-4 my-5">
-          <div class="mb-3">
-            <%= f.label :qr_position, class: "form-label" %>
-            <%= f.select :qr_position, 
-                        [
-                          ["Top Left", "top_left"],
-                          ["Top Right", "top_right"],
-                          ["Bottom Left", "bottom_left"],
-                          ["Bottom Right", "bottom_right"]
-                        ],
-                        { include_blank: true },
-                        class: "form-select" %>
-            </div>
-          </div>
+      </div>
 
-          <% if @isometry.persisted? && @isometry.isometry_images.attached? %>
-            <div class="row g-3">
-              <% @isometry.isometry_images.each do |image| %>
-                <div class="col-md-3">
-                  <div class="card h-100">
-                    <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
-                      <div class="card-body text-center">
-                        <i class="bi bi-file-pdf text-danger" style="font-size: 4rem;"></i>
-                        <h6 class="card-title mt-3 text-dark">
-                          <%= image.filename.to_s %>
-                        </h6>
-                      </div>
-                      <div class="card-footer text-center">
-                        <small class="text-muted">
-                          <%= number_to_human_size(image.byte_size) %> •
-                          <%= l(image.created_at, format: :short) %>
-                        </small>
-                      </div>
+      <!-- Existing PDFs with QR Position Selection -->
+      <% if @isometry.persisted? && @isometry.isometry_documents.any? %>
+        <div class="col-12">
+          <h6 class="mb-3"><%= t('.existing_documents') %></h6>
+          
+          <%= f.fields_for :isometry_documents do |doc_form| %>
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-md-1 text-center">
+                    <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
+                  </div>
+                  <div class="col-md-4">
+                    <h6 class="mb-1"><%= doc_form.object.pdf.filename %></h6>
+                    <small class="text-muted">
+                      <%= number_to_human_size(doc_form.object.pdf.byte_size) %> •
+                      <%= l(doc_form.object.pdf.created_at, format: :short) %>
+                    </small>
+                  </div>
+                  <div class="col-md-4">
+                    <%= doc_form.select :qr_position,
+                      [
+                        [t('.top_left'), "top_left"],
+                        [t('.top_right'), "top_right"],
+                        [t('.bottom_left'), "bottom_left"],
+                        [t('.bottom_right'), "bottom_right"]
+                      ],
+                      { include_blank: true },
+                      class: "form-select" %>
+                  </div>
+                  <div class="col-md-3 text-end">
+                    <%= link_to url_for(doc_form.object.pdf), 
+                              target: "_blank", 
+                              class: "btn btn-outline-primary btn-sm me-2" do %>
+                      <i class="bi bi-eye"></i> <%= t('.view') %>
+                    <% end %>
+                    
+                    <%= doc_form.check_box :_destroy, 
+                                         class: "btn-check",
+                                         id: "delete_doc_#{doc_form.object.id}" %>
+                    <%= doc_form.label :_destroy, 
+                                     class: "btn btn-outline-danger btn-sm",
+                                     for: "delete_doc_#{doc_form.object.id}" do %>
+                      <i class="bi bi-trash"></i> <%= t('.delete') %>
                     <% end %>
                   </div>
                 </div>
-              <% end %>
+              </div>
             </div>
           <% end %>
-      </div>
-
+        </div>
+      <% end %>
+    </div>
 
     <!-- Submit Buttons -->
     <div class="form-group my-5">
