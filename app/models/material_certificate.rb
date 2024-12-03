@@ -14,16 +14,12 @@ class MaterialCertificate < ApplicationRecord
     return all unless search_term.present?
 
     term = "%#{search_term}%"
-    left_joins(:delivery_items)
-      .left_joins(delivery_items: :incoming_delivery)
-      .where(
+      where(
         "material_certificates.certificate_number LIKE ? OR " \
         "material_certificates.batch_number LIKE ? OR " \
         "material_certificates.issuer_name LIKE ? OR " \
-        "delivery_items.tag_number LIKE ? OR " \
-        "delivery_items.batch_number LIKE ? OR " \
-        "delivery_items.item_description LIKE ?",
-        term, term, term, term, term, term
+        "material_certificates.line_id LIKE ?",
+        term, term, term, term
       ).distinct
   }
 
