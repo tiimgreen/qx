@@ -60,6 +60,7 @@ en:
         project: "Project"
         certificate_number: "Certificate Number"
         batch_number: "Batch Number"
+        line_id: "Position"
         issue_date: "Issue Date"
         issuer_name: "Issuer"
         description: "Description"

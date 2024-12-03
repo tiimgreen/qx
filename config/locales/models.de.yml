@@ -72,6 +72,7 @@ de:
         project: "Projekt"
         certificate_number: "Zertifikatnummer"
         batch_number: "Chargennummer"
+        line_id: "Positionen"
         issue_date: "Ausstellungsdatum"
         issuer_name: "Aussteller"
         description: "Beschreibung"
@@ -102,6 +103,7 @@ de:
         ra_value: "Messwert"
         on_hold_status: "On Hold"
         on_hold_comment: "Haltkommentar"
+        description: "Beschreibung"
     material_certificates:
       index:
         title: "Materialzertifikate"

@@ -20,11 +20,12 @@ de:
       search: "Zertifikate suchen..."
       download: "Herunterladen"
       no_certificate: "Keine Datei"
-      delete_confirm: "Sind Sie sicher, dass Sie dieses Zertifikat löschen möchten?"
+      delete_confirm: "Sind Sie sicher, dass Sie dieses Zertifikat löschen wollen?"
     show:
       title: "Materialzertifikat Details"
       certificate_number: "Zertifikatsnummer"
       batch_number: "Chargennummer"
+      line_id: "Positionen"
       issue_date: "Ausstellungsdatum"
       issuer: "Aussteller"
       certificate: "Zertifikat"
@@ -64,6 +65,7 @@ de:
       submit: "Zertifikat speichern"
       cancel: "Abbrechen"
       search_placeholder: "Positionen suchen..."
+      line_id: "Positionen"
     buttons:
       view: "Anzeigen"
       edit: "Bearbeiten"

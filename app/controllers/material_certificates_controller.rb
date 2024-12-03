@@ -57,6 +57,7 @@ class MaterialCertificatesController < ApplicationController
       :issue_date,
       :issuer_name,
       :description,
+      :line_id,
       :certificate_file
     )
   end

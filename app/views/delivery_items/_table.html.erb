@@ -5,6 +5,7 @@
         <th><%= t('activerecord.attributes.delivery_item.delivery_note_position') %></th>
         <th><%= t('activerecord.attributes.delivery_item.tag_number') %></th>
         <th><%= t('activerecord.attributes.delivery_item.batch_number') %></th>
+        <th><%= t('activerecord.attributes.delivery_item.description') %></th>
         <th><%= t('common.completed') %></th>
         <th><%= t('activerecord.attributes.delivery_item.on_hold_status') %></th>
         <th><%= t('activerecord.attributes.delivery_item.quantity_check') %></th>
@@ -22,6 +23,7 @@
           <td><%= item.delivery_note_position %></td>
           <td><%= item.tag_number %></td>
           <td><%= item.batch_number %></td>
+          <td><%= item.item_description %></td>
           <td><%= status_label(item.completed ? t('common.yes') : t('common.no')) %></td>
           <td><%= status_label(item.on_hold_status) %></td>
           <td><%= status_label(item.quantity_check_status) %></td>

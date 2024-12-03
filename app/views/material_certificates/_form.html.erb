@@ -25,6 +25,11 @@
       </div>
 
       <div class="form-group mb-3">
+        <%= f.label :line_id, t('.line_id'), class: 'form-label' %>
+        <%= f.text_field :line_id, class: 'form-control', required: true %>
+      </div>
+
+      <div class="form-group mb-3">
         <%= f.label :issue_date, t('.issue_date'), class: 'form-label' %>
         <%= f.date_field :issue_date, class: 'form-control', value: Date.current, required: true %>
       </div>

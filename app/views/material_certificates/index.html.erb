@@ -28,6 +28,7 @@
         <tr>
           <th><%= t('activerecord.attributes.material_certificate.certificate_number') %></th>
           <th><%= t('activerecord.attributes.material_certificate.batch_number') %></th>
+          <th><%= t('activerecord.attributes.material_certificate.line_id') %></th>
           <th><%= t('activerecord.attributes.material_certificate.issue_date') %></th>
           <th><%= t('activerecord.attributes.material_certificate.issuer_name') %></th>
           <th><%= t('activerecord.attributes.material_certificate.certificate') %></th>
@@ -39,6 +40,7 @@
           <tr>
             <td><%= certificate.certificate_number %></td>
             <td><%= certificate.batch_number %></td>
+            <td><%= certificate.line_id %></td>
             <td><%= l(certificate.issue_date, format: :long) %></td>
             <td><%= certificate.issuer_name %></td>
             <td>

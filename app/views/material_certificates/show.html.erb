@@ -15,6 +15,10 @@
             <%= @material_certificate.batch_number %>
           </p>
           <p>
+            <strong><%= t('.line_id') %>:</strong>
+            <%= @material_certificate.line_id %>
+          </p>
+          <p>
             <strong><%= t('.issue_date') %>:</strong>
             <%= l(@material_certificate.issue_date, format: :long) %>
           </p>
