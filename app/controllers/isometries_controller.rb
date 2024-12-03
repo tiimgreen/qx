@@ -51,8 +51,22 @@ class IsometriesController < ApplicationController
     # Handle new PDF upload first
     handle_new_pdf_upload(@isometry)
 
+    # Handle image attachments
+    if params[:isometry][:rt_images].present?
+      @isometry.rt_images.attach(params[:isometry][:rt_images])
+    end
+    if params[:isometry][:vt_images].present?
+      @isometry.vt_images.attach(params[:isometry][:vt_images])
+    end
+    if params[:isometry][:pt_images].present?
+      @isometry.pt_images.attach(params[:isometry][:pt_images])
+    end
+
+    # Remove image parameters before updating other attributes to prevent overwriting
+    update_params = isometry_params.except(:rt_images, :vt_images, :pt_images)
+
     # Then update other attributes
-    if @isometry.update(isometry_params)
+    if @isometry.update(update_params)
       redirect_to project_isometry_path(@project, @isometry),
                   notice: t("common.messages.updated", model: "Isometry")
     else

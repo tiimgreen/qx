@@ -101,7 +101,7 @@
 
   <!-- Additional Specifications -->
   <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
-  <div class="col-md-6 mb-4">
+  <div class="col-md-4 mb-4">
 
     <dl class="row">
       <dt class="col-sm-4"><%= t('.dp') %></dt>
@@ -134,23 +134,34 @@
     </dl>
   </div>
 
-  <div class="col-md-6 mb-4">
+  <div class="col-md-8 mb-4">
 
     <dl class="row">
-      <dt class="col-sm-4"><%= t('.rt_percentage') %></dt>
-      <dd class="col-sm-8 "><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
-      <!-- RT Images -->
-      <%= render partial: 'images', locals: { images: @isometry.rt_images } %>
+      <div class="row">
+        <div class="col-md-4">
+          <dl>
+            <dt><%= t('.rt_percentage') %></dt>
+            <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
+          </dl>
+          <%= render partial: 'images', locals: { images: @isometry.rt_images } %>
+        </div>
 
-      <dt class="col-sm-4"><%= t('.vt_percentage') %></dt>
-      <dd class="col-sm-8"><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
-      <!-- VT Images -->
-      <%= render partial: 'images', locals: { images: @isometry.vt_images } %>
+        <div class="col-md-4">
+          <dl>
+            <dt><%= t('.vt_percentage') %></dt>
+            <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
+          </dl>
+          <%= render partial: 'images', locals: { images: @isometry.vt_images } %>
+        </div>
 
-      <dt class="col-sm-4"><%= t('.pt_percentage') %></dt>
-      <dd class="col-sm-8"><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
-      <!-- PT Images -->
-      <%= render partial: 'images', locals: { images: @isometry.pt_images } %>
+        <div class="col-md-4">
+          <dl>
+            <dt><%= t('.pt_percentage') %></dt>
+            <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
+          </dl>
+          <%= render partial: 'images', locals: { images: @isometry.pt_images } %>
+        </div>
+      </div>
     </dl>
   </div>
 
@@ -230,5 +241,3 @@
   <% end %>
 </div>
 </div>
-
-
