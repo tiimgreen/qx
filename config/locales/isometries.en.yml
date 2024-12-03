@@ -13,7 +13,6 @@ en:
       title: "Edit Isometry"
     show:
       title: "Isometry Details"
-      basic_info: "Basic Information"
       technical_specs: "Technical Specifications"
       measurements: "Measurements"
       spooling: "Spooling"
@@ -25,7 +24,6 @@ en:
       comment: "Comment"
       date: "Date"
     form:
-      basic_info: "Basic Info"
       technical_specs: "Technical Specs"
       measurements: "Measurements"
       spooling: "Spooling"

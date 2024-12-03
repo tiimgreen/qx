@@ -24,42 +24,19 @@
 </div>
 
 <div class="row mb-4">
-  <!-- Basic Information -->
+  <!-- Technical Specifications -->
+  <h5 class="border-bottom pb-2 mb-3"><%= t('.technical_specs') %></h5>
+
   <div class="col-md-6 mb-4">
-    <h5 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h5>
     <dl class="row">
       <dt class="col-sm-4"><%= t('.received_date') %></dt>
-      <dd class="col-sm-8"><%= l(@isometry.received_date, format: :long) if @isometry.received_date %></dd>
+      <dd class="col-sm-8"><%= l(@isometry.received_date, format: :short) if @isometry.received_date %></dd>
 
       <dt class="col-sm-4"><%= t('.pid_number') %></dt>
-      <dd class="col-sm-8"><%= @isometry.pid_number %> Rev. <%= @isometry.pid_revision %></dd>
+      <dd class="col-sm-8"><%= @isometry.pid_number %></dd>
 
-      <dt class="col-sm-4"><%= t('.system') %></dt>
-      <dd class="col-sm-8"><%= @isometry.system %></dd>
-
-      <dt class="col-sm-4"><%= t('.ped_category') %></dt>
-      <dd class="col-sm-8"><%= @isometry.ped_category %></dd>
-
-      <dt class="col-sm-4"><%= t('.gmp') %></dt>
-      <dd class="col-sm-8">
-        <%= "GMP" if @isometry.gmp %>
-      </dd>
-      <dt class="col-sm-4"><%= t('.gdp') %></dt>
-      <dd class="col-sm-8">
-        <%= "GDP" if @isometry.gdp %>
-      </dd>
-    </dl>
-  </div>
-
-  <!-- Technical Specifications -->
-  <div class="col-md-6 mb-4">
-    <h5 class="border-bottom pb-2 mb-3"><%= t('.technical_specs') %></h5>
-    <dl class="row">
-      <dt class="col-sm-4"><%= t('.pipe_class') %></dt>
-      <dd class="col-sm-8"><%= @isometry.pipe_class %></dd>
-
-      <dt class="col-sm-4"><%= t('.material') %></dt>
-      <dd class="col-sm-8"><%= @isometry.material %></dd>
+      <dt class="col-sm-4"><%= t('.pid_revision') %></dt>
+      <dd class="col-sm-8"> <%= @isometry.pid_revision %></dd>
 
       <dt class="col-sm-4"><%= t('.line_id') %></dt>
       <dd class="col-sm-8"><%= @isometry.line_id %></dd>
@@ -73,8 +50,15 @@
       </dd>
 
       <dt class="col-sm-4"><%= t('.page') %></dt>
-      <dd class="col-sm-8"><%= @isometry.page_number %> / <%= @isometry.page_total %></dd>
+      <dd class="col-sm-8"><%= @isometry.page_number %></dd>
 
+      <dt class="col-sm-4"><%= t('.total_page') %></dt>
+      <dd class="col-sm-8"><%= @isometry.page_total %></dd>
+    </dl>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <dl class="row">
       <dt class="col-sm-4"><%= t('.dn_measurements') %></dt>
       <dd class="col-sm-8">
         <% if @isometry.dn1.present? %>
@@ -94,18 +78,89 @@
         <% end %>
       </dd>
 
-      <dt class="col-sm-4"><%= t('.total_pipe_length') %></dt>
-      <dd class="col-sm-8"><%= number_with_precision(@isometry.pipe_length, precision: 2) %> m</dd>
+      <dt class="col-sm-4"><%= t('.pipe_class') %></dt>
+      <dd class="col-sm-8"><%= @isometry.pipe_class %></dd>
+
+      <dt class="col-sm-4"><%= t('.material') %></dt>
+      <dd class="col-sm-8"><%= @isometry.material %></dd>
+
+      <dt class="col-sm-4"><%= t('.system') %></dt>
+      <dd class="col-sm-8"><%= @isometry.system %></dd>
 
       <dt class="col-sm-4"><%= t('.medium') %></dt>
       <dd class="col-sm-8"><%= @isometry.medium %></dd>
+
+      <dt class="col-sm-4"><%= t('.work_package') %></dt>
+      <dd class="col-sm-8"><%= @isometry.work_package_number %></dd>
+
+      <dt class="col-sm-4"><%= t('.test_pack') %></dt>
+      <dd class="col-sm-8"><%= @isometry.test_pack_number %></dd>
+
+ </dl>
+  </div>
+
+  <!-- Additional Specifications -->
+  <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
+  <div class="col-md-6 mb-4">
+
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.dp') %></dt>
+      <dd class="col-sm-8">
+        <%= "DP" if @isometry.dp %>
+      </dd>
+      <dt class="col-sm-4"><%= t('.dip') %></dt>
+      <dd class="col-sm-8">
+        <%= "DIP" if @isometry.dip %>
+      </dd>
+
+      <dt class="col-sm-4"><%= t('.isolation') %></dt>
+      <dd class="col-sm-8"><%= @isometry.isolation_required? ? t('common.yes') : t('common.no') %></dd>
+
+      <dt class="col-sm-4"><%= t('.gmp') %></dt>
+      <dd class="col-sm-8">
+        <%= "GMP" if @isometry.gmp %>
+      </dd>
+      <dt class="col-sm-4"><%= t('.gdp') %></dt>
+      <dd class="col-sm-8">
+        <%= "GDP" if @isometry.gdp %>
+      </dd>
+
+      <dt class="col-sm-4"><%= t('.ped_category') %></dt>
+      <dd class="col-sm-8"><%= @isometry.ped_category %></dd>
+
+      <dt class="col-sm-4"><%= t('.slope') %></dt>
+      <dd class="col-sm-8"><%= @isometry.slope_if_needed %></dd>
+
     </dl>
   </div>
 
-  <!-- Measurements -->
   <div class="col-md-6 mb-4">
-    <h5 class="border-bottom pb-2 mb-3"><%= t('.measurements') %></h5>
+
     <dl class="row">
+      <dt class="col-sm-4"><%= t('.rt_percentage') %></dt>
+      <dd class="col-sm-8 "><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
+      <!-- RT Images -->
+      <%= render partial: 'images', locals: { images: @isometry.rt_images } %>
+
+      <dt class="col-sm-4"><%= t('.vt_percentage') %></dt>
+      <dd class="col-sm-8"><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
+      <!-- VT Images -->
+      <%= render partial: 'images', locals: { images: @isometry.vt_images } %>
+
+      <dt class="col-sm-4"><%= t('.pt_percentage') %></dt>
+      <dd class="col-sm-8"><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
+      <!-- PT Images -->
+      <%= render partial: 'images', locals: { images: @isometry.pt_images } %>
+    </dl>
+  </div>
+
+  <!-- Spooling -->
+  <div class="col-md-6 mb-4">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.spooling') %></h5>
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.total_pipe_length') %></dt>
+      <dd class="col-sm-8"><%= number_with_precision(@isometry.pipe_length, precision: 2) %> m</dd>
+   
       <dt class="col-sm-4"><%= t('.workshop_sn') %></dt>
       <dd class="col-sm-8"><%= @isometry.workshop_sn %></dd>
 
@@ -120,63 +175,32 @@
 
       <dt class="col-sm-4"><%= t('.total_spools') %></dt>
       <dd class="col-sm-8"><%= @isometry.total_spools %></dd>
-
-      <dt class="col-sm-4"><%= t('.test_percentages') %></dt>
-      <dd class="col-sm-8">
-        RT: <%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %><br>
-        VT2: <%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %><br>
-        PT2: <%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %>
-      </dd>
     </dl>
   </div>
 
-  <!-- Additional Specifications -->
   <div class="col-md-6 mb-4">
-    <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
-    <dl class="row">
-      <dt class="col-sm-4"><%= t('.dp') %></dt>
-      <dd class="col-sm-8">
-        <%= "DP" if @isometry.dp %>
-      </dd>
-      <dt class="col-sm-4"><%= t('.dip') %></dt>
-      <dd class="col-sm-8">
-        <%= "DIP" if @isometry.dip %>
-      </dd>
-
-      <dt class="col-sm-4"><%= t('.slope') %></dt>
-      <dd class="col-sm-8"><%= @isometry.slope_if_needed %></dd>
-
-      <dt class="col-sm-4"><%= t('.isolation') %></dt>
-      <dd class="col-sm-8"><%= @isometry.isolation_required? ? t('common.yes') : t('common.no') %></dd>
-
-      <dt class="col-sm-4"><%= t('.work_package') %></dt>
-      <dd class="col-sm-8"><%= @isometry.work_package_number %></dd>
-
-      <dt class="col-sm-4"><%= t('.test_pack') %></dt>
-      <dd class="col-sm-8"><%= @isometry.test_pack_number %></dd>
-    </dl>
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.on_hold_status') %></h5>
+    <strong><%= t('.status') %>:</strong> <%= status_label(@isometry.on_hold_status) %><br>
+    <strong><%= t('.comment') %>:</strong> <%= @isometry.on_hold_comment %><br>
+    <strong><%= t('.date') %>:</strong> <%= l(@isometry.on_hold_date, format: :long) if @isometry.on_hold_date %>
   </div>
+</div>
 
-  <div class="row mb-4">
-    <div class="col-md-6">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.on_hold_status') %></h5>
-      <strong><%= t('.status') %>:</strong> <%= status_label(@isometry.on_hold_status) %><br>
-      <strong><%= t('.comment') %>:</strong> <%= @isometry.on_hold_comment %><br>
-      <strong><%= t('.date') %>:</strong> <%= l(@isometry.on_hold_date, format: :long) if @isometry.on_hold_date %>
-    </div>
-    <div class="col-md-6">
-      <!-- Notes -->
-      <% if @isometry.notes.present? %>
-          <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
-          <p class="text-muted"><%= @isometry.notes %></p>
-      <% end %>
-    </div>
+<div class="row g-3">
+  <!-- Notes -->
+  <div class="col-md-12 mb-4">
+  <% if @isometry.notes.present? %>
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
+      <p class="text-muted"><%= @isometry.notes %></p>
+  <% end %>
   </div>
+</div>
 
+<div class="row g-3">
   <!-- Isometry Images -->
   <% if @isometry.isometry_documents.any? %>
     <div class="col-md-12 mb-4">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.images') %></h5>
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.isometry_documents') %></h5>
       <div class="row g-3">
         <% @isometry.isometry_documents.each do |document| %>
           <div class="col-md-3">
@@ -205,3 +229,6 @@
     </div>
   <% end %>
 </div>
+</div>
+
+

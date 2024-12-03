@@ -1,0 +1,34 @@
+<%# Params:
+    - images: collection of attached images
+    - title: section title (optional)
+%>
+
+<% if images.attached? %>
+  <div class="col-md-12 mb-4">
+    <% if local_assigns[:title].present? %>
+      <h5 class="pb-2 mb-3"><%= title %></h5>
+    <% end %>
+    <div class="row g-3 ">
+      <% images.each do |image| %>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
+              <div class="card-body text-center">
+                <i class="bi bi-file-image text-danger" style="font-size: 2rem;"></i>
+                <h6 class="card-title mt-3 text-dark">
+                  <%= image.filename.to_s %>
+                </h6>
+              </div>
+              <div class="card-footer text-center">
+                <small class="text-muted">
+                  <%= number_to_human_size(image.byte_size) %> •
+                  <%= l(image.created_at, format: :short) %>
+                </small>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
