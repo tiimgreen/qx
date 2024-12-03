@@ -16,7 +16,8 @@ de:
       basic_info: "Grundinformationen"
       technical_specs: "Technische Spezifikationen"
       measurements: "Messungen"
-      additional_specs: "Zusätzliche Spezifikationen"
+      spooling: "Spooling"
+      additional_specs: "Zusatzliche Spezifikationen"
       on_hold_status: "On Hold"
       images: "Isometrie Bilder"
       notes: "Notizen"
@@ -26,10 +27,22 @@ de:
     form:
       basic_info: "Grundinfo"
       technical_specs: "Technische Daten"
+      spooling: "Spooling"
       measurements: "Messungen"
-      additional_specs: "Zusätzliche Daten"
+      additional_specs: "Zusatzliche Daten"
       on_hold_status: "On Hold"
       notes: "Notizen"
+      isometry_documents: "Isometry Dokumente"  
+      upload_new_pdf: "Neues Pdf hochladen"
+      qr_code_settings: "QR Code Einstellungen"
+      qr_position: "QR Position"
+      qr_x_coordinate: "X-Koordinate"
+      qr_y_coordinate: "Y-Koordinate"
+      qr_positions:
+        top-left: "Oben links"
+        top-right: "Oben rechts"
+        bottom-left: "Unten links"
+        bottom-right: "Unten rechts"
 
   activerecord:
     models:
@@ -58,7 +71,8 @@ de:
         medium: "Medium"
         pipe_length: "Rohrlänge"
         workshop_sn: "Werkstatt SN"
-        assembly_sn: "Montage SN"
+        assembly_sn: "On Site SN"
+        total_sn: "Gesamt SN"
         total_supports: "Gesamthalterungen"
         total_spools: "Gesamt Spools"
         rt_percentage: "RT %"

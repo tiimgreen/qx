@@ -10,204 +10,236 @@
     </div>
   <% end %>
 
-  <div class="row g-3">
-    <!-- Basic Information -->
-    <div class="col-md-6 my-5">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.basic_info') %></h5>
-
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <%= f.label :received_date, class: "form-label" %>
-          <%= f.date_field :received_date, class: "form-control", value: Date.current %>
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <%= f.label :pid_number, class: "form-label" %>
-          <%= f.text_field :pid_number, class: "form-control" %>
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <%= f.label :pid_revision, class: "form-label" %>
-          <%= f.number_field :pid_revision, class: "form-control" %>
-        </div>
-      </div>
-
-      <div class="row align-items-end">
-        <div class="col-md-4 mb-3">
-          <%= f.label :ped_category, class: "form-label" %>
-          <%= f.select :ped_category, Isometry::PED_CATEGORIES, { include_blank: true }, class: "form-select" %>
-        </div>
-        <div class="col-md-8 mb-3 d-flex align-items-center">
-          <div class="form-check form-check-inline mb-0">
-            <%= f.check_box :gmp, class: "form-check-input" %>
-            <%= f.label :gmp, class: "form-check-label" %>
-          </div>
-          <div class="form-check form-check-inline mb-0">
-            <%= f.check_box :gdp, class: "form-check-input" %>
-            <%= f.label :gdp, class: "form-check-label" %>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <%= f.label :pipe_class, class: "form-label" %>
-          <%= f.text_field :pipe_class, class: "form-control" %>
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <%= f.label :material, class: "form-label" %>
-          <%= f.text_field :material, class: "form-control" %>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :system, class: "form-label" %>
-        <%= f.text_field :system, class: "form-control" %>
-      </div>
+ 
+  <div class="card mb-4">
+    <div class="card-header d-flex align-items-center mb-3">
+      <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.technical_specs') %></h3>
     </div>
+    <div class="card-body">
+    <!-- Technical Specification -->
+      <div class="row g-3">
+        <div class="row">
+          <div class="col-md-2 mb-3">
+            <%= f.label :received_date, class: "form-label" %>
+            <%= f.date_field :received_date, class: "form-control", value: Date.current %>
+          </div>
 
-    <!-- Technical Specifications -->
-    <div class="col-md-6 my-5">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.technical_specs') %></h5>
+          <div class="col-md-2 mb-3">
+            <%= f.label :pid_number, class: "form-label" %>
+            <%= f.text_field :pid_number, class: "form-control" %>
+          </div>
 
-      <div class="mb-3">
-        <%= f.label :line_id, class: "form-label" %>
-        <%= f.text_field :line_id, class: "form-control" %>
-      </div>
+          <div class="col-md-2 mb-3">
+            <%= f.label :pid_revision, class: "form-label" %>
+            <%= f.number_field :pid_revision, class: "form-control" %>
+          </div>
 
-      <div class="row">
-        <div class="col-md-3 mb-3">
-          <%= f.label :revision_number, class: "form-label" %>
-          <%= f.number_field :revision_number, class: "form-control" %>
-        </div>
-        <div class="col-md-3 mb-3">
-          <div class="form-check mt-4">
+          <div class="col-md-2 mb-3">
+            <%= f.label :line_id, class: "form-label" %>
+            <%= f.text_field :line_id, class: "form-control" %>
+          </div>
+          
+          <div class="col-md-2 mb-3">
+            <%= f.label :revision_number, class: "form-label" %>
+            <%= f.number_field :revision_number, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
             <%= f.check_box :revision_last, class: "form-check-input" %>
             <%= f.label :revision_last, class: "form-check-label" %>
           </div>
         </div>
 
-        <div class="col-md-3 mb-3">
-          <%= f.label :page_number, class: "form-label" %>
-          <%= f.number_field :page_number, class: "form-control" %>
-        </div>
-        <div class="col-md-3 mb-3">
-          <%= f.label :page_total, class: "form-label" %>
-          <%= f.number_field :page_total, class: "form-control" %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <%= f.label :dn1, class: "form-label" %>
-          <%= f.text_field :dn1, class: "form-control" %>
-        </div>
-        <div class="col-md-4 mb-3">
-          <%= f.label :dn2, class: "form-label" %>
-          <%= f.text_field :dn2, class: "form-control" %>
-        </div>
-        <div class="col-md-4 mb-3">
-          <%= f.label :dn3, class: "form-label" %>
-          <%= f.text_field :dn3, class: "form-control" %>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :medium, class: "form-label" %>
-        <%= f.text_field :medium, class: "form-control" %>
-      </div>
-    </div>
-
-    <!-- Measurements -->
-    <div class="col-md-6 my-5">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.measurements') %></h5>
-
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <%= f.label :pipe_length, class: "form-label" %>
-          <%= f.number_field :pipe_length, class: "form-control", step: "0.01" %>
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <%= f.label :workshop_sn, class: "form-label" %>
-          <%= f.number_field :workshop_sn, class: "form-control" %>
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <%= f.label :assembly_sn, class: "form-label" %>
-          <%= f.number_field :assembly_sn, class: "form-control" %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <%= f.label :total_supports, class: "form-label" %>
-          <%= f.number_field :total_supports, class: "form-control" %>
-        </div>
-        <div class="col-md-6 mb-3">
-          <%= f.label :total_spools, class: "form-label" %>
-          <%= f.number_field :total_spools, class: "form-control" %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <%= f.label :rt, class: "form-label" %>
-          <%= f.number_field :rt, class: "form-control", step: "0.1" %>
-        </div>
-        <div class="col-md-4 mb-3">
-          <%= f.label :vt2, class: "form-label" %>
-          <%= f.number_field :vt2, class: "form-control", step: "0.1" %>
-        </div>
-        <div class="col-md-4 mb-3">
-          <%= f.label :pt2, class: "form-label" %>
-          <%= f.number_field :pt2, class: "form-control", step: "0.1" %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Additional Specifications -->
-    <div class="col-md-6 my-5">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
-
-      <div class="mb-3">
-        <div class="form-check form-check-inline">
-          <%= f.check_box :dp, class: "form-check-input" %>
-          <%= f.label :dp, class: "form-check-label" %>
-        </div>
-        <div class="form-check form-check-inline">
-          <%= f.check_box :dip, class: "form-check-input" %>
-          <%= f.label :dip, class: "form-check-label" %>
-        </div>
-        <div class="form-check form-check-inline">
-          <%= f.check_box :isolation_required, class: "form-check-input" %>
-          <%= f.label :isolation_required, class: "form-check-label" %>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :slope_if_needed, class: "form-label" %>
-        <%= f.text_field :slope_if_needed, class: "form-control" %>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <%= f.label :work_package_number, class: "form-label" %>
-          <%= f.number_field :work_package_number, class: "form-control" %>
-        </div>
-        <div class="col-md-6 mb-3">
-          <%= f.label :test_pack_number, class: "form-label" %>
-          <%= f.number_field :test_pack_number, class: "form-control" %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Hold Fields -->
-    <div class="row g-3">
-      <div class="col-md-6">
-        <h5 class="border-bottom pb-2 mb-3"><%= t('.on_hold_status') %></h5>
         <div class="row">
+          <div class="col-md-2 mb-3">
+            <%= f.label :page_number, class: "form-label" %>
+            <%= f.number_field :page_number, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <%= f.label :page_total, class: "form-label" %>
+            <%= f.number_field :page_total, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <%= f.label :dn1, class: "form-label" %>
+            <%= f.text_field :dn1, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <%= f.label :dn2, class: "form-label" %>
+            <%= f.text_field :dn2, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <%= f.label :dn3, class: "form-label" %>
+            <%= f.text_field :dn3, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <%= f.label :pipe_class, class: "form-label" %>
+            <%= f.text_field :pipe_class, class: "form-control" %>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 mb-3">
+            <%= f.label :material, class: "form-label" %>
+            <%= f.text_field :material, class: "form-control" %>
+          </div>
+        
+          <div class="col-md-2 mb-3">
+            <%= f.label :system, class: "form-label" %>
+            <%= f.text_field :system, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <%= f.label :medium, class: "form-label" %>
+            <%= f.text_field :medium, class: "form-control" %>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <%= f.label :work_package_number, class: "form-label" %>
+            <%= f.number_field :work_package_number, class: "form-control" %>
+          </div>
+          <div class="col-md-2 mb-3">
+            <%= f.label :test_pack_number, class: "form-label" %>
+            <%= f.number_field :test_pack_number, class: "form-control" %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header d-flex align-items-center mb-3">
+      <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.additional_specs') %></h3>
+    </div>
+    <div class="card-body">
+      <!-- Additional Specifications -->
+      <div class="row g-3">
+
+        <div class="row g-3">
+          <div class="row align-items-center mb-3">
+            <div class="col-12 col-md-auto mb-2 mb-md-0">
+              <div class="d-flex flex-wrap gap-2">
+                <div class="form-check mb-0">
+                  <%= f.check_box :dp, class: "form-check-input" %>
+                  <%= f.label :dp, class: "form-check-label" %>
+                </div>
+                <div class="form-check mb-0">
+                  <%= f.check_box :dip, class: "form-check-input" %>
+                  <%= f.label :dip, class: "form-check-label" %>
+                </div>
+                <div class="form-check mb-0">
+                  <%= f.check_box :isolation_required, class: "form-check-input" %>
+                  <%= f.label :isolation_required, class: "form-check-label" %>
+                </div>
+                <div class="form-check mb-0">
+                  <%= f.check_box :gmp, class: "form-check-input" %>
+                  <%= f.label :gmp, class: "form-check-label" %>
+                </div>
+                <div class="form-check mb-0">
+                  <%= f.check_box :gdp, class: "form-check-input" %>
+                  <%= f.label :gdp, class: "form-check-label" %>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row g-2">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                  <%= f.label :ped_category, class: "form-label mb-0" %>
+                  <%= f.select :ped_category, Isometry::PED_CATEGORIES, { include_blank: true }, class: "form-select" %>
+                </div>
+                <div class="col-12 col-md-6">
+                  <%= f.label :slope_if_needed, class: "form-label mb-0" %>
+                  <%= f.text_field :slope_if_needed, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <%= f.label :rt_percentage, class: "form-label" %>
+            <%= f.number_field :rt, class: "form-control", step: "0.1" %>
+            <%= f.file_field :rt_images, multiple: true, class: "form-control mt-2" %>
+          </div>
+          <div class="col-md-4 mb-3">
+            <%= f.label :vt2_percentage, class: "form-label" %>
+            <%= f.number_field :vt2, class: "form-control", step: "0.1" %>
+            <%= f.file_field :vt_images, multiple: true, class: "form-control mt-2" %>
+
+          </div>
+          <div class="col-md-4 mb-3">
+            <%= f.label :pt2_percentage, class: "form-label" %>
+            <%= f.number_field :pt2, class: "form-control", step: "0.1" %>
+            <%= f.file_field :pt_images, multiple: true, class: "form-control mt-2" %>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-header d-flex align-items-center mb-3">
+        <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.spooling') %></h3>
+      </div>
+      <div class="card-body">
+        <!-- Measurements -->
+        <div class="row g-3">
+          <div class="col-md-12 mb-3">
+            <%= f.label :pipe_length, class: "form-label" %>
+            <%= f.number_field :pipe_length, class: "form-control", step: "0.01" %>
+          </div>
+        </div>
+     
+        <div class="row g-3">
+          <div class="col-md-4 mb-3">
+            <%= f.label :workshop_sn, class: "form-label" %>
+            <%= f.number_field :workshop_sn, class: "form-control" %>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <%= f.label :assembly_sn, class: "form-label" %>
+            <%= f.number_field :assembly_sn, class: "form-control" %>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <%= f.label :total_sn, class: "form-label" %>
+            <%= f.number_field :total_sn, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6 mb-3">
+            <%= f.label :total_supports, class: "form-label" %>
+            <%= f.number_field :total_supports, class: "form-control" %>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= f.label :total_spools, class: "form-label" %>
+            <%= f.number_field :total_spools, class: "form-control" %>
+          </div>
+        </div>
+      </div>      
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-header d-flex align-items-center mb-3">
+        <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.on_hold_status') %></h3>
+      </div>
+      <div class="card-body">
+        <!-- On hold fields -->
+        <div class="row g-3">
           <div class="col-md-5 mb-3">
             <%= f.label :on_hold_status, class: "form-label" %>
             <%= f.select :on_hold_status, Isometry::ON_HOLD_STATUSES, { include_blank: true }, class: "form-select" %>
@@ -216,42 +248,54 @@
             <%= f.label :on_hold_images, class: "form-label" %>
             <%= f.file_field :on_hold_images, multiple: true, class: "form-control" %>
           </div>
-        </div>
-        <div class="mb-3">
-          <%= f.label :on_hold_comment, class: "form-label" %>
-          <%= f.text_area :on_hold_comment, class: "form-control", rows: 4  %>
-        </div>
-        
-        <% if f.object.on_hold_images.attached? %>
-          <div class="row g-3">
-            <% f.object.on_hold_images.each do |image| %>
-              <div class="col-md-6">
-                <div class="card h-100">
-                  <%= image_tag image, class: "card-img-top", style: "object-fit: cover; height: 150px;" %>
-                  <div class="card-footer">
-                    <small class="text-muted">
-                      <%= number_to_human_size(image.byte_size) %> • <%= l(image.created_at, format: :short) %>
-                    </small>
+          <div class="mb-3">
+            <%= f.label :on_hold_comment, class: "form-label" %>
+            <%= f.text_area :on_hold_comment, class: "form-control", rows: 4  %>
+          </div>
+      
+          <% if f.object.on_hold_images.attached? %>
+            <div class="row g-3">
+              <% f.object.on_hold_images.each do |image| %>
+                <div class="col-md-6">
+                  <div class="card h-100">
+                    <%= image_tag image, class: "card-img-top", style: "object-fit: cover; height: 150px;" %>
+                    <div class="card-footer">
+                      <small class="text-muted">
+                        <%= number_to_human_size(image.byte_size) %> • <%= l(image.created_at, format: :short) %>
+                      </small>
+                    </div>
                   </div>
                 </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="col-md-6">
-        <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
-        <div class="mb-3">
-          <%= f.text_area :notes, class: "form-control", rows: 9 %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
+<div class="card mb-4">
+  <div class="card-header d-flex align-items-center mb-3">
+    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.notes') %></h3>
+  </div>
+  <div class="card-body">
+    <!-- Notes -->
+    <div class="row g-3">
+      <div class="mb-3">
+        <%= f.text_area :notes, class: "form-control", rows: 6 %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header d-flex align-items-center mb-3">
+    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.isometry_documents') %></h3>
+  </div>
+  <div class="card-body">
     <!-- Image Upload -->
     <div class="row g-3">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.images') %></h5>
-      
       <!-- Initial PDF Upload -->
       <div class="col-md-8 mb-3">   
         <div class="row">
@@ -328,11 +372,13 @@
         </div>
       <% end %>
     </div>
-
-    <!-- Submit Buttons -->
-    <div class="form-group my-5">
-      <%= f.submit class: "btn btn-primary" %>
-      <%= link_to t('common.actions.cancel'), :back, class: 'btn btn-secondary' %>
-    </div>
   </div>
+</div>
+
+  <!-- Submit Buttons -->
+  <div class="form-group my-5">
+    <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
+    <%= link_to t('common.actions.cancel'), :back, class: 'btn btn-secondary' %>
+  </div>
+</div>
 <% end %>

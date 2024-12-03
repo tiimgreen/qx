@@ -16,6 +16,7 @@ en:
       basic_info: "Basic Information"
       technical_specs: "Technical Specifications"
       measurements: "Measurements"
+      spooling: "Spooling"
       additional_specs: "Additional Specifications"
       on_hold_status: "On Hold"
       images: "Isometry Images"
@@ -27,16 +28,19 @@ en:
       basic_info: "Basic Info"
       technical_specs: "Technical Specs"
       measurements: "Measurements"
+      spooling: "Spooling"
       additional_specs: "Additional Specs"
       on_hold_status: "On Hold"
       notes: "Notes"
-      qr_code_settings: QR Code Settings
-      qr_position: Position
-      qr_x_coordinate: X Coordinate
-      qr_y_coordinate: Y Coordinate
+      isometry_documents: "Isometry Documents"  
+      upload_new_pdf: "Upload New Pdf"
+      qr_code_settings: "QR Code Settings"
+      qr_position: "QR Position"
+      qr_x_coordinate: "X Coordinate"
+      qr_y_coordinate: "Y Coordinate"
       qr_positions:
-        top-left: Top Left
-        top-right: Top Right
+        top-left: "Top Left"
+        top-right: "Top Right"
         bottom-left: Bottom Left
         bottom-right: Bottom Right
 
@@ -67,7 +71,7 @@ en:
         medium: "Medium"
         pipe_length: "Pipe Length"
         workshop_sn: "Workshop SN"
-        assembly_sn: "Assembly SN"
+        assembly_sn: "On Site SN"
         total_sn: "Total SN"
         total_supports: "Total Supports"
         total_spools: "Total Spools"

@@ -4,6 +4,8 @@ de:
       show: "Anzeigen"
       edit: "Bearbeiten"
       delete: "Löschen"
+      save: "Speichern"
+      cancel: "Abbrechen"
     messages:
       confirm_delete: "Sind Sie sicher, dass Sie dieses %{model} löschen möchten?"
     labels:

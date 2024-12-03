@@ -16,6 +16,9 @@ class Isometry < ApplicationRecord
   accepts_nested_attributes_for :isometry_documents, allow_destroy: true
 
   has_many_attached :on_hold_images
+  has_many_attached :rt_images
+  has_many_attached :vt_images
+  has_many_attached :pt_images
 
   after_commit :process_isometry_documents, on: [ :create, :update ]
 
@@ -89,7 +92,7 @@ class Isometry < ApplicationRecord
 
     isometry_documents.each do |document|
       next unless document.pdf.attached?
-      
+
       Rails.logger.info "Processing isometry document: #{document.pdf.filename} (#{document.pdf.content_type})"
 
       # The actual processing is now handled by the IsometryDocument model
