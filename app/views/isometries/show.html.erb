@@ -82,37 +82,45 @@
 
       <dt class="col-sm-4"><%= t('.work_package') %></dt>
       <dd class="col-sm-8"><%= @isometry.work_package_number %></dd>
-
-
- </dl>
+    </dl>
   </div>
-
+</div>
 
 <!-- Material Certificates -->
-<div class="col-md-12 mb-4">
-  <h5 class="border-bottom pb-2 mb-3"><%= t('.material_certificates') %></h5>
-  <% if @isometry.material_certificates.any? %>
-    <div class="row">
-      <div class="col">
+<div class="row mb-4">
+  <div class="col-12">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.material_certificates') %></h5>
+    <% if @isometry.material_certificates.any? %>
+      <div class="row g-3">
         <% @isometry.material_certificates.each do |cert| %>
-          <div class="mb-2">
-            <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
-              <i class="bi bi-file-text me-2"  style="font-size: 4rem;"></i>
-              <%= cert.certificate_number %> - <%= cert.batch_number %>
-            <% end %>
+          <div class="col-md-2">
+            <div class="d-flex flex-column position-relative border rounded p-2">
+              <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
+                <div class="text-center mb-2">
+                  <i class="bi bi-file-text" style="font-size: 2rem;"></i>
+                </div>
+                <div class="d-flex flex-column text-center">
+                  <span class="fw-medium"><%= cert.certificate_number %></span>
+                  <span class="text-secondary small"><%= cert.batch_number %></span>
+                </div>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>
-    </div>
-  <% else %>
-    <p class="text-muted"><%= t('.no_certificates') %></p>
-  <% end %>
+    <% else %>
+      <p class="text-muted"><%= t('.no_certificates') %></p>
+    <% end %>
+  </div>
 </div>
 
-  <!-- Additional Specifications -->
-  <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
-  <div class="col-md-4 mb-4">
-
+<!-- Additional Specifications -->
+<div class="row mb-4">
+  <div class="col-12">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
+  </div>
+  
+  <div class="col-md-4">
     <dl class="row">
       <dt class="col-sm-4"><%= t('.dp') %></dt>
       <dd class="col-sm-8">
@@ -140,43 +148,41 @@
 
       <dt class="col-sm-4"><%= t('.slope') %></dt>
       <dd class="col-sm-8"><%= @isometry.slope_if_needed %></dd>
-
     </dl>
   </div>
 
-  <div class="col-md-8 mb-4">
-
-    <dl class="row">
-      <div class="row">
-        <div class="col-md-4">
-          <dl>
-            <dt><%= t('.rt_percentage') %></dt>
-            <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
-          </dl>
-          <%= render partial: 'images', locals: { images: @isometry.rt_images } %>
-        </div>
-
-        <div class="col-md-4">
-          <dl>
-            <dt><%= t('.vt_percentage') %></dt>
-            <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
-          </dl>
-          <%= render partial: 'images', locals: { images: @isometry.vt_images } %>
-        </div>
-
-        <div class="col-md-4">
-          <dl>
-            <dt><%= t('.pt_percentage') %></dt>
-            <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
-          </dl>
-          <%= render partial: 'images', locals: { images: @isometry.pt_images } %>
-        </div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-4">
+        <dl>
+          <dt><%= t('.rt_percentage') %></dt>
+          <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
+        </dl>
+        <%= render partial: 'images', locals: { images: @isometry.rt_images } %>
       </div>
-    </dl>
-  </div>
 
-  <!-- Spooling -->
-  <div class="col-md-6 mb-4">
+      <div class="col-md-4">
+        <dl>
+          <dt><%= t('.vt_percentage') %></dt>
+          <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
+        </dl>
+        <%= render partial: 'images', locals: { images: @isometry.vt_images } %>
+      </div>
+
+      <div class="col-md-4">
+        <dl>
+          <dt><%= t('.pt_percentage') %></dt>
+          <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
+        </dl>
+        <%= render partial: 'images', locals: { images: @isometry.pt_images } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Spooling -->
+<div class="row mb-4">
+  <div class="col-md-6">
     <h5 class="border-bottom pb-2 mb-3"><%= t('.spooling') %></h5>
     <dl class="row">
       <dt class="col-sm-4"><%= t('.total_pipe_length') %></dt>
@@ -199,28 +205,35 @@
     </dl>
   </div>
 
-  <div class="col-md-6 mb-4">
+  <div class="col-md-6">
     <h5 class="border-bottom pb-2 mb-3"><%= t('.on_hold_status') %></h5>
-    <strong><%= t('.status') %>:</strong> <%= status_label(@isometry.on_hold_status) %><br>
-    <strong><%= t('.comment') %>:</strong> <%= @isometry.on_hold_comment %><br>
-    <strong><%= t('.date') %>:</strong> <%= l(@isometry.on_hold_date, format: :long) if @isometry.on_hold_date %>
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.status') %></dt>
+      <dd class="col-sm-8"><%= status_label(@isometry.on_hold_status) %></dd>
+
+      <dt class="col-sm-4"><%= t('.comment') %></dt>
+      <dd class="col-sm-8"><%= @isometry.on_hold_comment %></dd>
+
+      <dt class="col-sm-4"><%= t('.date') %></dt>
+      <dd class="col-sm-8"><%= l(@isometry.on_hold_date, format: :long) if @isometry.on_hold_date %></dd>
+    </dl>
   </div>
 </div>
 
-<div class="row g-3">
-  <!-- Notes -->
-  <div class="col-md-12 mb-4">
-  <% if @isometry.notes.present? %>
+<!-- Notes -->
+<% if @isometry.notes.present? %>
+  <div class="row mb-4">
+    <div class="col-12">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
       <p class="text-muted"><%= @isometry.notes %></p>
-  <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
-<div class="row g-3">
-  <!-- Isometry Images -->
-  <% if @isometry.isometry_documents.any? %>
-    <div class="col-md-12 mb-4">
+<!-- Isometry Images -->
+<% if @isometry.isometry_documents.any? %>
+  <div class="row mb-4">
+    <div class="col-12">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.isometry_documents') %></h5>
       <div class="row g-3">
         <% @isometry.isometry_documents.each do |document| %>
@@ -248,6 +261,5 @@
         <% end %>
       </div>
     </div>
-  <% end %>
-</div>
-</div>
+  </div>
+<% end %>
