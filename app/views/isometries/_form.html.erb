@@ -261,7 +261,9 @@
   </div>
 </div>
 
-<div class="card mb-4" data-controller="material-certificate-search">
+<div class="card mb-4" data-controller="material-certificate-search" 
+     data-project-id="<%= @project.id %>" 
+     data-isometry-id="<%= @isometry.id %>">
   <div class="card-header d-flex align-items-center mb-3">
     <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.material_certificates') %></h3>
   </div>
@@ -284,30 +286,29 @@
         <div id="certificate-results" 
              class="list-group mb-3"
              data-material-certificate-search-target="results"></div>
-        <div class="row g-3"
-              data-material-certificate-search-target="selected">
-          <% @isometry.material_certificates.each do |cert| %>
-            <div class="col-md-2">
-              <div class="selected-certificate" data-certificate-id="<%= cert.id %>">
-                <input type="hidden" name="isometry[material_certificate_ids][]" value="<%= cert.id %>">
-                <div class="d-flex flex-column position-relative border rounded p-2">
-                  <button type="button" 
-                          class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1"
-                          data-action="click->material-certificate-search#removeCertificate">×</button>
-                  <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
-                    <div class="text-center mb-2">
-                      <i class="bi bi-file-text" style="font-size: 2rem;"></i>
-                    </div>
-                    <div class="d-flex flex-column text-center">
-                      <span class="fw-medium"><%= cert.certificate_number %></span>
-                      <span class="text-secondary small"><%= cert.batch_number %></span>
-                    </div>
-                  <% end %>
-                </div>
+  <div class="row g-3" data-material-certificate-search-target="selected">
+    <% @isometry.material_certificates.each do |cert| %>
+      <div class="col-md-2">
+        <div class="selected-certificate" data-certificate-id="<%= cert.id %>">
+          <input type="hidden" name="isometry[material_certificate_ids][]" value="<%= cert.id %>">
+          <div class="d-flex flex-column position-relative border rounded p-2">
+            <button type="button" 
+                    class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1" 
+                    data-action="click->material-certificate-search#removeCertificate">×</button>
+            <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
+              <div class="text-center mb-2">
+                <i class="bi bi-file-text" style="font-size: 2rem;"></i>
               </div>
-            </div>
-          <% end %>
+              <div class="d-flex flex-column text-center">
+                <span class="fw-medium"><%= cert.certificate_number %></span>
+                <span class="text-secondary small"><%= cert.batch_number %></span>
+              </div>
+            <% end %>
+          </div>
         </div>
+      </div>
+    <% end %>
+  </div>
       </div>
     </div>
   </div>

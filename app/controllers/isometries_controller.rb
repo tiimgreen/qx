@@ -3,7 +3,7 @@ class IsometriesController < ApplicationController
 
   layout "dashboard_layout"
   before_action :set_project
-  before_action :set_isometry, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate ]
   before_action :authorize_action!
 
   def index
@@ -80,6 +80,18 @@ class IsometriesController < ApplicationController
                 notice: t("common.messages.deleted", model: "Isometry")
   end
 
+  def remove_certificate
+    @isometry = Isometry.find(params[:id])
+    certificate = MaterialCertificate.find(params[:certificate_id])
+    
+    if @isometry.material_certificates.include?(certificate)
+      @isometry.material_certificates.delete(certificate)
+      head :ok
+    else
+      head :not_found
+    end
+  end
+
   private
 
   def authorize_action!
@@ -92,6 +104,8 @@ class IsometriesController < ApplicationController
       authorize_edit!
     when "destroy"
       authorize_destroy!
+    when "remove_certificate"
+      authorize_edit!
     end
   end
 

@@ -25,6 +25,9 @@ Rails.application.routes.draw do
       end
       resources :isometries do
         delete "delete_image", on: :member
+        member do
+          delete :remove_certificate
+        end
       end
     end
 

@@ -107,8 +107,47 @@ export default class extends Controller {
   }
 
   removeCertificate(event) {
+    event.preventDefault();
     const button = event.currentTarget;
     const certificateElement = button.closest('.selected-certificate');
-    certificateElement.remove();
+    const columnElement = certificateElement.closest('.col-md-2'); // Get the column wrapper
+    const certificateId = certificateElement.dataset.certificateId;
+    const projectId = this.element.dataset.projectId;
+    const isometryId = this.element.dataset.isometryId;
+    
+    if (isometryId && projectId) {
+      // We're on the show/edit page - make AJAX call to remove the certificate
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+      const path = `/projects/${projectId}/isometries/${isometryId}/remove_certificate`;
+      
+      fetch(path, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ certificate_id: certificateId })
+      }).then(response => {
+        if (response.ok) {
+          if (columnElement) {
+            columnElement.remove(); // Remove the entire column
+          } else {
+            certificateElement.remove(); // Fallback to removing just the certificate element
+          }
+        } else {
+          console.error('Failed to remove certificate');
+        }
+      }).catch(error => {
+        console.error('Error removing certificate:', error);
+      });
+    } else {
+      // We're on the form - just remove the element
+      if (columnElement) {
+        columnElement.remove(); // Remove the entire column
+      } else {
+        certificateElement.remove(); // Fallback to removing just the certificate element
+      }
+    }
   }
 }
