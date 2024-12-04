@@ -2,6 +2,8 @@
 <%
   # Ensure image_type is provided
   raise ArgumentError, "image_type must be provided" unless local_assigns[:image_type].present?
+  # Default edit_mode to false if not provided
+  edit_mode = local_assigns.fetch(:edit_mode, false)
 %>
 
 <% if images.attached? %>
@@ -18,12 +20,14 @@
         <div class="border rounded p-2 position-relative" 
              style="width: 120px;" 
              data-image-removal-target="imageContainer">
-          <button type="button" 
-                  class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" 
-                  style="font-size: 0.7rem; padding: 0.1rem 0.3rem;"
-                  data-action="click->image-removal#removeImage"
-                  data-image-removal-image-id-param="<%= image.signed_id %>"
-                  data-image-removal-image-type-param="<%= image_type %>">×</button>
+          <% if edit_mode %>
+            <button type="button" 
+                    class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" 
+                    style="font-size: 0.7rem; padding: 0.1rem 0.3rem;"
+                    data-action="click->image-removal#removeImage"
+                    data-image-removal-image-id-param="<%= image.signed_id %>"
+                    data-image-removal-image-type-param="<%= image_type %>">×</button>
+          <% end %>
           <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
             <div class="text-center">
               <i class="bi bi-file-image text-danger" style="font-size: 1.5rem;"></i>
@@ -32,12 +36,6 @@
               </div>
               <div class="text-muted" style="font-size: 0.7rem;">
                 <%= number_to_human_size(image.byte_size) %>
-                <% if Rails.env.development? %>
-                  <!-- Debug info -->
-                  <div class="text-muted">
-                    <small>Type: <%= image_type %></small>
-                  </div>
-                <% end %>
               </div>
             </div>
           <% end %>

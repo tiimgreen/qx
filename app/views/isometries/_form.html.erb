@@ -99,101 +99,102 @@
     </div>
   </div>
 
-  <div class="card mb-4">
-    <div class="card-header d-flex align-items-center mb-3">
-      <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.additional_specs') %></h3>
-    </div>
-    <div class="card-body">
-      <!-- Additional Specifications -->
-      <div class="row g-3">
+<div class="row mb-4">
+  <div class="col-12">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
+  </div>
+  
+  <div class="col-md-4">
+    <dl class="row">
+      <dt class="col-sm-4"><%= f.label :dp %></dt>
+      <dd class="col-sm-8">
+        <%= f.check_box :dp, class: "form-check-input" %>
+      </dd>
+      
+      <dt class="col-sm-4"><%= f.label :dip %></dt>
+      <dd class="col-sm-8">
+        <%= f.check_box :dip, class: "form-check-input" %>
+      </dd>
 
-        <div class="row g-3">
-          <div class="row align-items-center mb-3">
-            <div class="col-12 col-md-auto mb-2 mb-md-0">
-              <div class="d-flex flex-wrap gap-2">
-                <div class="form-check mb-0">
-                  <%= f.check_box :dp, class: "form-check-input" %>
-                  <%= f.label :dp, class: "form-check-label" %>
-                </div>
-                <div class="form-check mb-0">
-                  <%= f.check_box :dip, class: "form-check-input" %>
-                  <%= f.label :dip, class: "form-check-label" %>
-                </div>
-                <div class="form-check mb-0">
-                  <%= f.check_box :isolation_required, class: "form-check-input" %>
-                  <%= f.label :isolation_required, class: "form-check-label" %>
-                </div>
-                <div class="form-check mb-0">
-                  <%= f.check_box :gmp, class: "form-check-input" %>
-                  <%= f.label :gmp, class: "form-check-label" %>
-                </div>
-                <div class="form-check mb-0">
-                  <%= f.check_box :gdp, class: "form-check-input" %>
-                  <%= f.label :gdp, class: "form-check-label" %>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="row g-2">
-                <div class="col-12 col-md-6 mb-2 mb-md-0">
-                  <%= f.label :ped_category, class: "form-label mb-0" %>
-                  <%= f.select :ped_category, Isometry::PED_CATEGORIES, { include_blank: true }, class: "form-select" %>
-                </div>
-                <div class="col-12 col-md-6">
-                  <%= f.label :slope_if_needed, class: "form-label mb-0" %>
-                  <%= f.text_field :slope_if_needed, class: "form-control" %>
-                </div>
-              </div>
-            </div>
-          </div>
+      <dt class="col-sm-4"><%= f.label :isolation_required %></dt>
+      <dd class="col-sm-8">
+        <%= f.check_box :isolation_required, class: "form-check-input" %>
+      </dd>
 
-        </div>
+      <dt class="col-sm-4"><%= f.label :gmp %></dt>
+      <dd class="col-sm-8">
+        <%= f.check_box :gmp, class: "form-check-input" %>
+      </dd>
 
-<!-- app/views/isometries/_form.html.erb -->
-<div class="row">
-  <div class="col-md-4 mb-3">
-    <%= f.label :rt_percentage, class: "form-label" %>
-    <%= f.number_field :rt, class: "form-control", step: "0.1" %>
-    <%= f.file_field :rt_images, multiple: true, class: "form-control mt-2" %>
-    <% if @isometry.rt_images.attached? %>
-      <%= render partial: 'images', locals: { 
-        images: @isometry.rt_images, 
-        title: t('.rt_images'),
-        image_type: 'rt'
-      } %>
-    <% end %>
+      <dt class="col-sm-4"><%= f.label :gdp %></dt>
+      <dd class="col-sm-8">
+        <%= f.check_box :gdp, class: "form-check-input" %>
+      </dd>
+
+      <dt class="col-sm-4"><%= f.label :ped_category %></dt>
+      <dd class="col-sm-8">
+        <%= f.select :ped_category, Isometry::PED_CATEGORIES, { include_blank: true }, class: "form-select" %>
+      </dd>
+
+      <dt class="col-sm-4"><%= f.label :slope_if_needed %></dt>
+      <dd class="col-sm-8">
+        <%= f.text_field :slope_if_needed, class: "form-control" %>
+      </dd>
+    </dl>
   </div>
 
-  <div class="col-md-4 mb-3">
-    <%= f.label :vt2_percentage, class: "form-label" %>
-    <%= f.number_field :vt2, class: "form-control", step: "0.1" %>
-    <%= f.file_field :vt_images, multiple: true, class: "form-control mt-2" %>
-    <% if @isometry.vt_images.attached? %>
-      <%= render partial: 'images', locals: { 
-        images: @isometry.vt_images, 
-        title: t('.vt_images'),
-        image_type: 'vt'
-      } %>
-    <% end %>
-  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-4">
+        <dl>
+          <dt><%= f.label :rt_percentage %></dt>
+          <dd><%= f.number_field :rt, class: "form-control", step: "0.1" %></dd>
+        </dl>
+        <%= f.file_field :rt_images, multiple: true, class: "form-control mt-2" %>
+        <% if @isometry.rt_images.attached? %>
+          <%= render partial: 'images', locals: { 
+            images: @isometry.rt_images, 
+            title: t('.rt_images'),
+            image_type: 'rt',
+            edit_mode: true
+          } %>
+        <% end %>
+      </div>
 
-  <div class="col-md-4 mb-3">
-    <%= f.label :pt2_percentage, class: "form-label" %>
-    <%= f.number_field :pt2, class: "form-control", step: "0.1" %>
-    <%= f.file_field :pt_images, multiple: true, class: "form-control mt-2" %>
-    <% if @isometry.pt_images.attached? %>
-      <%= render partial: 'images', locals: { 
-        images: @isometry.pt_images, 
-        title: t('.pt_images'),
-        image_type: 'pt'
-      } %>
-    <% end %>
-  </div>
-</div>
+      <div class="col-md-4">
+        <dl>
+          <dt><%= f.label :vt2_percentage %></dt>
+          <dd><%= f.number_field :vt2, class: "form-control", step: "0.1" %></dd>
+        </dl>
+        <%= f.file_field :vt_images, multiple: true, class: "form-control mt-2" %>
+        <% if @isometry.vt_images.attached? %>
+          <%= render partial: 'images', locals: { 
+            images: @isometry.vt_images, 
+            title: t('.vt_images'),
+            image_type: 'vt',
+            edit_mode: true
+          } %>
+        <% end %>
+      </div>
 
+      <div class="col-md-4">
+        <dl>
+          <dt><%= f.label :pt2_percentage %></dt>
+          <dd><%= f.number_field :pt2, class: "form-control", step: "0.1" %></dd>
+        </dl>
+        <%= f.file_field :pt_images, multiple: true, class: "form-control mt-2" %>
+        <% if @isometry.pt_images.attached? %>
+          <%= render partial: 'images', locals: { 
+            images: @isometry.pt_images, 
+            title: t('.pt_images'),
+            image_type: 'pt',
+            edit_mode: true
+          } %>
+        <% end %>
       </div>
     </div>
   </div>
+</div>
 
 <div class="row g-3">
   <div class="col-md-6">

@@ -124,23 +124,27 @@
     <dl class="row">
       <dt class="col-sm-4"><%= t('.dp') %></dt>
       <dd class="col-sm-8">
-        <%= "DP" if @isometry.dp %>
+        <%= @isometry.dp ? t('common.yes') : t('common.no') %>
       </dd>
+      
       <dt class="col-sm-4"><%= t('.dip') %></dt>
       <dd class="col-sm-8">
-        <%= "DIP" if @isometry.dip %>
+        <%= @isometry.dip ? t('common.yes') : t('common.no') %>
       </dd>
 
       <dt class="col-sm-4"><%= t('.isolation') %></dt>
-      <dd class="col-sm-8"><%= @isometry.isolation_required? ? t('common.yes') : t('common.no') %></dd>
+      <dd class="col-sm-8">
+        <%= @isometry.isolation_required ? t('common.yes') : t('common.no') %>
+      </dd>
 
       <dt class="col-sm-4"><%= t('.gmp') %></dt>
       <dd class="col-sm-8">
-        <%= "GMP" if @isometry.gmp %>
+        <%= @isometry.gmp ? t('common.yes') : t('common.no') %>
       </dd>
+
       <dt class="col-sm-4"><%= t('.gdp') %></dt>
       <dd class="col-sm-8">
-        <%= "GDP" if @isometry.gdp %>
+        <%= @isometry.gdp ? t('common.yes') : t('common.no') %>
       </dd>
 
       <dt class="col-sm-4"><%= t('.ped_category') %></dt>
@@ -151,51 +155,51 @@
     </dl>
   </div>
 
-  <!-- app/views/isometries/show.html.erb -->
-<div class="row">
-  <div class="col-md-4">
-    <dl>
-      <dt><%= t('.rt_percentage') %></dt>
-      <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
-    </dl>
-    <% if @isometry.rt_images.attached? %>
-      <%= render partial: 'images', locals: { 
-        images: @isometry.rt_images, 
-        title: t('.rt_images'),
-        image_type: 'rt'
-      } %>
-    <% end %>
-  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-4">
+        <dl>
+          <dt><%= t('.rt_percentage') %></dt>
+          <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
+        </dl>
+        <% if @isometry.rt_images.attached? %>
+          <%= render partial: 'images', locals: { 
+            images: @isometry.rt_images, 
+            title: t('.rt_images'),
+            image_type: 'rt'
+          } %>
+        <% end %>
+      </div>
 
-  <div class="col-md-4">
-    <dl>
-      <dt><%= t('.vt_percentage') %></dt>
-      <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
-    </dl>
-    <% if @isometry.vt_images.attached? %>
-      <%= render partial: 'images', locals: { 
-        images: @isometry.vt_images, 
-        title: t('.vt_images'),
-        image_type: 'vt'
-      } %>
-    <% end %>
-  </div>
+      <div class="col-md-4">
+        <dl>
+          <dt><%= t('.vt_percentage') %></dt>
+          <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
+        </dl>
+        <% if @isometry.vt_images.attached? %>
+          <%= render partial: 'images', locals: { 
+            images: @isometry.vt_images, 
+            title: t('.vt_images'),
+            image_type: 'vt'
+          } %>
+        <% end %>
+      </div>
 
-  <div class="col-md-4">
-    <dl>
-      <dt><%= t('.pt_percentage') %></dt>
-      <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
-    </dl>
-    <% if @isometry.pt_images.attached? %>
-      <%= render partial: 'images', locals: { 
-        images: @isometry.pt_images, 
-        title: t('.pt_images'),
-        image_type: 'pt'
-      } %>
-    <% end %>
+      <div class="col-md-4">
+        <dl>
+          <dt><%= t('.pt_percentage') %></dt>
+          <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
+        </dl>
+        <% if @isometry.pt_images.attached? %>
+          <%= render partial: 'images', locals: { 
+            images: @isometry.pt_images, 
+            title: t('.pt_images'),
+            image_type: 'pt'
+          } %>
+        <% end %>
+      </div>
+    </div>
   </div>
-</div>
-
 </div>
 
 <!-- Spooling -->
