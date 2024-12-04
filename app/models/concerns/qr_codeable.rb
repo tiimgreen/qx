@@ -62,9 +62,9 @@ module QrCodeable
   end
 
   def generate_qr_code_image(url, output_path)
-    qrcode = RQRCode::QRCode.new(url, size: 6, level: :m)  # Increased size, reduced error correction
+    qrcode = RQRCode::QRCode.new(url, size: 4, level: :l)  # Reduced size, lowest error correction for smaller code
 
-    # Generate PNG with higher quality settings
+    # Generate PNG with optimized settings for smaller size
     png = qrcode.as_png(
       bit_depth: 1,
       border_modules: 1,
@@ -72,8 +72,8 @@ module QrCodeable
       color: "black",
       file: output_path,
       fill: "white",
-      module_px_size: 4,  # Reduced for smaller final size
-      resize_exactly_to: 200  # Reduced for better scaling to 100px
+      module_px_size: 3,  # Reduced for smaller final size
+      resize_exactly_to: 120  # Reduced final size
     )
   end
 
@@ -88,14 +88,14 @@ module QrCodeable
       pdf.go_to_page(1)
       pdf.image qr_path,
                at: [ x, y ],
-               width: 100,
-               height: 100
+               width: 60,  # Reduced size
+               height: 60  # Reduced size
     end
   end
 
   def calculate_qr_position(position)
     margin = 10
-    qr_size = 100
+    qr_size = 60  # Match the new size
 
     coords = case position.to_s
     when "top_right"
@@ -111,8 +111,8 @@ module QrCodeable
       y = qr_size + margin + 140
       [ x, y ]
     when "bottom_left"
-      x = 60
-      y = 245
+      x = -15  # Slightly adjusted for new size
+      y = 50   # Slightly adjusted for new size
       [ x, y ]
     else
       x = @page_width - qr_size - margin
