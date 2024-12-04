@@ -1,5 +1,7 @@
 class MaterialCertificatesController < ApplicationController
   layout "dashboard_layout"
+  before_action :authenticate_user!
+
   before_action :set_material_certificate, only: [ :show, :edit, :update, :destroy ]
 
   def index

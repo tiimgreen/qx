@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
-  before_action :authenticate_user!
   layout "dashboard_layout"
+  before_action :authenticate_user!
 
   def index
     @sectors = Sector.all
@@ -8,6 +8,4 @@ class DashboardController < ApplicationController
   end
 
   private
-
-
 end

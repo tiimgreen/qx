@@ -2,6 +2,7 @@ class IncomingDeliveriesController < ApplicationController
   include CompletableController
 
   layout "dashboard_layout"
+  before_action :authenticate_user!
   before_action :set_project
   before_action :set_incoming_delivery, only: [ :show, :edit, :update, :destroy ]
   before_action :authorize_action!

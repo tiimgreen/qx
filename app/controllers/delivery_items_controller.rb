@@ -2,6 +2,8 @@ class DeliveryItemsController < ApplicationController
   include CompletableController
 
   layout "dashboard_layout"
+  before_action :authenticate_user!
+
   before_action :set_incoming_delivery
   before_action :set_project
   before_action :set_delivery_item, only: [ :show, :edit, :update, :destroy, :delete_image ]

@@ -2,6 +2,7 @@ class IsometriesController < ApplicationController
   include CompletableController
 
   layout "dashboard_layout"
+  before_action :authenticate_user!
   before_action :set_project
   before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :delete_image ]
   before_action :authorize_action!
