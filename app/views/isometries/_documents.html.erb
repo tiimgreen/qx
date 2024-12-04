@@ -1,0 +1,34 @@
+<%# Params:
+    - documents: collection of attached documents
+    - title: section title (optional)
+%>
+
+<% if documents.any? %>
+  <div class="mb-3">
+    <% if local_assigns[:title].present? %>
+      <h5 class="border-bottom pb-2 mb-3"><%= title %></h5>
+    <% end %>
+    <div class="d-flex flex-wrap gap-2">
+      <% documents.each do |document| %>
+        <%= link_to url_for(document.pdf), target: "_blank", class: "text-decoration-none" do %>
+          <div class="border rounded p-2" style="width: 150px;">
+            <div class="text-center">
+              <i class="bi bi-file-pdf text-danger" style="font-size: 1.5rem;"></i>
+              <div class="small text-dark text-truncate mt-1" title="<%= document.pdf.filename.to_s %>">
+                <%= document.pdf.filename.to_s %>
+              </div>
+              <% if document.respond_to?(:qr_position) && document.qr_position.present? %>
+                <div class="text-muted small">
+                  <%= t('.qr_position') %>: <%= document.qr_position %>
+                </div>
+              <% end %>
+              <div class="text-muted" style="font-size: 0.7rem;">
+                <%= number_to_human_size(document.pdf.byte_size) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

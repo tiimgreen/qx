@@ -4,28 +4,25 @@
 %>
 
 <% if images.attached? %>
-  <div class="col-md-12 mb-4">
+  <div class="mb-3">
     <% if local_assigns[:title].present? %>
-      <h5 class="pb-2 mb-3"><%= title %></h5>
+      <h6 class="pb-2 mb-2"><%= title %></h6>
     <% end %>
-    <div class="row g-3 ">
+    <div class="d-flex flex-wrap gap-2">
       <% images.each do |image| %>
-          <div class="card h-100">
-            <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
-              <div class="card-body text-center">
-                <i class="bi bi-file-image text-danger" style="font-size: 2rem;"></i>
-                <h6 class="card-title mt-3 text-dark">
-                  <%= image.filename.to_s %>
-                </h6>
+        <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
+          <div class="border rounded p-2" style="width: 120px;">
+            <div class="text-center">
+              <i class="bi bi-file-image text-danger" style="font-size: 1.5rem;"></i>
+              <div class="small text-dark text-truncate mt-1" title="<%= image.filename.to_s %>">
+                <%= image.filename.to_s %>
               </div>
-              <div class="card-footer text-center">
-                <small class="text-muted">
-                  <%= number_to_human_size(image.byte_size) %> •
-                  <%= l(image.created_at, format: :short) %>
-                </small>
+              <div class="text-muted" style="font-size: 0.7rem;">
+                <%= number_to_human_size(image.byte_size) %>
               </div>
-            <% end %>
+            </div>
           </div>
+        <% end %>
       <% end %>
     </div>
   </div>
