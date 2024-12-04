@@ -56,6 +56,8 @@ de:
       total_sn: "Gesamt SN"
       total_supports: "Gesamthalterungen"
       total_spools: "Gesamtspools"
+      material_certificates: "Materialzertifikate"
+      no_certificates: "Keine Zertifikate an dieser Isometrie angehaengt"
     form:
       technical_specs: "Technische Daten"
       spooling: "Spooling"
@@ -74,6 +76,15 @@ de:
         top-right: "Oben rechts"
         bottom-left: "Unten links"
         bottom-right: "Unten rechts"
+      search_certificates_placeholder: "Zertifikatsnummer oder Chargennummer eingeben..."
+      material_certificates: "Materialzertifikate"
+      search_certificates: "Zertifikate suchen"
+    _form:
+      technical_specs: Technische Spezifikationen
+      additional_specs: Zusätzliche Spezifikationen
+      material_certificates: Materialzertifikate
+      search_certificates: Zertifikate suchen
+      search_certificates_placeholder: Zertifikatsnummer oder Chargennummer eingeben...
 
   activerecord:
     models:

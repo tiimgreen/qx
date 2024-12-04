@@ -261,6 +261,49 @@
   </div>
 </div>
 
+<div class="card mb-4" data-controller="material-certificate-search">
+  <div class="card-header d-flex align-items-center mb-3">
+    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.material_certificates') %></h3>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="mb-3">
+          <label class="form-label"><%= t('.search_certificates') %></label>
+          <%= text_field_tag :search, nil,
+            class: "form-control",
+            data: {
+              material_certificate_search_target: "search",
+              action: "input->material-certificate-search#search",
+              material_certificate_search_url: search_material_certificates_path
+            },
+            placeholder: t('.search_certificates_placeholder'),
+            autocomplete: "off"
+          %>
+        </div>
+        <div id="certificate-results" 
+             class="list-group mb-3"
+             data-material-certificate-search-target="results"></div>
+        <div id="selected-certificates" 
+             class="mb-3"
+             data-material-certificate-search-target="selected">
+          <% @isometry.material_certificates.each do |cert| %>
+            <div class="selected-certificate mb-2" data-certificate-id="<%= cert.id %>">
+              <input type="hidden" name="isometry[material_certificate_ids][]" value="<%= cert.id %>">
+              <div class="d-flex align-items-center">
+                <span class="me-2"><%= cert.certificate_number %> - <%= cert.batch_number %></span>
+                <button type="button" 
+                        class="btn btn-sm btn-danger remove-certificate"
+                        data-action="click->material-certificate-search#removeCertificate">×</button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card mb-4">
   <div class="card-header d-flex align-items-center mb-3">
     <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.notes') %></h3>

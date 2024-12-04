@@ -56,6 +56,8 @@ en:
       total_sn: "Total SN"
       total_supports: "Total Supports"
       total_spools: "Total Spools"
+      material_certificates: "Material Certificates"
+      no_certificates: "No certificates attached to this isometry"
     form:
       technical_specs: "Technical Specs"
       measurements: "Measurements"
@@ -74,6 +76,13 @@ en:
         top-right: "Top Right"
         bottom-left: Bottom Left
         bottom-right: Bottom Right
+      search_certificates_placeholder: "Enter certificate number or batch number..."
+    _form:
+      technical_specs: Technical Specifications
+      additional_specs: Additional Specifications
+      material_certificates: Material Certificates
+      search_certificates: Search Certificates
+      search_certificates_placeholder: Enter certificate number or batch number...
 
   activerecord:
     models:

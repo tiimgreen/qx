@@ -11,7 +11,11 @@ Rails.application.routes.draw do
       mount RailsAdmin::Engine => "/admin", as: "rails_admin"
     end
     # Add standalone route for material certificates index
-    resources :material_certificates
+    resources :material_certificates do
+      collection do
+        get :search
+      end
+    end
 
     resources :projects do
       resources :incoming_deliveries do

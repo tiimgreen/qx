@@ -1,5 +1,7 @@
 class MaterialCertificate < ApplicationRecord
   has_one_attached :certificate_file
+  has_many :isometry_material_certificates, dependent: :destroy
+  has_many :isometries, through: :isometry_material_certificates
 
   validates :certificate_number,
             presence: true,
@@ -10,17 +12,9 @@ class MaterialCertificate < ApplicationRecord
   before_validation :upcase_certificate_number
 
   scope :pending, -> { where(status: "pending") }
-  scope :search_by_term, ->(search_term) {
-    return all unless search_term.present?
-
-    term = "%#{search_term}%"
-      where(
-        "material_certificates.certificate_number LIKE ? OR " \
-        "material_certificates.batch_number LIKE ? OR " \
-        "material_certificates.issuer_name LIKE ? OR " \
-        "material_certificates.line_id LIKE ?",
-        term, term, term, term
-      ).distinct
+  scope :search_by_term, ->(term) {
+    where("LOWER(certificate_number) LIKE :term OR LOWER(batch_number) LIKE :term",
+          term: "%#{term.downcase}%")
   }
 
   private

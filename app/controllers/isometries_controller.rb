@@ -210,6 +210,7 @@ class IsometriesController < ApplicationController
       :slope_if_needed,
       :work_package_number,
       :test_pack_number,
+      material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],
       rt_images: [],
       vt_images: [],

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_03_055450) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_04_035000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -195,6 +195,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_03_055450) do
     t.index ["isometry_id"], name: "index_isometry_documents_on_isometry_id"
   end
 
+  create_table "isometry_material_certificates", force: :cascade do |t|
+    t.integer "isometry_id", null: false
+    t.integer "material_certificate_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["isometry_id"], name: "index_isometry_material_certificates_on_isometry_id"
+    t.index ["material_certificate_id"], name: "idx_on_material_certificate_id_b920b3d784"
+  end
+
   create_table "material_certificates", force: :cascade do |t|
     t.string "certificate_number", null: false
     t.string "batch_number", null: false
@@ -298,6 +307,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_03_055450) do
   add_foreign_key "isometries", "sectors"
   add_foreign_key "isometries", "users"
   add_foreign_key "isometry_documents", "isometries"
+  add_foreign_key "isometry_material_certificates", "isometries"
+  add_foreign_key "isometry_material_certificates", "material_certificates"
   add_foreign_key "projects", "users"
   add_foreign_key "user_resource_permissions", "permissions"
   add_foreign_key "user_resource_permissions", "users"

@@ -12,6 +12,9 @@ class Isometry < ApplicationRecord
     "bottom-right" => { x: -220, y: -220 }
   }.freeze
 
+  has_many :isometry_material_certificates, dependent: :destroy
+  has_many :material_certificates, through: :isometry_material_certificates
+
   has_many :isometry_documents, dependent: :destroy
   accepts_nested_attributes_for :isometry_documents, allow_destroy: true
 
