@@ -1,64 +1,102 @@
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <h2 class="mb-0"><%= t('.title') %></h2>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <p>
-            <strong><%= t('.certificate_number') %>:</strong>
-            <%= @material_certificate.certificate_number %>
-          </p>
-          <p>
-            <strong><%= t('.batch_number') %>:</strong>
-            <%= @material_certificate.batch_number %>
-          </p>
-          <p>
-            <strong><%= t('.line_id') %>:</strong>
-            <%= @material_certificate.line_id %>
-          </p>
-          <p>
-            <strong><%= t('.issue_date') %>:</strong>
-            <%= l(@material_certificate.issue_date, format: :long) %>
-          </p>
-          <p>
-            <strong><%= t('.issuer') %>:</strong>
-            <%= @material_certificate.issuer_name %>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <% if @material_certificate.certificate_file.attached? %>
-            <p>
-              <strong><%= t('.certificate') %>:</strong>
-              <%= link_to t('.download'),
-                  rails_blob_path(@material_certificate.certificate_file, disposition: "attachment"),
-                  class: "btn btn-sm btn-primary" %>
-            </p>
-          <% end %>
-          <% if @material_certificate.description.present? %>
-            <p>
-              <strong><%= t('.description') %>:</strong>
-              <%= @material_certificate.description %>
-            </p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="btn-group">
-        <%= link_to t('.back'),
-            material_certificates_path,
-            class: 'btn btn-secondary' %>
-        <%= link_to t('.edit'),
-            edit_material_certificate_path(@material_certificate),
-            class: 'btn btn-primary' %>
-        <%= link_to t('.delete'),
-            material_certificate_path(@material_certificate),
+<div class="container-fluid">
+  <%= render 'breadcrumb', breadcrumbs: [
+    { text: t('navigation.menu.material_certificates.title'), path: material_certificates_path },
+    { text: @material_certificate.certificate_number }
+  ] %>
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><%= @material_certificate.certificate_number %></h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <%= link_to edit_material_certificate_path(@material_certificate), class: "btn btn-sm btn-outline-secondary me-2" do %>
+        <i class="bi bi-pencil"></i> <%= t('common.actions.edit') %>
+      <% end %>
+      <%= link_to material_certificate_path(@material_certificate),
             method: :delete,
-            class: 'btn btn-danger',
-            data: { confirm: t('.delete_confirm') } %>
+            data: { confirm: t('common.messages.confirm_delete') },
+            class: "btn btn-sm btn-outline-danger" do %>
+        <i class="bi bi-trash"></i> <%= t('common.actions.delete') %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.certificate_details') %></h5>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <dl class="row">
+            <dt class="col-sm-4"><%= t('.certificate_number') %></dt>
+            <dd class="col-sm-8"><%= @material_certificate.certificate_number %></dd>
+
+            <dt class="col-sm-4"><%= t('.batch_number') %></dt>
+            <dd class="col-sm-8"><%= @material_certificate.batch_number %></dd>
+
+            <dt class="col-sm-4"><%= t('.line_id') %></dt>
+            <dd class="col-sm-8"><%= @material_certificate.line_id %></dd>
+          </dl>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <dl class="row">
+            <dt class="col-sm-4"><%= t('.issue_date') %></dt>
+            <dd class="col-sm-8"><%= l(@material_certificate.issue_date, format: :long) if @material_certificate.issue_date %></dd>
+
+            <dt class="col-sm-4"><%= t('.issuer') %></dt>
+            <dd class="col-sm-8"><%= @material_certificate.issuer_name %></dd>
+
+            <% if @material_certificate.description.present? %>
+              <dt class="col-sm-4"><%= t('.description') %></dt>
+              <dd class="col-sm-8"><%= @material_certificate.description %></dd>
+            <% end %>
+          </dl>
+        </div>
       </div>
     </div>
   </div>
+
+  <% if @material_certificate.certificate_file.attached? %>
+    <div class="row mb-4">
+      <div class="col-12">
+        <h5 class="border-bottom pb-2 mb-3"><%= t('.certificate_file') %></h5>
+        <div class="d-flex align-items-center">
+          <i class="bi bi-file-earmark-text me-2" style="font-size: 2rem;"></i>
+          <%= link_to t('.download'),
+              rails_blob_path(@material_certificate.certificate_file, disposition: "attachment"),
+              class: "btn btn-outline-primary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @material_certificate.isometries.any? %>
+    <div class="row mb-4">
+      <div class="col-12">
+        <h5 class="border-bottom pb-2 mb-3"><%= t('.related_isometries') %></h5>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr>
+                <th><%= t('activerecord.attributes.isometry.line_id') %></th>
+                <th><%= t('activerecord.attributes.isometry.project') %></th>
+                <th class="text-end"><%= t('common.labels.actions') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @material_certificate.isometries.each do |isometry| %>
+                <tr>
+                  <td><%= isometry.line_id %></td>
+                  <td><%= isometry.project.name %></td>
+                  <td class="text-end">
+                    <%= link_to project_isometry_path(isometry.project, isometry), class: "btn btn-sm btn-outline-primary" do %>
+                      <i class="bi bi-eye"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -1,36 +1,51 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><%= t('material_certificates.index.title') %></h1>
+    <h1><%= t('.title') %></h1>
     <%= link_to t('.new_certificate'),
         new_material_certificate_path,
         class: 'btn btn-primary' %>
   </div>
 
-  <div class="card mb-4">
-    <div class="card-body">
-      <%= form_tag material_certificates_path, method: :get, class: 'form-inline' do %>
-        <div class="input-group">
-          <%= text_field_tag :search,
-              params[:search],
-              class: 'form-control',
-              placeholder: t('common.labels.search_placeholder') %>
-          <button class="btn btn-outline-secondary" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
-      <% end %>
+  <%= form_tag material_certificates_path, method: :get, class: 'mb-4' do %>
+    <div class="input-group">
+      <%= text_field_tag :search, params[:search],
+                        class: 'form-control',
+                        placeholder: t('common.labels.search_placeholder') %>
+      <div class="input-group-append">
+        <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="table-responsive">
     <table class="table table-striped table-hover table-sm">
       <thead>
         <tr>
-          <th><%= t('activerecord.attributes.material_certificate.certificate_number') %></th>
-          <th><%= t('activerecord.attributes.material_certificate.batch_number') %></th>
-          <th><%= t('activerecord.attributes.material_certificate.line_id') %></th>
-          <th><%= t('activerecord.attributes.material_certificate.issue_date') %></th>
-          <th><%= t('activerecord.attributes.material_certificate.issuer_name') %></th>
+          <th>
+            <%= link_to t('activerecord.attributes.material_certificate.certificate_number'),
+                request.params.merge(sort: 'certificate_number', direction: (params[:sort] == 'certificate_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('certificate_number') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.material_certificate.batch_number'),
+                request.params.merge(sort: 'batch_number', direction: (params[:sort] == 'batch_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('batch_number') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.material_certificate.line_id'),
+                request.params.merge(sort: 'line_id', direction: (params[:sort] == 'line_id' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('line_id') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.material_certificate.issue_date'),
+                request.params.merge(sort: 'issue_date', direction: (params[:sort] == 'issue_date' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('issue_date') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.material_certificate.issuer_name'),
+                request.params.merge(sort: 'issuer_name', direction: (params[:sort] == 'issuer_name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('issuer_name') %>
+          </th>
           <th><%= t('activerecord.attributes.material_certificate.certificate') %></th>
           <th class="text-end"><%= t('common.labels.actions') %></th>
         </tr>
@@ -41,37 +56,28 @@
             <td><%= certificate.certificate_number %></td>
             <td><%= certificate.batch_number %></td>
             <td><%= certificate.line_id %></td>
-            <td><%= l(certificate.issue_date, format: :long) %></td>
+            <td><%= l(certificate.issue_date, format: :long) if certificate.issue_date %></td>
             <td><%= certificate.issuer_name %></td>
             <td>
               <% if certificate.certificate_file.attached? %>
                 <%= link_to t('.download'),
                     rails_blob_path(certificate.certificate_file, disposition: "attachment"),
                     class: "btn btn-sm btn-outline-primary" %>
-              <% else %>
-                <span class="text-muted"><%= t('.no_certificate') %></span>
               <% end %>
             </td>
             <td class="text-end">
-              <div class="btn-group btn-group-sm">
-                <%= link_to certificate,
-                    class: 'btn btn-outline-primary',
-                    title: t('common.buttons.view') do %>
-                  <i class="bi bi-eye"></i>
-                <% end %>
-                <%= link_to edit_material_certificate_path(certificate),
-                    class: 'btn btn-outline-primary',
-                    title: t('common.buttons.edit') do %>
-                  <i class="bi bi-pencil"></i>
-                <% end %>
-                <%= link_to certificate,
-                    method: :delete,
-                    data: { confirm: t('.delete_confirm') },
-                    class: 'btn btn-outline-danger',
-                    title: t('common.buttons.delete') do %>
-                  <i class="bi bi-trash"></i>
-                <% end %>
-              </div>
+              <%= link_to material_certificate_path(certificate), class: "btn btn-sm btn-outline-primary me-1" do %>
+                <i class="bi bi-eye"></i>
+              <% end %>
+              <%= link_to edit_material_certificate_path(certificate), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>
+              <%= link_to material_certificate_path(certificate),
+                  method: :delete,
+                  data: { confirm: t('common.messages.confirm_delete') },
+                  class: "btn btn-sm btn-outline-danger" do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>
