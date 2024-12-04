@@ -63,17 +63,7 @@
       <dd class="col-sm-8">
         <% if @isometry.dn1.present? %>
           <div class="mb-1">
-            DN1: <%= number_with_precision(@isometry.dn1, precision: 2) %> m
-          </div>
-        <% end %>
-        <% if @isometry.dn2.present? %>
-          <div class="mb-1">
-            DN2: <%= number_with_precision(@isometry.dn2, precision: 2) %> m
-          </div>
-        <% end %>
-        <% if @isometry.dn3.present? %>
-          <div class="mb-1">
-            DN3: <%= number_with_precision(@isometry.dn3, precision: 2) %> m
+            <%= number_with_precision(@isometry.dn1, precision: 2) %> m
           </div>
         <% end %>
       </dd>
@@ -93,8 +83,6 @@
       <dt class="col-sm-4"><%= t('.work_package') %></dt>
       <dd class="col-sm-8"><%= @isometry.work_package_number %></dd>
 
-      <dt class="col-sm-4"><%= t('.test_pack') %></dt>
-      <dd class="col-sm-8"><%= @isometry.test_pack_number %></dd>
 
  </dl>
   </div>
