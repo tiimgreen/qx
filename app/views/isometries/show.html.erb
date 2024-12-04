@@ -96,8 +96,8 @@
       <div class="col">
         <% @isometry.material_certificates.each do |cert| %>
           <div class="mb-2">
-            <%= link_to material_certificate_path(cert), class: "text-decoration-none" do %>
-              <i class="bi bi-file-text me-2"></i>
+            <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
+              <i class="bi bi-file-text me-2"  style="font-size: 4rem;"></i>
               <%= cert.certificate_number %> - <%= cert.batch_number %>
             <% end %>
           </div>
