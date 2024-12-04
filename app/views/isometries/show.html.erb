@@ -151,33 +151,51 @@
     </dl>
   </div>
 
-  <div class="col-md-8">
-    <div class="row">
-      <div class="col-md-4">
-        <dl>
-          <dt><%= t('.rt_percentage') %></dt>
-          <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
-        </dl>
-        <%= render partial: 'images', locals: { images: @isometry.rt_images } %>
-      </div>
-
-      <div class="col-md-4">
-        <dl>
-          <dt><%= t('.vt_percentage') %></dt>
-          <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
-        </dl>
-        <%= render partial: 'images', locals: { images: @isometry.vt_images } %>
-      </div>
-
-      <div class="col-md-4">
-        <dl>
-          <dt><%= t('.pt_percentage') %></dt>
-          <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
-        </dl>
-        <%= render partial: 'images', locals: { images: @isometry.pt_images } %>
-      </div>
-    </div>
+  <!-- app/views/isometries/show.html.erb -->
+<div class="row">
+  <div class="col-md-4">
+    <dl>
+      <dt><%= t('.rt_percentage') %></dt>
+      <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
+    </dl>
+    <% if @isometry.rt_images.attached? %>
+      <%= render partial: 'images', locals: { 
+        images: @isometry.rt_images, 
+        title: t('.rt_images'),
+        image_type: 'rt'
+      } %>
+    <% end %>
   </div>
+
+  <div class="col-md-4">
+    <dl>
+      <dt><%= t('.vt_percentage') %></dt>
+      <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
+    </dl>
+    <% if @isometry.vt_images.attached? %>
+      <%= render partial: 'images', locals: { 
+        images: @isometry.vt_images, 
+        title: t('.vt_images'),
+        image_type: 'vt'
+      } %>
+    <% end %>
+  </div>
+
+  <div class="col-md-4">
+    <dl>
+      <dt><%= t('.pt_percentage') %></dt>
+      <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
+    </dl>
+    <% if @isometry.pt_images.attached? %>
+      <%= render partial: 'images', locals: { 
+        images: @isometry.pt_images, 
+        title: t('.pt_images'),
+        image_type: 'pt'
+      } %>
+    <% end %>
+  </div>
+</div>
+
 </div>
 
 <!-- Spooling -->

@@ -4,22 +4,14 @@ export default class extends Controller {
   static targets = ["search", "results", "selected"]
 
   connect() {
-    console.log("Controller connected");
     this.searchTimeout = null;
-    // Log the search target and its dataset on connect
-    console.log("Search target:", this.searchTarget);
-    console.log("Search target dataset:", this.searchTarget.dataset);
   }
 
   search() {
     clearTimeout(this.searchTimeout);
     const query = this.searchTarget.value.trim();
     
-    // Debug logging
-    console.log("Search query:", query);
-    console.log("Search target:", this.searchTarget);
-    console.log("Search URL from dataset:", this.searchTarget.getAttribute("data-material-certificate-search-url"));
-    
+ 
     if (query.length < 2) {
       this.resultsTarget.innerHTML = '';
       return;
@@ -38,7 +30,7 @@ export default class extends Controller {
       
       // Debug log the full URL being fetched
       const fullUrl = `${searchUrl}?q=${encodeURIComponent(query)}`;
-      console.log('Fetching URL:', fullUrl);
+
 
       fetch(fullUrl, {
         method: 'GET',
@@ -54,7 +46,6 @@ export default class extends Controller {
         return response.json();
       })
       .then(data => {
-        console.log('Received data:', data);
         this.showResults(data);
       })
       .catch(error => {
@@ -66,7 +57,6 @@ export default class extends Controller {
 
   showResults(certificates) {
     if (!Array.isArray(certificates)) {
-      console.error('Expected array of certificates, got:', certificates);
       return;
     }
 

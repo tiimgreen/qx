@@ -149,25 +149,47 @@
 
         </div>
 
-        <div class="row">
-          <div class="col-md-4 mb-3">
-            <%= f.label :rt_percentage, class: "form-label" %>
-            <%= f.number_field :rt, class: "form-control", step: "0.1" %>
-            <%= f.file_field :rt_images, multiple: true, class: "form-control mt-2" %>
-          </div>
-          <div class="col-md-4 mb-3">
-            <%= f.label :vt2_percentage, class: "form-label" %>
-            <%= f.number_field :vt2, class: "form-control", step: "0.1" %>
-            <%= f.file_field :vt_images, multiple: true, class: "form-control mt-2" %>
+<!-- app/views/isometries/_form.html.erb -->
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <%= f.label :rt_percentage, class: "form-label" %>
+    <%= f.number_field :rt, class: "form-control", step: "0.1" %>
+    <%= f.file_field :rt_images, multiple: true, class: "form-control mt-2" %>
+    <% if @isometry.rt_images.attached? %>
+      <%= render partial: 'images', locals: { 
+        images: @isometry.rt_images, 
+        title: t('.rt_images'),
+        image_type: 'rt'
+      } %>
+    <% end %>
+  </div>
 
-          </div>
-          <div class="col-md-4 mb-3">
-            <%= f.label :pt2_percentage, class: "form-label" %>
-            <%= f.number_field :pt2, class: "form-control", step: "0.1" %>
-            <%= f.file_field :pt_images, multiple: true, class: "form-control mt-2" %>
+  <div class="col-md-4 mb-3">
+    <%= f.label :vt2_percentage, class: "form-label" %>
+    <%= f.number_field :vt2, class: "form-control", step: "0.1" %>
+    <%= f.file_field :vt_images, multiple: true, class: "form-control mt-2" %>
+    <% if @isometry.vt_images.attached? %>
+      <%= render partial: 'images', locals: { 
+        images: @isometry.vt_images, 
+        title: t('.vt_images'),
+        image_type: 'vt'
+      } %>
+    <% end %>
+  </div>
 
-          </div>
-        </div>
+  <div class="col-md-4 mb-3">
+    <%= f.label :pt2_percentage, class: "form-label" %>
+    <%= f.number_field :pt2, class: "form-control", step: "0.1" %>
+    <%= f.file_field :pt_images, multiple: true, class: "form-control mt-2" %>
+    <% if @isometry.pt_images.attached? %>
+      <%= render partial: 'images', locals: { 
+        images: @isometry.pt_images, 
+        title: t('.pt_images'),
+        image_type: 'pt'
+      } %>
+    <% end %>
+  </div>
+</div>
 
       </div>
     </div>

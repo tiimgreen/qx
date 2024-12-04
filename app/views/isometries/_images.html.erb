@@ -1,17 +1,30 @@
-<%# Params:
-    - images: collection of attached images
-    - title: section title (optional)
+<%# app/views/isometries/_images.html.erb %>
+<%
+  # Ensure image_type is provided
+  raise ArgumentError, "image_type must be provided" unless local_assigns[:image_type].present?
 %>
 
 <% if images.attached? %>
-  <div class="mb-3">
+  <div class="mb-3" 
+       data-controller="image-removal"
+       data-image-removal-project-id-value="<%= @project.id %>"
+       data-image-removal-isometry-id-value="<%= @isometry.id %>">
     <% if local_assigns[:title].present? %>
       <h6 class="pb-2 mb-2"><%= title %></h6>
     <% end %>
+    
     <div class="d-flex flex-wrap gap-2">
       <% images.each do |image| %>
-        <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
-          <div class="border rounded p-2" style="width: 120px;">
+        <div class="border rounded p-2 position-relative" 
+             style="width: 120px;" 
+             data-image-removal-target="imageContainer">
+          <button type="button" 
+                  class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" 
+                  style="font-size: 0.7rem; padding: 0.1rem 0.3rem;"
+                  data-action="click->image-removal#removeImage"
+                  data-image-removal-image-id-param="<%= image.signed_id %>"
+                  data-image-removal-image-type-param="<%= image_type %>">×</button>
+          <%= link_to url_for(image), target: "_blank", class: "text-decoration-none" do %>
             <div class="text-center">
               <i class="bi bi-file-image text-danger" style="font-size: 1.5rem;"></i>
               <div class="small text-dark text-truncate mt-1" title="<%= image.filename.to_s %>">
@@ -19,10 +32,16 @@
               </div>
               <div class="text-muted" style="font-size: 0.7rem;">
                 <%= number_to_human_size(image.byte_size) %>
+                <% if Rails.env.development? %>
+                  <!-- Debug info -->
+                  <div class="text-muted">
+                    <small>Type: <%= image_type %></small>
+                  </div>
+                <% end %>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

@@ -79,6 +79,9 @@ de:
       search_certificates_placeholder: "Zertifikatsnummer oder Chargennummer eingeben..."
       material_certificates: "Materialzertifikate"
       search_certificates: "Zertifikate suchen"
+      rt_images: "RT Bilder"
+      vt_images: "VT Bilder"
+      pt_images: "PT Bilder"
     _form:
       technical_specs: Technische Spezifikationen
       additional_specs: Zusätzliche Spezifikationen
