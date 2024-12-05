@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_04_035000) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_04_150000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -289,6 +289,30 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_035000) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "weldings", force: :cascade do |t|
+    t.string "number"
+    t.string "component"
+    t.string "dimension"
+    t.string "material"
+    t.string "batch_number"
+    t.integer "material_certificate_id"
+    t.string "type_code"
+    t.string "wps"
+    t.string "process"
+    t.string "welder"
+    t.datetime "rt_date"
+    t.datetime "pt_date"
+    t.datetime "vt_date"
+    t.string "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["batch_number"], name: "index_weldings_on_batch_number"
+    t.index ["isometry_id"], name: "index_weldings_on_isometry_id"
+    t.index ["material_certificate_id"], name: "index_weldings_on_material_certificate_id"
+    t.index ["number"], name: "index_weldings_on_number"
+  end
+
   create_table "work_locations", force: :cascade do |t|
     t.string "key"
     t.string "name"
@@ -314,4 +338,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_035000) do
   add_foreign_key "user_resource_permissions", "users"
   add_foreign_key "user_sectors", "sectors"
   add_foreign_key "user_sectors", "users"
+  add_foreign_key "weldings", "isometries"
+  add_foreign_key "weldings", "material_certificates"
 end

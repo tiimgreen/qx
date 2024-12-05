@@ -104,12 +104,24 @@
                   <span class="text-secondary small"><%= cert.batch_number %></span>
                 </div>
               <% end %>
-            </div>
+      </div>
           </div>
         <% end %>
       </div>
     <% else %>
       <p class="text-muted"><%= t('.no_certificates') %></p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Weldings -->
+<div class="row mb-4">
+  <div class="col-12">
+    <h5 class="border-bottom pb-2 mb-3"><%= t('.weldings') %></h5>
+    <% if @isometry.weldings.any? %>
+      <%= render 'weldings/weldings_table', weldings: @isometry.weldings %>
+    <% else %>
+      <p class="text-muted"><%= t('.no_weldings') %></p>
     <% end %>
   </div>
 </div>

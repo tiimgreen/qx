@@ -284,6 +284,31 @@
   </div>
 </div>
 
+<div class="card mb-4">
+  <div class="card-header d-flex align-items-center mb-3">
+    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.weldings') %></h3>
+  </div>
+  <div class="card-body" data-controller="nested-form">
+    <template data-nested-form-target="template">
+      <%= f.fields_for :weldings, Welding.new, child_index: 'NEW_RECORD' do |welding| %>
+        <%= render 'weldings/welding_fields', f: welding %>
+      <% end %>
+    </template>
+
+    <div data-nested-form-target="fields">
+      <%= f.fields_for :weldings do |welding| %>
+        <%= render 'weldings/welding_fields', f: welding %>
+      <% end %>
+    </div>
+
+    <div class="mt-3">
+      <%= link_to t('common.add_welding'), '#',
+          class: "btn btn-primary",
+          data: { action: "click->nested-form#add" } %>
+    </div>
+  </div>
+</div>
+
 <div class="card mb-4" data-controller="material-certificate-search" 
      data-project-id="<%= @project.id %>" 
      data-isometry-id="<%= @isometry.id %>">

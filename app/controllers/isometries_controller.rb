@@ -269,6 +269,11 @@ class IsometriesController < ApplicationController
       :test_pack_number,
       material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],
+      weldings_attributes: [
+        :id, :number, :component, :dimension, :material, :batch_number,
+        :material_certificate_id, :type_code, :wps, :process, :welder,
+        :rt_date, :pt_date, :vt_date, :result, :_destroy
+      ],
       rt_images: [],
       vt_images: [],
       pt_images: [],

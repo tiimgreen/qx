@@ -1,0 +1,82 @@
+<div class="nested-fields" data-new-record="<%= f.object.new_record? %>">
+  <%= f.hidden_field :_destroy %>
+  
+  <div class="row g-3">
+    <div class="col-md-2">
+      <%= f.label :number, class: "form-label" %>
+      <%= f.text_field :number, class: "form-control" %>
+    </div>
+    
+    <div class="col-md-2">
+      <%= f.label :component, class: "form-label" %>
+      <%= f.text_field :component, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :dimension, class: "form-label" %>
+      <%= f.text_field :dimension, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :material, class: "form-label" %>
+      <%= f.text_field :material, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :batch_number, class: "form-label" %>
+      <%= f.text_field :batch_number, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :type_code, class: "form-label" %>
+      <%= f.text_field :type_code, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-2">
+    <div class="col-md-2">
+      <%= f.label :wps, class: "form-label" %>
+      <%= f.text_field :wps, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :process, class: "form-label" %>
+      <%= f.text_field :process, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :welder, class: "form-label" %>
+      <%= f.text_field :welder, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :rt_date, class: "form-label" %>
+      <%= f.date_field :rt_date, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :pt_date, class: "form-label" %>
+      <%= f.date_field :pt_date, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :vt_date, class: "form-label" %>
+      <%= f.date_field :vt_date, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-2">
+    <div class="col-md-2">
+      <%= f.label :result, class: "form-label" %>
+      <%= f.text_field :result, class: "form-control" %>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+      <%= link_to t('common.remove'), '#', 
+          class: "btn btn-danger",
+          data: { action: "click->nested-form#remove" } %>
+    </div>
+  </div>
+
+  <hr class="my-4">
+</div>

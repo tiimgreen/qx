@@ -50,11 +50,11 @@ module ApplicationHelper
 
     css_class = case status.downcase
     when "ok", "accepted", "passed", "n/a", "yes", "ja"
-                  "bg-success"
+                "bg-success"
     when "not ok", "rejected", "failed", "on hold", "false", "no", "nein"
-                  "bg-danger"
+                "bg-danger"
     else
-                  "bg-warning"
+                "bg-warning"
     end
 
     content_tag(:span, status, class: "badge #{css_class} text-white")

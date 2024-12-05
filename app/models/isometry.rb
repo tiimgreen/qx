@@ -14,6 +14,8 @@ class Isometry < ApplicationRecord
 
   has_many :isometry_material_certificates, dependent: :destroy
   has_many :material_certificates, through: :isometry_material_certificates
+  has_many :weldings, dependent: :destroy
+  accepts_nested_attributes_for :weldings, allow_destroy: true
 
   has_many :isometry_documents, dependent: :destroy
   accepts_nested_attributes_for :isometry_documents, allow_destroy: true

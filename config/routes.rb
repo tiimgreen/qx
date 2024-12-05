@@ -28,6 +28,7 @@ Rails.application.routes.draw do
           delete :delete_image
           delete :remove_certificate
         end
+        resources :weldings
       end
     end
 

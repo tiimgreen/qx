@@ -1,0 +1,40 @@
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th><%= t('common.weldings.number') %></th>
+        <th><%= t('common.weldings.component') %></th>
+        <th><%= t('common.weldings.dimension') %></th>
+        <th><%= t('common.weldings.material') %></th>
+        <th><%= t('common.weldings.batch_number') %></th>
+        <th><%= t('common.weldings.type_code') %></th>
+        <th><%= t('common.weldings.wps') %></th>
+        <th><%= t('common.weldings.process') %></th>
+        <th><%= t('common.weldings.welder') %></th>
+        <th><%= t('common.weldings.rt_date') %></th>
+        <th><%= t('common.weldings.pt_date') %></th>
+        <th><%= t('common.weldings.vt_date') %></th>
+        <th><%= t('common.weldings.result') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% weldings.each do |welding| %>
+        <tr>
+          <td><%= welding.number %></td>
+          <td><%= welding.component %></td>
+          <td><%= welding.dimension %></td>
+          <td><%= welding.material %></td>
+          <td><%= welding.batch_number %></td>
+          <td><%= welding.type_code %></td>
+          <td><%= welding.wps %></td>
+          <td><%= welding.process %></td>
+          <td><%= welding.welder %></td>
+          <td><%= l(welding.rt_date, format: :short) if welding.rt_date %></td>
+          <td><%= l(welding.pt_date, format: :short) if welding.pt_date %></td>
+          <td><%= l(welding.vt_date, format: :short) if welding.vt_date %></td>
+          <td><%= welding.result %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
