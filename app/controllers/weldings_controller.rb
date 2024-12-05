@@ -52,9 +52,10 @@ class WeldingsController < ApplicationController
 
   def welding_params
     params.require(:welding).permit(
-      :number, :component, :dimension, :material, :batch_number,
-      :material_certificate_id, :type_code, :wps, :process, :welder,
-      :rt_date, :pt_date, :vt_date, :result
+      :number, :component, :dimension, :material,
+      :batch_number, :type_code, :wps, :process,
+      :welder, :rt_date, :pt_date, :vt_date,
+      :result, :material_certificate_id
     )
   end
 end

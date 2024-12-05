@@ -24,7 +24,17 @@
           <td><%= welding.component %></td>
           <td><%= welding.dimension %></td>
           <td><%= welding.material %></td>
-          <td><%= welding.batch_number %></td>
+          <td>
+            <% if welding.material_certificate %>
+              <%= link_to material_certificate_path(welding.material_certificate), class: "text-decoration-none" do %>
+                <small class="bg-success text-white rounded p-1"><%= welding.batch_number %> (<%= welding.material_certificate.certificate_number %>)</small>
+              <% end %>
+            <% else %>
+              <span class="bg-danger text-white rounded p-1">
+                <%= welding.batch_number %>
+              </span>
+            <% end %>
+          </td>
           <td><%= welding.type_code %></td>
           <td><%= welding.wps %></td>
           <td><%= welding.process %></td>

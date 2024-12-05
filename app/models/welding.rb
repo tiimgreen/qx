@@ -1,5 +1,6 @@
 class Welding < ApplicationRecord
   # Relationships
+  belongs_to :isometry, optional: true
   belongs_to :material_certificate, optional: true
 
   # Validations

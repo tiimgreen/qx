@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :material_certificates do
       collection do
         get :search
+        get :search, as: :search_material_certificates
       end
     end
 

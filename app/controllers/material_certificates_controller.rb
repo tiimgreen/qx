@@ -6,7 +6,21 @@ class MaterialCertificatesController < ApplicationController
 
   def index
     @material_certificates = MaterialCertificate.all
-    @material_certificates = @material_certificates.search_by_term(params[:search]) if params[:search].present?
+  end
+
+  def search
+    query = (params[:q] || params[:query])&.strip&.downcase
+    @certificates = if query.present?
+      MaterialCertificate.where("LOWER(batch_number) LIKE ? OR LOWER(certificate_number) LIKE ?", 
+                               "%#{query}%", "%#{query}%")
+                        .limit(10)
+    else
+      MaterialCertificate.none
+    end
+
+    respond_to do |format|
+      format.json { render json: @certificates.as_json(only: [:id, :batch_number, :certificate_number]) }
+    end
   end
 
   def show
@@ -44,34 +58,6 @@ class MaterialCertificatesController < ApplicationController
   def destroy
     @material_certificate.destroy
     redirect_to material_certificates_url, notice: t(".success")
-  end
-
-  def search
-    query = params[:q].to_s.strip
-    @certificates = if query.present?
-      MaterialCertificate
-        .where("LOWER(certificate_number) LIKE :query OR LOWER(batch_number) LIKE :query",
-               query: "%#{query.downcase}%")
-        .limit(10)
-    else
-      MaterialCertificate.none
-    end
-
-    respond_to do |format|
-      format.json do
-        render json: @certificates.map { |cert|
-          {
-            id: cert.id,
-            certificate_number: cert.certificate_number,
-            batch_number: cert.batch_number
-          }
-        }
-      end
-    end
-  rescue => e
-    Rails.logger.error "Search error: #{e.message}"
-    Rails.logger.error e.backtrace.join("\n")
-    render json: { error: "Search failed" }, status: :internal_server_error
   end
 
   private
