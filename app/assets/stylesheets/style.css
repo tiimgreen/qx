@@ -97,3 +97,15 @@
   }
 }
 /* end modal */
+
+
+.form-control.d-inline {
+  display: inline-block;
+  width: auto; /* Adjust width as needed */
+}
+
+.inline-symbol {
+  display: inline-block;
+  margin-left: 5px; /* Adjust the space between the input and the % sign as needed */
+  vertical-align: middle; /* Aligns vertically with the input */
+}

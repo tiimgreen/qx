@@ -148,7 +148,7 @@
       <div class="col-md-4">
         <dl>
           <dt><%= f.label :rt_percentage %></dt>
-          <dd><%= f.number_field :rt, class: "form-control", step: "0.1" %></dd>
+          <dd><%= f.number_field :rt, class: "form-control d-inline", step: "1" %> <span class="inline-symbol">%</span></dd>
         </dl>
         <%= f.file_field :rt_images, multiple: true, class: "form-control mt-2" %>
         <% if @isometry.rt_images.attached? %>
@@ -164,7 +164,7 @@
       <div class="col-md-4">
         <dl>
           <dt><%= f.label :vt2_percentage %></dt>
-          <dd><%= f.number_field :vt2, class: "form-control", step: "0.1" %></dd>
+          <dd><%= f.number_field :vt2, class: "form-control d-inline", step: "1" %> <span class="inline-symbol">%</span></dd>
         </dl>
         <%= f.file_field :vt_images, multiple: true, class: "form-control mt-2" %>
         <% if @isometry.vt_images.attached? %>
@@ -180,7 +180,7 @@
       <div class="col-md-4">
         <dl>
           <dt><%= f.label :pt2_percentage %></dt>
-          <dd><%= f.number_field :pt2, class: "form-control", step: "0.1" %></dd>
+          <dd><%= f.number_field :pt2, class: "form-control d-inline", step: "1" %> <span class="inline-symbol">%</span></dd>
         </dl>
         <%= f.file_field :pt_images, multiple: true, class: "form-control mt-2" %>
         <% if @isometry.pt_images.attached? %>
@@ -362,19 +362,7 @@
   </div>
 </div>
 
-<div class="card mb-4">
-  <div class="card-header d-flex align-items-center mb-3">
-    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.notes') %></h3>
-  </div>
-  <div class="card-body">
-    <!-- Notes -->
-    <div class="row g-3">
-      <div class="mb-3">
-        <%= f.text_area :notes, class: "form-control", rows: 6 %>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <div class="card mb-4">
   <div class="card-header d-flex align-items-center mb-3">
@@ -425,17 +413,6 @@
                       <%= l(doc_form.object.pdf.created_at, format: :short) %>
                     </small>
                   </div>
-                  <div class="col-md-4">
-                    <%= doc_form.select :qr_position,
-                      [
-                        [t('.top_left'), "top_left"],
-                        [t('.top_right'), "top_right"],
-                        [t('.bottom_left'), "bottom_left"],
-                        [t('.bottom_right'), "bottom_right"]
-                      ],
-                      { include_blank: true },
-                      class: "form-select" %>
-                  </div>
                   <div class="col-md-3 text-end">
                     <%= link_to url_for(doc_form.object.pdf), 
                               target: "_blank", 
@@ -458,6 +435,20 @@
           <% end %>
         </div>
       <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header d-flex align-items-center mb-3">
+    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.notes') %></h3>
+  </div>
+  <div class="card-body">
+    <!-- Notes -->
+    <div class="row g-3">
+      <div class="mb-3">
+        <%= f.text_area :notes, class: "form-control", rows: 6 %>
+      </div>
     </div>
   </div>
 </div>
