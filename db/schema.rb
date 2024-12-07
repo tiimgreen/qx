@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_04_150000) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_07_091108) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -139,9 +139,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_150000) do
     t.boolean "revision_last", default: true
     t.integer "page_number"
     t.integer "page_total"
-    t.string "dn1"
-    t.string "dn2"
-    t.string "dn3"
     t.string "medium"
     t.decimal "pipe_length", precision: 10, scale: 2
     t.integer "workshop_sn"
@@ -149,15 +146,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_150000) do
     t.integer "total_sn"
     t.integer "total_supports"
     t.integer "total_spools"
-    t.decimal "rt", precision: 5, scale: 2
-    t.decimal "vt2", precision: 5, scale: 2
-    t.decimal "pt2", precision: 5, scale: 2
+    t.integer "rt"
+    t.integer "vt2"
+    t.integer "pt2"
     t.boolean "dp", default: false
     t.boolean "dip", default: false
     t.string "slope_if_needed"
     t.boolean "isolation_required", default: false
     t.integer "work_package_number"
-    t.integer "test_pack_number"
     t.integer "project_id", null: false
     t.integer "sector_id"
     t.integer "user_id"
@@ -168,6 +164,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_150000) do
     t.string "qr_position"
     t.integer "qr_x_coordinate", default: -220
     t.integer "qr_y_coordinate", default: 20
+    t.string "dn"
     t.index ["deleted"], name: "index_isometries_on_deleted"
     t.index ["line_id"], name: "index_isometries_on_line_id", unique: true
     t.index ["on_hold_status"], name: "index_isometries_on_on_hold_status"
@@ -182,7 +179,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_150000) do
     t.index ["revision_number"], name: "index_isometries_on_revision_number"
     t.index ["sector_id"], name: "index_isometries_on_sector_id"
     t.index ["system"], name: "index_isometries_on_system"
-    t.index ["test_pack_number"], name: "index_isometries_on_test_pack_number"
     t.index ["user_id"], name: "index_isometries_on_user_id"
     t.index ["work_package_number"], name: "index_isometries_on_work_package_number"
   end

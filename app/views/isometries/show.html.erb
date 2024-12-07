@@ -61,9 +61,9 @@
     <dl class="row">
       <dt class="col-sm-4"><%= t('.dn_measurements') %></dt>
       <dd class="col-sm-8">
-        <% if @isometry.dn1.present? %>
+        <% if @isometry.dn.present? %>
           <div class="mb-1">
-            <%= number_with_precision(@isometry.dn1, precision: 2) %> m
+            <%= @isometry.dn %> m
           </div>
         <% end %>
       </dd>
@@ -254,16 +254,6 @@
   </div>
 </div>
 
-<!-- Notes -->
-<% if @isometry.notes.present? %>
-  <div class="row mb-4">
-    <div class="col-12">
-      <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
-      <p class="text-muted"><%= @isometry.notes %></p>
-    </div>
-  </div>
-<% end %>
-
 <!-- Isometry Images -->
 <% if @isometry.isometry_documents.any? %>
   <div class="row mb-4">
@@ -272,6 +262,16 @@
         documents: @isometry.isometry_documents,
         title: t('.isometry_documents')
       } %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Notes -->
+<% if @isometry.notes.present? %>
+  <div class="row mb-4">
+    <div class="col-12">
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.notes') %></h5>
+      <p class="text-muted"><%= @isometry.notes %></p>
     </div>
   </div>
 <% end %>
