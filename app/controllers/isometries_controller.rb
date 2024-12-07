@@ -252,9 +252,7 @@ class IsometriesController < ApplicationController
       :pipe_class,
       :material,
       :system,
-      :dn1,
-      :dn2,
-      :dn3,
+      :dn,
       :medium,
       :total_supports,
       :total_spools,
@@ -266,7 +264,6 @@ class IsometriesController < ApplicationController
       :isolation_required,
       :slope_if_needed,
       :work_package_number,
-      :test_pack_number,
       material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],
       weldings_attributes: [

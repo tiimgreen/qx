@@ -6,7 +6,7 @@
           <% case sector.key %>
           <% when 'incoming_deliveries' %>
             <i class="bi bi-folder"></i> <%= project.incoming_deliveries.count %>
-          <% when 'isometries' %>
+          <% when 'isometric' %>
             <i class="bi bi-diagram-3"></i> <%= project.isometries.count %>
           <% else %>
             <i class="bi bi-folder"></i> <%= sector.key.classify.constantize.count rescue 0 %>

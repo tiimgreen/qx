@@ -40,6 +40,11 @@
           </div>
           
           <div class="col-md-2 mb-3">
+            <%= f.label :dn, class: "form-label" %>
+            <%= f.text_field :dn, class: "form-control" %>
+          </div>
+          
+          <div class="col-md-2 mb-3">
             <%= f.label :revision_number, class: "form-label" %>
             <%= f.number_field :revision_number, class: "form-control" %>
           </div>
@@ -59,11 +64,6 @@
           <div class="col-md-2 mb-3">
             <%= f.label :page_total, class: "form-label" %>
             <%= f.number_field :page_total, class: "form-control" %>
-          </div>
-
-          <div class="col-md-2 mb-3">
-            <%= f.label :dn, class: "form-label" %>
-            <%= f.text_field :dn, class: "form-control" %>
           </div>
 
           <div class="col-md-2 mb-3">

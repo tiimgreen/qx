@@ -45,19 +45,14 @@
             <%= sort_indicator('work_package_number') %>
           </th>
           <th>
-            <%= link_to t('activerecord.attributes.isometry.test_pack_number'),
-                request.params.merge(sort: 'test_pack_number', direction: (params[:sort] == 'test_pack_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('test_pack_number') %>
+            <%= link_to t('activerecord.attributes.isometry.system'),
+                request.params.merge(sort: 'system', direction: (params[:sort] == 'system' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('system') %>
           </th>
           <th>
             <%= link_to t('activerecord.attributes.isometry.pid_number'),
                 request.params.merge(sort: 'pid_number', direction: (params[:sort] == 'pid_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('pid_number') %>
-          </th>
-          <th>
-            <%= link_to t('activerecord.attributes.isometry.system'),
-                request.params.merge(sort: 'system', direction: (params[:sort] == 'system' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('system') %>
           </th>
           <th>
             <%= link_to t('activerecord.attributes.isometry.revision_number'),
@@ -86,9 +81,8 @@
           <tr>
             <td><%= link_to isometry.line_id, project_isometry_path(@project, isometry) %></td>
             <td><%= isometry.work_package_number %></td>
-            <td><%= isometry.test_pack_number %></td>
-            <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>
             <td><%= isometry.system %></td>
+            <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>
             <td><%= isometry.revision_number %><%= ' (Latest)' if isometry.revision_last %></td>
             <td><%= isometry.material %></td>
             <td><%= l(isometry.received_date, format: :short) if isometry.received_date %></td>
