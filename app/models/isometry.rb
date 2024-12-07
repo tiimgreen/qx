@@ -64,6 +64,15 @@ class Isometry < ApplicationRecord
     isometry_documents.map(&:pdf)
   end
 
+  # Public methods for weldings
+  def weldings_missing_certificates?
+    weldings.exists?(material_certificate_id: nil)
+  end
+
+  def weldings_count
+    weldings.count
+  end
+
   # Callbacks
   before_save :calculate_total_sn
   before_save :set_on_hold_date

@@ -18,7 +18,7 @@ class IsometriesController < ApplicationController
     sort_direction = params[:direction] || "desc"
 
     @isometries = base_scope
-      .includes(:project, :sector)
+      .includes(:project, :sector, :weldings)
       .search_by_term(params[:search])
       .order(sort_column => sort_direction)
   end

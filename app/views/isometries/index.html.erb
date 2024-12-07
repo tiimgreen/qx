@@ -74,6 +74,9 @@
                 request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('on_hold_status') %>
           </th>
+          <th>
+            <%= t('common.labels.weldings') %>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -88,6 +91,17 @@
             <td><%= l(isometry.received_date, format: :short) if isometry.received_date %></td>
             <td>
                 <%= status_label(isometry.on_hold_status)  %>
+            </td>
+            <td>
+              <% if isometry.weldings_count > 0 && isometry.weldings_missing_certificates? %>
+                <span class="badge bg-danger">
+                  <%= isometry.weldings_count %>
+                </span>
+                <% elsif isometry.weldings_count > 0 %>
+                  <span class="badge bg-success">
+                    <%= isometry.weldings_count %>
+                  </span>
+                <% end %>
             </td>
             <td class="text-end">
               <div class="btn-group btn-group-sm">
