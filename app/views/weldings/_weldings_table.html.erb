@@ -26,8 +26,12 @@
           <td><%= welding.material %></td>
           <td>
             <% if welding.material_certificate %>
-              <%= link_to material_certificate_path(welding.material_certificate), class: "text-decoration-none" do %>
-                <small class="bg-success text-white rounded p-1"><%= welding.batch_number %> (<%= welding.material_certificate.certificate_number %>)</small>
+              <% if welding.material_certificate&.certificate_file&.attached? %>
+                <%= link_to rails_blob_path(welding.material_certificate.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
+                  <small class="bg-success text-white rounded p-1"><%= welding.batch_number %> (<%= welding.material_certificate.certificate_number %>)</small>
+                <% end %>
+              <% else %>
+                <small class="bg-secondary text-white rounded p-1"><%= welding.batch_number %> (<%= welding.material_certificate&.certificate_number %>)</small>
               <% end %>
             <% else %>
               <span class="bg-danger text-white rounded p-1">

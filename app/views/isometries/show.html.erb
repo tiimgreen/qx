@@ -93,18 +93,30 @@
     <% if @isometry.material_certificates.any? %>
       <div class="row g-3">
         <% @isometry.material_certificates.each do |cert| %>
-          <div class="col-md-2">
+          <div class="col-md-1">
             <div class="d-flex flex-column position-relative border rounded p-2">
-              <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
-                <div class="text-center mb-2">
-                  <i class="bi bi-file-text" style="font-size: 2rem;"></i>
-                </div>
-                <div class="d-flex flex-column text-center">
-                  <span class="fw-medium"><%= cert.certificate_number %></span>
-                  <span class="text-secondary small"><%= cert.batch_number %></span>
+              <% if cert.certificate_file.attached? %>
+                <%= link_to rails_blob_path(cert.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none text-dark" do %>
+                  <div class="text-center mb-2">
+                    <i class="bi bi-file-text" style="font-size: 2rem;"></i>
+                  </div>
+                  <div class="text-center">
+                    <small><%= cert.certificate_number %></small><br>
+                    <span class="text-secondary small"><%= cert.batch_number %></span>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="text-decoration-none text-dark">
+                  <div class="text-center mb-2">
+                    <i class="bi bi-file-text" style="font-size: 2rem; opacity: 0.5;"></i>
+                  </div>
+                  <div class="text-center">
+                    <small><%= cert.certificate_number %></small><br>
+                    <span class="text-secondary small"><%= cert.batch_number %></span>
+                  </div>
                 </div>
               <% end %>
-      </div>
+            </div>
           </div>
         <% end %>
       </div>
@@ -128,11 +140,10 @@
 
 <!-- Additional Specifications -->
 <div class="row mb-4">
-  <div class="col-12">
-    <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
-  </div>
-  
   <div class="col-md-4">
+    <div class="col-12">
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.additional_specs') %></h5>
+    </div>
     <dl class="row">
       <dt class="col-sm-4"><%= t('.dp') %></dt>
       <dd class="col-sm-8">
@@ -168,51 +179,47 @@
   </div>
 
   <div class="col-md-8">
-    <div class="row">
-      <div class="col-md-4">
-        <dl>
-          <dt><%= t('.rt_percentage') %></dt>
-          <dd><%= number_to_percentage(@isometry.rt, precision: 1) if @isometry.rt %></dd>
-        </dl>
-        <% if @isometry.rt_images.attached? %>
-          <%= render partial: 'images', locals: { 
-            images: @isometry.rt_images, 
-            title: t('.rt_images'),
-            image_type: 'rt'
-          } %>
-        <% end %>
-      </div>
+    <!-- Inspections -->
+    <div class="col-12">
+      <h5 class="border-bottom pb-2 mb-3"><%= t('.inspections') %></h5>
+      
+      <dl class="row mb-3">
+        <dt class="col-sm-2"><%= t('.rt_percentage') %></dt>
+        <dd class="col-sm-10"><%= @isometry.rt %> %</dd>
+      </dl>
+      <% if @isometry.rt_images.attached? %>
+        <%= render partial: 'images', locals: { 
+          images: @isometry.rt_images, 
+          image_type: 'rt'
+        } %>
+      <% end %>
 
-      <div class="col-md-4">
-        <dl>
-          <dt><%= t('.vt_percentage') %></dt>
-          <dd><%= number_to_percentage(@isometry.vt2, precision: 1) if @isometry.vt2 %></dd>
-        </dl>
-        <% if @isometry.vt_images.attached? %>
-          <%= render partial: 'images', locals: { 
-            images: @isometry.vt_images, 
-            title: t('.vt_images'),
-            image_type: 'vt'
-          } %>
-        <% end %>
-      </div>
+      <dl class="row mb-3">
+        <dt class="col-sm-2"><%= t('.vt_percentage') %></dt>
+        <dd class="col-sm-10"><%= @isometry.vt2 %> %</dd>
+      </dl>
+      <% if @isometry.vt_images.attached? %>
+        <%= render partial: 'images', locals: { 
+          images: @isometry.vt_images, 
+          image_type: 'vt'
+        } %>
+      <% end %>
 
-      <div class="col-md-4">
-        <dl>
-          <dt><%= t('.pt_percentage') %></dt>
-          <dd><%= number_to_percentage(@isometry.pt2, precision: 1) if @isometry.pt2 %></dd>
-        </dl>
-        <% if @isometry.pt_images.attached? %>
-          <%= render partial: 'images', locals: { 
-            images: @isometry.pt_images, 
-            title: t('.pt_images'),
-            image_type: 'pt'
-          } %>
-        <% end %>
-      </div>
+      <dl class="row mb-3">
+        <dt class="col-sm-2"><%= t('.pt_percentage') %></dt>
+        <dd class="col-sm-10"><%= @isometry.pt2%> %</dd>
+      </dl>
+      <% if @isometry.pt_images.attached? %>
+        <%= render partial: 'images', locals: { 
+          images: @isometry.pt_images, 
+          image_type: 'pt'
+        } %>
+      <% end %>
     </div>
   </div>
 </div>
+
+
 
 <!-- Spooling -->
 <div class="row mb-4">

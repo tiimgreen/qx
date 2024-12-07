@@ -20,21 +20,24 @@
           <% case sector.key %>
           <% when 'incoming_delivery' %>
             <%= link_to project_incoming_deliveries_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
-              <i class="bi bi-list"></i> <%= t('navigation.menu.incoming_deliveries.deliveries') %>
+              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
             <%= link_to new_project_incoming_delivery_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('navigation.menu.incoming_deliveries.new_delivery') %>
+              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% when 'isometric' %>
             <%= link_to project_isometries_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
-              <i class="bi bi-list"></i> <%= t('navigation.menu.isometries.list') %>
+              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
             <%= link_to new_project_isometry_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('navigation.menu.isometries.new') %>
+              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% when 'material_certificate' %>
             <%= link_to material_certificates_path, class: 'btn btn-outline-primary m-1 me-2' do %>
-              <i class="bi bi-list"></i> <%= t('navigation.menu.material_certificates.list') %>
+              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_material_certificate_path, class: 'btn btn-primary' do %>
+              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% end %>
         </div>
