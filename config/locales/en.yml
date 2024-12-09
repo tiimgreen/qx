@@ -26,6 +26,9 @@ en:
     edit: "Edit"
     delete: "Delete"
     confirm: "Are you sure?"
+    actions:
+      download_welding_report: "Download Welding Report"
+      view_welding_report: "View Welding Report"
     messages:
       created: "%{model} was successfully created."
       updated: "%{model} was successfully updated."

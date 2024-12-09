@@ -4,7 +4,7 @@ class IsometriesController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :delete_image ]
+  before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :delete_image, :download_welding_report ]
   before_action :authorize_action!
 
   def index
@@ -135,6 +135,15 @@ class IsometriesController < ApplicationController
     end
   end
 
+  def download_welding_report
+    pdf = ::WeldingPdfGenerator.new(@isometry).generate
+    
+    send_data pdf.render,
+              filename: "welding_report_#{@isometry.line_id}.pdf",
+              type: 'application/pdf',
+              disposition: params[:download] ? 'attachment' : 'inline'
+  end
+
   private
 
   def authorize_action!
@@ -143,7 +152,7 @@ class IsometriesController < ApplicationController
       authorize_view!
     when "new", "create"
       authorize_create!
-    when "edit", "update", "delete_image"
+    when "edit", "update", "delete_image", "download_welding_report"
       authorize_edit!
     when "destroy"
       authorize_destroy!

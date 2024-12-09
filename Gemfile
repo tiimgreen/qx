@@ -43,6 +43,7 @@ gem "mini_magick"
 # PDF processing
 gem "pdf-reader"
 gem "prawn"
+gem "prawn-table"
 gem "prawn-templates"
 
 group :development, :test do
