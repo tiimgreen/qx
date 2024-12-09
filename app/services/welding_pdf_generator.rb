@@ -73,7 +73,7 @@ class WeldingPdfGenerator
         { content: weld.type_code, rowspan: 2 },
         { content: weld.wps, rowspan: 2 },
         { content: weld.process, rowspan: 2 },
-        { content: weld.welder, rowspan: 2 },
+        weld.welder,
         weld.rt_date&.strftime("%d.%m.%Y"),
         weld.pt_date&.strftime("%d.%m.%Y"),
         weld.vt_date&.strftime("%d.%m.%Y"),
@@ -86,6 +86,7 @@ class WeldingPdfGenerator
         weld.dimension,
         weld.batch_number,
         weld.material_certificate&.certificate_number,
+        weld.welder,
         weld.rt_date&.strftime("%d.%m.%Y"),
         weld.pt_date&.strftime("%d.%m.%Y"),
         weld.vt_date&.strftime("%d.%m.%Y")
