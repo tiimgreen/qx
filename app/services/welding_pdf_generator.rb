@@ -95,7 +95,7 @@ class WeldingPdfGenerator
     pdf.table(data) do |t|
       t.cells.style do |c|
         c.size = 7
-        c.padding = [1, 1, 1, 1]
+        c.padding = [3, 2, 3, 2]  # Increased vertical padding
         c.border_width = 0.5
         c.align = :center
         c.valign = :center
@@ -103,6 +103,10 @@ class WeldingPdfGenerator
 
       # Header row styles
       t.row(0..1).style(font_style: :bold, size: 7)
+      
+      # Make header rows slightly taller
+      t.row(0).min_height = 25
+      t.row(1).min_height = 25
     end
   end
 
