@@ -9,31 +9,42 @@ class WeldingPdfGenerator
   end
 
   def generate
-    # Increased page margins to ensure content fits
     Prawn::Document.new(page_size: "A4", page_layout: :landscape, margin: [ 30, 30, 30, 30 ]) do |pdf|
-      generate_header(pdf)
-      generate_table(pdf)
-      generate_footer(pdf)
+      # Set up repeating header for all pages
+      pdf.repeat(:all) do
+        pdf.bounding_box([ 0, pdf.bounds.top ], width: pdf.bounds.width, height: 120) do
+          # Company logo on the left
+          pdf.image "#{Rails.root}/app/assets/images/logo.png", width: 120, position: :left, vposition: :top
+
+          # Page numbers on the right
+          pdf.float do
+            pdf.text_box "#{pdf.page_number} von #{pdf.page_count}",
+                        at: [ pdf.bounds.right - 50, pdf.bounds.top ],
+                        align: :right,
+                        size: 12
+          end
+
+          # Project information
+          pdf.move_down 5
+          pdf.text "Isometrie / Isometric: #{@isometry.line_id}", size: 11
+          pdf.text "Projekt Nr. / Project No.: #{@isometry.project.project_number}", size: 11
+          pdf.move_down 5
+          pdf.text "Protokoll Schweissnaht / Weldlog", size: 14, style: :bold, align: :center
+        end
+      end
+
+      # Start the content below the header
+      pdf.bounding_box([ 0, pdf.bounds.top - 120 ], width: pdf.bounds.width, height: pdf.bounds.height - 120) do
+        generate_table(pdf)
+        generate_footer(pdf)
+      end
     end
   end
 
   private
 
   def generate_header(pdf)
-    pdf.image "#{Rails.root}/app/assets/images/logo.png", width: 120, position: :left
-    pdf.float do
-      pdf.text_box "1 von 1",
-                  at: [ pdf.bounds.right - 50, pdf.bounds.top ],
-                  align: :right,
-                  size: 12
-    end
-
-    pdf.move_down 20
-    pdf.text "Isometrie / Isometric: #{@isometry.line_id}", size: 11
-    pdf.text "Projekt Nr. / Project No.: #{@isometry.project.project_number}", size: 11
-    pdf.move_down 10
-    pdf.text "Protokoll Schweissnaht / Weldlog", size: 14, style: :bold, align: :center
-    pdf.move_down 15
+    # This method is no longer needed as header is handled in generate method
   end
 
   def generate_table(pdf)
