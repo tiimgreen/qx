@@ -2,7 +2,7 @@
   <%= f.hidden_field :_destroy %>
   
   <div class="row g-3 mt-4">
-    <div class="col-12"><hr><h5>First Set</h5></div>
+    <div class="col-12"><hr><h5><%= t('common.weldings.first_set') %></h5></div>
     <div class="col-md-2">
       <%= f.label :number, class: "form-label" %>
       <%= f.text_field :number, class: "form-control" %>
@@ -85,7 +85,7 @@
 
   <%# Second Set of Controls %>
   <div class="row g-3 mt-4">
-    <div class="col-12"><hr><h5>Second Set</h5></div>
+    <div class="col-12"><hr><h5><%= t('common.weldings.second_set') %></h5></div>
     <div class="col-md-2">
       <%= f.label :component1, class: "form-label" %>
       <%= f.text_field :component1, class: "form-control" %>

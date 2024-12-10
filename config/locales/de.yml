@@ -155,3 +155,4 @@ de:
               greater_than: "Soll-Ist-Menge muss größer als %{count} sein"
             on_hold:
               inclusion: "muss einen gültigen Status haben"
+
