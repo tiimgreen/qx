@@ -276,13 +276,27 @@ class IsometriesController < ApplicationController
       material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],
       weldings_attributes: [
-        :id, :number, :component, :dimension, :material, :batch_number,
-        :material_certificate_id, :type_code, :wps, :process, :welder,
-        :rt_date, :pt_date, :vt_date, :result, :_destroy
+        :id, :number, 
+        :component, :component1,
+        :dimension, :dimension1,
+        :material, :material1,
+        :batch_number, :batch_number1,
+        :material_certificate_id, :material_certificate1_id,
+        :type_code, :type_code1,
+        :wps, :wps1,
+        :process, :process1,
+        :welder, :welder1,
+        :rt_date, :rt_date1,
+        :pt_date, :pt_date1,
+        :vt_date, :vt_date1,
+        :result, :result1,
+        :_destroy
       ],
       rt_images: [],
       vt_images: [],
       pt_images: [],
+      on_hold_images: [],
+      new_pdf_qr_position: []
     )
   end
 

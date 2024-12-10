@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_07_091108) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_10_015737) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -303,8 +303,22 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_07_091108) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "isometry_id"
+    t.string "component1"
+    t.string "dimension1"
+    t.string "material1"
+    t.string "batch_number1"
+    t.integer "material_certificate1_id"
+    t.string "type_code1"
+    t.string "wps1"
+    t.string "process1"
+    t.string "welder1"
+    t.datetime "rt_date1"
+    t.datetime "pt_date1"
+    t.datetime "vt_date1"
+    t.string "result1"
     t.index ["batch_number"], name: "index_weldings_on_batch_number"
     t.index ["isometry_id"], name: "index_weldings_on_isometry_id"
+    t.index ["material_certificate1_id"], name: "index_weldings_on_material_certificate1_id"
     t.index ["material_certificate_id"], name: "index_weldings_on_material_certificate_id"
     t.index ["number"], name: "index_weldings_on_number"
   end
@@ -336,4 +350,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_07_091108) do
   add_foreign_key "user_sectors", "users"
   add_foreign_key "weldings", "isometries"
   add_foreign_key "weldings", "material_certificates"
+  add_foreign_key "weldings", "material_certificates", column: "material_certificate1_id"
 end

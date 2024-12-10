@@ -21,10 +21,27 @@
       <% weldings.each do |welding| %>
         <tr>
           <td><%= welding.number %></td>
-          <td><%= welding.component %></td>
-          <td><%= welding.dimension %></td>
-          <td><%= welding.material %></td>
           <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.component %></div>
+              <div><%= welding.component1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.dimension %></div>
+              <div><%= welding.dimension1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.material %></div>
+              <div><%= welding.material1 %></div>
+            </div>
+          </td>
+          <td>
+          <div class="d-flex flex-column">
+            <div>
             <% if welding.material_certificate %>
               <% if welding.material_certificate&.certificate_file&.attached? %>
                 <%= link_to rails_blob_path(welding.material_certificate.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
@@ -38,15 +55,72 @@
                 <%= welding.batch_number %>
               </span>
             <% end %>
+            </div>
+              <div>
+                <% if welding.material_certificate1 %>
+                  <% if welding.material_certificate1&.certificate_file&.attached? %>
+                    <%= link_to rails_blob_path(welding.material_certificate1.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
+                      <small class="bg-success text-white rounded p-1"><%= welding.batch_number1 %> (<%= welding.material_certificate1.certificate_number %>)</small>
+                    <% end %>
+                  <% else %>
+                    <small class="bg-secondary text-white rounded p-1"><%= welding.batch_number1 %> (<%= welding.material_certificate1&.certificate_number %>)</small>
+                  <% end %>
+                <% else %>
+                  <span class="bg-danger text-white rounded p-1">
+                    <%= welding.batch_number1 %>
+                  </span>
+                <% end %>                
+              </div>
+            </div>
           </td>
-          <td><%= welding.type_code %></td>
-          <td><%= welding.wps %></td>
-          <td><%= welding.process %></td>
-          <td><%= welding.welder %></td>
-          <td><%= l(welding.rt_date, format: :short) if welding.rt_date %></td>
-          <td><%= l(welding.pt_date, format: :short) if welding.pt_date %></td>
-          <td><%= l(welding.vt_date, format: :short) if welding.vt_date %></td>
-          <td><%= welding.result %></td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.type_code %></div>
+              <div><%= welding.type_code1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.wps %></div>
+              <div><%= welding.wps1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.process %></div>
+              <div><%= welding.process1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.welder %></div>
+              <div><%= welding.welder1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= l(welding.rt_date, format: :short) if welding.rt_date%></div>
+              <div><%= l(welding.rt_date1, format: :short) if welding.rt_date1%></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= l(welding.pt_date, format: :short) if welding.pt_date%></div>
+              <div><%= l(welding.pt_date1, format: :short) if welding.pt_date1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= l(welding.vt_date, format: :short) if welding.vt_date %></div>
+              <div><%= l(welding.vt_date1, format: :short) if welding.vt_date1 %></div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.result %></div>
+              <div><%= welding.result1 %></div>
+            </div>
+          </td>
         </tr>
       <% end %>
     </tbody>
