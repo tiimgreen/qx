@@ -16,8 +16,8 @@ class WeldingPdfGenerator
           # Company logo on the left
           pdf.image "#{Rails.root}/app/assets/images/logo.png", width: 120, position: :left, vposition: :top
 
-          pdf.text "Isometrie / Isometric: #{@isometry.line_id}", size: 11
-          pdf.text "Projekt Nr. / Project No.: #{@isometry.project.project_number}", size: 11
+          pdf.text "<b>Isometrie / Isometric:</b> #{@isometry.line_id}", size: 11, inline_format: true
+          pdf.text "<b>Projekt Nr. / Project No.:</b> #{@isometry.project.project_number}", size: 11, inline_format: true
           pdf.move_down 5
           pdf.text "Protokoll Schweissnaht / Weldlog", size: 14, style: :bold, align: :center
         end
