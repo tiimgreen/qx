@@ -11,9 +11,9 @@
         <th><%= t('common.weldings.wps') %></th>
         <th><%= t('common.weldings.process') %></th>
         <th><%= t('common.weldings.welder') %></th>
-        <th><%= t('common.weldings.rt_date') %></th>
-        <th><%= t('common.weldings.pt_date') %></th>
-        <th><%= t('common.weldings.vt_date') %></th>
+        <th><%= t('common.weldings.rt') %></th>
+        <th><%= t('common.weldings.pt') %></th>
+        <th><%= t('common.weldings.vt') %></th>
         <th><%= t('common.weldings.result') %></th>
       </tr>
     </thead>
@@ -99,20 +99,20 @@
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= l(welding.rt_date, format: :short) if welding.rt_date%></div>
-              <div><%= l(welding.rt_date1, format: :short) if welding.rt_date1%></div>
+              <div><%= welding.rt_date&.strftime("%d-%m-%Y") %></div>
+              <div><%= welding.rt_date1&.strftime("%d-%m-%Y") %></div>
             </div>
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= l(welding.pt_date, format: :short) if welding.pt_date%></div>
-              <div><%= l(welding.pt_date1, format: :short) if welding.pt_date1 %></div>
+              <div><%= welding.pt_date&.strftime("%d-%m-%Y") %></div>
+              <div><%= welding.pt_date1&.strftime("%d-%m-%Y") %></div>
             </div>
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= l(welding.vt_date, format: :short) if welding.vt_date %></div>
-              <div><%= l(welding.vt_date1, format: :short) if welding.vt_date1 %></div>
+              <div><%= welding.vt_date&.strftime("%d-%m-%Y") %></div>
+              <div><%= welding.vt_date1&.strftime("%d-%m-%Y") %></div>
             </div>
           </td>
           <td>
