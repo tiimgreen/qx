@@ -23,7 +23,7 @@ class WeldingPdfGenerator
     pdf.image "#{Rails.root}/app/assets/images/logo.png", width: 120, position: :left
     pdf.float do
       pdf.text_box "1 von 1",
-                  at: [pdf.bounds.right - 50, pdf.bounds.top],
+                  at: [ pdf.bounds.right - 50, pdf.bounds.top ],
                   align: :right,
                   size: 12
     end
@@ -67,36 +67,41 @@ class WeldingPdfGenerator
         { content: weld.number, rowspan: 2 },
         weld.component,
         weld.dimension,
-        { content: weld.material, rowspan: 2 },
+        weld.material,
         weld.batch_number,
         weld.material_certificate&.certificate_number,
-        { content: weld.type_code, rowspan: 2 },
-        { content: weld.wps, rowspan: 2 },
-        { content: weld.process, rowspan: 2 },
+        weld.type_code,
+        weld.wps,
+        weld.process,
         weld.welder,
         weld.rt_date&.strftime("%d.%m.%Y"),
         weld.pt_date&.strftime("%d.%m.%Y"),
         weld.vt_date&.strftime("%d.%m.%Y"),
-        { content: weld.result, rowspan: 2 }
+        weld.result
       ]
 
       # Second row
       data << [
-        weld.component,
-        weld.dimension,
-        weld.batch_number,
-        weld.material_certificate&.certificate_number,
-        weld.welder,
-        weld.rt_date&.strftime("%d.%m.%Y"),
-        weld.pt_date&.strftime("%d.%m.%Y"),
-        weld.vt_date&.strftime("%d.%m.%Y")
+        weld.component1,
+        weld.dimension1,
+        weld.material1,
+        weld.batch_number1,
+        weld.material_certificate1&.certificate_number,
+        weld.type_code1,
+        weld.wps1,
+        weld.process1,
+        weld.welder1,
+        weld.rt_date1&.strftime("%d.%m.%Y"),
+        weld.pt_date1&.strftime("%d.%m.%Y"),
+        weld.vt_date1&.strftime("%d.%m.%Y"),
+        weld.result1
       ]
     end
 
     pdf.table(data) do |t|
       t.cells.style do |c|
         c.size = 7
-        c.padding = [3, 2, 3, 2]  # Increased vertical padding
+        c.padding = [ 3, 2, 3, 2 ]  # Increased vertical padding
         c.border_width = 0.5
         c.align = :center
         c.valign = :center
@@ -104,7 +109,7 @@ class WeldingPdfGenerator
 
       # Header row styles
       t.row(0..1).style(font_style: :bold, size: 7)
-      
+
       # Make header rows slightly taller
       t.row(0).min_height = 25
       t.row(1).min_height = 25
