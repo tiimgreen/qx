@@ -28,7 +28,6 @@ class WeldingPdfGenerator
           pdf.move_down 5
           pdf.text "Isometrie / Isometric: #{@isometry.line_id}", size: 11
           pdf.text "Projekt Nr. / Project No.: #{@isometry.project.project_number}", size: 11
-          pdf.move_down 5
           pdf.text "Protokoll Schweissnaht / Weldlog", size: 14, style: :bold, align: :center
         end
       end
@@ -43,18 +42,14 @@ class WeldingPdfGenerator
 
   private
 
-  def generate_header(pdf)
-    # This method is no longer needed as header is handled in generate method
-  end
-
   def generate_table(pdf)
     data = [
       [
         { content: "Naht Nr.\nWeld Nr.", rowspan: 2 },
         { content: "Komponente\ncomponent", rowspan: 2 },
-        { content: "Materialdokumentation- material documentation", colspan: 6 },
-        { content: "Schweissnahtdoku.-welding\ndocu.", colspan: 2 },
-        { content: "Prüfung-dokumentation- test\ndocumentation", colspan: 3 },
+        { content: "Materialdokumentation - material documentation", colspan: 6 },
+        { content: "Schweissnahtdoku - welding\ndocu.", colspan: 2 },
+        { content: "Prüfung - dokumentation - test\ndocumentation", colspan: 3 },
         { content: "Erg.-\nResult", rowspan: 2 }
       ],
       [
