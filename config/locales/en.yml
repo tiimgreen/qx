@@ -27,8 +27,8 @@ en:
     delete: "Delete"
     confirm: "Are you sure?"
     actions:
-      download_welding_report: "Download Welding Report"
-      view_welding_report: "View Welding Report"
+      download_welding_report: "Download Weldlog Report"
+      view_welding_report: "View Weldlog Report"
     messages:
       created: "%{model} was successfully created."
       updated: "%{model} was successfully updated."
@@ -112,8 +112,8 @@ en:
     work_preparation_description: "Preparation of work processes"
     prefabrication: "Prefabrication"
     prefabrication_description: "Component prefabrication"
-    welding: "Welding"
-    welding_description: "Welding processes and documentation"
+    welding: "Weldlog"
+    welding_description: "Weldlog processes and documentation"
     final_inspection: "Final Inspection"
     final_inspection_description: "Quality control and final checks"
     transport: "Transport"
