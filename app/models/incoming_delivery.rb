@@ -3,8 +3,10 @@ class IncomingDelivery < ApplicationRecord
   belongs_to :work_location
   belongs_to :user, optional: true
   has_many_attached :delivery_notes
-  has_many :delivery_items, counter_cache: true, dependent: :destroy
+  has_many :delivery_items, dependent: :destroy
   has_many :material_certificates, through: :delivery_items
+
+  before_destroy :purge_attached_files
 
   validates :delivery_date, presence: true
   validates :order_number, presence: true, uniqueness: true
@@ -38,6 +40,10 @@ class IncomingDelivery < ApplicationRecord
   end
 
   private
+
+  def purge_attached_files
+    delivery_notes.purge
+  end
 
   def all_checks_passed?
     # First check if incoming delivery is on hold

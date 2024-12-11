@@ -11,11 +11,13 @@ class DeliveryItem < ApplicationRecord
   has_many_attached :ra_check_images
   has_many_attached :on_hold_images
 
-  validates :delivery_note_position, presence: true
-  validates :tag_number, presence: true, uniqueness: { scope: :incoming_delivery_id }
-  validates :batch_number, presence: true
-  validates :actual_quantity, presence: true, numericality: { greater_than: 0 }
-  validates :target_quantity, presence: true, numericality: { greater_than: 0 }
+  before_destroy :purge_attached_files
+
+  validates :delivery_note_position, presence: true, on: :create
+  validates :tag_number, presence: true, uniqueness: { scope: :incoming_delivery_id }, on: :create
+  validates :batch_number, presence: true, on: :create
+  validates :actual_quantity, presence: true, numericality: { greater_than: 0 }, on: :create
+  validates :target_quantity, presence: true, numericality: { greater_than: 0 }, on: :create
 
   CHECK_STATUSES = [ "N/A", "Passed", "Failed" ].freeze
   VISUAL_STATUSES = [ "Passed", "Failed" ].freeze
@@ -51,6 +53,15 @@ class DeliveryItem < ApplicationRecord
   end
 
   private
+
+  def purge_attached_files
+    quantity_check_images.purge
+    dimension_check_images.purge
+    visual_check_images.purge
+    vt2_check_images.purge
+    ra_check_images.purge
+    on_hold_images.purge
+  end
 
   def all_checks_passed?
     return false if on_hold?

@@ -1,8 +1,9 @@
 class Project < ApplicationRecord
-  has_many :incoming_deliveries
-  has_many :material_certificates
+  has_many :incoming_deliveries, dependent: :destroy
   has_many :delivery_items, through: :incoming_deliveries
-  has_many :isometries
+  has_many :isometries, dependent: :destroy
+  has_many :isometry_material_certificates, through: :isometries
+  has_many :material_certificates, through: :isometry_material_certificates
 
   belongs_to :user, optional: true
 
