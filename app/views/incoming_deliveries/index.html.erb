@@ -119,9 +119,10 @@
                                data: {
                                  bs_toggle: "modal",
                                  bs_target: "#deleteIncomingDeliveryModal",
-                                 "delivery-id": delivery.id,
-                                 "delivery-number": delivery.delivery_note_number,
-                                 "order-number": delivery.order_number
+                                 incoming_delivery_id: delivery.id,
+                                 project_id: @project.id,
+                                 incoming_delivery_name: delivery.order_number,
+                                 incoming_delivery_number: delivery.delivery_note_number
                                } do %>
                       <i class="bi bi-trash"></i>
                     <% end %>
