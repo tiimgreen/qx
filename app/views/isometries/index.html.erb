@@ -122,11 +122,17 @@
                 <% end %>
               <% end %>
               <% if current_user.can_delete?("Isometry") %>
-                <%= link_to project_isometry_path(@project, isometry),
-                      method: :delete,
-                      data: { confirm: t('common.messages.confirm_delete') },
-                      class: 'btn btn-outline-danger m-1',
-                      title: t('common.actions.delete') do %>
+                <%= button_tag type: 'button',
+                           class: 'btn btn-outline-danger m-1',
+                           title: t('isometries.buttons.delete'),
+                           data: {
+                             bs_toggle: "modal",
+                             bs_target: "#deleteIsometryModal",
+                             "isometry-id": isometry.id,
+                             "isometry-name": isometry.line_id,
+                             "isometry-number": isometry.line_id,
+                             "project-id": @project.id
+                           } do %>
                   <i class="bi bi-trash"></i>
                 <% end %>
               <% end %>
@@ -144,3 +150,10 @@
     </div>
   <% end %>
 </div>
+
+<%= render partial: 'delete_confirmation_modal', 
+           locals: {
+             modal_id: 'deleteIsometryModal',
+             controller_name: 'delete-isometry',
+             model_name: 'isometry'
+           } %>

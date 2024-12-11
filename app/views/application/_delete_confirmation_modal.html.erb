@@ -1,0 +1,38 @@
+<%# Params:
+  modal_id: ID for the modal (e.g., "deleteProjectModal")
+  controller_name: Name of the Stimulus controller (e.g., "delete-project")
+  model_name: Translation key for the model (e.g., "project" or "isometry")
+%>
+
+<div class="modal fade" 
+     id="<%= modal_id %>" 
+     tabindex="-1" 
+     data-controller="<%= controller_name %>"
+     data-<%= controller_name %>-message-value="<%= t('common.messages.confirm_delete_with_details', model: t("activerecord.models.#{model_name}"), name: '%{name}', number: '%{number}') %>"
+     aria-labelledby="<%= modal_id %>Label" 
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="<%= modal_id %>Label">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <%= t('common.messages.confirm_delete_title') %>
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p data-<%= controller_name %>-target="message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x-circle me-2"></i><%= t('common.buttons.cancel') %>
+        </button>
+        <button type="button" 
+                class="btn btn-danger"
+                data-action="<%= controller_name %>#delete<%= model_name.classify %>">
+          <i class="bi bi-trash me-2"></i><%= t('common.buttons.delete') %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

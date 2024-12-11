@@ -92,9 +92,7 @@ de:
 
   activerecord:
     models:
-      isometry:
-        one: "Isometrie"
-        other: "Isometrien"
+      isometry: "Isometrie"
     attributes:
       isometry:
         received_date: "Eingangsdatum"
