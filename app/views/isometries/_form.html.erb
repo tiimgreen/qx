@@ -165,7 +165,7 @@
           <div class="col-12 col-md-3">
             <div class="d-flex flex-column gap-2">
               <div class="d-flex justify-content-between align-items-center">
-                <label class="form-label mb-0">RT</label>
+                <%= f.label :rt, class: "form-label mb-0" %>
                 <div class="flex-grow-1 ms-3">
                   <div class="input-group">
                     <%= f.number_field :rt, class: "form-control", step: "1" %>
@@ -174,7 +174,7 @@
                 </div>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <label class="form-label mb-0">VT2</label>
+                <%= f.label :vt2, class: "form-label mb-0" %>
                 <div class="flex-grow-1 ms-3">
                   <div class="input-group">
                     <%= f.number_field :vt2, class: "form-control", step: "1" %>
@@ -183,7 +183,7 @@
                 </div>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <label class="form-label mb-0">PT2</label>
+                <%= f.label :pt2, class: "form-label mb-0" %>
                 <div class="flex-grow-1 ms-3">
                   <div class="input-group">
                     <%= f.number_field :pt2, class: "form-control", step: "1" %>
@@ -244,7 +244,7 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="row g-3">
     <div class="card mb-4">
       <div class="card-header d-flex align-items-center mb-3">
         <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.spooling') %></h3>
@@ -288,7 +288,7 @@
       </div>      
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="row g-3">
     <div class="card mb-4">
       <div class="card-header d-flex align-items-center mb-3">
         <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.on_hold_status') %></h3>
