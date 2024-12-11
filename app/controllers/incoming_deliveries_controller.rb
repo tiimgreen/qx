@@ -82,7 +82,6 @@ class IncomingDeliveriesController < ApplicationController
 
 
   def destroy
-    debugger
     @incoming_delivery.destroy
     redirect_to project_incoming_deliveries_path(@project), notice: t(".success")
   end

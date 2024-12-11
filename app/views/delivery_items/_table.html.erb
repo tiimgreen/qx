@@ -70,13 +70,15 @@
 </div>
 
 <% delivery_items.each do |item| %>
-  <div class="modal fade" 
-       id="deleteDeliveryItemModal_<%= item.id %>" 
-       tabindex="-1" 
-       data-controller="delete-delivery-item"
-       data-delete-delivery-item-message-value="<%= t('common.messages.confirm_delete_with_details', model: t("activerecord.models.delivery_item"), name: '%{name}', number: '%{number}') %>"
-       aria-labelledby="deleteDeliveryItemModalLabel_<%= item.id %>" 
-       aria-hidden="true">
+<div class="modal fade" 
+     id="deleteDeliveryItemModal_<%= item.id %>" 
+     tabindex="-1" 
+     data-controller="delete-delivery-item"
+     data-delete-delivery-item-message-value="<%= t('common.messages.confirm_delete_with_details', model: t('activerecord.models.delivery_item'), name: '%{name}', number: '%{number}') %>"
+     data-action="show.bs.modal->delete-delivery-item#handleModalShow"
+     aria-labelledby="deleteDeliveryItemModalLabel_<%= item.id %>" 
+     aria-hidden="true">
+
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-danger text-white">
