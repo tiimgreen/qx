@@ -64,31 +64,37 @@
             <td><%= project.user&.name %></td>
             <td class="text-end">
               <div class="btn-group btn-group-sm">
-                <%= link_to project,
-                           class: 'btn btn-outline-info m-1',
-                           title: t('projects.buttons.view'),
-                           data: { bs_toggle: 'tooltip' } do %>
-                  <i class="bi bi-eye"></i>
+                <% if current_user.can_view?("Project") %>
+                  <%= link_to project,
+                             class: 'btn btn-outline-info m-1',
+                             title: t('projects.buttons.view'),
+                             data: { bs_toggle: 'tooltip' } do %>
+                    <i class="bi bi-eye"></i>
+                  <% end %>
                 <% end %>
 
-                <%= link_to edit_project_path(project),
-                           class: 'btn btn-outline-primary m-1',
-                           title: t('projects.buttons.edit'),
-                           data: { bs_toggle: 'tooltip' } do %>
-                  <i class="bi bi-pencil"></i>
+                <% if current_user.can_edit?("Project") %>
+                  <%= link_to edit_project_path(project),
+                             class: 'btn btn-outline-primary m-1',
+                             title: t('projects.buttons.edit'),
+                             data: { bs_toggle: 'tooltip' } do %>
+                    <i class="bi bi-pencil"></i>
+                  <% end %>
                 <% end %>
 
-                <%= button_tag type: 'button',
-                           class: 'btn btn-outline-danger m-1',
-                           title: t('projects.buttons.delete'),
-                           data: {
-                             bs_toggle: "modal",
-                             bs_target: "#deleteProjectModal",
-                             "project-id": project.id,
-                             "project-name": project.name,
-                             "project-number": project.project_number
-                           } do %>
-                  <i class="bi bi-trash"></i>
+                <% if current_user.can_delete?("Project") %>
+                  <%= button_tag type: 'button',
+                             class: 'btn btn-outline-danger m-1',
+                             title: t('projects.buttons.delete'),
+                             data: {
+                               bs_toggle: "modal",
+                               bs_target: "#deleteProjectModal",
+                               "project-id": project.id,
+                               "project-name": project.name,
+                               "project-number": project.project_number
+                             } do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
                 <% end %>
               </div>
             </td>

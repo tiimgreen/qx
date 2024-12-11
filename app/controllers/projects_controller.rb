@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user!
   before_action :set_project, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_action!
 
   def index
     sort_column = sort_params || "created_at"
@@ -68,5 +69,46 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:project_number, :name, :description, :project_manager, :client_name)
+  end
+
+  def authorize_action!
+    case action_name
+    when "index", "show"
+      authorize_view!
+    when "new", "create"
+      authorize_create!
+    when "edit", "update"
+      authorize_edit!
+    when "destroy"
+      authorize_destroy!
+    end
+  end
+
+  def authorize_view!
+    unless current_user.can_view?("Project")
+      flash[:alert] = "You don't have permission to view projects"
+      redirect_to request.referer || root_path
+    end
+  end
+
+  def authorize_create!
+    unless current_user.can_create?("Project")
+      flash[:alert] = "You don't have permission to create projects"
+      redirect_to request.referer || projects_path
+    end
+  end
+
+  def authorize_edit!
+    unless current_user.can_edit?("Project")
+      flash[:alert] = "You don't have permission to update projects"
+      redirect_to request.referer || project_path(@project)
+    end
+  end
+
+  def authorize_destroy!
+    unless current_user.can_delete?("Project")
+      flash[:alert] = "You don't have permission to delete projects"
+      redirect_to request.referer || project_path(@project)
+    end
   end
 end

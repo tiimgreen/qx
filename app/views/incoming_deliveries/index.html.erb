@@ -94,32 +94,37 @@
               <td><%= delivery.user&.name %></td>
               <td class="text-end">
                 <div class="btn-group btn-group-sm">
-                  <%= link_to project_incoming_delivery_path(@project, delivery),
-                             class: 'btn btn-outline-info m-1',
-                             title: t('incoming_deliveries.buttons.view'),
-                             data: { bs_toggle: 'tooltip' } do %>
-                    <i class="bi bi-eye"></i>
+                  <% if current_user.can_view?("IncomingDelivery") %>
+                    <%= link_to project_incoming_delivery_path(@project, delivery),
+                               class: 'btn btn-outline-info m-1',
+                               title: t('incoming_deliveries.buttons.view'),
+                               data: { bs_toggle: 'tooltip' } do %>
+                      <i class="bi bi-eye"></i>
+                    <% end %>
                   <% end %>
 
-                  <%= link_to edit_project_incoming_delivery_path(@project, delivery),
-                             class: 'btn btn-outline-primary m-1',
-                             title: t('incoming_deliveries.buttons.edit'),
-                             data: { bs_toggle: 'tooltip' } do %>
-                    <i class="bi bi-pencil"></i>
+                  <% if current_user.can_edit?("IncomingDelivery") %>
+                    <%= link_to edit_project_incoming_delivery_path(@project, delivery),
+                               class: 'btn btn-outline-primary m-1',
+                               title: t('incoming_deliveries.buttons.edit'),
+                               data: { bs_toggle: 'tooltip' } do %>
+                      <i class="bi bi-pencil"></i>
+                    <% end %>
                   <% end %>
 
-                  <%= button_tag type: 'button',
-                           class: 'btn btn-outline-danger m-1',
-                           title: t('incoming_deliveries.buttons.delete'),
-                           data: {
-                             bs_toggle: "modal",
-                             bs_target: "#deleteIncomingDeliveryModal",
-                             "incoming-delivery-id": delivery.id,
-                             "project-id": @project.id,
-                             "incoming-delivery-name": delivery.order_number,
-                             "incoming-delivery-number": delivery.delivery_note_number
-                           } do %>
-                    <i class="bi bi-trash"></i>
+                  <% if current_user.can_delete?("IncomingDelivery") %>
+                    <%= button_tag type: 'button',
+                               class: 'btn btn-outline-danger m-1',
+                               title: t('incoming_deliveries.buttons.delete'),
+                               data: {
+                                 bs_toggle: "modal",
+                                 bs_target: "#deleteIncomingDeliveryModal",
+                                 "delivery-id": delivery.id,
+                                 "delivery-number": delivery.delivery_note_number,
+                                 "order-number": delivery.order_number
+                               } do %>
+                      <i class="bi bi-trash"></i>
+                    <% end %>
                   <% end %>
                 </div>
               </td>
