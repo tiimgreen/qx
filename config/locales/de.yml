@@ -135,6 +135,8 @@ de:
     passed: "Bestanden"
     failed: "Nicht bestanden"
   activerecord:
+    models:
+      project: "Projekt"
     errors:
       models:
         delivery_item:
@@ -155,4 +157,3 @@ de:
               greater_than: "Soll-Ist-Menge muss größer als %{count} sein"
             on_hold:
               inclusion: "muss einen gültigen Status haben"
-

@@ -8,6 +8,8 @@ en:
       cancel: "Cancel"
     messages:
       confirm_delete: "Are you sure you want to delete this %{model}?"
+      confirm_delete_with_details: "Are you sure you want to delete %{model} '%{name}' (%{number})? This action cannot be undone and will delete all associated records."
+      confirm_delete_title: "Confirm Deletion"
     labels:
       actions: "Actions"
       search: "Search"
@@ -17,6 +19,9 @@ en:
       remove: "Remove"
       new: "New"
       overview: "Overview"
+    buttons:
+      cancel: "Cancel"
+      delete: "Delete"
     weldings:
       number: "Number"
       component: "Component"
@@ -38,4 +43,3 @@ en:
       no_weldings: "No weldings added yet."
       first_set: "First Set"
       second_set: "Second Set"
-
