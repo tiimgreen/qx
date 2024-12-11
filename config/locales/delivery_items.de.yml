@@ -38,3 +38,8 @@ de:
       edit: "Bearbeiten"
       delete: "Löschen"
       back: "Zurück"
+    destroy:
+      success: "Lieferposition wurde erfolgreich gelöscht"
+  activerecord:
+    models:
+      delivery_item: "Lieferposition"

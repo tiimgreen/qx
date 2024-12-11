@@ -108,15 +108,17 @@
                     <i class="bi bi-pencil"></i>
                   <% end %>
 
-                  <%= button_to project_incoming_delivery_path(@project, delivery),
-                             method: :delete,
-                             class: 'btn btn-outline-danger m-1',
-                             title: t('incoming_deliveries.buttons.delete'),
-                             form: { style: 'display: inline' },
-                             data: {
-                               turbo_confirm: t('common.messages.confirm_delete', model: IncomingDelivery.model_name.human.downcase),
-                               bs_toggle: 'tooltip'
-                             } do %>
+                  <%= button_tag type: 'button',
+                           class: 'btn btn-outline-danger m-1',
+                           title: t('incoming_deliveries.buttons.delete'),
+                           data: {
+                             bs_toggle: "modal",
+                             bs_target: "#deleteIncomingDeliveryModal",
+                             "incoming-delivery-id": delivery.id,
+                             "project-id": @project.id,
+                             "incoming-delivery-name": delivery.order_number,
+                             "incoming-delivery-number": delivery.delivery_note_number
+                           } do %>
                     <i class="bi bi-trash"></i>
                   <% end %>
                 </div>
@@ -128,3 +130,9 @@
   </div>
 </div>
 
+<%= render partial: 'delete_confirmation_modal', 
+           locals: {
+             modal_id: 'deleteIncomingDeliveryModal',
+             controller_name: 'delete-incoming-delivery',
+             model_name: 'incoming_delivery'
+           } %>

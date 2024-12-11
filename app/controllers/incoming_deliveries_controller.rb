@@ -82,9 +82,9 @@ class IncomingDeliveriesController < ApplicationController
 
 
   def destroy
+    debugger
     @incoming_delivery.destroy
-    redirect_to project_incoming_deliveries_path(@project),
-                notice: t("common.messages.deleted", model: "Delivery")
+    redirect_to project_incoming_deliveries_path(@project), notice: t(".success")
   end
 
   def complete

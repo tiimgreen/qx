@@ -46,3 +46,8 @@ de:
       delete: "Löschen"
       view: "Anzeigen"
       complete: "Abschließen"
+    destroy:
+      success: "Eingehende Lieferung wurde erfolgreich gelöscht"
+  activerecord:
+    models:
+      incoming_delivery: "Eingehende Lieferung"

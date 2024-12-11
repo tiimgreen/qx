@@ -67,8 +67,6 @@ class DeliveryItemsController < ApplicationController
 
   def destroy
     @delivery_item.destroy
-    redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                notice: t("common.messages.deleted", model: DeliveryItem.model_name.human)
   end
 
   def complete
@@ -111,7 +109,7 @@ class DeliveryItemsController < ApplicationController
 
   def set_delivery_item
     @delivery_item = if params[:id]
-      DeliveryItem.find(params[:id])
+      @incoming_delivery.delivery_items.find(params[:id])
     else
       @incoming_delivery.delivery_items.build
     end

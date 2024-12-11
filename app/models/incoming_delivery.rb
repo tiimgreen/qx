@@ -3,10 +3,11 @@ class IncomingDelivery < ApplicationRecord
   belongs_to :work_location
   belongs_to :user, optional: true
   has_many_attached :delivery_notes
-  has_many :delivery_items, dependent: :destroy
+  has_many :delivery_items
   has_many :material_certificates, through: :delivery_items
 
   before_destroy :purge_attached_files
+  before_destroy :cleanup_delivery_items
 
   validates :delivery_date, presence: true
   validates :order_number, presence: true, uniqueness: true
@@ -43,6 +44,10 @@ class IncomingDelivery < ApplicationRecord
 
   def purge_attached_files
     delivery_notes.purge
+  end
+
+  def cleanup_delivery_items
+    delivery_items.each(&:destroy)
   end
 
   def all_checks_passed?
