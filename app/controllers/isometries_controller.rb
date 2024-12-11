@@ -137,11 +137,11 @@ class IsometriesController < ApplicationController
 
   def download_welding_report
     pdf = ::WeldingPdfGenerator.new(@isometry).generate
-    
+
     send_data pdf.render,
               filename: "welding_report_#{@isometry.line_id}.pdf",
-              type: 'application/pdf',
-              disposition: params[:download] ? 'attachment' : 'inline'
+              type: "application/pdf",
+              disposition: params[:download] ? "attachment" : "inline"
   end
 
   private
@@ -163,28 +163,28 @@ class IsometriesController < ApplicationController
 
   def authorize_view!
     unless current_user.can_view?("Isometry")
-      flash[:alert] = "You don't have permission to view isometries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.show"), model: Isometry.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
 
   def authorize_create!
     unless current_user.can_create?("Isometry")
-      flash[:alert] = "You don't have permission to create isometries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: Isometry.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
 
   def authorize_edit!
     unless current_user.can_edit?("Isometry")
-      flash[:alert] = "You don't have permission to update isometries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.edit"), model: Isometry.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
 
   def authorize_destroy!
     unless current_user.can_delete?("Isometry")
-      flash[:alert] = "You don't have permission to delete isometries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: Isometry.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
@@ -276,7 +276,7 @@ class IsometriesController < ApplicationController
       material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],
       weldings_attributes: [
-        :id, :number, 
+        :id, :number,
         :component, :component1,
         :dimension, :dimension1,
         :material, :material1,

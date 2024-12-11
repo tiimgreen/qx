@@ -86,28 +86,28 @@ class ProjectsController < ApplicationController
 
   def authorize_view!
     unless current_user.can_view?("Project")
-      flash[:alert] = "You don't have permission to view projects"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.show"), model: Project.model_name.human)
       redirect_to request.referer || root_path
     end
   end
 
   def authorize_create!
     unless current_user.can_create?("Project")
-      flash[:alert] = "You don't have permission to create projects"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: Project.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
 
   def authorize_edit!
     unless current_user.can_edit?("Project")
-      flash[:alert] = "You don't have permission to update projects"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.edit"), model: Project.model_name.human)
       redirect_to request.referer || project_path(@project)
     end
   end
 
   def authorize_destroy!
     unless current_user.can_delete?("Project")
-      flash[:alert] = "You don't have permission to delete projects"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: Project.model_name.human)
       redirect_to request.referer || project_path(@project)
     end
   end

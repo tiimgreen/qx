@@ -120,28 +120,28 @@ class IncomingDeliveriesController < ApplicationController
 
   def authorize_view!
     unless current_user.can_view?("IncomingDelivery")
-      flash[:alert] = "You don't have permission to view deliveries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.show"), model: IncomingDelivery.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
 
   def authorize_create!
     unless current_user.can_create?("IncomingDelivery")
-      flash[:alert] = "You don't have permission to create deliveries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: IncomingDelivery.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
 
   def authorize_edit!
     unless current_user.can_edit?("IncomingDelivery")
-      flash[:alert] = "You don't have permission to update deliveries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.edit"), model: IncomingDelivery.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
 
   def authorize_destroy!
     unless current_user.can_delete?("IncomingDelivery")
-      flash[:alert] = "You don't have permission to delete deliveries"
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: IncomingDelivery.model_name.human)
       redirect_to request.referer || projects_path
     end
   end
