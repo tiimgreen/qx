@@ -48,26 +48,28 @@
               <% end %>
             <% end %>
           </ul>
-            <div class="ms-auto">
-              <div class="dropdown" data-controller="language">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <%= image_tag "flags/4x3/#{I18n.locale == :en ? 'gb' : 'de'}.svg", width: 20, height: 15, alt: I18n.locale.to_s.upcase %>
-                  <%= I18n.locale.to_s.upcase %>
-                </button>
-                <ul class="dropdown-menu">
-                  <% { en: 'gb', de: 'de' }.each do |locale, flag| %>
-                    <li>
-                      <%= link_to params.permit(:locale).merge(locale: locale),
-                            class: "dropdown-item #{I18n.locale == locale ? 'active' : ''}",
-                            data: { "turbo-method": :patch } do %>
-                        <%= image_tag "flags/4x3/#{flag}.svg", width: 20, height: 15, alt: locale.to_s.upcase %>
-                        <%= locale.to_s.upcase %>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
+
+          <div class="ms-auto">
+            <div class="dropdown" data-controller="language">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= image_tag "flags/4x3/#{I18n.locale == :en ? 'gb' : 'de'}.svg", width: 20, height: 15, alt: I18n.locale.to_s.upcase %>
+                <%= I18n.locale.to_s.upcase %>
+              </button>
+              <ul class="dropdown-menu">
+                <% { en: 'gb', de: 'de' }.each do |locale, flag| %>
+                  <li>
+                    <%= link_to switch_locale_path(new_locale: locale),
+                          class: "dropdown-item #{I18n.locale == locale ? 'active' : ''}",
+                          data: { "turbo-method": :post } do %>
+                      <%= image_tag "flags/4x3/#{flag}.svg", width: 20, height: 15, alt: locale.to_s.upcase %>
+                      <%= locale.to_s.upcase %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
             </div>
+          </div>
+
           <!-- User section -->
           <ul class="navbar-nav">
             <% if user_signed_in? %>

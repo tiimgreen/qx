@@ -8,7 +8,7 @@ module Internationalization
   private
 
   def set_locale
-    I18n.locale = extract_locale || I18n.default_locale
+    I18n.locale = extract_locale || session[:locale] || I18n.default_locale
   end
 
   def extract_locale

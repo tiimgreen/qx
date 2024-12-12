@@ -68,7 +68,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:project_number, :name, :description, :project_manager, :client_name)
+    params.require(:project).permit(:project_number, :name, :description, :project_manager, :client_name, :id, :locale)
   end
 
   def authorize_action!
