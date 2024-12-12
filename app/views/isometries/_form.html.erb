@@ -10,186 +10,257 @@
     </div>
   <% end %>
 
- 
-  <div class="card mb-4">
-    <div class="card-header d-flex align-items-center mb-3">
-      <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.technical_specs') %></h3>
-    </div>
-    <div class="card-body">
-    <!-- Technical Specification -->
-      <div class="row g-3">
-        <div class="row">
-          <div class="col-md-2 mb-3">
-            <%= f.label :received_date, class: "form-label" %>
-            <%= f.date_field :received_date, class: "form-control", value: Date.current %>
-          </div>
+<div class="accordion" id="mainAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section1">
+        <%= t('.technical_specs') %>
+      </button>
+    </h2>
+    <div id="section1" class="accordion-collapse collapse show" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+        <!-- Technical Specification -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="row">
+                <div class="col-md-2 mb-3">
+                  <%= f.label :received_date, class: "form-label" %>
+                  <%= f.date_field :received_date, class: "form-control", value: Date.current %>
+                </div>
 
-          <div class="col-md-2 mb-3">
-            <%= f.label :pid_number, class: "form-label" %>
-            <%= f.text_field :pid_number, class: "form-control" %>
-          </div>
+                <div class="col-md-2 mb-3">
+                  <%= f.label :pid_number, class: "form-label" %>
+                  <%= f.text_field :pid_number, class: "form-control" %>
+                </div>
 
-          <div class="col-md-2 mb-3">
-            <%= f.label :pid_revision, class: "form-label" %>
-            <%= f.number_field :pid_revision, class: "form-control" %>
-          </div>
+                <div class="col-md-2 mb-3">
+                  <%= f.label :pid_revision, class: "form-label" %>
+                  <%= f.number_field :pid_revision, class: "form-control" %>
+                </div>
 
-          <div class="col-md-2 mb-3">
-            <%= f.label :line_id, class: "form-label" %>
-            <%= f.text_field :line_id, class: "form-control" %>
-          </div>
-          
-          <div class="col-md-2 mb-3">
-            <%= f.label :dn, class: "form-label" %>
-            <%= f.text_field :dn, class: "form-control" %>
-          </div>
-          
-          <div class="col-md-2 mb-3">
-            <%= f.label :revision_number, class: "form-label" %>
-            <%= f.number_field :revision_number, class: "form-control" %>
-          </div>
+                <div class="col-md-2 mb-3">
+                  <%= f.label :line_id, class: "form-label" %>
+                  <%= f.text_field :line_id, class: "form-control" %>
+                </div>
+                
+                <div class="col-md-2 mb-3">
+                  <%= f.label :dn, class: "form-label" %>
+                  <%= f.text_field :dn, class: "form-control" %>
+                </div>
+                
+                <div class="col-md-2 mb-3">
+                  <%= f.label :revision_number, class: "form-label" %>
+                  <%= f.number_field :revision_number, class: "form-control" %>
+                </div>
 
-          <div class="col-md-2 mb-3">
-            <%= f.check_box :revision_last, class: "form-check-input" %>
-            <%= f.label :revision_last, class: "form-check-label" %>
+                <div class="col-md-2 mb-3">
+                  <%= f.check_box :revision_last, class: "form-check-input" %>
+                  <%= f.label :revision_last, class: "form-check-label" %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2 mb-3">
+                  <%= f.label :page_number, class: "form-label" %>
+                  <%= f.number_field :page_number, class: "form-control" %>
+                </div>
+
+                <div class="col-md-2 mb-3">
+                  <%= f.label :page_total, class: "form-label" %>
+                  <%= f.number_field :page_total, class: "form-control" %>
+                </div>
+
+                <div class="col-md-2 mb-3">
+                  <%= f.label :pipe_class, class: "form-label" %>
+                  <%= f.text_field :pipe_class, class: "form-control" %>
+                </div>
+
+                <div class="col-md-2 mb-3">
+                  <%= f.label :material, class: "form-label" %>
+                  <%= f.text_field :material, class: "form-control" %>
+                </div>
+
+                <div class="col-md-2 mb-3">
+                  <%= f.label :system, class: "form-label" %>
+                  <%= f.text_field :system, class: "form-control" %>
+                </div>
+                
+                <div class="col-md-2 mb-3">
+                  <%= f.label :medium, class: "form-label" %>
+                  <%= f.text_field :medium, class: "form-control" %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2 mb-3">
+                  <%= f.label :work_package_number, class: "form-label" %>
+                  <%= f.number_field :work_package_number, class: "form-control" %>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-md-2 mb-3">
-            <%= f.label :page_number, class: "form-label" %>
-            <%= f.number_field :page_number, class: "form-control" %>
-          </div>
-
-          <div class="col-md-2 mb-3">
-            <%= f.label :page_total, class: "form-label" %>
-            <%= f.number_field :page_total, class: "form-control" %>
-          </div>
-
-          <div class="col-md-2 mb-3">
-            <%= f.label :pipe_class, class: "form-label" %>
-            <%= f.text_field :pipe_class, class: "form-control" %>
-          </div>
-
-          <div class="col-md-2 mb-3">
-            <%= f.label :material, class: "form-label" %>
-            <%= f.text_field :material, class: "form-control" %>
-          </div>
-
-          <div class="col-md-2 mb-3">
-            <%= f.label :system, class: "form-label" %>
-            <%= f.text_field :system, class: "form-control" %>
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-2 mb-3">
-            <%= f.label :medium, class: "form-label" %>
-            <%= f.text_field :medium, class: "form-control" %>
-          </div>
-
-          <div class="col-md-2 mb-3">
-            <%= f.label :work_package_number, class: "form-label" %>
-            <%= f.number_field :work_package_number, class: "form-control" %>
-          </div>
-        </div>
-
+        
       </div>
     </div>
   </div>
 
-<!-- Additional Specification -->
-<div class="card mb-4">
-  <div class="card-header d-flex align-items-center mb-3">
-    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.additional_specs') %></h3>
-  </div>
-  <div class="card-body">
-    <div class="row g-3">
-      <div class="container p-4">
-        <div class="row">
-          <!-- First column - Checkboxes (DP, DIP, Isolierung) -->
-          <div class="col-12 col-md-2 mb-3 mb-md-0">
-            <div class="d-flex flex-column gap-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :dp, class: "form-label mb-0" %>
-                <%= f.check_box :dp, class: "form-check-input" %>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :dip, class: "form-label mb-0" %>
-                <%= f.check_box :dip, class: "form-check-input" %>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :isolation_required, class: "form-label mb-0" %>
-                <%= f.check_box :isolation_required, class: "form-check-input" %>
-              </div>
-            </div>
-          </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section2">
+        <%= t('.additional_specs') %>
+      </button>
+    </h2>
+    <div id="section2" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+        <!-- Additional Specification -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="container p-4">
+                <div class="row">
+                  <!-- First column - Checkboxes (DP, DIP, Isolierung) -->
+                  <div class="col-12 col-md-2 mb-3 mb-md-0">
+                    <div class="d-flex flex-column gap-2">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :dp, class: "form-label mb-0" %>
+                        <%= f.check_box :dp, class: "form-check-input" %>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :dip, class: "form-label mb-0" %>
+                        <%= f.check_box :dip, class: "form-check-input" %>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :isolation_required, class: "form-label mb-0" %>
+                        <%= f.check_box :isolation_required, class: "form-check-input" %>
+                      </div>
+                    </div>
+                  </div>
 
-          <!-- Second column - Checkboxes (GMP, GDP) -->
-          <div class="col-12 col-md-2 mb-3 mb-md-0">
-            <div class="d-flex flex-column gap-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :gmp, class: "form-label mb-0" %>
-                <%= f.check_box :gmp, class: "form-check-input" %>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :gdp, class: "form-label mb-0" %>
-                <%= f.check_box :gdp, class: "form-check-input" %>
-              </div>
-            </div>
-          </div>
+                  <!-- Second column - Checkboxes (GMP, GDP) -->
+                  <div class="col-12 col-md-2 mb-3 mb-md-0">
+                    <div class="d-flex flex-column gap-2">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :gmp, class: "form-label mb-0" %>
+                        <%= f.check_box :gmp, class: "form-check-input" %>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :gdp, class: "form-label mb-0" %>
+                        <%= f.check_box :gdp, class: "form-check-input" %>
+                      </div>
+                    </div>
+                  </div>
 
-          <!-- Third column - PED and Gefälle -->
-          <div class="col-12 col-md-5 mb-3 mb-md-0">
-            <div class="d-flex flex-column gap-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :ped_category, class: "form-label mb-0" %>
-                <div class="flex-grow-1 ms-3">
-                  <%= f.select :ped_category, Isometry::PED_CATEGORIES, { include_blank: true }, class: "form-select" %>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :gefall, class: "form-label mb-0" %>
-                <div class="flex-grow-1 ms-3">
-                  <div class="input-group">
-                    <%= f.text_field :slope_if_needed, class: "form-control", step: "1" %>
-                    <span class="input-group-text">%</span>
+                  <!-- Third column - PED and Gefälle -->
+                  <div class="col-12 col-md-5 mb-3 mb-md-0">
+                    <div class="d-flex flex-column gap-2">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :ped_category, class: "form-label mb-0" %>
+                        <div class="flex-grow-1 ms-3">
+                          <%= f.select :ped_category, Isometry::PED_CATEGORIES, { include_blank: true }, class: "form-select" %>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :gefall, class: "form-label mb-0" %>
+                        <div class="flex-grow-1 ms-3">
+                          <div class="input-group">
+                            <%= f.text_field :slope_if_needed, class: "form-control", step: "1" %>
+                            <span class="input-group-text">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Fourth column - RT, VT2, PT2 -->
+                  <div class="col-12 col-md-3">
+                    <div class="d-flex flex-column gap-2">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :rt, class: "form-label mb-0" %>
+                        <div class="flex-grow-1 ms-3">
+                          <div class="input-group">
+                            <%= f.number_field :rt, class: "form-control", step: "1" %>
+                            <span class="input-group-text">%</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :vt2, class: "form-label mb-0" %>
+                        <div class="flex-grow-1 ms-3">
+                          <div class="input-group">
+                            <%= f.number_field :vt2, class: "form-control", step: "1" %>
+                            <span class="input-group-text">%</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <%= f.label :pt2, class: "form-label mb-0" %>
+                        <div class="flex-grow-1 ms-3">
+                          <div class="input-group">
+                            <%= f.number_field :pt2, class: "form-control", step: "1" %>
+                            <span class="input-group-text">%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <!-- Fourth column - RT, VT2, PT2 -->
-          <div class="col-12 col-md-3">
-            <div class="d-flex flex-column gap-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :rt, class: "form-label mb-0" %>
-                <div class="flex-grow-1 ms-3">
-                  <div class="input-group">
-                    <%= f.number_field :rt, class: "form-control", step: "1" %>
-                    <span class="input-group-text">%</span>
-                  </div>
-                </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section3">
+        <%= t('.inspection') %>
+      </button>
+    </h2>
+    <div id="section3" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+          <!-- Inspection -->
+        <div class="row g-3">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <dt><%= f.label :rt_percentage %></dt>
+                <%= f.file_field :rt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
+                <% if @isometry.rt_images.attached? %>
+                  <%= render partial: 'images', locals: { 
+                    images: @isometry.rt_images, 
+                    image_type: 'rt',
+                    edit_mode: true
+                  } %>
+                <% end %>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :vt2, class: "form-label mb-0" %>
-                <div class="flex-grow-1 ms-3">
-                  <div class="input-group">
-                    <%= f.number_field :vt2, class: "form-control", step: "1" %>
-                    <span class="input-group-text">%</span>
-                  </div>
-                </div>
+
+              <div class="row">
+                <dt><%= f.label :vt2_percentage %></dt>
+                <%= f.file_field :vt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
+                <% if @isometry.vt_images.attached? %>
+                  <%= render partial: 'images', locals: { 
+                    images: @isometry.vt_images, 
+                    image_type: 'vt',
+                    edit_mode: true
+                  } %>
+                <% end %>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <%= f.label :pt2, class: "form-label mb-0" %>
-                <div class="flex-grow-1 ms-3">
-                  <div class="input-group">
-                    <%= f.number_field :pt2, class: "form-control", step: "1" %>
-                    <span class="input-group-text">%</span>
-                  </div>
-                </div>
+
+              <div class="row">
+                <dt><%= f.label :pt2_percentage %></dt>
+                <%= f.file_field :pt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
+                <% if @isometry.pt_images.attached? %>
+                  <%= render partial: 'images', locals: { 
+                    images: @isometry.pt_images, 
+                    image_type: 'pt',
+                    edit_mode: true
+                  } %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -197,327 +268,340 @@
       </div>
     </div>
   </div>
-</div>
 
-<!-- Inspection -->
-<div class="row g-3">
-  <div class="card mb-4">
-    <div class="card-header d-flex align-items-center mb-3">
-      <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.inspection') %></h3>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <dt><%= f.label :rt_percentage %></dt>
-        <%= f.file_field :rt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
-        <% if @isometry.rt_images.attached? %>
-          <%= render partial: 'images', locals: { 
-            images: @isometry.rt_images, 
-            image_type: 'rt',
-            edit_mode: true
-          } %>
-        <% end %>
-      </div>
-
-      <div class="row">
-        <dt><%= f.label :vt2_percentage %></dt>
-        <%= f.file_field :vt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
-        <% if @isometry.vt_images.attached? %>
-          <%= render partial: 'images', locals: { 
-            images: @isometry.vt_images, 
-            image_type: 'vt',
-            edit_mode: true
-          } %>
-        <% end %>
-      </div>
-
-      <div class="row">
-        <dt><%= f.label :pt2_percentage %></dt>
-        <%= f.file_field :pt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
-        <% if @isometry.pt_images.attached? %>
-          <%= render partial: 'images', locals: { 
-            images: @isometry.pt_images, 
-            image_type: 'pt',
-            edit_mode: true
-          } %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Spooling -->
-<div class="row g-3">
-  <div class="card mb-4">
-    <div class="card-header d-flex align-items-center mb-3">
-      <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.spooling') %></h3>
-    </div>
-    <div class="card-body">
-      <!-- Measurements -->
-      <div class="row g-3">
-        <div class="col-md-2 mb-3">
-          <%= f.label :pipe_length, class: "form-label" %>
-          <div class="input-group">
-            <%= f.number_field :pipe_length, class: "form-control", step: "0.01" %>
-            <span class="input-group-text">M</span>
-          </div>
-        </div>
-        <div class="col-md-2 mb-3">
-          <%= f.label :workshop_sn, class: "form-label" %>
-          <div class="input-group">
-            <%= f.number_field :workshop_sn, class: "form-control" %>
-            <span class="input-group-text">PCS</span>
-          </div>
-        </div>
-
-        <div class="col-md-2 mb-3">
-          <%= f.label :assembly_sn, class: "form-label" %>
-          <div class="input-group">
-            <%= f.number_field :assembly_sn, class: "form-control" %>
-            <span class="input-group-text">PCS</span>
-          </div>
-        </div>
-
-        <div class="col-md-2 mb-3">
-          <%= f.label :total_sn, class: "form-label" %>
-          <div class="input-group">
-            <%= f.number_field :total_sn, class: "form-control" %>
-            <span class="input-group-text">PCS</span>
-          </div>
-        </div>
-
-        <div class="col-md-2 mb-3">
-          <%= f.label :total_supports, class: "form-label" %>
-          <div class="input-group">
-            <%= f.number_field :total_supports, class: "form-control" %>
-            <span class="input-group-text">PCS</span>
-          </div>
-        </div>
-        <div class="col-md-2 mb-3">
-          <%= f.label :total_spools, class: "form-label" %>
-          <div class="input-group">
-            <%= f.number_field :total_spools, class: "form-control" %>
-            <span class="input-group-text">PCS</span>
-          </div>
-        </div>
-      </div>
-    </div>      
-  </div>
-</div>
-
-<!-- On hold status -->
-<div class="row g-3">
-  <div class="card mb-4">
-    <div class="card-header d-flex align-items-center mb-3">
-      <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.on_hold_status') %></h3>
-    </div>
-    <div class="card-body">
-      <!-- On hold fields -->
-      <div class="row g-3">
-        <div class="col-md-5 mb-3">
-          <%= f.label :on_hold_status, class: "form-label" %>
-          <%= f.select :on_hold_status, Isometry::ON_HOLD_STATUSES, { include_blank: true }, class: "form-select" %>
-        </div>
-        <div class="col-md-7 mb-3">
-          <%= f.label :on_hold_images, class: "form-label" %>
-          <%= f.file_field :on_hold_images, multiple: true, class: "form-control" %>
-        </div>
-        <div class="mb-3">
-          <%= f.label :on_hold_comment, class: "form-label" %>
-          <%= f.text_area :on_hold_comment, class: "form-control", rows: 4  %>
-        </div>
-    
-        <% if f.object.on_hold_images.attached? %>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section4">
+        <%= t('.spooling') %>
+      </button>
+    </h2>
+    <div id="section4" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+          <!-- Spooling -->
           <div class="row g-3">
-            <% f.object.on_hold_images.each do |image| %>
-              <div class="col-md-6">
-                <div class="card h-100">
-                  <%= image_tag image, class: "card-img-top", style: "object-fit: cover; height: 150px;" %>
-                  <div class="card-footer">
-                    <small class="text-muted">
-                      <%= number_to_human_size(image.byte_size) %> • <%= l(image.created_at, format: :short) %>
-                    </small>
+            <div class="card mb-4">
+              <div class="card-body">
+                <!-- Measurements -->
+                <div class="row g-3">
+                  <div class="col-md-2 mb-3">
+                    <%= f.label :pipe_length, class: "form-label" %>
+                    <div class="input-group">
+                      <%= f.number_field :pipe_length, class: "form-control", step: "0.01" %>
+                      <span class="input-group-text">M</span>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <%= f.label :workshop_sn, class: "form-label" %>
+                    <div class="input-group">
+                      <%= f.number_field :workshop_sn, class: "form-control" %>
+                      <span class="input-group-text">PCS</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 mb-3">
+                    <%= f.label :assembly_sn, class: "form-label" %>
+                    <div class="input-group">
+                      <%= f.number_field :assembly_sn, class: "form-control" %>
+                      <span class="input-group-text">PCS</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 mb-3">
+                    <%= f.label :total_sn, class: "form-label" %>
+                    <div class="input-group">
+                      <%= f.number_field :total_sn, class: "form-control" %>
+                      <span class="input-group-text">PCS</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 mb-3">
+                    <%= f.label :total_supports, class: "form-label" %>
+                    <div class="input-group">
+                      <%= f.number_field :total_supports, class: "form-control" %>
+                      <span class="input-group-text">PCS</span>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <%= f.label :total_spools, class: "form-label" %>
+                    <div class="input-group">
+                      <%= f.number_field :total_spools, class: "form-control" %>
+                      <span class="input-group-text">PCS</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            <% end %>
+              </div>      
+            </div>
           </div>
-        <% end %>
+
       </div>
     </div>
   </div>
-</div>
 
-<div class="card mb-4">
-  <div class="card-header d-flex align-items-center mb-3">
-    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.weldings') %></h3>
-  </div>
-  <div class="card-body" data-controller="nested-form">
-    <template data-nested-form-target="template">
-      <%= f.fields_for :weldings, Welding.new, child_index: 'NEW_RECORD' do |welding| %>
-        <%= render 'weldings/welding_fields', f: welding %>
-      <% end %>
-    </template>
-
-    <div data-nested-form-target="fields">
-      <%= f.fields_for :weldings do |welding| %>
-        <%= render 'weldings/welding_fields', f: welding %>
-      <% end %>
-    </div>
-
-    <div class="mt-3">
-      <%= link_to t('common.add_welding'), '#',
-          class: "btn btn-primary",
-          data: { action: "click->nested-form#add" } %>
-    </div>
-  </div>
-</div>
-
-<div class="card mb-4" data-controller="material-certificate-search" 
-     data-project-id="<%= @project.id %>" 
-     data-isometry-id="<%= @isometry.id %>">
-  <div class="card-header d-flex align-items-center mb-3">
-    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.material_certificates') %></h3>
-  </div>
-  <div class="card-body">
-    <div class="row g-3">
-      <div class="col-12">
-        <div class="mb-3">
-          <label class="form-label"><%= t('.search_certificates') %></label>
-          <%= text_field_tag :search, nil,
-            class: "form-control",
-            data: {
-              material_certificate_search_target: "search",
-              action: "input->material-certificate-search#search",
-              material_certificate_search_url: search_material_certificates_path
-            },
-            placeholder: t('.search_certificates_placeholder'),
-            autocomplete: "off"
-          %>
-        </div>
-        <div id="certificate-results" 
-             class="list-group mb-3"
-             data-material-certificate-search-target="results"></div>
-  <div class="row g-3" data-material-certificate-search-target="selected">
-    <% @isometry.material_certificates.each do |cert| %>
-      <div class="col-md-2">
-        <div class="selected-certificate" data-certificate-id="<%= cert.id %>">
-          <input type="hidden" name="isometry[material_certificate_ids][]" value="<%= cert.id %>">
-          <div class="d-flex flex-column position-relative border rounded p-2">
-            <button type="button" 
-                    class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1" 
-                    data-action="click->material-certificate-search#removeCertificate">×</button>
-            <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
-              <div class="text-center mb-2">
-                <i class="bi bi-file-text" style="font-size: 2rem;"></i>
-              </div>
-              <div class="d-flex flex-column text-center">
-                <span class="fw-medium"><%= cert.certificate_number %></span>
-                <span class="text-secondary small"><%= cert.batch_number %></span>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="card mb-4">
-  <div class="card-header d-flex align-items-center mb-3">
-    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.isometry_documents') %></h3>
-  </div>
-  <div class="card-body">
-    <!-- Image Upload -->
-    <div class="row g-3">
-      <!-- Initial PDF Upload -->
-      <div class="col-md-8 mb-3">   
-        <div class="row">
-          <div class="col-md-8">
-            <%= f.label :new_pdf, t('.upload_new_pdf'), class: "form-label" %>
-            <%= f.file_field :new_pdf, class: "form-control" %>
-          </div>
-          
-          <div class="col-md-4">
-            <%= f.label :new_pdf_qr_position, t('.qr_position'), class: "form-label" %>
-            <%= f.select :new_pdf_qr_position, 
-                      [
-                        [t('.top_left'), "top_left"],
-                        [t('.top_right'), "top_right"],
-                        [t('.bottom_left'), "bottom_left"],
-                        [t('.bottom_right'), "bottom_right"]
-                      ],
-                      { include_blank: true },
-                      class: "form-select" %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Existing PDFs with QR Position Selection -->
-      <% if @isometry.persisted? && @isometry.isometry_documents.any? %>
-        <div class="col-12">
-          <h6 class="mb-3"><%= t('.existing_documents') %></h6>
-          
-          <%= f.fields_for :isometry_documents do |doc_form| %>
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-md-1 text-center">
-                    <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
-                  </div>
-                  <div class="col-md-4">
-                    <h6 class="mb-1"><%= doc_form.object.pdf.filename %></h6>
-                    <small class="text-muted">
-                      <%= number_to_human_size(doc_form.object.pdf.byte_size) %> •
-                      <%= l(doc_form.object.pdf.created_at, format: :short) %>
-                    </small>
-                  </div>
-                  <div class="col-md-3 text-end">
-                    <%= link_to url_for(doc_form.object.pdf), 
-                              target: "_blank", 
-                              class: "btn btn-outline-primary btn-sm me-2" do %>
-                      <i class="bi bi-eye"></i> <%= t('.view') %>
-                    <% end %>
-                    
-                    <%= doc_form.check_box :_destroy, 
-                                         class: "btn-check",
-                                         id: "delete_doc_#{doc_form.object.id}" %>
-                    <%= doc_form.label :_destroy, 
-                                     class: "btn btn-outline-danger btn-sm",
-                                     for: "delete_doc_#{doc_form.object.id}" do %>
-                      <i class="bi bi-trash"></i> <%= t('.delete') %>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section5">
+        <%= t('.on_hold_status') %>
+      </button>
+    </h2>
+    <div id="section5" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+        <!-- On hold status -->
+        <div class="row g-3">
+          <div class="card mb-4">
+            <div class="card-body">
+              <!-- On hold fields -->
+              <div class="row g-3">
+                <div class="col-md-5 mb-3">
+                  <%= f.label :on_hold_status, class: "form-label" %>
+                  <%= f.select :on_hold_status, Isometry::ON_HOLD_STATUSES, { include_blank: true }, class: "form-select" %>
+                </div>
+                <div class="col-md-7 mb-3">
+                  <%= f.label :on_hold_images, class: "form-label" %>
+                  <%= f.file_field :on_hold_images, multiple: true, class: "form-control" %>
+                </div>
+                <div class="mb-3">
+                  <%= f.label :on_hold_comment, class: "form-label" %>
+                  <%= f.text_area :on_hold_comment, class: "form-control", rows: 4  %>
+                </div>
+            
+                <% if f.object.on_hold_images.attached? %>
+                  <div class="row g-3">
+                    <% f.object.on_hold_images.each do |image| %>
+                      <div class="col-md-6">
+                        <div class="card h-100">
+                          <%= image_tag image, class: "card-img-top", style: "object-fit: cover; height: 150px;" %>
+                          <div class="card-footer">
+                            <small class="text-muted">
+                              <%= number_to_human_size(image.byte_size) %> • <%= l(image.created_at, format: :short) %>
+                            </small>
+                          </div>
+                        </div>
+                      </div>
                     <% end %>
                   </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section6">
+        <%= t('.weldings') %>
+      </button>
+    </h2>
+    <div id="section6" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+        <!-- Weldings -->
+        <div class="card mb-4">
+          <div class="card-body" data-controller="nested-form">
+            <template data-nested-form-target="template">
+              <%= f.fields_for :weldings, Welding.new, child_index: 'NEW_RECORD' do |welding| %>
+                <%= render 'weldings/welding_fields', f: welding %>
+              <% end %>
+            </template>
+
+            <div data-nested-form-target="fields">
+              <%= f.fields_for :weldings do |welding| %>
+                <%= render 'weldings/welding_fields', f: welding %>
+              <% end %>
+            </div>
+
+            <div class="mt-3">
+              <%= link_to t('common.add_welding'), '#',
+                  class: "btn btn-primary",
+                  data: { action: "click->nested-form#add" } %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section7">
+        <%= t('.material_certificates') %>
+      </button>
+    </h2>
+    <div id="section7" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+        <!-- Material Certificates -->
+        <div class="card mb-4" data-controller="material-certificate-search" 
+            data-project-id="<%= @project.id %>" 
+            data-isometry-id="<%= @isometry.id %>">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="mb-3">
+                  <label class="form-label"><%= t('.search_certificates') %></label>
+                  <%= text_field_tag :search, nil,
+                    class: "form-control",
+                    data: {
+                      material_certificate_search_target: "search",
+                      action: "input->material-certificate-search#search",
+                      material_certificate_search_url: search_material_certificates_path
+                    },
+                    placeholder: t('.search_certificates_placeholder'),
+                    autocomplete: "off"
+                  %>
+                </div>
+                <div id="certificate-results" 
+                    class="list-group mb-3"
+                    data-material-certificate-search-target="results"></div>
+                <div class="row g-3" data-material-certificate-search-target="selected">
+                  <% @isometry.material_certificates.each do |cert| %>
+                    <div class="col-md-2">
+                      <div class="selected-certificate" data-certificate-id="<%= cert.id %>">
+                        <input type="hidden" name="isometry[material_certificate_ids][]" value="<%= cert.id %>">
+                        <div class="d-flex flex-column position-relative border rounded p-2">
+                          <button type="button" 
+                                  class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1" 
+                                  data-action="click->material-certificate-search#removeCertificate">×</button>
+                          <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
+                            <div class="text-center mb-2">
+                              <i class="bi bi-file-text" style="font-size: 2rem;"></i>
+                            </div>
+                            <div class="d-flex flex-column text-center">
+                              <span class="fw-medium"><%= cert.certificate_number %></span>
+                              <span class="text-secondary small"><%= cert.batch_number %></span>
+                            </div>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             </div>
-          <% end %>
+          </div>
         </div>
-      <% end %>
-    </div>
-  </div>
-</div>
 
-<div class="card mb-4">
-  <div class="card-header d-flex align-items-center mb-3">
-    <h3 class="mb-0 flex-grow-1 pb-2 mb-3"><%= t('.notes') %></h3>
-  </div>
-  <div class="card-body">
-    <!-- Notes -->
-    <div class="row g-3">
-      <div class="mb-3">
-        <%= f.text_area :notes, class: "form-control", rows: 6 %>
       </div>
     </div>
   </div>
-</div>
 
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section8">
+        <%= t('.isometry_documents') %>
+      </button>
+    </h2>
+    <div id="section8" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+        <!-- Isometry Documents -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <!-- Image Upload -->
+            <div class="row g-3">
+              <!-- Initial PDF Upload -->
+              <div class="col-md-8 mb-3">   
+                <div class="row">
+                  <div class="col-md-8">
+                    <%= f.label :new_pdf, t('.upload_new_pdf'), class: "form-label" %>
+                    <%= f.file_field :new_pdf, class: "form-control" %>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <%= f.label :new_pdf_qr_position, t('.qr_position'), class: "form-label" %>
+                    <%= f.select :new_pdf_qr_position, 
+                              [
+                                [t('.top_left'), "top_left"],
+                                [t('.top_right'), "top_right"],
+                                [t('.bottom_left'), "bottom_left"],
+                                [t('.bottom_right'), "bottom_right"]
+                              ],
+                              { include_blank: true },
+                              class: "form-select" %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Existing PDFs with QR Position Selection -->
+              <% if @isometry.persisted? && @isometry.isometry_documents.any? %>
+                <div class="col-12">
+                  <h6 class="mb-3"><%= t('.existing_documents') %></h6>
+                  
+                  <%= f.fields_for :isometry_documents do |doc_form| %>
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="row align-items-center">
+                          <div class="col-md-1 text-center">
+                            <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
+                          </div>
+                          <div class="col-md-4">
+                            <h6 class="mb-1"><%= doc_form.object.pdf.filename %></h6>
+                            <small class="text-muted">
+                              <%= number_to_human_size(doc_form.object.pdf.byte_size) %> •
+                              <%= l(doc_form.object.pdf.created_at, format: :short) %>
+                            </small>
+                          </div>
+                          <div class="col-md-3 text-end">
+                            <%= link_to url_for(doc_form.object.pdf), 
+                                      target: "_blank", 
+                                      class: "btn btn-outline-primary btn-sm me-2" do %>
+                              <i class="bi bi-eye"></i> <%= t('.view') %>
+                            <% end %>
+                            
+                            <%= doc_form.check_box :_destroy, 
+                                                class: "btn-check",
+                                                id: "delete_doc_#{doc_form.object.id}" %>
+                            <%= doc_form.label :_destroy, 
+                                            class: "btn btn-outline-danger btn-sm",
+                                            for: "delete_doc_#{doc_form.object.id}" do %>
+                              <i class="bi bi-trash"></i> <%= t('.delete') %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section9">
+        <%= t('.notes') %>
+      </button>
+    </h2>
+    <div id="section9" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+      <div class="accordion-body">
+        <!-- Notes -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <!-- Notes -->
+            <div class="row g-3">
+              <div class="mb-3">
+                <%= f.text_area :notes, class: "form-control", rows: 6 %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+      
   <!-- Submit Buttons -->
   <div class="form-group my-5">
     <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
     <%= link_to t('common.actions.cancel'), :back, class: 'btn btn-secondary' %>
   </div>
+
+</div>
+
 </div>
 <% end %>

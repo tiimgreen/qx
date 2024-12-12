@@ -45,7 +45,7 @@
       <dt class="col-sm-4"><%= t('.line_id') %></dt>
       <dd class="col-sm-8"><%= @isometry.line_id %></dd>
 
-      <dt class="col-sm-4"><%= t('.dn') %></dt>
+      <dt class="col-sm-4"><%= t('.dn_measurements') %> </dt>
       <dd class="col-sm-8"><%= @isometry.dn %></dd>
 
       <dt class="col-sm-4"><%= t('.revision') %></dt>
@@ -66,15 +66,6 @@
 
   <div class="col-md-6 mb-4">
     <dl class="row">
-      <dt class="col-sm-4"><%= t('.dn_measurements') %></dt>
-      <dd class="col-sm-8">
-        <% if @isometry.dn.present? %>
-          <div class="mb-1">
-            <%= @isometry.dn %> m
-          </div>
-        <% end %>
-      </dd>
-
       <dt class="col-sm-4"><%= t('.pipe_class') %></dt>
       <dd class="col-sm-8"><%= @isometry.pipe_class %></dd>
 
