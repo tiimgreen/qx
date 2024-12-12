@@ -49,9 +49,9 @@ module ApplicationHelper
     return if status.blank?
 
     css_class = case status.downcase
-    when "ok", "accepted", "passed", "n/a", "yes", "ja"
+    when "ok", "accepted", "passed", "n/a", "yes", "ja", "e"
                 "bg-success"
-    when "not ok", "rejected", "failed", "on hold", "false", "no", "nein"
+    when "not ok", "rejected", "failed", "on hold", "false", "no", "nein", "ne"
                 "bg-danger"
     else
                 "bg-warning"
