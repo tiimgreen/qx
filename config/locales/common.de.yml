@@ -29,6 +29,7 @@ de:
       dimension: "Abmessung"
       material: "Werkstoff"
       batch_number: "Charge"
+      material_certificate: "Materialzertifikat"
       type_code: "Typ"
       wps: "WPS"
       process: "Prozess"

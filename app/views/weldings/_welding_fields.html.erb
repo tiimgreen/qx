@@ -37,18 +37,15 @@
         <div data-welding-certificate-search-target="searchResults" class="position-absolute w-100"></div>
       </div>
     </div>
-
-    <div class="col-md-2">
-      <%= f.label :type_code, class: "form-label" %>
-      <%= f.text_field :type_code, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="row g-3 mt-2">
     <div class="col-md-2">
       <%= f.label :wps, class: "form-label" %>
       <%= f.text_field :wps, class: "form-control" %>
     </div>
+
+  </div>
+
+  <div class="row g-3 mt-2">
+
 
     <div class="col-md-2">
       <%= f.label :process, class: "form-label" %>
@@ -74,9 +71,6 @@
       <%= f.label :vt_date, class: "form-label" %>
       <%= f.date_field :vt_date, class: "form-control", value: f.object.vt_date || (f.object.new_record? ? Date.current : nil) %>
     </div>
-  </div>
-
-  <div class="row g-3 mt-2">
     <div class="col-md-2">
       <%= f.label :result, class: "form-label" %>
       <%= f.select :result, Welding::RESULT_TYPES, { include_blank: false }, class: "form-control" %>
@@ -117,16 +111,13 @@
     </div>
 
     <div class="col-md-2">
-      <%= f.label :type_code1, class: "form-label" %>
-      <%= f.text_field :type_code1, class: "form-control" %>
+      <%= f.label :wps1, class: "form-label" %>
+      <%= f.text_field :wps1, class: "form-control" %>
     </div>
   </div>
 
   <div class="row g-3 mt-2">
-    <div class="col-md-2">
-      <%= f.label :wps1, class: "form-label" %>
-      <%= f.text_field :wps1, class: "form-control" %>
-    </div>
+
 
     <div class="col-md-2">
       <%= f.label :process1, class: "form-label" %>
@@ -152,14 +143,13 @@
       <%= f.label :vt_date1, class: "form-label" %>
       <%= f.date_field :vt_date1, class: "form-control", value: f.object.vt_date1 || (f.object.new_record? ? Date.current : nil) %>
     </div>
-  </div>
-
-  <div class="row g-3 mt-2">
     <div class="col-md-2">
       <%= f.label :result1, class: "form-label" %>
       <%= f.select :result1, Welding::RESULT_TYPES, { include_blank: false }, class: "form-control" %>
     </div>
+  </div>
 
+  <div class="row g-3 mt-2">
     <div class="col-md-2 d-flex align-items-end">
       <%= link_to t('common.remove'), '#', 
           class: "btn btn-danger",

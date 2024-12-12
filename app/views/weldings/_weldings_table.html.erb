@@ -7,7 +7,7 @@
         <th><%= t('common.weldings.dimension') %></th>
         <th><%= t('common.weldings.material') %></th>
         <th><%= t('common.weldings.batch_number') %></th>
-        <th><%= t('common.weldings.type_code') %></th>
+        <th><%= t('common.weldings.material_certificate') %></th>
         <th><%= t('common.weldings.wps') %></th>
         <th><%= t('common.weldings.process') %></th>
         <th><%= t('common.weldings.welder') %></th>
@@ -40,43 +40,36 @@
             </div>
           </td>
           <td>
+            <div class="d-flex flex-column">
+              <div><%= welding.batch_number %></div>
+              <div><%= welding.batch_number1 %></div>
+            </div>
+          </td>
+          <td>
           <div class="d-flex flex-column">
             <div>
             <% if welding.material_certificate %>
               <% if welding.material_certificate&.certificate_file&.attached? %>
                 <%= link_to rails_blob_path(welding.material_certificate.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
-                  <small class="bg-success text-white rounded p-1"><%= welding.batch_number %> (<%= welding.material_certificate.certificate_number %>)</small>
+                  <small class="bg-success text-white rounded p-1"><%= welding.material_certificate.certificate_number %></small>
                 <% end %>
               <% else %>
-                <small class="bg-secondary text-white rounded p-1"><%= welding.batch_number %> (<%= welding.material_certificate&.certificate_number %>)</small>
+                <small class="bg-secondary text-white rounded p-1"><%= welding.material_certificate&.certificate_number %></small>
               <% end %>
-            <% else %>
-              <span class="bg-danger text-white rounded p-1">
-                <%= welding.batch_number %>
-              </span>
             <% end %>
             </div>
               <div>
                 <% if welding.material_certificate1 %>
                   <% if welding.material_certificate1&.certificate_file&.attached? %>
                     <%= link_to rails_blob_path(welding.material_certificate1.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
-                      <small class="bg-success text-white rounded p-1"><%= welding.batch_number1 %> (<%= welding.material_certificate1.certificate_number %>)</small>
+                      <small class="bg-success text-white rounded p-1"><%= welding.material_certificate1.certificate_number %></small>
                     <% end %>
                   <% else %>
-                    <small class="bg-secondary text-white rounded p-1"><%= welding.batch_number1 %> (<%= welding.material_certificate1&.certificate_number %>)</small>
+                    <small class="bg-secondary text-white rounded p-1"><%= welding.material_certificate1&.certificate_number %></small>
                   <% end %>
-                <% else %>
-                  <span class="bg-danger text-white rounded p-1">
-                    <%= welding.batch_number1 %>
-                  </span>
+
                 <% end %>                
               </div>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex flex-column">
-              <div><%= welding.type_code %></div>
-              <div><%= welding.type_code1 %></div>
             </div>
           </td>
           <td>

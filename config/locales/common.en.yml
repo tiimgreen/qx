@@ -29,6 +29,7 @@ en:
       dimension: "Dimension"
       material: "Material"
       batch_number: "Batch Number"
+      material_certificate: "Material Certificate"
       type_code: "Type Code"
       wps: "WPS"
       process: "Process"
