@@ -58,6 +58,7 @@ de:
       total_spools: "TOTAL Spools"
       material_certificates: "Materialzertifikate"
       no_certificates: "Keine Zertifikate an dieser Isometrie angehaengt"
+      weldings: "Weldlog"
     form:
       technical_specs: "Technische Daten"
       spooling: "Spooling"
@@ -83,6 +84,7 @@ de:
       rt_images: "RT Bilder"
       vt_images: "VT Bilder"
       pt_images: "PT Bilder"
+      weldings: "Weldlog"
     _form:
       technical_specs: Technische Spezifikationen
       additional_specs: Zusätzliche Spezifikationen

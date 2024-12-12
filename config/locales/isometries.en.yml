@@ -58,6 +58,7 @@ en:
       total_spools: "TOTAL Spools"
       material_certificates: "Material Certificates"
       no_certificates: "No certificates attached to this isometry"
+      weldings: "Weldlog"
     form:
       technical_specs: "Technical Specs"
       measurements: "Measurements"
@@ -81,6 +82,7 @@ en:
       vt_images: "VT Images"
       pt_images: "PT Images"
       search_certificates_placeholder: "Enter certificate number or batch number..."
+      weldings: "Weldlog"
     _form:
       technical_specs: Technical Specifications
       additional_specs: Additional Specifications
