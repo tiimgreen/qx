@@ -99,7 +99,7 @@ module QrCodeable
 
     coords = case position.to_s
     when "top_right"
-      x = @page_width - qr_size - margin - 570
+      x = @page_width - qr_size*2
       y = @page_height - qr_size - margin - 5
       [ x, y ]
     when "top_left"
@@ -107,8 +107,8 @@ module QrCodeable
       y = @page_height - qr_size - margin - 40
       [ x, y ]
     when "bottom_right"
-      x = @page_width - qr_size - margin - 570
-      y = qr_size + margin + 140
+      x = @page_width - qr_size*2
+      y = 50
       [ x, y ]
     when "bottom_left"
       x = -15
