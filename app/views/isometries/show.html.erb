@@ -34,7 +34,7 @@
   <div class="col-md-6 mb-4">
     <dl class="row">
       <dt class="col-sm-4"><%= t('.received_date') %></dt>
-      <dd class="col-sm-8"><%= l(@isometry.received_date, format: :short) if @isometry.received_date %></dd>
+      <dd class="col-sm-8"><%= @isometry.received_date.strftime("%Y-%m-%d") %></dd>
 
       <dt class="col-sm-4"><%= t('.pid_number') %></dt>
       <dd class="col-sm-8"><%= @isometry.pid_number %></dd>
