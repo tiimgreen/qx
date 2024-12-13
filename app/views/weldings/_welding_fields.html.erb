@@ -81,6 +81,8 @@
   <div class="row g-3 mt-4">
     <div class="col-12"><hr><h5><%= t('common.weldings.second_set') %></h5></div>
     <div class="col-md-2">
+    </div>
+    <div class="col-md-2">
       <%= f.label :component1, t('activerecord.attributes.isometry.weldings_attributes.component1'), class: "form-label" %>
       <%= f.text_field :component1, class: "form-control" %>
     </div>
@@ -118,7 +120,6 @@
 
   <div class="row g-3 mt-2">
 
-
     <div class="col-md-2">
       <%= f.label :process1, t('activerecord.attributes.isometry.weldings_attributes.process1'), class: "form-label" %>
       <%= f.select :process1, Welding::PROCESS_TYPES, { include_blank: false }, class: "form-control" %>
@@ -149,7 +150,7 @@
     </div>
   </div>
 
-  <div class="row g-3 mt-2">
+  <div class="row g-3 mt-2 justify-content-end">
     <div class="col-md-2 d-flex align-items-end">
       <%= link_to t('common.remove'), '#', 
           class: "btn btn-danger",
