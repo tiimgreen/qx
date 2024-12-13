@@ -45,23 +45,21 @@ class WeldingPdfGenerator
       [
         { content: "Naht Nr.\nWeld Nr.", rowspan: 2 },
         { content: "Komponente\ncomponent", rowspan: 2 },
-        { content: "Materialdokumentation - material documentation", colspan: 6 },
+        { content: "Materialdokumentation - material documentation", colspan: 4 },
         { content: "Schweissnahtdoku - welding\ndocu.", colspan: 2 },
-        { content: "Prüfung - dokumentation - test\ndocumentation", colspan: 3 },
-        { content: "Erg.-\nResult", rowspan: 2 }
+        { content: "Prüfung - dokumentation - test\ndocumentation", colspan: 4 }
       ],
       [
-        "Abmess\nung\ndimensi\non",
-        "Werkst\noff\nmateri\nal",
-        "Charge\nHeat\nNr.",
-        "Zeugnis\nCertific\nate",
-        "Typ",
-        "WPS",
+        "Abmessung\ndimensinon",
+        "Werkstoff\nmaterial",
+        "Charge\nHeat Nr.",
+        "Zeugnis\nCertificate",
         "Prozess\nprocess",
         "Schweisser\nWelder",
-        "RT\nDatum\n/date",
-        "PT\nDatum\n/date",
-        "VT\nDatum\n/date"
+        "RT Datum\n/date",
+        "PT Datum\n/date",
+        "VT Datum\n/date",
+        "Erg\nresult"
       ]
     ]
 
@@ -74,8 +72,6 @@ class WeldingPdfGenerator
         weld.material,
         weld.batch_number,
         weld.material_certificate&.certificate_number,
-        weld.type_code,
-        weld.wps,
         weld.process,
         weld.welder,
         weld.rt_date&.strftime("%d.%m.%Y"),
@@ -91,8 +87,6 @@ class WeldingPdfGenerator
         weld.material1,
         weld.batch_number1,
         weld.material_certificate1&.certificate_number,
-        weld.type_code1,
-        weld.wps1,
         weld.process1,
         weld.welder1,
         weld.rt_date1&.strftime("%d.%m.%Y"),
