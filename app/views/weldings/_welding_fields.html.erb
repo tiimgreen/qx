@@ -46,7 +46,6 @@
 
   <div class="row g-3 mt-2">
 
-
     <div class="col-md-2">
       <%= f.label :process, t('activerecord.attributes.isometry.weldings_attributes.process'), class: "form-label" %>
       <%= f.select :process, Welding::PROCESS_TYPES, { include_blank: false }, class: "form-control" %>
@@ -118,8 +117,7 @@
     </div>
   </div>
 
-  <div class="row g-3 mt-2">
-
+  <div class="row g-3 mt-2 mb-5">
     <div class="col-md-2">
       <%= f.label :process1, t('activerecord.attributes.isometry.weldings_attributes.process1'), class: "form-label" %>
       <%= f.select :process1, Welding::PROCESS_TYPES, { include_blank: false }, class: "form-control" %>
@@ -150,8 +148,10 @@
     </div>
   </div>
 
+<hr>
+
   <div class="row g-3 mt-2 justify-content-end">
-    <div class="col-md-2 d-flex align-items-end">
+    <div class="col-md-2 d-flex justify-content-end">
       <%= link_to t('common.remove'), '#', 
           class: "btn btn-danger",
           data: { action: "click->nested-form#remove" } %>

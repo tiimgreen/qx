@@ -103,16 +103,16 @@ module QrCodeable
       y = @page_height - qr_size - margin - 5
       [ x, y ]
     when "top_left"
-      x = 125
-      y = @page_height - qr_size - margin - 5
+      x = 130
+      y = @page_height - qr_size - margin - 40
       [ x, y ]
     when "bottom_right"
       x = @page_width - qr_size - margin - 570
       y = qr_size + margin + 140
       [ x, y ]
     when "bottom_left"
-      x = -15  # Slightly adjusted for new size
-      y = 50   # Slightly adjusted for new size
+      x = -15
+      y = 50
       [ x, y ]
     else
       x = @page_width - qr_size - margin
