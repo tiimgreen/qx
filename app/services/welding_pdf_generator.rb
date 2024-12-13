@@ -41,7 +41,7 @@ class WeldingPdfGenerator
   private
 
   def generate_table(pdf)
-    data = [
+    header_rows = [
       [
         { content: "Naht Nr.\nWeld Nr.", rowspan: 2 },
         { content: "Komponente\ncomponent", rowspan: 2 },
@@ -63,54 +63,65 @@ class WeldingPdfGenerator
       ]
     ]
 
-    @welds.each do |weld|
-      # First row
-      data << [
-        { content: weld.number, rowspan: 2 },
-        weld.component,
-        weld.dimension,
-        weld.material,
-        weld.batch_number,
-        weld.material_certificate&.certificate_number,
-        weld.process,
-        weld.welder,
-        weld.rt_date&.strftime("%d.%m.%Y"),
-        weld.pt_date&.strftime("%d.%m.%Y"),
-        weld.vt_date&.strftime("%d.%m.%Y"),
-        weld.result
-      ]
+    # Split welds into chunks of 5 (since each weld takes 2 rows)
+    @welds.each_slice(10) do |weld_chunk|
+      data = header_rows.dup
 
-      # Second row
-      data << [
-        weld.component1,
-        weld.dimension1,
-        weld.material1,
-        weld.batch_number1,
-        weld.material_certificate1&.certificate_number,
-        weld.process1,
-        weld.welder1,
-        weld.rt_date1&.strftime("%d.%m.%Y"),
-        weld.pt_date1&.strftime("%d.%m.%Y"),
-        weld.vt_date1&.strftime("%d.%m.%Y"),
-        weld.result1
-      ]
-    end
+      weld_chunk.each do |weld|
+        # First row
+        data << [
+          { content: weld.number, rowspan: 2 },
+          weld.component,
+          weld.dimension,
+          weld.material,
+          weld.batch_number,
+          weld.material_certificate&.certificate_number,
+          weld.process,
+          weld.welder,
+          weld.rt_date&.strftime("%d.%m.%Y"),
+          weld.pt_date&.strftime("%d.%m.%Y"),
+          weld.vt_date&.strftime("%d.%m.%Y"),
+          weld.result
+        ]
 
-    pdf.table(data) do |t|
-      t.cells.style do |c|
-        c.size = 7
-        c.padding = [ 3, 2, 3, 2 ]  # Increased vertical padding
-        c.border_width = 0.5
-        c.align = :center
-        c.valign = :center
+        # Second row
+        data << [
+          weld.component1,
+          weld.dimension1,
+          weld.material1,
+          weld.batch_number1,
+          weld.material_certificate1&.certificate_number,
+          weld.process1,
+          weld.welder1,
+          weld.rt_date1&.strftime("%d.%m.%Y"),
+          weld.pt_date1&.strftime("%d.%m.%Y"),
+          weld.vt_date1&.strftime("%d.%m.%Y"),
+          weld.result1
+        ]
       end
 
-      # Header row styles
-      t.row(0..1).style(font_style: :bold, size: 7)
+      pdf.table(data) do |t|
+        t.cells.style do |c|
+          c.size = 7
+          c.padding = [ 5, 2, 5, 2 ]
+          c.border_width = 0.5
+          c.align = :center
+          c.valign = :center
+          c.height = 20
+        end
 
-      # Make header rows slightly taller
-      t.row(0).min_height = 25
-      t.row(1).min_height = 25
+        # Header row styles
+        t.row(0..1).style(font_style: :bold, size: 7)
+
+        # Make header rows slightly taller
+        t.row(0).min_height = 25
+        t.row(1).min_height = 25
+      end
+
+      # Add a new page if there are more welds to show
+      if weld_chunk != @welds.each_slice(5).to_a.last
+        pdf.start_new_page
+      end
     end
   end
 
