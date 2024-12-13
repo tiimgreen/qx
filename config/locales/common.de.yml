@@ -62,6 +62,7 @@ de:
       no_weldings: "Noch keine Schweißnähte hinzugefügt."
       first_set: "Erster Satz"
       second_set: "Zweiter Satz"
+      view_welding_report: "Weldlog Report anzeigen"
   activerecord:
     attributes:
       isometry:
