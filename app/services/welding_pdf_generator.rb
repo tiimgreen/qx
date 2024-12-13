@@ -1,11 +1,16 @@
 require "prawn"
 require "prawn/templates"
 require "prawn/table"
+require "rqrcode"
 
 class WeldingPdfGenerator
+  include QrCodeable
+
   def initialize(isometry)
     @isometry = isometry
     @welds = isometry.weldings
+    @page_width = 842  # A4 landscape width
+    @page_height = 595 # A4 landscape height
   end
 
   def generate
@@ -15,6 +20,23 @@ class WeldingPdfGenerator
         pdf.bounding_box([ 0, pdf.bounds.top ], width: pdf.bounds.width, height: 80) do
           # Company logo on the left
           pdf.image "#{Rails.root}/app/assets/images/logo.png", width: 120, position: :left, vposition: :top
+
+          # Add QR code to the top right
+          qr_temp_file = Tempfile.new([ "qr", ".png" ])
+          begin
+            qr_data = "#{Rails.application.routes.url_helpers.project_isometry_url(project_id: @isometry.project_id, id: @isometry.id, host: Rails.application.routes.default_url_options[:host])}"
+            generate_qr_code_image(qr_data, qr_temp_file.path)
+
+            # Use fixed position for landscape A4
+            x = pdf.bounds.width - 50  # Position from right margin
+            y = pdf.bounds.top - 20    # Position from top margin
+
+            pdf.image qr_temp_file.path, at: [ x, y ], width: 50
+          ensure
+            qr_temp_file.close
+            qr_temp_file.unlink
+          end
+
 
           pdf.text "<b>Isometrie / Isometric:</b> #{@isometry.line_id}", size: 11, inline_format: true
           pdf.text "<b>Projekt Nr. / Project No.:</b> #{@isometry.project.project_number}", size: 11, inline_format: true
