@@ -20,6 +20,7 @@ de:
       remove: "Entfernen"
       new: "Neues"
       overview: "Ubersicht"
+      active_projects: "Aktive Projekte"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"
