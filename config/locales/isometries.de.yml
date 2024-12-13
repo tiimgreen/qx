@@ -54,7 +54,7 @@ de:
       workshop_sn: "Werkstatt SN"
       assembly_sn: "On Site SN"
       total_sn: "TOTAL SN"
-      total_supports: "TOTAL Halterungen"
+      total_supports: "TOTAL Halt"
       total_spools: "TOTAL Spools"
       material_certificates: "Materialzertifikate"
       no_certificates: "Keine Zertifikate an dieser Isometrie angehaengt"
@@ -85,6 +85,9 @@ de:
       vt_images: "VT Bilder"
       pt_images: "PT Bilder"
       weldings: "Weldlog"
+      isometry_rt: "RT"
+      isometry_vt: "VT2"
+      isometry_pt: "PT2"
     _form:
       technical_specs: Technische Spezifikationen
       additional_specs: Zusätzliche Spezifikationen
@@ -117,7 +120,7 @@ de:
         workshop_sn: "Werkstatt SN"
         assembly_sn: "On Site SN"
         total_sn: "TOTAL SN"
-        total_supports: "TOTAL Halterungen"
+        total_supports: "TOTAL Halt"
         total_spools: "TOTAL Spools"
         rt_percentage: "RT"
         vt2_percentage: "VT2"

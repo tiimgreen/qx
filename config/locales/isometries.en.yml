@@ -81,6 +81,9 @@ en:
       rt_images: "RT Images"
       vt_images: "VT Images"
       pt_images: "PT Images"
+      isometry_rt: "RT"
+      isometry_vt: "VT2"
+      isometry_pt: "PT2"
       search_certificates_placeholder: "Enter certificate number or batch number..."
       weldings: "Weldlog"
     _form:

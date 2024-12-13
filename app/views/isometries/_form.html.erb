@@ -11,6 +11,7 @@
   <% end %>
 
 <div class="accordion" id="mainAccordion">
+  <!-- Technical Specification -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section1">
@@ -19,7 +20,6 @@
     </h2>
     <div id="section1" class="accordion-collapse collapse show" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
-        <!-- Technical Specification -->
         <div class="card mb-4">
           <div class="card-body">
             <div class="row g-3">
@@ -52,11 +52,6 @@
                 <div class="col-md-2 mb-3">
                   <%= f.label :revision_number, class: "form-label" %>
                   <%= f.number_field :revision_number, class: "form-control" %>
-                </div>
-
-                <div class="col-md-2 mb-3">
-                  <%= f.check_box :revision_last, class: "form-check-input" %>
-                  <%= f.label :revision_last, class: "form-check-label" %>
                 </div>
               </div>
 
@@ -97,6 +92,10 @@
                   <%= f.label :work_package_number, class: "form-label" %>
                   <%= f.number_field :work_package_number, class: "form-control" %>
                 </div>
+                <div class="col-md-2 mb-3">
+                  <%= f.check_box :revision_last, class: "form-check-input" %>
+                  <%= f.label :revision_last, class: "form-check-label" %>
+                </div>
               </div>
 
             </div>
@@ -107,6 +106,7 @@
     </div>
   </div>
 
+  <!-- Additional Specification -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section2">
@@ -115,7 +115,6 @@
     </h2>
     <div id="section2" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
-        <!-- Additional Specification -->
         <div class="card mb-4">
           <div class="card-body">
             <div class="row g-3">
@@ -124,17 +123,17 @@
                   <!-- First column - Checkboxes (DP, DIP, Isolierung) -->
                   <div class="col-12 col-md-2 mb-3 mb-md-0">
                     <div class="d-flex flex-column gap-2">
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
                         <%= f.label :dp, class: "form-label mb-0" %>
-                        <%= f.check_box :dp, class: "form-check-input" %>
+                        <%= f.check_box :dp, class: "form-check-input mt-0" %>
                       </div>
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
                         <%= f.label :dip, class: "form-label mb-0" %>
-                        <%= f.check_box :dip, class: "form-check-input" %>
+                        <%= f.check_box :dip, class: "form-check-input mt-0" %>
                       </div>
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
                         <%= f.label :isolation_required, class: "form-label mb-0" %>
-                        <%= f.check_box :isolation_required, class: "form-check-input" %>
+                        <%= f.check_box :isolation_required, class: "form-check-input mt-0" %>
                       </div>
                     </div>
                   </div>
@@ -142,13 +141,13 @@
                   <!-- Second column - Checkboxes (GMP, GDP) -->
                   <div class="col-12 col-md-2 mb-3 mb-md-0">
                     <div class="d-flex flex-column gap-2">
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
                         <%= f.label :gmp, class: "form-label mb-0" %>
-                        <%= f.check_box :gmp, class: "form-check-input" %>
+                        <%= f.check_box :gmp, class: "form-check-input mt-0" %>
                       </div>
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
                         <%= f.label :gdp, class: "form-label mb-0" %>
-                        <%= f.check_box :gdp, class: "form-check-input" %>
+                        <%= f.check_box :gdp, class: "form-check-input mt-0" %>
                       </div>
                     </div>
                   </div>
@@ -178,7 +177,7 @@
                   <div class="col-12 col-md-3">
                     <div class="d-flex flex-column gap-2">
                       <div class="d-flex justify-content-between align-items-center">
-                        <%= f.label :rt, class: "form-label mb-0" %>
+                        <label class="form-label mb-0"><%= t('.isometry_rt') %></label>
                         <div class="flex-grow-1 ms-3">
                           <div class="input-group">
                             <%= f.number_field :rt, class: "form-control", step: "1" %>
@@ -187,7 +186,7 @@
                         </div>
                       </div>
                       <div class="d-flex justify-content-between align-items-center">
-                        <%= f.label :vt2, class: "form-label mb-0" %>
+                        <label class="form-label mb-0"><%= t('.isometry_vt') %></label>
                         <div class="flex-grow-1 ms-3">
                           <div class="input-group">
                             <%= f.number_field :vt2, class: "form-control", step: "1" %>
@@ -196,7 +195,7 @@
                         </div>
                       </div>
                       <div class="d-flex justify-content-between align-items-center">
-                        <%= f.label :pt2, class: "form-label mb-0" %>
+                        <label class="form-label mb-0"><%= t('.isometry_pt') %></label>
                         <div class="flex-grow-1 ms-3">
                           <div class="input-group">
                             <%= f.number_field :pt2, class: "form-control", step: "1" %>
@@ -215,6 +214,7 @@
     </div>
   </div>
 
+  <!-- Inspection -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section3">
@@ -223,7 +223,6 @@
     </h2>
     <div id="section3" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
-          <!-- Inspection -->
         <div class="row g-3">
           <div class="card mb-4">
             <div class="card-body">
@@ -269,6 +268,7 @@
     </div>
   </div>
 
+  <!-- Spooling -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section4">
@@ -277,11 +277,9 @@
     </h2>
     <div id="section4" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
-          <!-- Spooling -->
           <div class="row g-3">
             <div class="card mb-4">
               <div class="card-body">
-                <!-- Measurements -->
                 <div class="row g-3">
                   <div class="col-md-2 mb-3">
                     <%= f.label :pipe_length, class: "form-label" %>
@@ -337,6 +335,7 @@
     </div>
   </div>
 
+  <!-- On hold status -->
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#section5">
@@ -345,15 +344,13 @@
     </h2>
     <div id="section5" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
-        <!-- On hold status -->
         <div class="row g-3">
           <div class="card mb-4">
             <div class="card-body">
-              <!-- On hold fields -->
               <div class="row g-3">
                 <div class="col-md-5 mb-3">
                   <%= f.label :on_hold_status, class: "form-label" %>
-                  <%= f.select :on_hold_status, Isometry::ON_HOLD_STATUSES, { include_blank: true }, class: "form-select" %>
+                  <%= f.select :on_hold_status, Isometry::ON_HOLD_STATUSES, { include_blank: false }, class: "form-select" %>
                 </div>
                 <div class="col-md-7 mb-3">
                   <%= f.label :on_hold_images, class: "form-label" %>
