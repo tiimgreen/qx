@@ -88,31 +88,31 @@ module QrCodeable
       pdf.go_to_page(1)
       pdf.image qr_path,
                at: [ x, y ],
-               width: 60,  # Reduced size
-               height: 60  # Reduced size
+               width: 40,
+               height: 40
     end
   end
 
   def calculate_qr_position(position)
     margin = 10
-    qr_size = 60  # Match the new size
+    qr_size = 40
 
     coords = case position.to_s
     when "top_right"
-      x = @page_width - qr_size*2
-      y = @page_height - qr_size - margin - 5
+      x = -25
+      y = 1145
       [ x, y ]
-    when "top_left"
-      x = 130
-      y = @page_height - qr_size - margin - 40
+    when "top_left" # nord right
+      x = 0
+      y = 100
       [ x, y ]
     when "bottom_right"
-      x = @page_width - qr_size*2
-      y = 50
+      x = 755
+      y = 1145
       [ x, y ]
     when "bottom_left"
-      x = -15
-      y = 50
+      x = 760
+      y = 10
       [ x, y ]
     else
       x = @page_width - qr_size - margin
