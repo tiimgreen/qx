@@ -21,6 +21,10 @@ en:
       new: "New"
       overview: "Overview"
       acttive_projects: "Active Projects"
+      top_left: "North Right"
+      top_right: "Top Right"
+      bottom_left: "North Bottom"
+      bottom_right: "Bottom Right"
     buttons:
       cancel: "Cancel"
       delete: "Delete"

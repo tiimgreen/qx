@@ -5,13 +5,6 @@ class Isometry < ApplicationRecord
 
   include QrCodeable
 
-  QR_POSITIONS = {
-    "top-left" => { x: 20, y: 20 },
-    "top-right" => { x: -220, y: 20 },
-    "bottom-left" => { x: 20, y: -220 },
-    "bottom-right" => { x: -220, y: -220 }
-  }.freeze
-
   has_many :isometry_material_certificates, dependent: :destroy
   has_many :material_certificates, through: :isometry_material_certificates
   has_many :weldings, dependent: :destroy

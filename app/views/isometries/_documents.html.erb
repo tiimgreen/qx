@@ -19,7 +19,8 @@
               </div>
               <% if document.respond_to?(:qr_position) && document.qr_position.present? %>
                 <div class="text-muted small">
-                  <%= t('.qr_position') %>: <%= document.qr_position %>
+                  <%= t('.qr_position') %>: <br> 
+                  <%= t('common.labels.' + document.qr_position) %>
                 </div>
               <% end %>
               <div class="text-muted" style="font-size: 0.7rem;">

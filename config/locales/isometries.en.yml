@@ -73,11 +73,6 @@ en:
       qr_position: "QR Position"
       qr_x_coordinate: "X Coordinate"
       qr_y_coordinate: "Y Coordinate"
-      qr_positions:
-        top-left: "Top Left"
-        top-right: "Top Right"
-        bottom-left: Bottom Left
-        bottom-right: Bottom Right
       rt_images: "RT Images"
       vt_images: "VT Images"
       pt_images: "PT Images"

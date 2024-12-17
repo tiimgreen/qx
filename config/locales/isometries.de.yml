@@ -73,11 +73,6 @@ de:
       qr_position: "QR Position"
       qr_x_coordinate: "X-Koordinate"
       qr_y_coordinate: "Y-Koordinate"
-      qr_positions:
-        top-left: "Oben links"
-        top-right: "Oben rechts"
-        bottom-left: "Unten links"
-        bottom-right: "Unten rechts"
       search_certificates_placeholder: "Zertifikatsnummer oder Chargennummer eingeben..."
       material_certificates: "Materialzertifikate"
       search_certificates: "Zertifikate suchen"

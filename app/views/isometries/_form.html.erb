@@ -508,10 +508,10 @@
                     <%= f.label :new_pdf_qr_position, t('.qr_position'), class: "form-label" %>
                     <%= f.select :new_pdf_qr_position, 
                               [
-                                [t('.top_left'), "top_left"],
-                                [t('.top_right'), "top_right"],
-                                [t('.bottom_left'), "bottom_left"],
-                                [t('.bottom_right'), "bottom_right"]
+                                [t('common.labels.top_left'), "top_left"],
+                                [t('common.labels.top_right'), "top_right"],
+                                [t('common.labels.bottom_left'), "bottom_left"],
+                                [t('common.labels.bottom_right'), "bottom_right"]
                               ],
                               { include_blank: true },
                               class: "form-select" %>
