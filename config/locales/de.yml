@@ -157,3 +157,10 @@ de:
               greater_than: "Soll-Ist-Menge muss größer als %{count} sein"
             on_hold:
               inclusion: "muss einen gültigen Status haben"
+  isometries:
+    actions:
+      add_page: "Seite hinzufügen"
+    notices:
+      page_created: "Neue Seite wurde erfolgreich erstellt"
+    errors:
+      page_creation_failed: "Fehler beim Erstellen einer neuen Seite"

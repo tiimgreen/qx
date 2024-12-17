@@ -157,3 +157,10 @@ en:
               greater_than: "Target quantity must be greater than %{count}"
             on_hold:
               inclusion: "must have a valid status"
+  isometries:
+    actions:
+      add_page: "Add Page"
+    notices:
+      page_created: "New page was successfully created"
+    errors:
+      page_creation_failed: "Failed to create new page"

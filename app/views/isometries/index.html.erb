@@ -40,6 +40,9 @@
             <%= sort_indicator('line_id') %>
           </th>
           <th>
+            <%= t('common.labels.page_number') %>
+          </th>
+          <th>
             <%= link_to t('activerecord.attributes.isometry.work_package_number'),
                 request.params.merge(sort: 'work_package_number', direction: (params[:sort] == 'work_package_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('work_package_number') %>
@@ -83,6 +86,7 @@
         <% @isometries.each do |isometry| %>
           <tr>
             <td><%= link_to isometry.line_id, project_isometry_path(@project, isometry) %></td>
+            <td><%= isometry.page_number %>/<%= isometry.page_total %></td>
             <td><%= isometry.work_package_number %></td>
             <td><%= isometry.system %></td>
             <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>

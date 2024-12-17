@@ -4,7 +4,7 @@ class IsometriesController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :delete_image, :download_welding_report ]
+  before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :delete_image, :download_welding_report, :new_page ]
   before_action :authorize_action!
 
   def index
@@ -144,6 +144,16 @@ class IsometriesController < ApplicationController
               disposition: params[:download] ? "attachment" : "inline"
   end
 
+  def new_page
+    @isometry = @project.isometries.find(params[:id])
+    service = IsometryPageCreator.new(@isometry)
+    new_isometry = service.create_new_page
+
+    redirect_to project_isometry_path(@project, new_isometry), notice: t("isometries.notices.page_created")
+  rescue => e
+    redirect_to project_isometry_path(@project, @isometry), alert: t("isometries.errors.page_creation_failed")
+  end
+
   private
 
   def authorize_action!
@@ -152,7 +162,7 @@ class IsometriesController < ApplicationController
       authorize_view!
     when "new", "create"
       authorize_create!
-    when "edit", "update", "delete_image", "download_welding_report"
+    when "edit", "update", "delete_image", "download_welding_report", "new_page"
       authorize_edit!
     when "destroy"
       authorize_destroy!

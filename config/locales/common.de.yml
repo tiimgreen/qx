@@ -25,6 +25,7 @@ de:
       top_right: "Oben rechts"
       bottom_left: "Unten links"
       bottom_right: "Nordboden"
+      page_number: "Seite"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"

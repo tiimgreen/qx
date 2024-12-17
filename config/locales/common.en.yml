@@ -25,6 +25,7 @@ en:
       top_right: "Top Right"
       bottom_left: "North Bottom"
       bottom_right: "Bottom Right"
+      page_number: "Page"
     buttons:
       cancel: "Cancel"
       delete: "Delete"

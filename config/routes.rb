@@ -31,6 +31,7 @@ Rails.application.routes.draw do
           delete :remove_certificate
           get :download_welding_report
         end
+        post :new_page, on: :member
         resources :weldings
       end
     end

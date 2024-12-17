@@ -36,7 +36,7 @@ class Isometry < ApplicationRecord
   validates :system, presence: true
   validates :pipe_class, presence: true
   validates :material, presence: true
-  validates :line_id, presence: true, uniqueness: true
+  validates :line_id, presence: true
   validates :revision_number, presence: true
   validates :page_number, presence: true
   validates :page_total, presence: true
@@ -71,7 +71,7 @@ class Isometry < ApplicationRecord
   before_save :set_on_hold_date
 
   # Scopes
-  scope :active, -> { where(deleted: false) }
+  scope :active, -> { where(deleted: false).order(line_id: :asc, page_number: :desc) }
   scope :deleted, -> { where(deleted: true) }
   scope :on_hold, -> { where.not(on_hold_status: [ nil, "" ]) }
   scope :latest_revision, -> { where(revision_last: true) }
@@ -91,6 +91,24 @@ class Isometry < ApplicationRecord
       search: term
     )
   }
+
+  # Check if new page can be added
+  def can_add_page?
+    return false unless revision_last? # Only allow adding pages to latest revision
+
+    # Find all isometries with same line_id and latest revision
+    related_isometries = self.class.where(line_id: line_id, revision_last: true, deleted: false)
+
+    # Get the first page (page_number = 1) for this line_id and revision
+    first_page = related_isometries.find_by(page_number: 1)
+
+    # Only allow adding pages if this is the first page
+    return false unless self == first_page
+
+    # Check if we haven't reached the total pages limit
+    current_pages_count = related_isometries.count
+    current_pages_count < page_total
+  end
 
   private
 
