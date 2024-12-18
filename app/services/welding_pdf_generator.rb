@@ -103,7 +103,7 @@ class WeldingPdfGenerator
           weld.rt_date&.strftime("%d.%m.%Y"),
           weld.pt_date&.strftime("%d.%m.%Y"),
           weld.vt_date&.strftime("%d.%m.%Y"),
-          weld.result
+          { content: weld.result, rowspan: 2 }
         ]
 
         # Second row
@@ -117,8 +117,7 @@ class WeldingPdfGenerator
           weld.welder1,
           weld.rt_date1&.strftime("%d.%m.%Y"),
           weld.pt_date1&.strftime("%d.%m.%Y"),
-          weld.vt_date1&.strftime("%d.%m.%Y"),
-          weld.result1
+          weld.vt_date1&.strftime("%d.%m.%Y")
         ]
       end
 

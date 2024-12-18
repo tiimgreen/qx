@@ -119,6 +119,9 @@
 
   <div class="row g-3 mt-2 mb-5">
     <div class="col-md-2">
+    </div>
+    
+    <div class="col-md-2">
       <%= f.label :process1, t('activerecord.attributes.isometry.weldings_attributes.process1'), class: "form-label" %>
       <%= f.select :process1, Welding::PROCESS_TYPES, { include_blank: false }, class: "form-control" %>
     </div>
@@ -141,10 +144,6 @@
     <div class="col-md-2">
       <%= f.label :vt_date1, t('activerecord.attributes.isometry.weldings_attributes.vt_date1'), class: "form-label" %>
       <%= f.date_field :vt_date1, class: "form-control", value: f.object.vt_date1 || (f.object.new_record? ? Date.current : nil) %>
-    </div>
-    <div class="col-md-2">
-      <%= f.label :result1, t('activerecord.attributes.isometry.weldings_attributes.result1'), class: "form-label" %>
-      <%= f.select :result1, Welding::RESULT_TYPES, { include_blank: false }, class: "form-control" %>
     </div>
   </div>
 
