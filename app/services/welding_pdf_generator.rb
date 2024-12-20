@@ -68,8 +68,8 @@ class WeldingPdfGenerator
         { content: "Naht Nr.\nWeld Nr.", rowspan: 2 },
         { content: "Komponente\ncomponent", rowspan: 2 },
         { content: "Materialdokumentation - material documentation", colspan: 4 },
-        { content: "Schweissnahtdoku - welding\ndocu.", colspan: 2 },
-        { content: "Prüfung - dokumentation - test\ndocumentation", colspan: 4 }
+        { content: "Schweissnahtdoku - welding docu.", colspan: 2 },
+        { content: "Prüfung - dokumentation - test documentation", colspan: 4 }
       ],
       [
         "Abmessung\ndimensinon",
@@ -78,9 +78,9 @@ class WeldingPdfGenerator
         "Zeugnis\nCertificate",
         "Prozess\nprocess",
         "Schweisser\nWelder",
-        "RT Datum\n/date",
-        "PT Datum\n/date",
-        "VT Datum\n/date",
+        "RT / date",
+        "PT / date",
+        "VT / date",
         "Erg\nresult"
       ]
     ]
@@ -100,9 +100,9 @@ class WeldingPdfGenerator
           weld.material_certificate&.certificate_number,
           weld.process,
           weld.welder,
-          weld.rt_date&.strftime("%d.%m.%Y"),
-          weld.pt_date&.strftime("%d.%m.%Y"),
-          weld.vt_date&.strftime("%d.%m.%Y"),
+          { content: "#{weld.rt_done_by}\n#{weld.rt_date&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.pt_done_by}\n#{weld.pt_date&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.vt_done_by}\n#{weld.vt_date&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
           { content: weld.result, rowspan: 2 }
         ]
 
@@ -115,29 +115,28 @@ class WeldingPdfGenerator
           weld.material_certificate1&.certificate_number,
           weld.process1,
           weld.welder1,
-          weld.rt_date1&.strftime("%d.%m.%Y"),
-          weld.pt_date1&.strftime("%d.%m.%Y"),
-          weld.vt_date1&.strftime("%d.%m.%Y")
+          { content: "#{weld.rt_done_by1}\n#{weld.rt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.pt_done_by1}\n#{weld.pt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.vt_done_by1}\n#{weld.vt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] }
         ]
       end
 
-      pdf.table(data) do |t|
-        t.cells.style do |c|
-          c.size = 7
-          c.padding = [ 5, 2, 5, 2 ]
-          c.border_width = 0.5
-          c.align = :center
-          c.valign = :center
-          c.height = 20
-        end
+      pdf.table(data, width: pdf.bounds.width) do |t|
+        t.cells.style(
+          size: 9,
+          align: :center,
+          valign: :center,
+          padding: [ 2, 2, 4, 2 ],
+          inline_format: true
+        )
 
-        # Header row styles
-        t.row(0..1).style(font_style: :bold, size: 7)
-
-        # Make header rows slightly taller
-        t.row(0).min_height = 25
-        t.row(1).min_height = 25
+        # Style header rows (first two rows)
+        t.row(0..1).style(
+          font_style: :bold
+        )
       end
+
+      pdf.move_down 20
 
       # Add a new page if there are more welds to show
       if weld_chunk != @welds.each_slice(5).to_a.last

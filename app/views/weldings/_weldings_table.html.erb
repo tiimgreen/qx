@@ -92,20 +92,20 @@
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= welding.rt_date&.strftime("%d-%m-%Y") %></div>
-              <div><%= welding.rt_date1&.strftime("%d-%m-%Y") %></div>
+              <div><%= welding.rt_done_by %> <%= welding.rt_date&.strftime("%Y-%m-%d") %></div>
+              <div><%= welding.rt_done_by1 %><%= welding.rt_date1&.strftime("%Y-%m-%d") %></div>
             </div>
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= welding.pt_date&.strftime("%d-%m-%Y") %></div>
-              <div><%= welding.pt_date1&.strftime("%d-%m-%Y") %></div>
+              <div><%= welding.pt_done_by %> <%= welding.pt_date&.strftime("%Y-%m-%d") %></div>
+              <div><%= welding.pt_done_by1 %><%= welding.pt_date1&.strftime("%Y-%m-%d") %></div>
             </div>
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= welding.vt_date&.strftime("%d-%m-%Y") %></div>
-              <div><%= welding.vt_date1&.strftime("%d-%m-%Y") %></div>
+              <div><%= welding.vt_done_by %> <%= welding.vt_date&.strftime("%Y-%m-%d") %></div>
+              <div><%= welding.vt_done_by1 %><%= welding.vt_date1&.strftime("%Y-%m-%d") %></div>
             </div>
           </td>
           <td>

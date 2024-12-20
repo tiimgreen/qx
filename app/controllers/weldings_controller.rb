@@ -65,7 +65,10 @@ class WeldingsController < ApplicationController
       :rt_date, :rt_date1,
       :pt_date, :pt_date1,
       :vt_date, :vt_date1,
-      :result, :result1
+      :result, :result1,
+      :rt_done_by, :rt_done_by1,
+      :pt_done_by, :pt_done_by1,
+      :vt_done_by, :vt_done_by1
     )
   end
 end

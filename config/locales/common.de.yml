@@ -26,6 +26,7 @@ de:
       bottom_left: "Unten links"
       bottom_right: "Nordboden"
       page_number: "Seite"
+      done_by: "Erledigt von"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"

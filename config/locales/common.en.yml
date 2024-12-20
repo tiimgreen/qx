@@ -26,6 +26,7 @@ en:
       bottom_left: "North Bottom"
       bottom_right: "Bottom Right"
       page_number: "Page"
+      done_by: "Done By"
     buttons:
       cancel: "Cancel"
       delete: "Delete"
@@ -52,3 +53,13 @@ en:
       first_set: "First Set"
       second_set: "Second Set"
       view_welding_report: "View Welding Report"
+  activerecord:
+    attributes:
+      isometry:
+        weldings_attributes:    
+          rt_date: "RT Date"
+          rt_date1: "RT Date"
+          pt_date: "PT Date"
+          pt_date1: "PT Date"
+          vt_date: "VT Date"
+          vt_date1: "VT Date"

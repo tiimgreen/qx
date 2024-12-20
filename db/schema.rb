@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_17_142810) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_20_123357) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -316,6 +316,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_17_142810) do
     t.datetime "pt_date1"
     t.datetime "vt_date1"
     t.string "result1"
+    t.string "rt_done_by"
+    t.string "pt_done_by"
+    t.string "vt_done_by"
+    t.string "rt_done_by1"
+    t.string "pt_done_by1"
+    t.string "vt_done_by1"
     t.index ["batch_number"], name: "index_weldings_on_batch_number"
     t.index ["isometry_id"], name: "index_weldings_on_isometry_id"
     t.index ["material_certificate1_id"], name: "index_weldings_on_material_certificate1_id"
