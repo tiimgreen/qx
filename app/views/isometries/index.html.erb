@@ -9,16 +9,36 @@
   </div>
 
   <div class="row mb-4">
-    <div class="col-md-8">
-      <%= form_tag project_isometries_path(@project), method: :get do %>
-        <div class="input-group">
-          <%= text_field_tag :search, params[:search],
-                            class: 'form-control',
-                            placeholder: t('common.labels.search_placeholder') %>
-          <div class="input-group-append">
-            <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+    <div class="col-md-6">
+      <%= form_tag project_isometries_path(@project), method: :get, class: 'row g-2' do %>
+        <div class="col-md-12">
+          <div class="input-group">
+            <%= text_field_tag :search, params[:search],
+                              class: 'form-control',
+                              placeholder: t('common.labels.search_placeholder') %>
+            <%= hidden_field_tag :revision_filter, params[:revision_filter] %>
+            <div class="input-group-append">
+              <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+            </div>
           </div>
         </div>
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <% if Rails.env.development? %>
+        <%= form_tag project_isometries_path(@project), method: :get, class: 'd-inline' do %>
+          <%= hidden_field_tag :search, params[:search] %>
+          <div class="input-group">
+            <%= select_tag :revision_filter,
+                          options_for_select([
+                            [t('.filter.latest_revisions'), 'latest'],
+                            [t('.filter.old_revisions'), 'old'],
+                            [t('.filter.all_revisions'), 'all']
+                          ], params[:revision_filter] || 'latest'),
+                          class: 'form-select',
+                          onchange: 'this.form.submit()' %>
+          </div>
+        <% end %>
       <% end %>
     </div>
     <div class="col-md-4 text-end">

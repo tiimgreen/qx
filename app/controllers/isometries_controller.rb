@@ -14,13 +14,26 @@ class IsometriesController < ApplicationController
       Isometry.active
     end
 
+    @isometries = base_scope.includes(:project, :sector, :weldings)
+
+    # Apply revision filter
+    case params[:revision_filter]
+    when 'all'
+      # Show all revisions
+    when 'old'
+      @isometries = @isometries.where(revision_last: false)
+    else # 'latest' or nil
+      @isometries = @isometries.where(revision_last: true)
+    end
+
+    if params[:search].present?
+      @isometries = @isometries.search_by_term(params[:search])
+    end
+
     sort_column = sort_params || "received_date"
     sort_direction = params[:direction] || "desc"
 
-    @isometries = base_scope
-      .includes(:project, :sector, :weldings)
-      .search_by_term(params[:search])
-      .order(sort_column => sort_direction)
+    @isometries = @isometries.order(sort_column => sort_direction)
   end
 
   def show

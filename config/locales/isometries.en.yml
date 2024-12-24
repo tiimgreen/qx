@@ -9,6 +9,10 @@ en:
       no_isometries: "No isometries found"
       create_revision: "Rev."
       confirm_revision: "Are you sure you want to create a new revision? This will mark the current revision as not latest."
+      filter:
+        latest_revisions: "Latest Revisions"
+        old_revisions: "Old Revisions"
+        all_revisions: "All Revisions"
     new:
       title: "New Isometry"
     edit:
