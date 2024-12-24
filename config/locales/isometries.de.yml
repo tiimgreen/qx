@@ -7,6 +7,8 @@ de:
       title: "Isometrien"
       title_for_project: "Isometrien für %{project}"
       no_isometries: "Keine Isometrien gefunden"
+      create_revision: "Revision"
+      confirm_revision: "Sind Sie sicher, dass Sie eine neue Revision erstellen möchten? Die aktuelle Revision wird als nicht aktuell markiert."
     new:
       title: "Neue Isometrie"
     edit:
@@ -59,6 +61,9 @@ de:
       material_certificates: "Materialzertifikate"
       no_certificates: "Keine Zertifikate an dieser Isometrie angehaengt"
       weldings: "Weldlog"
+    create_revision:
+      revision_created: "Neue Revision wurde erfolgreich erstellt"
+      revision_failed: "Neue Revision konnte nicht erstellt werden"
     form:
       technical_specs: "Technische Daten"
       spooling: "Spooling"

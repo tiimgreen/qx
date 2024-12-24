@@ -30,6 +30,7 @@ Rails.application.routes.draw do
           delete :delete_image
           delete :remove_certificate
           get :download_welding_report
+          post :create_revision
         end
         post :new_page, on: :member
         resources :weldings

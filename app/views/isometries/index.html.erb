@@ -90,7 +90,7 @@
             <td><%= isometry.work_package_number %></td>
             <td><%= isometry.system %></td>
             <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>
-            <td><%= isometry.revision_number %><%= ' (Latest)' if isometry.revision_last %></td>
+            <td><span class="<%= isometry.revision_last ? 'badge bg-success text-white' : 'badge bg-danger text-white' %>"><%= isometry.revision_number %></span></td>
             <td><%= isometry.material %></td>
             <td><%= l(isometry.received_date, format: :short) if isometry.received_date %></td>
             <td>
@@ -108,18 +108,24 @@
                 <% end %>
             </td>
             <td class="text-end">
-              <div class="btn-group btn-group-sm">
+              <% if isometry.page_number == 1 && isometry.revision_last? %>
+                <%= button_to create_revision_project_isometry_path(@project, isometry),
+                            method: :post,
+                            class: 'btn btn-sm btn-outline-primary me-2',
+                            form: { style: 'display: inline-block' },
+                            data: { turbo_confirm: t('.confirm_revision') } do %>
+                  <i class="bi bi-plus-circle"></i> <%= t('.create_revision') %>
+                <% end %>
+              <% end %>
               <% if current_user.can_view?("Isometry") %>
                 <%= link_to project_isometry_path(@project, isometry), 
-                  class: 'btn btn-outline-info m-1',
-                  title: t('common.actions.edit'),
-                  data: { bs_toggle: 'tooltip' } do %>
+                  class: 'btn btn-sm btn-outline-secondary' do %>
                   <i class="bi bi-eye"></i>
                 <% end %>
               <% end %>
               <% if current_user.can_edit?("Isometry") %>
                 <%= link_to edit_project_isometry_path(@project, isometry), 
-                  class: 'btn btn-outline-primary m-1',
+                  class: 'btn btn-sm btn-outline-primary m-1',
                   title: t('common.actions.edit'),
                   data: { bs_toggle: 'tooltip' } do %>
                   <i class="bi bi-pencil"></i>
@@ -127,7 +133,7 @@
               <% end %>
               <% if current_user.can_delete?("Isometry") %>
                 <%= button_tag type: 'button',
-                           class: 'btn btn-outline-danger m-1',
+                           class: 'btn btn-sm btn-outline-danger m-1',
                            title: t('isometries.buttons.delete'),
                            data: {
                              bs_toggle: "modal",
@@ -140,7 +146,6 @@
                   <i class="bi bi-trash"></i>
                 <% end %>
               <% end %>
-              </div>
             </td>
           </tr>
         <% end %>
