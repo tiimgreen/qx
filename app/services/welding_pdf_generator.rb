@@ -123,10 +123,10 @@ class WeldingPdfGenerator
 
       pdf.table(data, width: pdf.bounds.width) do |t|
         t.cells.style(
-          size: 9,
+          size: 8,
           align: :center,
           valign: :center,
-          padding: [ 2, 2, 4, 2 ],
+          padding: [ 2, 1, 4, 1 ],
           inline_format: true
         )
 
