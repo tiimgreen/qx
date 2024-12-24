@@ -8,13 +8,18 @@
     <h1 class="h2"><%= @material_certificate.certificate_number %></h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <%= link_to edit_material_certificate_path(@material_certificate), class: "btn btn-sm btn-outline-secondary me-2" do %>
-        <i class="bi bi-pencil"></i> <%= t('common.actions.edit') %>
+        <i class="bi bi-pencil"></i>
       <% end %>
-      <%= link_to material_certificate_path(@material_certificate),
-            method: :delete,
-            data: { confirm: t('common.messages.confirm_delete') },
-            class: "btn btn-sm btn-outline-danger" do %>
-        <i class="bi bi-trash"></i> <%= t('common.actions.delete') %>
+      <%= button_tag type: 'button',
+          class: 'btn btn-sm btn-outline-danger',
+          title: t('common.buttons.delete'),
+          data: {
+            bs_toggle: "modal",
+            bs_target: "#deleteMaterialCertificateModal",
+            "certificate-id": @material_certificate.id,
+            "certificate-number": @material_certificate.certificate_number
+          } do %>
+        <i class="bi bi-trash"></i>
       <% end %>
     </div>
   </div>
@@ -100,3 +105,10 @@
     </div>
   <% end %>
 </div>
+
+<%= render partial: 'delete_confirmation_modal',
+           locals: {
+             modal_id: 'deleteMaterialCertificateModal',
+             controller_name: 'delete-material-certificate',
+             model_name: 'material_certificate'
+           } %>

@@ -72,10 +72,15 @@
               <%= link_to edit_material_certificate_path(certificate), class: "btn btn-sm btn-outline-secondary me-1" do %>
                 <i class="bi bi-pencil"></i>
               <% end %>
-              <%= link_to material_certificate_path(certificate),
-                  method: :delete,
-                  data: { confirm: t('common.messages.confirm_delete') },
-                  class: "btn btn-sm btn-outline-danger" do %>
+              <%= button_tag type: 'button',
+                  class: 'btn btn-sm btn-outline-danger',
+                  title: t('common.buttons.delete'),
+                  data: {
+                    bs_toggle: "modal",
+                    bs_target: "#deleteMaterialCertificateModal",
+                    "certificate-id": certificate.id,
+                    "certificate-number": certificate.certificate_number
+                  } do %>
                 <i class="bi bi-trash"></i>
               <% end %>
             </td>
@@ -85,3 +90,12 @@
     </table>
   </div>
 </div>
+
+<%= render partial: 'delete_confirmation_modal',
+           locals: {
+             modal_id: 'deleteMaterialCertificateModal',
+             controller_name: 'delete-material-certificate',
+             model_name: 'material_certificate'
+           } %>
+
+<%= render 'pagy' %>

@@ -5,7 +5,13 @@ class MaterialCertificatesController < ApplicationController
   before_action :set_material_certificate, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @material_certificates = MaterialCertificate.all
+    sort_column = sort_params || "created_at"
+    sort_direction = params[:direction] || "desc"
+
+    @pagy, @material_certificates = pagy(
+      MaterialCertificate.search_by_term(params[:search])
+                        .order(sort_column => sort_direction)
+    )
   end
 
   def search
@@ -57,7 +63,11 @@ class MaterialCertificatesController < ApplicationController
 
   def destroy
     @material_certificate.destroy
-    redirect_to material_certificates_url, notice: t(".success")
+
+    respond_to do |format|
+      format.html { redirect_to material_certificates_url, notice: t(".success") }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -76,5 +86,17 @@ class MaterialCertificatesController < ApplicationController
       :line_id,
       :certificate_file
     )
+  end
+
+  def sort_params
+    allowed_columns = %w[
+      certificate_number
+      batch_number
+      line_id
+      issue_date
+      issuer_name
+      created_at
+    ]
+    params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
   end
 end
