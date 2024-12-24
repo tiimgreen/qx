@@ -72,7 +72,7 @@ class WeldingPdfGenerator
         { content: "Prüfung - dokumentation - test documentation", colspan: 4 }
       ],
       [
-        "Abmessung\ndimensinon",
+        "Abmessung\ndimension",
         "Werkstoff\nmaterial",
         "Charge\nHeat Nr.",
         "Zeugnis\nCertificate",
@@ -81,7 +81,7 @@ class WeldingPdfGenerator
         "RT / date",
         "PT / date",
         "VT / date",
-        "Erg\nresult"
+        "Erg\nres"
       ]
     ]
 
