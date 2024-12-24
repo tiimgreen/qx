@@ -18,7 +18,7 @@ class IncomingDelivery < ApplicationRecord
     return all unless search_term.present?
 
     term = "%#{search_term}%"
-    left_joins(:project, :work_location, :user)
+    left_joins(:project, :work_location, :user, :delivery_items)
       .where("incoming_deliveries.delivery_note_number LIKE :search OR
         incoming_deliveries.order_number LIKE :search OR
         incoming_deliveries.supplier_name LIKE :search OR
@@ -28,7 +28,18 @@ class IncomingDelivery < ApplicationRecord
         work_locations.name LIKE :search OR
         work_locations.location_type LIKE :search OR
         users.first_name LIKE :search OR
-        users.last_name LIKE :search",
+        users.last_name LIKE :search OR
+        delivery_items.tag_number LIKE :search OR
+        delivery_items.batch_number LIKE :search OR
+        delivery_items.item_description LIKE :search OR
+        delivery_items.specifications LIKE :search OR
+        delivery_items.delivery_note_position LIKE :search OR
+        delivery_items.quantity_check_status LIKE :search OR
+        delivery_items.dimension_check_status LIKE :search OR
+        delivery_items.visual_check_status LIKE :search OR
+        delivery_items.vt2_check_status LIKE :search OR
+        delivery_items.ra_check_status LIKE :search OR
+        delivery_items.on_hold_status LIKE :search",
         search: term
       ).distinct
   }
