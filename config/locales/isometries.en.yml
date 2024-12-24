@@ -90,9 +90,7 @@ en:
 
   activerecord:
     models:
-      isometry:
-        one: "Isometry"
-        other: "Isometries"
+      isometry: "Isometry"
     attributes:
       isometry:
         received_date: "Receipt Date"

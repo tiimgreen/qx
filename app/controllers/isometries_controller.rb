@@ -77,7 +77,7 @@ class IsometriesController < ApplicationController
 
   def destroy
     @isometry.update(deleted: true)
-    redirect_to project_isometries_path(@project),
+    redirect_to project_isometries_path(@project, locale: I18n.locale),
                 notice: t("common.messages.deleted", model: "Isometry")
   end
 

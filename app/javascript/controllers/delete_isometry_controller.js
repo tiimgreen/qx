@@ -28,7 +28,8 @@ export default class extends Controller {
     event.preventDefault()
     
     try {
-      const response = await fetch(`/de/projects/${this.projectId}/isometries/${this.isometryId}`, {
+      const currentLocale = document.documentElement.lang || 'en'
+      const response = await fetch(`/${currentLocale}/projects/${this.projectId}/isometries/${this.isometryId}`, {
         method: 'DELETE',
         headers: {
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
