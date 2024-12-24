@@ -87,6 +87,7 @@ class Isometry < ApplicationRecord
        isometries.pid_number LIKE :search OR
        isometries.system LIKE :search OR
        isometries.material LIKE :search OR
+       isometries.revision_number LIKE :search OR
        isometries.medium LIKE :search",
       search: term
     )

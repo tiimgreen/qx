@@ -7,7 +7,7 @@ de:
       title: "Isometrien"
       title_for_project: "Isometrien für %{project}"
       no_isometries: "Keine Isometrien gefunden"
-      create_revision: "Revision"
+      create_revision: "Rev."
       confirm_revision: "Sind Sie sicher, dass Sie eine neue Revision erstellen möchten? Die aktuelle Revision wird als nicht aktuell markiert."
     new:
       title: "Neue Isometrie"
