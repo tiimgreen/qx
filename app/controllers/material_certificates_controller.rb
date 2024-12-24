@@ -1,8 +1,8 @@
 class MaterialCertificatesController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user!
-
   before_action :set_material_certificate, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_action!
 
   def index
     sort_column = sort_params || "created_at"
@@ -98,5 +98,46 @@ class MaterialCertificatesController < ApplicationController
       created_at
     ]
     params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
+  end
+
+  def authorize_action!
+    case action_name
+    when "index", "show"
+      authorize_view!
+    when "new", "create"
+      authorize_create!
+    when "edit", "update"
+      authorize_edit!
+    when "destroy"
+      authorize_destroy!
+    end
+  end
+
+  def authorize_view!
+    unless current_user.can_view?("MaterialCertificate")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.show"), model: MaterialCertificate.model_name.human)
+      redirect_to request.referer || root_path
+    end
+  end
+
+  def authorize_create!
+    unless current_user.can_create?("MaterialCertificate")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: MaterialCertificate.model_name.human)
+      redirect_to request.referer || material_certificates_path
+    end
+  end
+
+  def authorize_edit!
+    unless current_user.can_edit?("MaterialCertificate")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.edit"), model: MaterialCertificate.model_name.human)
+      redirect_to request.referer || material_certificate_path(@material_certificate)
+    end
+  end
+
+  def authorize_destroy!
+    unless current_user.can_delete?("MaterialCertificate")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: MaterialCertificate.model_name.human)
+      redirect_to request.referer || material_certificate_path(@material_certificate)
+    end
   end
 end

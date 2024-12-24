@@ -66,22 +66,30 @@
               <% end %>
             </td>
             <td class="text-end">
-              <%= link_to material_certificate_path(certificate), class: "btn btn-sm btn-outline-primary me-1" do %>
-                <i class="bi bi-eye"></i>
+              <% if current_user.can_view?("MaterialCertificate") %>
+                <%= link_to material_certificate_path(certificate), class: "btn btn-sm btn-outline-primary me-1" do %>
+                  <i class="bi bi-eye"></i>
+                <% end %>
               <% end %>
-              <%= link_to edit_material_certificate_path(certificate), class: "btn btn-sm btn-outline-secondary me-1" do %>
-                <i class="bi bi-pencil"></i>
+              
+              <% if current_user.can_edit?("MaterialCertificate") %>
+                <%= link_to edit_material_certificate_path(certificate), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                  <i class="bi bi-pencil"></i>
+                <% end %>
               <% end %>
-              <%= button_tag type: 'button',
-                  class: 'btn btn-sm btn-outline-danger',
-                  title: t('common.buttons.delete'),
-                  data: {
-                    bs_toggle: "modal",
-                    bs_target: "#deleteMaterialCertificateModal",
-                    "certificate-id": certificate.id,
-                    "certificate-number": certificate.certificate_number
-                  } do %>
-                <i class="bi bi-trash"></i>
+              
+              <% if current_user.can_delete?("MaterialCertificate") %>
+                <%= button_tag type: 'button',
+                    class: 'btn btn-sm btn-outline-danger',
+                    title: t('common.buttons.delete'),
+                    data: {
+                      bs_toggle: "modal",
+                      bs_target: "#deleteMaterialCertificateModal",
+                      "certificate-id": certificate.id,
+                      "certificate-number": certificate.certificate_number
+                    } do %>
+                  <i class="bi bi-trash"></i>
+                <% end %>
               <% end %>
             </td>
           </tr>

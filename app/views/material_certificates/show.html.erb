@@ -7,19 +7,24 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2"><%= @material_certificate.certificate_number %></h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-      <%= link_to edit_material_certificate_path(@material_certificate), class: "btn btn-sm btn-outline-secondary me-2" do %>
-        <i class="bi bi-pencil"></i>
+      <% if current_user.can_edit?("MaterialCertificate") %>
+        <%= link_to edit_material_certificate_path(@material_certificate), class: "btn btn-sm btn-outline-secondary me-2" do %>
+          <i class="bi bi-pencil"></i>
+        <% end %>
       <% end %>
-      <%= button_tag type: 'button',
-          class: 'btn btn-sm btn-outline-danger',
-          title: t('common.buttons.delete'),
-          data: {
-            bs_toggle: "modal",
-            bs_target: "#deleteMaterialCertificateModal",
-            "certificate-id": @material_certificate.id,
-            "certificate-number": @material_certificate.certificate_number
-          } do %>
-        <i class="bi bi-trash"></i>
+      
+      <% if current_user.can_delete?("MaterialCertificate") %>
+        <%= button_tag type: 'button',
+            class: 'btn btn-sm btn-outline-danger',
+            title: t('common.buttons.delete'),
+            data: {
+              bs_toggle: "modal",
+              bs_target: "#deleteMaterialCertificateModal",
+              "certificate-id": @material_certificate.id,
+              "certificate-number": @material_certificate.certificate_number
+            } do %>
+          <i class="bi bi-trash"></i>
+        <% end %>
       <% end %>
     </div>
   </div>
