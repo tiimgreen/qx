@@ -11,6 +11,7 @@ en:
       confirm_delete_with_details: "Are you sure you want to delete %{model} '%{name}' (%{number})? This action cannot be undone and will delete all associated records."
       confirm_delete_title: "Confirm Deletion"
       unauthorized: "You don't have permission to %{action} %{model}"
+      pending_deliveries: "Please complete your existing delivery before creating a new one"
     labels:
       actions: "Actions"
       search: "Search"

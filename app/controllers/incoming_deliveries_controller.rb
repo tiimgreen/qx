@@ -114,7 +114,7 @@ class IncomingDeliveriesController < ApplicationController
     end
 
     if current_user.has_pending_deliveries?("IncomingDelivery", @project.id)
-      flash[:info] = "Please complete your existing deliveries before creating a new one"
+      flash[:info] =  t("common.messages.pending_deliveries")
     end
   end
 
