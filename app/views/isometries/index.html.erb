@@ -128,18 +128,10 @@
                 <% end %>
             </td>
             <td class="text-end">
-              <% if isometry.page_number == 1 && isometry.revision_last? %>
-                <%= button_to create_revision_project_isometry_path(@project, isometry),
-                            method: :post,
-                            class: 'btn btn-sm btn-outline-primary me-2',
-                            form: { style: 'display: inline-block' },
-                            data: { turbo_confirm: t('.confirm_revision') } do %>
-                  <i class="bi bi-plus-circle"></i> <%= t('.create_revision') %>
-                <% end %>
-              <% end %>
+              <% %>
               <% if current_user.can_view?("Isometry") %>
                 <%= link_to project_isometry_path(@project, isometry), 
-                  class: 'btn btn-sm btn-outline-secondary' do %>
+                  class: "btn btn-sm btn-outline-secondary #{ isometry.page_number == 1 && isometry.revision_last? ? 'btn bg-success text-white' : ''}" do %>
                   <i class="bi bi-eye"></i>
                 <% end %>
               <% end %>
