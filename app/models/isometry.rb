@@ -114,7 +114,8 @@ class Isometry < ApplicationRecord
   private
 
   def process_isometry_documents
-    return unless isometry_documents.any?
+    # Skip processing for drafts or when no documents
+    return if draft? || !isometry_documents.any?
 
     isometry_documents.each do |document|
       next unless document.pdf.attached?
@@ -152,6 +153,8 @@ class Isometry < ApplicationRecord
   end
 
   def log_qr_position_change
+    return if draft?
+    
     Rails.logger.info "========== QR Position Debug =========="
     Rails.logger.info "Current QR Position: #{qr_position.inspect}"
     Rails.logger.info "QR Position in database: #{qr_position_was.inspect}"

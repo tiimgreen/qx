@@ -26,6 +26,9 @@ Rails.application.routes.draw do
         end
       end
       resources :isometries do
+        collection do
+          post :autosave
+        end
         member do
           delete :delete_image
           delete :remove_certificate

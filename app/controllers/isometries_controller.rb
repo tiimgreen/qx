@@ -18,9 +18,9 @@ class IsometriesController < ApplicationController
 
     # Apply revision filter
     case params[:revision_filter]
-    when 'all'
+    when "all"
       # Show all revisions
-    when 'old'
+    when "old"
       @isometries = @isometries.where(revision_last: false)
     else # 'latest' or nil
       @isometries = @isometries.where(revision_last: true)
@@ -47,44 +47,99 @@ class IsometriesController < ApplicationController
   end
 
   def create
-    @isometry = @project.isometries.build(isometry_params)
+    @isometry = @project.isometries.new(isometry_params)
     @isometry.user = current_user
 
-    # Handle new PDF upload
-    handle_new_pdf_upload(@isometry)
+    respond_to do |format|
+      format.html do
+        # Handle new PDF upload first
+        handle_new_pdf_upload(@isometry)
 
-    if @isometry.save
-      redirect_to project_isometry_path(@project, @isometry),
-                  notice: t("common.messages.created", model: "Isometry")
-    else
-      render :new, status: :unprocessable_entity
+        # Handle image attachments
+        if params[:isometry][:rt_images].present?
+          @isometry.rt_images.attach(params[:isometry][:rt_images])
+        end
+        if params[:isometry][:vt_images].present?
+          @isometry.vt_images.attach(params[:isometry][:vt_images])
+        end
+        if params[:isometry][:pt_images].present?
+          @isometry.pt_images.attach(params[:isometry][:pt_images])
+        end
+
+        # Remove image parameters before saving
+        create_params = isometry_params.except(:rt_images, :vt_images, :pt_images)
+        @isometry.assign_attributes(create_params)
+
+        if @isometry.save
+          redirect_to project_isometry_path(@project, @isometry),
+                      notice: t("common.messages.created", model: "Isometry")
+        else
+          render :new, status: :unprocessable_entity
+        end
+      end
+
+      format.json do
+        @isometry.draft = true
+        if @isometry.save(validate: false)
+          render json: {
+            status: "success",
+            message: "Draft saved",
+            id: @isometry.id
+          }
+        else
+          render json: {
+            status: "error",
+            message: @isometry.errors.full_messages
+          }, status: :unprocessable_entity
+        end
+      end
     end
   end
 
   def update
-    # Handle new PDF upload first
-    handle_new_pdf_upload(@isometry)
+    respond_to do |format|
+      format.html do
+        # Handle new PDF upload first
+        handle_new_pdf_upload(@isometry)
 
-    # Handle image attachments
-    if params[:isometry][:rt_images].present?
-      @isometry.rt_images.attach(params[:isometry][:rt_images])
-    end
-    if params[:isometry][:vt_images].present?
-      @isometry.vt_images.attach(params[:isometry][:vt_images])
-    end
-    if params[:isometry][:pt_images].present?
-      @isometry.pt_images.attach(params[:isometry][:pt_images])
-    end
+        # Handle image attachments
+        if params[:isometry][:rt_images].present?
+          @isometry.rt_images.attach(params[:isometry][:rt_images])
+        end
+        if params[:isometry][:vt_images].present?
+          @isometry.vt_images.attach(params[:isometry][:vt_images])
+        end
+        if params[:isometry][:pt_images].present?
+          @isometry.pt_images.attach(params[:isometry][:pt_images])
+        end
 
-    # Remove image parameters before updating other attributes to prevent overwriting
-    update_params = isometry_params.except(:rt_images, :vt_images, :pt_images)
+        # Remove image parameters before updating other attributes
+        update_params = isometry_params.except(:rt_images, :vt_images, :pt_images)
 
-    # Then update other attributes
-    if @isometry.update(update_params)
-      redirect_to project_isometry_path(@project, @isometry),
-                  notice: t("common.messages.updated", model: "Isometry")
-    else
-      render :edit, status: :unprocessable_entity
+        if @isometry.update(update_params)
+          redirect_to project_isometry_path(@project, @isometry),
+                      notice: t("common.messages.updated", model: "Isometry")
+        else
+          render :edit, status: :unprocessable_entity
+        end
+      end
+
+      format.json do
+        @isometry.assign_attributes(isometry_params)
+        @isometry.draft = true
+        if @isometry.save(validate: false)
+          render json: {
+            status: "success",
+            message: "Draft saved",
+            id: @isometry.id
+          }
+        else
+          render json: {
+            status: "error",
+            message: "Failed to save draft"
+          }, status: :unprocessable_entity
+        end
+      end
     end
   end
 
@@ -179,6 +234,17 @@ class IsometriesController < ApplicationController
     end
   end
 
+  def autosave
+    @isometry = @project.isometries.new(isometry_params)
+    @isometry.draft = true
+
+    if @isometry.save(validate: false)
+      render json: { status: "success", message: "Draft saved" }
+    else
+      render json: { status: "error", message: @isometry.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def authorize_action!
@@ -193,6 +259,8 @@ class IsometriesController < ApplicationController
       authorize_destroy!
     when "remove_certificate"
       authorize_edit!
+    when "autosave"
+      authorize_create!
     end
   end
 
@@ -264,77 +332,25 @@ class IsometriesController < ApplicationController
 
   def isometry_params
     params.require(:isometry).permit(
-      :line_id,
-      :line_id_2,
-      :line_id_3,
-      :line_id_4,
-      :line_id_5,
-      :line_id_6,
-      :line_id_7,
-      :line_id_8,
-      :line_id_9,
-      :line_id_10,
-      :pipe_length,
-      :workshop_sn,
-      :assembly_sn,
-      :total_sn,
-      :revision_number,
-      :revision_last,
-      :page_number,
-      :page_total,
-      :sector_id,
-      :notes,
-      :qr_position,
-      :on_hold_status,
-      :on_hold_comment,
-      :received_date,
-      :pid_number,
-      :pid_revision,
-      :ped_category,
-      :gmp,
-      :gdp,
-      :pipe_class,
-      :material,
-      :system,
-      :dn,
-      :medium,
-      :total_supports,
-      :total_spools,
-      :rt,
-      :vt2,
-      :pt2,
-      :dp,
-      :dip,
-      :isolation_required,
-      :slope_if_needed,
-      :work_package_number,
+      :received_date, :pid_number, :pid_revision, :line_id, :dn,
+      :revision_number, :page_number, :page_total, :pipe_class,
+      :material, :system, :medium, :work_package_number, :revision_last,
+      :dp, :dip, :isolation_required, :gmp, :gdp, :ped_category,
+      :slope_if_needed, :rt, :vt2, :pt2, :pipe_length, :workshop_sn,
+      :assembly_sn, :total_sn, :total_supports, :total_spools,
+      :on_hold_status, :on_hold_comment, :notes, :qr_position, :draft,
+      rt_images: [], vt_images: [], pt_images: [], on_hold_images: [],
       material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],
       weldings_attributes: [
-        :id, :number,
-        :component, :component1,
-        :dimension, :dimension1,
-        :material, :material1,
-        :batch_number, :batch_number1,
+        :id, :number, :component, :component1, :dimension, :dimension1,
+        :material, :material1, :batch_number, :batch_number1,
         :material_certificate_id, :material_certificate1_id,
-        :type_code, :type_code1,
-        :wps, :wps1,
-        :process, :process1,
-        :welder, :welder1,
-        :rt_date, :rt_date1,
-        :pt_date, :pt_date1,
-        :vt_date, :vt_date1,
-        :result, :result1,
-        :rt_done_by, :rt_done_by1,
-        :pt_done_by, :pt_done_by1,
-        :vt_done_by, :vt_done_by1,
-        :_destroy
-      ],
-      rt_images: [],
-      vt_images: [],
-      pt_images: [],
-      on_hold_images: [],
-      new_pdf_qr_position: []
+        :type_code, :type_code1, :wps, :wps1, :process, :process1,
+        :welder, :welder1, :rt_date, :rt_date1, :pt_date, :pt_date1,
+        :vt_date, :vt_date1, :result, :result1, :rt_done_by, :rt_done_by1,
+        :pt_done_by, :pt_done_by1, :vt_done_by, :vt_done_by1, :_destroy
+      ]
     )
   end
 

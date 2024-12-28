@@ -1,4 +1,13 @@
-<%= form_with(model: [@project, @isometry], local: true, class: "needs-validation") do |f| %>
+<%# Form with navigation warning and autosave %>
+<div data-controller="form-navigation">
+  <%= form_with(model: [@project, @isometry], 
+                local: true, 
+                class: "needs-validation",
+                data: { 
+                  controller: "autosave",
+                  autosave_interval_value: 15000,
+                  form_navigation_target: "form"
+                }) do |f| %>
   <% if @isometry.errors.any? %>
     <div class="alert alert-danger">
       <h4><%= t('common.messages.errors', count: @isometry.errors.count) %></h4>
@@ -602,3 +611,4 @@
 
 </div>
 <% end %>
+</div>
