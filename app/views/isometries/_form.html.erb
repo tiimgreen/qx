@@ -51,7 +51,7 @@
                 
                 <div class="col-md-2 mb-3">
                   <%= f.label :revision_number, class: "form-label" %>
-                  <%= f.number_field :revision_number, class: "form-control" %>
+                  <%= f.number_field :revision_number, class: "form-control", min: 0, max: 10 %>
                 </div>
               </div>
 
