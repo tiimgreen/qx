@@ -60,10 +60,11 @@
             <td><%= certificate.issuer_name %></td>
             <td>
               <% if certificate.certificate_file.attached? %>
-                <%= link_to t('material_certificates.buttons.view'),
-                    rails_blob_path(certificate.certificate_file, disposition: "inline"),
-                    class: "btn btn-sm btn-outline-primary",
-                    target: "_blank" %>
+                <%= link_to rails_blob_path(certificate.certificate_file, disposition: "inline"),
+                    class: "text-decoration-none",
+                    target: "_blank" do %>
+                  <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+                <% end %>
               <% end %>
             </td>
             <td class="text-end">
