@@ -69,10 +69,11 @@
       <div class="col-12">
         <h5 class="border-bottom pb-2 mb-3"><%= t('.certificate_file') %></h5>
         <div class="d-flex align-items-center">
-          <i class="bi bi-file-earmark-text me-2" style="font-size: 2rem;"></i>
-          <%= link_to t('.download'),
-              rails_blob_path(@material_certificate.certificate_file, disposition: "attachment"),
-              class: "btn btn-outline-primary" %>
+          <%= link_to rails_blob_path(@material_certificate.certificate_file, disposition: "inline"),
+              class: "text-decoration-none",
+              target: "_blank" do %>
+            <i class="bi bi-file-earmark-text" style="font-size: 4rem;"></i>
+          <% end %>
         </div>
       </div>
     </div>
