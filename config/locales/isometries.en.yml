@@ -90,6 +90,7 @@ en:
       isometry_pt: "PT2"
       search_certificates_placeholder: "Enter certificate number or batch number..."
       weldings: "Weldlog"
+      slope: "Slope"
     _form:
       technical_specs: Technical Specifications
       additional_specs: Additional Specifications
@@ -141,7 +142,7 @@ en:
 
   sectors:
     isometric: "Isometries"
-    isometric_description: "Manage piping isometry drawings and their technical specifications"
+    isometric_description: "Isometry Management and Technical Specification"
 
   navigation:
     menu:

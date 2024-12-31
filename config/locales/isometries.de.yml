@@ -92,6 +92,7 @@ de:
       isometry_rt: "RT"
       isometry_vt: "VT2"
       isometry_pt: "PT2"
+      slope: "Gefälle"
     _form:
       technical_specs: Technische Spezifikationen
       additional_specs: Zusätzliche Spezifikationen
@@ -143,7 +144,7 @@ de:
 
   sectors:
     isometric: "Isometrien"
-    isometric_description: "Verwalten Sie Rohr-Isometrie-Zeichnungen und deren technische Spezifikationen"
+    isometric_description: "Isometrieverwaltung und technische Spezifikation"
 
   navigation:
     menu:
