@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_28_093023) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_02_172123) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -221,6 +221,23 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_093023) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "prefabrications", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "work_location_id"
+    t.string "work_package_number"
+    t.datetime "completed", precision: nil
+    t.text "on_hold_status"
+    t.text "on_hold_comment"
+    t.datetime "on_hold_date", precision: nil
+    t.integer "user_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_prefabrications_on_project_id"
+    t.index ["user_id"], name: "index_prefabrications_on_user_id"
+    t.index ["work_location_id"], name: "index_prefabrications_on_work_location_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "project_number", null: false
     t.string "name", null: false
@@ -350,6 +367,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_093023) do
   add_foreign_key "isometry_documents", "isometries"
   add_foreign_key "isometry_material_certificates", "isometries"
   add_foreign_key "isometry_material_certificates", "material_certificates"
+  add_foreign_key "prefabrications", "projects"
+  add_foreign_key "prefabrications", "users"
+  add_foreign_key "prefabrications", "work_locations"
   add_foreign_key "projects", "users"
   add_foreign_key "user_resource_permissions", "permissions"
   add_foreign_key "user_resource_permissions", "users"

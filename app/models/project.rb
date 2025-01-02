@@ -4,6 +4,7 @@ class Project < ApplicationRecord
   has_many :isometries, dependent: :destroy
   has_many :isometry_material_certificates, through: :isometries
   has_many :material_certificates, through: :isometry_material_certificates
+  has_many :prefabrications, dependent: :destroy
 
   belongs_to :user, optional: true
 

@@ -6,11 +6,20 @@ en:
       edit: "Edit"
       delete: "Delete"
       cancel: "Cancel"
+      complete: "Complete"
     messages:
       confirm_delete: "Are you sure you want to delete this %{model}?"
       confirm_delete_with_details: "Are you sure you want to delete %{model} '%{name}' (%{number})? This action cannot be undone and will delete all associated records."
       confirm_delete_title: "Confirm Deletion"
       unauthorized: "You don't have permission to %{action} %{model}"
+      confirm_complete: "Are you sure you want to mark this as completed?"
+      success:
+        created: "%{model} was successfully created"
+        updated: "%{model} was successfully updated"
+        deleted: "%{model} was successfully deleted"
+        completed: "%{model} was successfully completed"
+      failure:
+        complete: "Failed to complete %{model}"
       pending_deliveries: "Please complete your existing delivery before creating a new one"
     labels:
       actions: "Actions"

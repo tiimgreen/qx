@@ -18,6 +18,7 @@ en:
         title: "Incoming Deliveries"
         deliveries: "Deliveries"
         new_delivery: "New Delivery"
+      prefabrications: "Prefabrications"
   common:
     save: "Save"
     cancel: "Cancel"
@@ -137,6 +138,8 @@ en:
     passed: "Passed"
     failed: "Failed"
   activerecord:
+    models:
+      prefabrication: "Prefabrication"
     errors:
       models:
         delivery_item:
@@ -157,6 +160,35 @@ en:
               greater_than: "Target quantity must be greater than %{count}"
             on_hold:
               inclusion: "must have a valid status"
+    attributes:
+      prefabrication:
+        work_location: "Work Location"
+        work_package_number: "Work Package Number"
+        completed: "Completed Date"
+        on_hold_status: "On Hold Status"
+        on_hold_comment: "On Hold Comment"
+        on_hold_date: "On Hold Date"
+        on_hold_images: "On Hold Images"
+        active: "Active"
+      delivery_item:
+        name: "Name"
+        tag_number: "TAG-Number"
+        batch_number: "Batch Number"
+        actual_quantity: "Actual Quantity"
+        target_quantity: "Target Quantity"
+        on_hold: "On Hold"
+      project:
+        name: "Name"
+        description: "Description"
+        start_date: "Start Date"
+        end_date: "End Date"
+        status: "Status"
+      user:
+        email: "Email"
+        password: "Password"
+        first_name: "First Name"
+        last_name: "Last Name"
+        role: "Role"
   isometries:
     actions:
       add_page: "Add Page"
@@ -164,3 +196,30 @@ en:
       page_created: "New page was successfully created"
     errors:
       page_creation_failed: "Failed to create new page"
+  prefabrications:
+    form:
+      complete_button: "Mark as Completed"
+      confirm_complete: "Are you sure you want to mark this prefabrication as completed?"
+      errors:
+        header:
+          one: "1 error prohibited this prefabrication from being saved"
+          other: "%{count} errors prohibited this prefabrication from being saved"
+    complete:
+      success: "Prefabrication was successfully marked as completed"
+      failure: "Failed to mark prefabrication as completed"
+    create:
+      success: "Prefabrication was successfully created"
+    update:
+      success: "Prefabrication was successfully updated"
+    destroy:
+      success: "Prefabrication was successfully deleted"
+    index:
+      title_for_project: "Prefabrications for %{project}"
+    buttons:
+      new_prefabrication: "New Prefabrication"
+    show:
+      title: "Prefabrication Details"
+    new:
+      title: "New Prefabrication"
+    edit:
+      title: "Edit Prefabrication: %{work_package}"

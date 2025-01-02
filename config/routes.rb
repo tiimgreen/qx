@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :isometries do
         collection do
           post :autosave
+          get :search_work_packages
         end
         member do
           delete :delete_image
@@ -38,6 +39,14 @@ Rails.application.routes.draw do
         delete :destroy
         post :new_page, on: :member
         resources :weldings
+      end
+      resources :prefabrications do
+        member do
+          patch :complete
+        end
+        collection do
+          get :search_isometries
+        end
       end
     end
 

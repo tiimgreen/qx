@@ -6,12 +6,20 @@ de:
       delete: "Löschen"
       save: "Speichern"
       cancel: "Abbrechen"
+      complete: "Abschließen"
     messages:
       confirm_delete: "Sind Sie sicher, dass Sie dieses %{model} löschen wollen?"
       confirm_delete_with_details: "Sind Sie sicher, dass Sie %{model} '%{name}' (%{number}) löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden und löscht alle zugeordneten Datensätze."
       confirm_delete_title: "Löschen bestätigen"
       unauthorized: "Sie haben keine Berechtigung zum %{action} von %{model}"
-      pending_deliveries: "Bitte beenden Sie Ihre bestehenden Lieferungen, bevor Sie eine neue erstellen"
+      confirm_complete: "Sind Sie sicher, dass Sie dies als abgeschlossen markieren möchten?"
+      success:
+        created: "%{model} wurde erfolgreich erstellt"
+        updated: "%{model} wurde erfolgreich aktualisiert"
+        deleted: "%{model} wurde erfolgreich gelöscht"
+        completed: "%{model} wurde erfolgreich abgeschlossen"
+      failure:
+        complete: "Fehler beim Abschließen von %{model}"
     labels:
       actions: "Aktionen"
       search: "Suche"

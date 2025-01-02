@@ -144,7 +144,9 @@ class IsometriesController < ApplicationController
   end
 
   def destroy
-    @isometry.update(deleted: true)
+    @isometry.transaction do
+      @isometry.update_columns(deleted: true)
+    end
     redirect_to project_isometries_path(@project, locale: I18n.locale),
                 notice: t("common.messages.deleted", model: "Isometry")
   end
@@ -159,14 +161,6 @@ class IsometriesController < ApplicationController
     else
       head :not_found
     end
-  end
-
-  def destroy
-    @isometry.transaction do
-      @isometry.update_columns(deleted: true)
-    end
-    redirect_to project_isometries_path(@project, locale: I18n.locale),
-                notice: t("common.messages.deleted", model: "Isometry")
   end
 
   def delete_image
@@ -253,6 +247,18 @@ class IsometriesController < ApplicationController
     end
   end
 
+  def search_work_packages
+    isometries = @project.isometries.where('work_package_number ILIKE ?', "%#{params[:term]}%")
+                        .select(:id, :work_package_number)
+                        .limit(10)
+    
+    render json: isometries.map { |i| { 
+      id: i.id, 
+      label: i.work_package_number,
+      value: i.work_package_number 
+    }}
+  end
+
   private
 
   def authorize_action!
@@ -269,6 +275,8 @@ class IsometriesController < ApplicationController
       authorize_edit!
     when "autosave"
       authorize_create!
+    when "search_work_packages"
+      authorize_view!
     end
   end
 

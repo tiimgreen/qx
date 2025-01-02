@@ -1,0 +1,55 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.prefabrications'),
+    path: project_prefabrications_path(@project) },
+  { text: @prefabrication.work_package_number }
+] %>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 class="mb-0"><%= t('.title', work_package: @prefabrication.work_package_number) %></h2>
+      <div>
+        <%= link_to edit_project_prefabrication_path(@project, @prefabrication), class: 'btn btn-outline-primary' do %>
+          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.work_package_number') %></dt>
+            <dd class="col-sm-8"><%= @prefabrication.work_package_number %></dd>
+
+            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.active') %></dt>
+            <dd class="col-sm-8"><%= @prefabrication.active ? t('common.yes') : t('common.no') %></dd>
+
+            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.completed') %></dt>
+            <dd class="col-sm-8"><%= l(@prefabrication.completed, format: :long) if @prefabrication.completed %></dd>
+          </dl>
+        </div>
+
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.on_hold_status') %>
+            <dd class="col-sm-8"><%= @prefabrication.on_hold_status %></dd>
+
+            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.on_hold_date') %></dt>
+            <dd class="col-sm-8"><%= l(@prefabrication.on_hold_date, format: :long) if @prefabrication.on_hold_date %></dd>
+
+            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.on_hold_comment') %></dt>
+            <dd class="col-sm-8"><%= @prefabrication.on_hold_comment %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="d-flex justify-content-between">
+        <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>

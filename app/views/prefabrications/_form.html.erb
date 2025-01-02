@@ -1,0 +1,103 @@
+<%= form_with(
+      model: [@project, @prefabrication],
+      local: true,
+      class: 'needs-validation'
+    ) do |f| %>
+  <% if @prefabrication.errors.any? %>
+    <div class="alert alert-danger">
+      <h6><%= t('.errors.header', count: @prefabrication.errors.count) %></h6>
+      <ul>
+        <% @prefabrication.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id if @project %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= f.label :work_location_id, class: 'form-label' %>
+        <%= f.collection_select :work_location_id,
+                              WorkLocation.all,
+                              :id,
+                              ->(wl) { wl.location_type ? t("work_locations.types.#{wl.location_type}") : "" },
+                              { prompt: true },
+                              { class: "form-control" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :work_package_number, class: 'form-label' %>
+        <div class="input-group">
+          <%= f.text_field :work_package_number, 
+                          class: 'form-control',
+                          data: {
+                            controller: "autocomplete",
+                            autocomplete_url_value: search_work_packages_project_isometries_path(@project, format: :json)
+                          } %>
+          <button class="btn btn-outline-secondary" type="button" id="searchIsometries">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <% if @prefabrication.persisted? %>
+        <div class="mb-3">
+          <%= f.label :completed, class: 'form-label' %>
+          <%= f.text_field :completed, 
+                          value: (@prefabrication.completed ? l(@prefabrication.completed, format: :long) : nil),
+                          class: 'form-control', 
+                          disabled: true %>
+        </div>
+
+        <div class="mb-3">
+          <% unless @prefabrication.completed? %>
+            <%= link_to complete_project_prefabrication_path(@project, @prefabrication),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-md-6">
+      <%= render 'application/hold_fields', f: f %>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= f.submit class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :javascript do %>
+  <script>
+    document.addEventListener('turbolinks:load', function() {
+      const workPackageField = document.querySelector('[data-controller="autocomplete"]');
+      
+      if (workPackageField) {
+        $(workPackageField).autocomplete({
+          source: workPackageField.dataset.autocompleteUrlValue,
+          minLength: 2,
+          select: function(event, ui) {
+            workPackageField.value = ui.item.value;
+            return false;
+          }
+        });
+      }
+    });
+  </script>
+<% end %>

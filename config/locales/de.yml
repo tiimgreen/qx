@@ -137,6 +137,7 @@ de:
   activerecord:
     models:
       project: "Projekt"
+      prefabrication: "Vorfertigung"
     errors:
       models:
         delivery_item:
@@ -157,6 +158,27 @@ de:
               greater_than: "Soll-Ist-Menge muss größer als %{count} sein"
             on_hold:
               inclusion: "muss einen gültigen Status haben"
+    attributes:
+      prefabrication:
+        work_location: "Arbeitsort"
+        work_package_number: "Arbeitspaket Nummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"
+        active: "Aktiv"
+  prefabrications:
+    index:
+      title_for_project: "Vorfertigung für %{project}"
+    buttons:
+      new_prefabrication: "Neue Vorfertigung"
+    show:
+      title: "Vorfertigung Details"
+    new:
+      title: "Neue Vorfertigung"
+    edit:
+      title: "Vorfertigung bearbeiten: %{work_package}"
   isometries:
     actions:
       add_page: "Seite hinzufügen"
