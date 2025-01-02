@@ -11,9 +11,9 @@
 # # This file should ensure the existence of records required to run the application in every environment (production,
 # # development, test). The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
-# Admin.create!(email: "nezir.zahirovic@gmail.com", password: "kiGA5#iyFc8$e8&b", password_confirmation: "kiGA5#iyFc8$e8&b", name: "Nezir Zahirovic")
-# Admin.create!(email: "iztok.goetsch@qualinox.ch", password: "657$G9BnhQmQBs8h", password_confirmation: "657$G9BnhQmQBs8h", name: "Iztok Goetsch")
-# Admin.create!(email: "adnan.kovacevic@qualinox.ch", password: "fGK&&9FKG9KCGhzh", password_confirmation: "fGK&&9FKG9KCGhzh", name: "Adnan Kovacevic")
+# Admin.create!(email: "nezir.zahirovic@gmail.com", password: "kiGA5#iyFc8$e8&bX", password_confirmation: "kiGA5#iyFc8$e8&bX", name: "Nezir Zahirovic")
+# Admin.create!(email: "iztok.goetsch@qualinox.ch", password: "657$G9BnhQmQBs8hX", password_confirmation: "657$G9BnhQmQBs8hX", name: "Iztok Goetsch")
+# Admin.create!(email: "adnan.kovacevic@qualinox.ch", password: "fGK&&9FKG9KCGhzhX", password_confirmation: "fGK&&9FKG9KCGhzhX", name: "Adnan Kovacevic")
 # puts "added admins"
 
 # User.create!(
