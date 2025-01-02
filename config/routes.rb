@@ -35,6 +35,7 @@ Rails.application.routes.draw do
           get :download_welding_report
           post :create_revision
         end
+        delete :destroy
         post :new_page, on: :member
         resources :weldings
       end

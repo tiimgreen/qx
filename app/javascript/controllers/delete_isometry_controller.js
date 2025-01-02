@@ -26,7 +26,6 @@ export default class extends Controller {
 
   async deleteIsometry(event) {
     event.preventDefault()
-    
     try {
       const currentLocale = document.documentElement.lang || 'en'
       const response = await fetch(`/${currentLocale}/projects/${this.projectId}/isometries/${this.isometryId}`, {

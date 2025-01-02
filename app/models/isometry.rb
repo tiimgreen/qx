@@ -37,7 +37,7 @@ class Isometry < ApplicationRecord
   validates :pipe_class, presence: true
   validates :material, presence: true
   validates :line_id, presence: true
-  validates :revision_number, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :revision_number, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }, if: :persisted?
   validates :page_number, presence: true
   validates :page_total, presence: true
   validates :medium, presence: true

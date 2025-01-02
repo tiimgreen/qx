@@ -161,6 +161,14 @@ class IsometriesController < ApplicationController
     end
   end
 
+  def destroy
+    @isometry.transaction do
+      @isometry.update_columns(deleted: true)
+    end
+    redirect_to project_isometries_path(@project, locale: I18n.locale),
+                notice: t("common.messages.deleted", model: "Isometry")
+  end
+
   def delete_image
     begin
       image_type = params[:image_type]

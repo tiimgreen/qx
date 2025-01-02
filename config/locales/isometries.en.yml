@@ -8,7 +8,6 @@ en:
       title_for_project: "Isometries for %{project}"
       no_isometries: "No isometries found"
       create_revision: "Rev."
-      confirm_revision: "Are you sure you want to create a new revision? This will mark the current revision as not latest."
       filter:
         latest_revisions: "Latest Revisions"
         old_revisions: "Old Revisions"
@@ -65,6 +64,7 @@ en:
       material_certificates: "Material Certificates"
       no_certificates: "No certificates attached to this isometry"
       weldings: "Weldlog"
+      confirm_revision: "Are you sure you want to create a new revision? This will mark the current revision as not latest."
     create_revision:
       revision_created: "New revision was successfully created"
       revision_failed: "Failed to create new revision"
