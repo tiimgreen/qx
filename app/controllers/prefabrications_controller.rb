@@ -3,7 +3,7 @@ class PrefabricationsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_prefabrication, only: [ :show, :edit, :update, :destroy, :complete, :delete_image ]
+  before_action :set_prefabrication, only: [ :show, :edit, :update, :destroy, :complete ]
 
   def index
     @prefabrications = @project.prefabrications
@@ -84,16 +84,6 @@ class PrefabricationsController < ApplicationController
       project_prefabrication_path(@project, @prefabrication),
       {}  # No need for params, completion values will be set by complete_resource
     )
-  end
-
-  def delete_image
-    image = @prefabrication.on_hold_images.find(params[:image_id])
-    image.purge
-
-    respond_to do |format|
-      format.html { redirect_back(fallback_location: project_prefabrication_path(@project, @prefabrication)) }
-      format.json { head :no_content }
-    end
   end
 
   def destroy

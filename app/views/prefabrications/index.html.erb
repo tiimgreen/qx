@@ -66,10 +66,7 @@
           <tr>
             <td><%= t("work_locations.types.#{prefabrication.work_location.location_type}") if prefabrication.work_location %></td>
             <td><%= prefabrication.work_package_number %></td>
-            <td>
-              <%= prefabrication.on_hold_status %><br>
-              <%= prefabrication.on_hold_date ? l(prefabrication.on_hold_date, format: :short) : nil %>
-            </td>
+            <td><%= status_label(prefabrication.on_hold_status) %></td>
             <td><%= l(prefabrication.completed, format: :short) if prefabrication.completed %></td>
             <td><%= prefabrication.user.name %></td>
             <td class="text-end">

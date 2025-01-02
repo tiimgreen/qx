@@ -4,7 +4,7 @@ class IsometriesController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :delete_image, :download_welding_report, :new_page, :create_revision ]
+  before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :download_welding_report, :new_page, :create_revision ]
   before_action :authorize_action!
 
   def index
@@ -163,50 +163,6 @@ class IsometriesController < ApplicationController
     end
   end
 
-  def delete_image
-    begin
-      image_type = params[:image_type]
-      image_id = params[:image_id]
-
-      Rails.logger.info "Attempting to delete image: #{image_type} #{image_id}"
-
-      # Get the attachments collection based on image type
-      attachments = case image_type
-      when "rt"
-        @isometry.rt_images
-      when "vt"
-        @isometry.vt_images
-      when "pt"
-        @isometry.pt_images
-      when "on_hold"
-        @isometry.on_hold_images
-      end
-
-      # Find the specific attachment by blob ID
-      if attachments
-        # Look through the attachments to find the one with matching blob
-        attachment = attachments.attachments.find { |a| a.blob.signed_id == image_id }
-
-        if attachment
-          Rails.logger.info "Found attachment, attempting to purge"
-          attachment.purge
-          head :ok
-        else
-          Rails.logger.error "Attachment not found for signed_id: #{image_id}"
-          head :not_found
-        end
-      else
-        Rails.logger.error "Invalid image type: #{image_type}"
-        head :unprocessable_entity
-      end
-
-    rescue => e
-      Rails.logger.error "Error deleting image: #{e.message}"
-      Rails.logger.error e.backtrace.join("\n")
-      head :internal_server_error
-    end
-  end
-
   def download_welding_report
     pdf = ::WeldingPdfGenerator.new(@isometry).generate
 
@@ -273,7 +229,7 @@ class IsometriesController < ApplicationController
       authorize_view!
     when "new", "create"
       authorize_create!
-    when "edit", "update", "delete_image", "download_welding_report", "new_page", "create_revision"
+    when "edit", "update", "download_welding_report", "new_page", "create_revision"
       authorize_edit!
     when "destroy"
       authorize_destroy!

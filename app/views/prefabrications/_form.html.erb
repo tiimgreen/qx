@@ -17,7 +17,7 @@
   <%= f.hidden_field :project_id if @project %>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="mb-3">
         <%= f.label :work_location_id, class: 'form-label' %>
         <%= f.collection_select :work_location_id,
@@ -69,7 +69,7 @@
       <% end %>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
       <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
         delete_image_project_prefabrication_path(@project, @prefabrication, image_id: image) 
       } %>
@@ -80,7 +80,7 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-outline-secondary' %>
-        <%= f.submit class: 'btn btn-primary' %>
+        <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
       </div>
     </div>
   </div>
