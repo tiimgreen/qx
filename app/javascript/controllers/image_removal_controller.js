@@ -4,7 +4,8 @@ export default class extends Controller {
   static targets = ["imageContainer"]
   static values = {
     projectId: String,
-    isometryId: String
+    modelId: String,
+    modelType: String
   }
 
   removeImage(event) {
@@ -17,7 +18,8 @@ export default class extends Controller {
     // Debug logging
     console.log('Delete image data:', {
       projectId: this.projectIdValue,
-      isometryId: this.isometryIdValue,
+      modelId: this.modelIdValue,
+      modelType: this.modelTypeValue,
       imageId,
       imageType,
       buttonDataset: button.dataset
@@ -34,22 +36,20 @@ export default class extends Controller {
       return;
     }
 
-    if (!this.projectIdValue || !this.isometryIdValue) {
-      console.error('Missing project/isometry data:', {
+    if (!this.projectIdValue || !this.modelIdValue || !this.modelTypeValue) {
+      console.error('Missing required data:', {
         projectId: this.projectIdValue,
-        isometryId: this.isometryIdValue
+        modelId: this.modelIdValue,
+        modelType: this.modelTypeValue
       });
       return;
     }
 
     if (confirm('Are you sure you want to remove this image?')) {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-      const path = `/projects/${this.projectIdValue}/isometries/${this.isometryIdValue}/delete_image`;
+      const path = `/projects/${this.projectIdValue}/images/${this.modelTypeValue}/${this.modelIdValue}`;
 
-      console.log('Making request to:', path, {
-        imageId,
-        imageType
-      });
+      console.log('Making request to:', path);
       
       fetch(path, {
         method: 'DELETE',
@@ -78,6 +78,7 @@ export default class extends Controller {
       })
       .catch(error => {
         console.error('Error removing image:', error);
+        alert('Failed to remove image. Please try again.');
       });
     }
   }

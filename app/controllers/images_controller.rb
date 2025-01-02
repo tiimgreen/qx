@@ -1,0 +1,84 @@
+# app/controllers/images_controller.rb
+class ImagesController < ApplicationController
+  layout "dashboard_layout"
+  before_action :authenticate_user!
+  before_action :set_project
+  before_action :authorize_edit!
+
+  def destroy
+    begin
+      model_class = params[:model_type].classify.constantize
+      model = model_class.find(params[:model_id])
+
+      # Ensure the model belongs to the current project
+      unless model.project_id == @project.id
+        Rails.logger.error "Unauthorized: Model #{params[:model_id]} does not belong to project #{@project.id}"
+        return head :unauthorized
+      end
+
+      image_type = params[:image_type]
+      image_id = params[:image_id]
+
+      Rails.logger.info "Attempting to delete image: #{image_type} #{image_id} from #{model_class} #{model.id}"
+
+      # Get the attachments collection based on image type
+      attachments = case model_class.to_s
+      when "Isometry"
+        case image_type
+        when "rt"
+          model.rt_images
+        when "vt"
+          model.vt_images
+        when "pt"
+          model.pt_images
+        when "on_hold"
+          model.on_hold_images
+        end
+      when "Prefabrication"
+        case image_type
+        when "on_hold"
+          model.on_hold_images
+          # Add other prefabrication image types here
+        end
+      else
+        Rails.logger.error "Invalid model type: #{model_class}"
+        return head :unprocessable_entity
+      end
+
+      # Find the specific attachment by blob ID
+      if attachments
+        attachment = attachments.attachments.find { |a| a.blob.signed_id == image_id }
+
+        if attachment
+          Rails.logger.info "Found attachment, attempting to purge"
+          attachment.purge
+          head :ok
+        else
+          Rails.logger.error "Attachment not found for signed_id: #{image_id}"
+          head :not_found
+        end
+      else
+        Rails.logger.error "Invalid image type: #{image_type}"
+        head :unprocessable_entity
+      end
+
+    rescue => e
+      Rails.logger.error "Error deleting image: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      head :internal_server_error
+    end
+  end
+
+  private
+
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
+
+  def authorize_edit!
+    unless current_user.can_edit?("Project")
+      Rails.logger.error "User #{current_user.id} unauthorized to edit project #{@project.id}"
+      head :unauthorized
+    end
+  end
+end

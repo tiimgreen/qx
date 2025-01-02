@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
 
     resources :projects do
+      delete "images/:model_type/:model_id", to: "images#destroy", as: :delete_image
+
       resources :incoming_deliveries do
         resources :delivery_items do
           delete "delete_image", on: :member
@@ -43,6 +45,7 @@ Rails.application.routes.draw do
       resources :prefabrications do
         member do
           patch :complete
+          delete "delete_image/:image_id", action: :delete_image, as: :delete_image
         end
       end
     end

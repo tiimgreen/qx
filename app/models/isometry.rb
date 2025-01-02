@@ -13,7 +13,10 @@ class Isometry < ApplicationRecord
   has_many :isometry_documents, dependent: :destroy
   accepts_nested_attributes_for :isometry_documents, allow_destroy: true
 
-  has_many_attached :on_hold_images
+  has_many_attached :on_hold_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
   has_many_attached :rt_images
   has_many_attached :vt_images
   has_many_attached :pt_images
@@ -154,7 +157,7 @@ class Isometry < ApplicationRecord
 
   def log_qr_position_change
     return if draft?
-    
+
     Rails.logger.info "========== QR Position Debug =========="
     Rails.logger.info "Current QR Position: #{qr_position.inspect}"
     Rails.logger.info "QR Position in database: #{qr_position_was.inspect}"

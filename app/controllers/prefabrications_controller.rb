@@ -3,7 +3,7 @@ class PrefabricationsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_prefabrication, only: [ :show, :edit, :update, :destroy, :complete ]
+  before_action :set_prefabrication, only: [ :show, :edit, :update, :destroy, :complete, :delete_image ]
 
   def index
     @prefabrications = @project.prefabrications
@@ -40,9 +40,12 @@ class PrefabricationsController < ApplicationController
   end
 
   def create
-    @prefabrication = @project.prefabrications.new(prefabrication_params)
+    @prefabrication = @project.prefabrications.new(prefabrication_params_without_images)
     @prefabrication.user = current_user
     @prefabrication.active = true
+
+    # Handle image attachments separately
+    attach_on_hold_images if params.dig(:prefabrication, :on_hold_images).present?
 
     if @prefabrication.save
       redirect_to project_prefabrication_path(@project, @prefabrication),
@@ -56,9 +59,18 @@ class PrefabricationsController < ApplicationController
     # Set on_hold_date when status is On Hold
     if params[:prefabrication][:on_hold_status] == "On Hold"
       params[:prefabrication][:on_hold_date] = Time.current
+      params[:prefabrication][:completed] = nil
+      params[:prefabrication][:active] = true
+    else
+      params[:prefabrication][:on_hold_date] = nil
+      params[:prefabrication][:active] = false
+      params[:prefabrication][:on_hold_comment] = nil
     end
 
-    if @prefabrication.update(prefabrication_params)
+    # Handle image attachments separately
+    attach_on_hold_images if params.dig(:prefabrication, :on_hold_images).present?
+
+    if @prefabrication.update(prefabrication_params_without_images)
       redirect_to project_prefabrication_path(@project, @prefabrication),
                   notice: t("common.messages.success.updated", model: Prefabrication.model_name.human)
     else
@@ -72,6 +84,16 @@ class PrefabricationsController < ApplicationController
       project_prefabrication_path(@project, @prefabrication),
       {}  # No need for params, completion values will be set by complete_resource
     )
+  end
+
+  def delete_image
+    image = @prefabrication.on_hold_images.find(params[:image_id])
+    image.purge
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: project_prefabrication_path(@project, @prefabrication)) }
+      format.json { head :no_content }
+    end
   end
 
   def destroy
@@ -104,5 +126,17 @@ class PrefabricationsController < ApplicationController
       :total_time,
       on_hold_images: []
     )
+  end
+
+  def prefabrication_params_without_images
+    prefabrication_params.except(:on_hold_images)
+  end
+
+  def attach_on_hold_images
+    return unless params.dig(:prefabrication, :on_hold_images).present?
+
+    params[:prefabrication][:on_hold_images].each do |image|
+      @prefabrication.on_hold_images.attach(image)
+    end
   end
 end

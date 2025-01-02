@@ -242,7 +242,8 @@
                   <%= render partial: 'images', locals: { 
                     images: @isometry.rt_images, 
                     image_type: 'rt',
-                    edit_mode: true
+                    edit_mode: true,
+                    model_type: @isometry
                   } %>
                 <% end %>
               </div>
@@ -254,7 +255,8 @@
                   <%= render partial: 'images', locals: { 
                     images: @isometry.vt_images, 
                     image_type: 'vt',
-                    edit_mode: true
+                    edit_mode: true,
+                    model_type: @isometry
                   } %>
                 <% end %>
               </div>
@@ -266,7 +268,8 @@
                   <%= render partial: 'images', locals: { 
                     images: @isometry.pt_images, 
                     image_type: 'pt',
-                    edit_mode: true
+                    edit_mode: true,
+                    model_type: @isometry
                   } %>
                 <% end %>
               </div>
@@ -354,41 +357,10 @@
     <div id="section5" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
         <div class="row g-3">
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="row g-3">
-                <div class="col-md-5 mb-3">
-                  <%= f.label :on_hold_status, class: "form-label" %>
-                  <%= f.select :on_hold_status, Isometry::ON_HOLD_STATUSES, { include_blank: false }, class: "form-select" %>
-                </div>
-                <div class="col-md-7 mb-3">
-                  <%= f.label :on_hold_images, class: "form-label" %>
-                  <%= f.file_field :on_hold_images, multiple: true, class: "form-control" %>
-                </div>
-                <div class="mb-3">
-                  <%= f.label :on_hold_comment, class: "form-label" %>
-                  <%= f.text_area :on_hold_comment, class: "form-control", rows: 4  %>
-                </div>
             
-                <% if f.object.on_hold_images.attached? %>
-                  <div class="row g-3">
-                    <% f.object.on_hold_images.each do |image| %>
-                      <div class="col-md-6">
-                        <div class="card h-100">
-                          <%= image_tag image, class: "card-img-top", style: "object-fit: cover; height: 150px;" %>
-                          <div class="card-footer">
-                            <small class="text-muted">
-                              <%= number_to_human_size(image.byte_size) %> • <%= l(image.created_at, format: :short) %>
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
+          <%= render 'hold_fields', f: f, delete_path: ->(image) { 
+            delete_image_project_isometry_path(@project, @isometry, image_id: image) 
+          } %>
         </div>
       </div>
     </div>

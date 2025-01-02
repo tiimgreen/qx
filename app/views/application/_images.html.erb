@@ -7,10 +7,12 @@
 %>
 
 <% if images.attached? %>
-  <div class="mb-3" 
+  <div class="my-3" 
        data-controller="image-removal"
        data-image-removal-project-id-value="<%= @project.id %>"
-       data-image-removal-isometry-id-value="<%= @isometry.id %>">
+       data-image-removal-model-id-value="<%= model_type.id %>"
+       data-image-removal-model-type-value="<%= model_type.class.name.downcase %>">
+       
     <% if local_assigns[:title].present? %>
       <h6 class="pb-2 mb-2"><%= title %></h6>
     <% end %>

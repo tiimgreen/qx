@@ -178,6 +178,8 @@ class IsometriesController < ApplicationController
         @isometry.vt_images
       when "pt"
         @isometry.pt_images
+      when "on_hold"
+        @isometry.on_hold_images
       end
 
       # Find the specific attachment by blob ID
