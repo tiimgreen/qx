@@ -14,7 +14,6 @@
         <i class="bi bi-plus"></i> <%= t('isometries.actions.add_page') %>
       <% end %>
     <% end %>
-    <% if Rails.env.development? %>
     <% if current_user.can_edit?("Isometry") && @isometry.page_number == 1 && @isometry.revision_last? %>
       <%= button_to create_revision_project_isometry_path(@project, @isometry),
                   method: :post,
@@ -23,7 +22,6 @@
                   data: { turbo_confirm: t('.confirm_revision') } do %>
         <i class="bi bi-plus-circle"></i> <%= t('.create_revision') %>
       <% end %>
-    <% end %>
     <% end %>
     <% if current_user.can_edit?("Isometry") %>
       <%= link_to edit_project_isometry_path(@project, @isometry), class: "btn btn-sm btn-outline-secondary me-2" do %>

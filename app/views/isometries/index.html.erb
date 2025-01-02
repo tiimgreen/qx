@@ -25,20 +25,18 @@
       <% end %>
     </div>
     <div class="col-md-2">
-      <% if Rails.env.development? %>
-        <%= form_tag project_isometries_path(@project), method: :get, class: 'd-inline' do %>
-          <%= hidden_field_tag :search, params[:search] %>
-          <div class="input-group">
-            <%= select_tag :revision_filter,
-                          options_for_select([
-                            [t('.filter.latest_revisions'), 'latest'],
-                            [t('.filter.old_revisions'), 'old'],
-                            [t('.filter.all_revisions'), 'all']
-                          ], params[:revision_filter] || 'latest'),
-                          class: 'form-select',
-                          onchange: 'this.form.submit()' %>
-          </div>
-        <% end %>
+      <%= form_tag project_isometries_path(@project), method: :get, class: 'd-inline' do %>
+        <%= hidden_field_tag :search, params[:search] %>
+        <div class="input-group">
+          <%= select_tag :revision_filter,
+                        options_for_select([
+                          [t('.filter.latest_revisions'), 'latest'],
+                          [t('.filter.old_revisions'), 'old'],
+                          [t('.filter.all_revisions'), 'all']
+                        ], params[:revision_filter] || 'latest'),
+                        class: 'form-select',
+                        onchange: 'this.form.submit()' %>
+        </div>
       <% end %>
     </div>
     <div class="col-md-4 text-end">
