@@ -30,16 +30,17 @@
 
       <div class="mb-3">
         <%= f.label :work_package_number, class: 'form-label' %>
-        <div class="input-group">
+        <div class="input-group" 
+             data-controller="work-package-search"
+             data-work-package-search-url-value="<%= search_work_packages_project_isometries_path(@project, format: :json) %>"
+             data-work-package-search-min-length-value="2">
           <%= f.text_field :work_package_number, 
                           class: 'form-control',
                           data: {
-                            controller: "autocomplete",
-                            autocomplete_url_value: search_work_packages_project_isometries_path(@project, format: :json)
+                            work_package_search_target: "input",
+                            action: "input->work-package-search#search click@window->work-package-search#clickOutside"
                           } %>
-          <button class="btn btn-outline-secondary" type="button" id="searchIsometries">
-            <i class="bi bi-search"></i>
-          </button>
+          <div class="dropdown-menu w-100" data-work-package-search-target="results"></div>
         </div>
       </div>
 
@@ -81,23 +82,4 @@
       </div>
     </div>
   </div>
-<% end %>
-
-<% content_for :javascript do %>
-  <script>
-    document.addEventListener('turbolinks:load', function() {
-      const workPackageField = document.querySelector('[data-controller="autocomplete"]');
-      
-      if (workPackageField) {
-        $(workPackageField).autocomplete({
-          source: workPackageField.dataset.autocompleteUrlValue,
-          minLength: 2,
-          select: function(event, ui) {
-            workPackageField.value = ui.item.value;
-            return false;
-          }
-        });
-      }
-    });
-  </script>
 <% end %>

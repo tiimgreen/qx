@@ -54,7 +54,7 @@
             <%= sort_indicator('completed') if params[:sort] == 'completed' %>
           </th>
           <th>
-            <%= link_to t('activerecord.attributes.prefabrication.user'),
+            <%= link_to t('common.labels.created_by'),
                 request.params.merge(sort: 'user', direction: (params[:sort] == 'user' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('user') if params[:sort] == 'user' %>
           </th>
@@ -66,7 +66,10 @@
           <tr>
             <td><%= t("work_locations.types.#{prefabrication.work_location.location_type}") if prefabrication.work_location %></td>
             <td><%= prefabrication.work_package_number %></td>
-            <td><%= prefabrication.on_hold_status %></td>
+            <td>
+              <%= prefabrication.on_hold_status %><br>
+              <%= prefabrication.on_hold_date ? l(prefabrication.on_hold_date, format: :short) : nil %>
+            </td>
             <td><%= l(prefabrication.completed, format: :short) if prefabrication.completed %></td>
             <td><%= prefabrication.user.name %></td>
             <td class="text-end">

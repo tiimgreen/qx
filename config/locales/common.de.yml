@@ -21,6 +21,7 @@ de:
       failure:
         complete: "Fehler beim Abschließen von %{model}"
     labels:
+      created_by: "Erstellt von"
       actions: "Aktionen"
       search: "Suche"
       search_button: "Suchen"

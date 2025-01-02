@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_02_172123) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_02_185400) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -233,6 +233,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_172123) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "total_time", precision: 10, scale: 2
     t.index ["project_id"], name: "index_prefabrications_on_project_id"
     t.index ["user_id"], name: "index_prefabrications_on_user_id"
     t.index ["work_location_id"], name: "index_prefabrications_on_work_location_id"

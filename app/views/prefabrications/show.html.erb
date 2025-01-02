@@ -20,27 +20,30 @@
       <div class="row">
         <div class="col-md-6">
           <dl class="row">
-            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.work_package_number') %></dt>
-            <dd class="col-sm-8"><%= @prefabrication.work_package_number %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.work_package_number') %></dt>
+            <dd class="col-sm-6"><%= @prefabrication.work_package_number %></dd>
 
-            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.active') %></dt>
-            <dd class="col-sm-8"><%= @prefabrication.active ? t('common.yes') : t('common.no') %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.active') %></dt>
+            <dd class="col-sm-6"><%= @prefabrication.active ? t('common.yes') : t('common.no') %></dd>
 
-            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.completed') %></dt>
-            <dd class="col-sm-8"><%= l(@prefabrication.completed, format: :long) if @prefabrication.completed %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.user') %></dt>
+            <dd class="col-sm-6"><%= @prefabrication.user.name %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.completed') %></dt>
+            <dd class="col-sm-6"><%= l(@prefabrication.completed, format: :long) if @prefabrication.completed %></dd>
           </dl>
         </div>
 
         <div class="col-md-6">
           <dl class="row">
-            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.on_hold_status') %>
-            <dd class="col-sm-8"><%= @prefabrication.on_hold_status %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.on_hold_status') %></dt>
+            <dd class="col-sm-6"><%= @prefabrication.on_hold_status %></dd>
 
-            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.on_hold_date') %></dt>
-            <dd class="col-sm-8"><%= l(@prefabrication.on_hold_date, format: :long) if @prefabrication.on_hold_date %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.on_hold_date') %></dt>
+            <dd class="col-sm-6"><%= l(@prefabrication.on_hold_date, format: :long) if @prefabrication.on_hold_date %></dd>
 
-            <dt class="col-sm-4"><%= t('activerecord.attributes.prefabrication.on_hold_comment') %></dt>
-            <dd class="col-sm-8"><%= @prefabrication.on_hold_comment %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.on_hold_comment') %></dt>
+            <dd class="col-sm-6"><%= @prefabrication.on_hold_comment %></dd>
           </dl>
         </div>
       </div>

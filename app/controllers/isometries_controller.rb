@@ -248,15 +248,19 @@ class IsometriesController < ApplicationController
   end
 
   def search_work_packages
-    isometries = @project.isometries.where('work_package_number ILIKE ?', "%#{params[:term]}%")
+    isometries = @project.isometries
+                        .where("work_package_number LIKE ?", "%#{params[:query]}%")
                         .select(:id, :work_package_number)
                         .limit(10)
-    
-    render json: isometries.map { |i| { 
-      id: i.id, 
+
+    render json: isometries.map { |i| {
+      id: i.id,
       label: i.work_package_number,
-      value: i.work_package_number 
+      value: i.work_package_number
     }}
+  rescue => e
+    Rails.logger.error "Error in search_work_packages: #{e.message}"
+    render json: [], status: :ok
   end
 
   private

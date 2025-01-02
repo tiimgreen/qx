@@ -44,9 +44,6 @@ Rails.application.routes.draw do
         member do
           patch :complete
         end
-        collection do
-          get :search_isometries
-        end
       end
     end
 

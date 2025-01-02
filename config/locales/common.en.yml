@@ -22,6 +22,7 @@ en:
         complete: "Failed to complete %{model}"
       pending_deliveries: "Please complete your existing delivery before creating a new one"
     labels:
+      created_by: "Created By"
       actions: "Actions"
       search: "Search"
       search_button: "Search"

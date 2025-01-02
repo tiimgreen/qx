@@ -1,4 +1,7 @@
 class PrefabricationsController < ApplicationController
+  layout "dashboard_layout"
+  include CompletableController
+  before_action :authenticate_user!
   before_action :set_project
   before_action :set_prefabrication, only: [ :show, :edit, :update, :destroy, :complete ]
 
@@ -8,7 +11,7 @@ class PrefabricationsController < ApplicationController
                               .order(created_at: :desc)
 
     if params[:search].present?
-      @prefabrications = @prefabrications.where("work_package_number ILIKE ?", "%#{params[:search]}%")
+      @prefabrications = @prefabrications.where("work_package_number LIKE ?", "%#{params[:search]}%")
     end
 
     if params[:sort].present?
@@ -50,6 +53,11 @@ class PrefabricationsController < ApplicationController
   end
 
   def update
+    # Set on_hold_date when status is On Hold
+    if params[:prefabrication][:on_hold_status] == "On Hold"
+      params[:prefabrication][:on_hold_date] = Time.current
+    end
+
     if @prefabrication.update(prefabrication_params)
       redirect_to project_prefabrication_path(@project, @prefabrication),
                   notice: t("common.messages.success.updated", model: Prefabrication.model_name.human)
@@ -59,30 +67,17 @@ class PrefabricationsController < ApplicationController
   end
 
   def complete
-    debugger
-    Rails.logger.info "Complete action called for prefabrication #{@prefabrication.id}"
-    Rails.logger.info "Current params: #{params.inspect}"
-
-    if @prefabrication.update(completed: Time.current, active: false)
-      Rails.logger.info "Successfully completed prefabrication"
-      redirect_to project_prefabrication_path(@project, @prefabrication),
-                  notice: t("common.messages.success.completed", model: Prefabrication.model_name.human)
-    else
-      Rails.logger.error "Failed to complete prefabrication: #{@prefabrication.errors.full_messages}"
-      redirect_to project_prefabrication_path(@project, @prefabrication),
-                  alert: t("common.messages.failure.complete", model: Prefabrication.model_name.human)
-    end
+    complete_resource(
+      @prefabrication,
+      project_prefabrication_path(@project, @prefabrication),
+      {}  # No need for params, completion values will be set by complete_resource
+    )
   end
 
   def destroy
     @prefabrication.destroy
     redirect_to project_prefabrications_path(@project),
                 notice: t("common.messages.success.deleted", model: Prefabrication.model_name.human)
-  end
-
-  def search_isometries
-    isometries = @project.isometries.where("work_package_number ILIKE ?", "%#{params[:term]}%")
-    render json: isometries.map { |i| { label: i.work_package_number, value: i.work_package_number } }
   end
 
   private
@@ -96,12 +91,17 @@ class PrefabricationsController < ApplicationController
   end
 
   def prefabrication_params
+    return {} unless params[:prefabrication].present?
+
     params.require(:prefabrication).permit(
       :work_location_id,
       :work_package_number,
       :on_hold_status,
       :on_hold_comment,
       :on_hold_date,
+      :active,
+      :completed,
+      :total_time,
       on_hold_images: []
     )
   end
