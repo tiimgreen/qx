@@ -33,10 +33,11 @@ class FinalInspectionsController < ApplicationController
   def create
     @final_inspection = @project.final_inspections.new(final_inspection_params_without_images)
     @final_inspection.user = current_user
-    @final_inspection.active = true
 
     # Handle image attachments separately
-    attach_on_hold_images if params.dig(:final_inspection, :on_hold_images).present?
+    attach_images(:on_hold_images) if params.dig(:final_inspection, :on_hold_images).present?
+    attach_images(:visual_check_images) if params.dig(:final_inspection, :visual_check_images).present?
+    attach_images(:vt2_check_images) if params.dig(:final_inspection, :vt2_check_images).present?
 
     if @final_inspection.save
       redirect_to project_final_inspection_path(@project, @final_inspection),
@@ -57,7 +58,9 @@ class FinalInspectionsController < ApplicationController
 
   def update
     on_hold_params(params)
-    attach_on_hold_images if params.dig(:final_inspection, :on_hold_images).present?
+    attach_images(:on_hold_images) if params.dig(:final_inspection, :on_hold_images).present?
+    attach_images(:visual_check_images) if params.dig(:final_inspection, :visual_check_images).present?
+    attach_images(:vt2_check_images) if params.dig(:final_inspection, :vt2_check_images).present?
 
     if @final_inspection.update(final_inspection_params_without_images)
       redirect_to project_final_inspection_path(@project, @final_inspection),
@@ -124,19 +127,22 @@ class FinalInspectionsController < ApplicationController
       :vt2_check_comment,
       :completed,
       :total_time,
-      on_hold_images: []
+      :project_id,
+      on_hold_images: [],
+      visual_check_images: [],
+      vt2_check_images: []
     )
   end
 
   def final_inspection_params_without_images
-    final_inspection_params.except(:on_hold_images)
+    final_inspection_params.except(:on_hold_images, :visual_check_images, :vt2_check_images)
   end
 
-  def attach_on_hold_images
-    return unless params.dig(:final_inspection, :on_hold_images).present?
+  def attach_images(image_type)
+    return unless params.dig(:final_inspection, image_type).present?
 
-    params[:final_inspection][:on_hold_images].each do |image|
-      @final_inspection.on_hold_images.attach(image)
+    params[:final_inspection][image_type].each do |image|
+      @final_inspection.send(image_type).attach(image)
     end
   end
 
@@ -144,10 +150,8 @@ class FinalInspectionsController < ApplicationController
     if params[:final_inspection][:on_hold_status] == "On Hold"
       params[:final_inspection][:on_hold_date] = Time.current
       params[:final_inspection][:completed] = nil
-      params[:final_inspection][:active] = true
     else
       params[:final_inspection][:on_hold_date] = nil
-      params[:final_inspection][:active] = false
       params[:final_inspection][:on_hold_comment] = nil
     end
   end

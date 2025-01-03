@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-md-4">
       <div class="mb-3">
-        <%= f.label t('activerecord.attributes.prefabrication.work_location'), for: :work_location_id, class: 'form-label' %>
+        <%= f.label t('activerecord.attributes.final_inspection.work_location'), for: :work_location_id, class: 'form-label' %>
         <%= f.collection_select :work_location_id,
                               WorkLocation.all,
                               :id,
@@ -78,6 +78,68 @@
       <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
         delete_image_project_final_inspection_path(@project, @final_inspection, image_id: image) 
       } %>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-6">
+     
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :visual_check_status, t('activerecord.attributes.final_inspection.visual_check_status'), class: 'form-label' %>
+                <%= f.select :visual_check_status, FinalInspection::VISUAL_STATUSES, { include_blank: false }, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :visual_check_images, t('activerecord.attributes.final_inspection.visual_check_images'), class: 'form-label' %>
+              <%= f.file_field :visual_check_images, multiple: true, class: 'form-control' %>
+            </div>
+          </div>
+          
+          <%= render partial: 'images', locals: { 
+            images: f.object.visual_check_images, 
+            image_type: 'visual_check',
+            edit_mode: true,
+            model_type: f.object
+          } %>
+
+          <%= f.text_area :visual_check_comment, class: 'form-control mt-2', rows: 2,
+                          placeholder: t('activerecord.attributes.final_inspection.visual_check_comment') %>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+
+       <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :vt2_check_status, t('activerecord.attributes.final_inspection.vt2_check_status'), class: 'form-label' %>
+                <%= f.select :vt2_check_status, FinalInspection::VT2_STATUSES, { include_blank: false }, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :vt2_check_images, t('activerecord.attributes.final_inspection.vt2_check_images'), class: 'form-label' %>
+              <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control' %>
+            </div>
+          </div>
+          
+          <%= render partial: 'images', locals: { 
+            images: f.object.vt2_check_images, 
+            image_type: 'vt2_check',
+            edit_mode: true,
+            model_type: f.object
+          } %>
+
+          <%= f.text_area :vt2_check_comment, class: 'form-control mt-2', rows: 2,
+                          placeholder: t('activerecord.attributes.final_inspection.vt2_check_comment') %>
+        </div>
+      </div>
+
     </div>
   </div>
 

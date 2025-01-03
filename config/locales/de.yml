@@ -178,12 +178,12 @@ de:
         on_hold_comment: "Halt Kommentar"
         on_hold_date: "Halt Datum"
         on_hold_images: "Halt Bilder"
-        visual_check_status: "Visual Check Status"
-        visual_check_comment: "Visual Check Kommentar"
-        visual_check_images: "Visual Check Bilder"
-        vt2_check_status: "VT2 Check Status"
-        vt2_check_comment: "VT2 Check Kommentar"
-        vt2_check_images: "VT2 Check Bilder"
+        visual_check_status: "Visuelle Prüfung Status"
+        visual_check_comment: "Visuelle Prüfung Kommentar"
+        visual_check_images: "Visuelle Prüfung Bilder"
+        vt2_check_status: "VT2 Endoskop Status"
+        vt2_check_comment: "VT2 Endoskop Kommentar"
+        vt2_check_images: "VT2 Endoskop Bilder"
   prefabrications:
     form:
       complete_button: "Als abgeschlossen markieren"

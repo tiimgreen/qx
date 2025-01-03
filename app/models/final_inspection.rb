@@ -4,6 +4,7 @@ class FinalInspection < ApplicationRecord
   belongs_to :user
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   VISUAL_STATUSES = [ "Passed", "Failed" ].freeze
+  VT2_STATUSES = [ "Passed", "Failed" ].freeze
 
   has_many_attached :on_hold_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
@@ -20,11 +21,9 @@ class FinalInspection < ApplicationRecord
     attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
   end
 
-  validates :visual_check_status, inclusion: { in: VISUAL_STATUSES, allow_nil: true }
   validates :work_package_number, presence: true, uniqueness: { scope: :project_id }
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
   validates :on_hold_comment, length: { maximum: 2000 }
-  validates :total_time, numericality: { precision: 10, scale: 2 }
 
   scope :search_by_term, ->(search_term) {
     return all unless search_term.present?
