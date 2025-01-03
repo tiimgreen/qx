@@ -8,16 +8,11 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log("WorkPackageSearch controller connected")
-    console.log("URL:", this.urlValue)
-    console.log("Input target:", this.hasInputTarget)
-    console.log("Results target:", this.hasResultsTarget)
     this.resultsTarget.hidden = true
     this.resultsTarget.classList.add("dropdown-menu", "show")
   }
 
   search(event) {
-    console.log("Search triggered:", event.target.value)
     const query = event.target.value
 
     if (query.length < this.minLengthValue) {
@@ -30,7 +25,6 @@ export default class extends Controller {
 
   async performSearch(query) {
     try {
-      console.log("Fetching from:", this.urlValue)
       const response = await fetch(`${this.urlValue}?query=${encodeURIComponent(query)}`, {
         headers: {
           'Accept': 'application/json',
@@ -38,17 +32,14 @@ export default class extends Controller {
         }
       })
       const data = await response.json()
-      console.log("Search results:", data)
       
       this.showResults(data)
     } catch (error) {
-      console.error("Error fetching work package numbers:", error)
       this.hideResults()
     }
   }
 
   showResults(items) {
-    console.log("Showing results:", items)
     if (!Array.isArray(items) || items.length === 0) {
       this.hideResults()
       return

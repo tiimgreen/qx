@@ -2,7 +2,8 @@
   { text: @project.name, path: project_path(@project) },
   { text: t('navigation.menu.prefabrications'),
     path: project_prefabrications_path(@project) },
-  { text: @prefabrication.work_package_number },
+  { text: @prefabrication.work_package_number,
+    path: project_prefabrication_path(@project, @prefabrication) },
   { text: t('common.labels.edit') }
 ] %>
 

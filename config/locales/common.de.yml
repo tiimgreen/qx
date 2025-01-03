@@ -37,6 +37,12 @@ de:
       bottom_right: "Nordboden"
       page_number: "Seite"
       done_by: "Erledigt von"
+      on_hold_images: "Haltbilder"
+      on_hold_comment: "Haltkommentar"
+      on_hold_date: "Auf Halt seit"
+      on_hold_status: "On Hold"
+      active: "Aktiv"
+      completed: "Abgeschlossen"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"

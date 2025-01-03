@@ -51,30 +51,37 @@ class PrefabricationsController < ApplicationController
       redirect_to project_prefabrication_path(@project, @prefabrication),
                   notice: t("common.messages.success.created", model: Prefabrication.model_name.human)
     else
-      render :new
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "prefabrication_form",
+            partial: "form",
+            locals: { project: @project, prefabrication: @prefabrication }
+          )
+        }
+      end
     end
   end
 
   def update
-    # Set on_hold_date when status is On Hold
-    if params[:prefabrication][:on_hold_status] == "On Hold"
-      params[:prefabrication][:on_hold_date] = Time.current
-      params[:prefabrication][:completed] = nil
-      params[:prefabrication][:active] = true
-    else
-      params[:prefabrication][:on_hold_date] = nil
-      params[:prefabrication][:active] = false
-      params[:prefabrication][:on_hold_comment] = nil
-    end
-
-    # Handle image attachments separately
+    on_hold_params(params)
     attach_on_hold_images if params.dig(:prefabrication, :on_hold_images).present?
 
     if @prefabrication.update(prefabrication_params_without_images)
       redirect_to project_prefabrication_path(@project, @prefabrication),
                   notice: t("common.messages.success.updated", model: Prefabrication.model_name.human)
     else
-      render :edit
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "prefabrication_form",
+            partial: "form",
+            locals: { project: @project, prefabrication: @prefabrication }
+          )
+        }
+      end
     end
   end
 
@@ -127,6 +134,18 @@ class PrefabricationsController < ApplicationController
 
     params[:prefabrication][:on_hold_images].each do |image|
       @prefabrication.on_hold_images.attach(image)
+    end
+  end
+
+  def on_hold_params(params)
+    if params[:prefabrication][:on_hold_status] == "On Hold"
+      params[:prefabrication][:on_hold_date] = Time.current
+      params[:prefabrication][:completed] = nil
+      params[:prefabrication][:active] = true
+    else
+      params[:prefabrication][:on_hold_date] = nil
+      params[:prefabrication][:active] = false
+      params[:prefabrication][:on_hold_comment] = nil
     end
   end
 end
