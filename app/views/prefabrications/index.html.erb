@@ -53,11 +53,7 @@
                 request.params.merge(sort: 'completed', direction: (params[:sort] == 'completed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('completed') if params[:sort] == 'completed' %>
           </th>
-          <th>
-            <%= link_to t('common.labels.created_by'),
-                request.params.merge(sort: 'user', direction: (params[:sort] == 'user' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('user') if params[:sort] == 'user' %>
-          </th>
+          <th><%= t('common.labels.created_by') %></th>
           <th class="text-end"><%= t('common.labels.actions') %></th>
         </tr>
       </thead>
