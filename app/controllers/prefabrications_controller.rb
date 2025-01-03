@@ -4,6 +4,7 @@ class PrefabricationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project
   before_action :set_prefabrication, only: [ :show, :edit, :update, :destroy, :complete ]
+  before_action :authorize_action!
 
   def index
     @prefabrications = @project.prefabrications
@@ -146,6 +147,47 @@ class PrefabricationsController < ApplicationController
       params[:prefabrication][:on_hold_date] = nil
       params[:prefabrication][:active] = false
       params[:prefabrication][:on_hold_comment] = nil
+    end
+  end
+
+  def authorize_action!
+    case action_name
+    when "index", "show"
+      authorize_view!
+    when "new", "create"
+      authorize_create!
+    when "edit", "update"
+      authorize_edit!
+    when "destroy"
+      authorize_destroy!
+    end
+  end
+
+  def authorize_view!
+    unless current_user.can_view?("Prefabrication")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.show"), model: Prefabrication.model_name.human)
+      redirect_to request.referer || root_path
+    end
+  end
+
+  def authorize_create!
+    unless current_user.can_create?("Prefabrication")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: Prefabrication.model_name.human)
+      redirect_to request.referer || prefabrications_path
+    end
+  end
+
+  def authorize_edit!
+    unless current_user.can_edit?("Prefabrication")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.edit"), model: Prefabrication.model_name.human)
+      redirect_to request.referer || prefabrication_path(@prefabrication)
+    end
+  end
+
+  def authorize_destroy!
+    unless current_user.can_delete?("Prefabrication")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: Prefabrication.model_name.human)
+      redirect_to request.referer || prefabrication_path(@prefabrication)
     end
   end
 end

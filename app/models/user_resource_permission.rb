@@ -9,6 +9,7 @@ class UserResourcePermission < ApplicationRecord
     "IncomingDelivery",
     "DeliveryItem",
     "Isometry",
+    "Prefabrication",
     "Project",
     "MaterialCertificate"
   ].freeze

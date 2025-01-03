@@ -70,17 +70,23 @@
             <td><%= l(prefabrication.completed, format: :short) if prefabrication.completed %></td>
             <td><%= prefabrication.user.name %></td>
             <td class="text-end">
-              <%= link_to project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-outline-primary' do %>
-                <i class="bi bi-eye"></i>
+              <% if current_user.can_view?("Prefabrication") %>
+                <%= link_to project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-outline-primary' do %>
+                  <i class="bi bi-eye"></i>
+                <% end %>
               <% end %>
-              <%= link_to edit_project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-outline-secondary' do %>
-                <i class="bi bi-pencil"></i>
+              <% if current_user.can_edit?("Prefabrication") %>
+                <%= link_to edit_project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-outline-secondary' do %>
+                  <i class="bi bi-pencil"></i>
+                <% end %>
               <% end %>
-              <%= link_to project_prefabrication_path(@project, prefabrication),
-                          method: :delete,
-                          data: { confirm: t('common.messages.confirm_delete') },
+              <% if current_user.can_delete?("Prefabrication") %>
+                <%= link_to project_prefabrication_path(@project, prefabrication),
+                            method: :delete,
+                            data: { confirm: t('common.messages.confirm_delete') },
                           class: 'btn btn-sm btn-outline-danger' do %>
                 <i class="bi bi-trash"></i>
+                <% end %>
               <% end %>
             </td>
           </tr>
@@ -89,3 +95,10 @@
     </table>
   </div>
 </div>
+
+<%= render partial: 'delete_confirmation_modal', 
+           locals: {
+             modal_id: 'deletePrefabricationModal',
+             controller_name: 'delete-prefabrication',
+             model_name: 'prefabrication'
+           } %>
