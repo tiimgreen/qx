@@ -40,7 +40,11 @@ class FinalInspection < ApplicationRecord
        users.email LIKE :search OR
        final_inspections.work_package_number LIKE :search OR
        final_inspections.on_hold_status LIKE :search OR
-       final_inspections.on_hold_comment LIKE :search",
+       final_inspections.on_hold_comment LIKE :search OR
+       final_inspections.visual_check_status LIKE :search OR
+       final_inspections.visual_check_comment LIKE :search OR
+       final_inspections.vt2_check_status LIKE :search OR
+       final_inspections.vt2_check_comment LIKE :search",
       search: term
     )
     .distinct
