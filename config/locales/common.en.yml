@@ -80,3 +80,10 @@ en:
           pt_date1: "PT Date"
           vt_date: "VT Date"
           vt_date1: "VT Date"
+          en:
+    errors:
+      models:
+        user_resource_permission:
+          attributes:
+            permission:
+              required: "The Permission field is required."

@@ -114,3 +114,9 @@ de:
           vt_date1: "VT Datum"
           result: "Erg."
           result1: "Erg."
+    errors:
+      models:
+        user_resource_permission:
+          attributes:
+            permission:
+              required: "Das Feld Permission ist erforderlich."
