@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_02_185400) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_03_060642) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -95,6 +95,27 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_185400) do
     t.index ["incoming_delivery_id", "tag_number"], name: "index_delivery_items_on_incoming_delivery_id_and_tag_number", unique: true, where: "tag_number IS NOT NULL"
     t.index ["incoming_delivery_id"], name: "index_delivery_items_on_incoming_delivery_id"
     t.index ["user_id"], name: "index_delivery_items_on_user_id"
+  end
+
+  create_table "final_inspections", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "work_location_id"
+    t.string "work_package_number"
+    t.text "on_hold_status"
+    t.text "on_hold_comment"
+    t.datetime "on_hold_date", precision: nil
+    t.boolean "visual_check_status"
+    t.text "visual_check_comment"
+    t.text "vt2_check_status"
+    t.text "vt2_check_comment"
+    t.datetime "completed", precision: nil
+    t.decimal "total_time", precision: 10, scale: 2
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_final_inspections_on_project_id"
+    t.index ["user_id"], name: "index_final_inspections_on_user_id"
+    t.index ["work_location_id"], name: "index_final_inspections_on_work_location_id"
   end
 
   create_table "incoming_deliveries", force: :cascade do |t|
@@ -359,6 +380,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_185400) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "final_inspections", "projects"
+  add_foreign_key "final_inspections", "users"
+  add_foreign_key "final_inspections", "work_locations"
   add_foreign_key "incoming_deliveries", "projects"
   add_foreign_key "incoming_deliveries", "users"
   add_foreign_key "incoming_deliveries", "work_locations"

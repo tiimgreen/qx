@@ -207,5 +207,5 @@
 # end
 
 # (1..4).each_with_index do |permission, index|
-# UserResourcePermission.create!(user_id: User.find(1).id, resource_name: "Prefabrication", permission_id: index + 1)
+# UserResourcePermission.create!(user_id: User.find(1).id, resource_name: "FinalInspection", permission_id: index + 1)
 # end

@@ -10,6 +10,8 @@
             <i class="bi bi-diagram-3"></i> <%= project.isometries.active.count %>
           <% when 'prefabrication' %>
             <i class="bi bi-diagram-3"></i> <%= project.prefabrications.active.count %>
+          <% when 'final_inspection' %>
+            <i class="bi bi-diagram-3"></i> <%= project.final_inspections.count %>
           <% else %>
             <i class="bi bi-folder"></i> <%= sector.key.classify.constantize.unscoped.active.count rescue 0 %>
           <% end %>
@@ -46,6 +48,13 @@
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
             <%= link_to new_project_prefabrication_path(project), class: 'btn btn-primary' do %>
+              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+          <% when 'final_inspection' %>
+            <%= link_to project_final_inspections_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
+              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_final_inspection_path(project), class: 'btn btn-primary' do %>
               <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% end %>

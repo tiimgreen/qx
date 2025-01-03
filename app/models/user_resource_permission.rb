@@ -8,6 +8,7 @@ class UserResourcePermission < ApplicationRecord
   RESOURCE_NAMES = [
     "IncomingDelivery",
     "DeliveryItem",
+    "FinalInspection",
     "Isometry",
     "Prefabrication",
     "Project",

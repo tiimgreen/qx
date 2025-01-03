@@ -126,6 +126,8 @@ de:
     testing_and_pressur_description: "Systemprüfung und Drucktests"
     documentation: "Dokumentation"
     documentation_description: "Projektdokumentation und Aufzeichnungen"
+    material_certificate: "Materialzertifikat"
+    material_certificate_description: "Zertifikate der Materialien"
   work_locations:
     types:
       workshop: "Werkstatt"
@@ -168,7 +170,37 @@ de:
         on_hold_date: "Halt Datum"
         on_hold_images: "Halt Bilder"
         active: "Aktiv"
+      final_inspection:
+        work_location: "Arbeitsort"
+        work_package_number: "Arbeitspaket Nummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"
+        visual_check_status: "Visual Check Status"
+        visual_check_comment: "Visual Check Kommentar"
+        visual_check_images: "Visual Check Bilder"
+        vt2_check_status: "VT2 Check Status"
+        vt2_check_comment: "VT2 Check Kommentar"
+        vt2_check_images: "VT2 Check Bilder"
   prefabrications:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diese Vorfertigung als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung der Vorfertigung"
+          other: "%{count} Fehler verhindern die Speicherung der Vorfertigung"
+    complete:
+      success: "Vorfertigung wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren der Vorfertigung als abgeschlossen"
+    create:
+      success: "Vorfertigung wurde erfolgreich erstellt"
+    update:
+      success: "Vorfertigung wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Vorfertigung wurde erfolgreich gelöscht"
     index:
       title_for_project: "Vorfertigung für %{project}"
     buttons:
@@ -179,6 +211,33 @@ de:
       title: "Neue Vorfertigung"
     edit:
       title: "Vorfertigung bearbeiten: %{work_package}"
+  final_inspections:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diese Endkontrolle als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung der Endkontrolle"
+          other: "%{count} Fehler verhindern die Speicherung der Endkontrolle"
+    complete:
+      success: "Endkontrolle wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren der Endkontrolle als abgeschlossen"
+    create:
+      success: "Endkontrolle wurde erfolgreich erstellt"
+    update:
+      success: "Endkontrolle wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Endkontrolle wurde erfolgreich gelöscht"
+    index:
+      title_for_project: "Endkontrolle für %{project}"
+    buttons:
+      new_final_inspection: "Neue Endkontrolle"
+    show:
+      title: "Endkontrolle Details"
+    new:
+      title: "Neue Endkontrolle"
+    edit:
+      title: "Endkontrolle bearbeiten: %{work_package}"  
   isometries:
     actions:
       add_page: "Seite hinzufügen"
