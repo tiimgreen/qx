@@ -14,6 +14,26 @@ class Prefabrication < ApplicationRecord
   validates :on_hold_comment, length: { maximum: 2000 }
 
   scope :active, -> { where(active: true) }
+  scope :search_by_term, ->(search_term) {
+    return all unless search_term.present?
+
+    term = "%#{search_term}%"
+
+    joins("LEFT JOIN work_locations ON prefabrications.work_location_id = work_locations.id")
+    .joins("LEFT JOIN users ON prefabrications.user_id = users.id")
+    .where(
+      "work_locations.location_type LIKE :search OR
+       work_locations.name LIKE :search OR
+       work_locations.key LIKE :search OR
+       users.first_name LIKE :search OR
+       users.email LIKE :search OR
+       prefabrications.work_package_number LIKE :search OR
+       prefabrications.on_hold_status LIKE :search OR
+       prefabrications.on_hold_comment LIKE :search",
+      search: term
+    )
+    .distinct # Add this to avoid duplicate results
+  }
 
   def on_hold?
     on_hold_status == "On Hold"

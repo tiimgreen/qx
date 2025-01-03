@@ -7,23 +7,13 @@ class PrefabricationsController < ApplicationController
   before_action :authorize_action!
 
   def index
-    @prefabrications = @project.prefabrications
-                              .includes(:work_location)
-                              .order(created_at: :desc)
+    sort_column = sort_params || "created_at"
+    sort_direction = params[:direction] || "desc"
 
-    if params[:search].present?
-      @prefabrications = @prefabrications.where("work_package_number LIKE ?", "%#{params[:search]}%")
-    end
-
-    if params[:sort].present?
-      direction = params[:direction] == "desc" ? "desc" : "asc"
-      @prefabrications = @prefabrications.order("#{params[:sort]} #{direction}")
-    end
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @prefabrications }
-    end
+    @pagy, @prefabrications = pagy(
+      @project.prefabrications.includes(:work_location).search_by_term(params[:search])
+            .order(sort_column => sort_direction)
+    )
   end
 
   def show
@@ -101,6 +91,15 @@ class PrefabricationsController < ApplicationController
   end
 
   private
+  def sort_params
+    allowed_columns = %w[
+      work_package_number
+      work_location_id
+      on_hold_status
+      completed
+    ]
+    params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
+  end
 
   def set_project
     @project = Project.find(params[:project_id])
