@@ -96,7 +96,7 @@ class PrefabricationsController < ApplicationController
 
   def destroy
     @prefabrication.destroy
-    redirect_to project_prefabrications_path(@project),
+    redirect_to project_prefabrications_path(@project, locale: I18n.locale),
                 notice: t("common.messages.success.deleted", model: Prefabrication.model_name.human)
   end
 

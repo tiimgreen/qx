@@ -24,7 +24,7 @@
     </div>
     <div class="col-md-4 text-end">
       <%= link_to new_project_prefabrication_path(@project), class: 'btn btn-primary' do %>
-        <i class="bi bi-plus"></i> <%= t('prefabrications.buttons.new_prefabrication') %>
+        <i class="bi bi-plus"></i> <%= t('common.buttons.new') %>
       <% end %>
     </div>
   </div>
@@ -81,12 +81,19 @@
                 <% end %>
               <% end %>
               <% if current_user.can_delete?("Prefabrication") %>
-                <%= link_to project_prefabrication_path(@project, prefabrication),
-                            method: :delete,
-                            data: { confirm: t('common.messages.confirm_delete') },
-                          class: 'btn btn-sm btn-outline-danger' do %>
-                <i class="bi bi-trash"></i>
-                <% end %>
+                  <%= button_tag type: 'button',
+                             class: 'btn btn-outline-danger m-1',
+                             title: t('common.buttons.delete'),
+                             data: {
+                               bs_toggle: "modal",
+                               bs_target: "#deletePrefabricationModal",
+                               "project-id": prefabrication.project.id,
+                               "prefabrication-id": prefabrication.id,
+                               "prefabrication-name": prefabrication.work_package_number,
+                               "prefabrication-number": prefabrication.work_package_number
+                             } do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
               <% end %>
             </td>
           </tr>

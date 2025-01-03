@@ -47,6 +47,8 @@ en:
     buttons:
       cancel: "Cancel"
       delete: "Delete"
+      new: "New"
+      save: "Save"
     weldings:
       number: "Number"
       component: "Component"

@@ -60,7 +60,7 @@
 
         </div>
         <div class="mb-3">
-          <% if @prefabrication.completed.nil? && !@prefabrication.on_hold? %>
+          <% if @prefabrication.persisted? && @prefabrication.completed.nil? && !@prefabrication.on_hold? %>
             <%= link_to complete_project_prefabrication_path(@project, @prefabrication),
                       method: :patch,
                       class: 'btn btn-success',

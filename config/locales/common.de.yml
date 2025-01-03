@@ -46,6 +46,8 @@ de:
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"
+      new: "Neu"
+      save: "Speichern"
     weldings:
       number: "Naht Nr."
       component: "Komponente"

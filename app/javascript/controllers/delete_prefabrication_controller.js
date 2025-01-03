@@ -12,23 +12,25 @@ export default class extends Controller {
 
   handleModalShow(event) {
     const button = event.relatedTarget
-    this.isometryId = button.getAttribute('data-isometry-id')
-    const isometryName = button.getAttribute('data-isometry-name')
-    const isometryNumber = button.getAttribute('data-isometry-number')
+    this.prefabricationId = button.getAttribute('data-prefabrication-id')
     this.projectId = button.getAttribute('data-project-id')
+    const prefabricationName = button.getAttribute('data-prefabrication-name')
+    const prefabricationNumber = button.getAttribute('data-prefabrication-number')
     
     const message = this.messageValue
-      .replace('%{name}', isometryName)
-      .replace('%{number}', isometryNumber)
+      .replace('%{name}', prefabricationName)
+      .replace('%{number}', prefabricationNumber)
     
     this.messageTarget.textContent = message
   }
 
-  async deleteIsometry(event) {
+  async deletePrefabrication(event) {
     event.preventDefault()
+    
     try {
       const currentLocale = window.location.pathname.split('/')[1] || 'de'
-      const response = await fetch(`/${currentLocale}/projects/${this.projectId}/isometries/${this.isometryId}`, {
+      console.log(`/${currentLocale}/projects/${this.projectId}/prefabrications/${this.prefabricationId}`)
+      const response = await fetch(`/${currentLocale}/projects/${this.projectId}/prefabrications/${this.prefabricationId}`, {
         method: 'DELETE',
         headers: {
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
