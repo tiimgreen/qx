@@ -96,9 +96,9 @@
                                bs_toggle: "modal",
                                bs_target: "#deleteFinalInspectionModal",
                                "project-id": final_inspection.project.id,
-                               "final_inspection-id": final_inspection.id,
-                               "final_inspection-name": final_inspection.work_package_number,
-                               "final_inspection-number": final_inspection.work_package_number
+                               "final-inspection-id": final_inspection.id,
+                               "final-inspection-name": final_inspection.work_package_number,
+                               "final-inspection-number": final_inspection.work_package_number
                              } do %>
                     <i class="bi bi-trash"></i>
                   <% end %>
@@ -114,6 +114,6 @@
 <%= render partial: 'delete_confirmation_modal', 
            locals: {
              modal_id: 'deleteFinalInspectionModal',
-             controller_name: 'delete-final_inspection',
+             controller_name: 'delete-final-inspection',
              model_name: 'final_inspection'
            } %>

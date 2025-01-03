@@ -140,6 +140,8 @@ de:
     models:
       project: "Projekt"
       prefabrication: "Vorfertigung"
+      final_inspection: "Endkontrolle"
+      "final-inspection": "Endkontrolle"
     errors:
       models:
         delivery_item:

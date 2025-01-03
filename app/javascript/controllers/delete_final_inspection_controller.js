@@ -12,10 +12,10 @@ export default class extends Controller {
 
   handleModalShow(event) {
     const button = event.relatedTarget
-    this.final_inspection_id = button.getAttribute('data-final_inspection-id')
+    this.final_inspection_id = button.getAttribute('data-final-inspection-id')
     this.projectId = button.getAttribute('data-project-id')
-    const final_inspectionName = button.getAttribute('data-final_inspection-name')
-    const final_inspectionNumber = button.getAttribute('data-final_inspection-number')
+    const final_inspectionName = button.getAttribute('data-final-inspection-name')
+    const final_inspectionNumber = button.getAttribute('data-final-inspection-number')
     
     const message = this.messageValue
       .replace('%{name}', final_inspectionName)

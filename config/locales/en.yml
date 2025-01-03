@@ -142,6 +142,8 @@ en:
   activerecord:
     models:
       prefabrication: "Prefabrication"
+      final_inspection: "Final Inspection"
+      "final-inspection": "Final Inspection"
     errors:
       models:
         delivery_item:
