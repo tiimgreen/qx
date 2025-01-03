@@ -15,15 +15,6 @@ export default class extends Controller {
     const imageId = button.dataset.imageRemovalImageIdParam;
     const imageType = button.dataset.imageRemovalImageTypeParam;
     
-    // Debug logging
-    console.log('Delete image data:', {
-      projectId: this.projectIdValue,
-      modelId: this.modelIdValue,
-      modelType: this.modelTypeValue,
-      imageId,
-      imageType,
-      buttonDataset: button.dataset
-    });
 
     // Validate required data
     if (!imageId || !imageType) {
@@ -49,8 +40,6 @@ export default class extends Controller {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
       const path = `/projects/${this.projectIdValue}/images/${this.modelTypeValue}/${this.modelIdValue}`;
 
-      console.log('Making request to:', path);
-      
       fetch(path, {
         method: 'DELETE',
         headers: {

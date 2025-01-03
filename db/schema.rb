@@ -104,7 +104,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_03_060642) do
     t.text "on_hold_status"
     t.text "on_hold_comment"
     t.datetime "on_hold_date", precision: nil
-    t.boolean "visual_check_status"
+    t.text "visual_check_status"
     t.text "visual_check_comment"
     t.text "vt2_check_status"
     t.text "vt2_check_comment"

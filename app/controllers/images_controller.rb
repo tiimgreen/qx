@@ -7,8 +7,13 @@ class ImagesController < ApplicationController
 
   def destroy
     begin
-      model_class = params[:model_type].classify.constantize
-      model = model_class.find(params[:model_id])
+      model_class = if params[:model_type].downcase == "finalinspection"
+        "FinalInspection"
+      else
+        params[:model_type].underscore.camelize
+      end
+
+      model = model_class.constantize.find(params[:model_id])
 
       # Ensure the model belongs to the current project
       unless model.project_id == @project.id
@@ -20,7 +25,6 @@ class ImagesController < ApplicationController
       image_id = params[:image_id]
 
       Rails.logger.info "Attempting to delete image: #{image_type} #{image_id} from #{model_class} #{model.id}"
-
       # Get the attachments collection based on image type
       attachments = case model_class.to_s
       when "Isometry"
@@ -38,7 +42,15 @@ class ImagesController < ApplicationController
         case image_type
         when "on_hold"
           model.on_hold_images
-          # Add other prefabrication image types here
+        end
+      when "FinalInspection"
+        case image_type
+        when "on_hold"
+          model.on_hold_images
+        when "visual_check"
+          model.visual_check_images
+        when "vt2_check"
+          model.vt2_check_images
         end
       else
         Rails.logger.error "Invalid model type: #{model_class}"
