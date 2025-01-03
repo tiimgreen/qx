@@ -44,6 +44,7 @@ en:
       on_hold_status: "On Hold"
       active: "Active"
       completed: "Completed"
+      select: "Please select"
     buttons:
       cancel: "Cancel"
       delete: "Delete"

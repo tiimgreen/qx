@@ -1,0 +1,18 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.work_preparations'),
+    path: project_work_preparations_path(@project) },
+  { text: t('common.labels.new') }
+] %>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0"><%= t('.title') %></h2>
+    </div>
+
+    <div class="card-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

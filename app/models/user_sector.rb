@@ -15,6 +15,4 @@ class UserSector < ApplicationRecord
   def name
     custom_label
   end
-
-
 end

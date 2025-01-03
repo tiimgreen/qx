@@ -159,10 +159,20 @@ de:
             target_quantity:
               blank: "Soll-Ist-Menge darf nicht leer sein"
               not_a_number: "Soll-Ist-Menge muss eine Zahl sein"
-              greater_than: "Soll-Ist-Menge muss größer als %{count} sein"
+              greater_than: "Soll-Ist-Menge muss grandiern als %{count} sein"
             on_hold:
               inclusion: "muss einen gültigen Status haben"
     attributes:
+      work_preparation:
+        work_location: "Arbeitsort"
+        work_package_number: "Arbeitspaket Nummer"
+        work_preparation_type: "Arbeitsvorbereitungstyp"
+        batch_number: "Chargennummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"
       prefabrication:
         work_location: "Arbeitsort"
         work_package_number: "Arbeitspaket Nummer"

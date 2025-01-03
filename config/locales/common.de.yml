@@ -43,6 +43,7 @@ de:
       on_hold_status: "On Hold"
       active: "Aktiv"
       completed: "Abgeschlossen"
+      select: "Bitte auswählen"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"

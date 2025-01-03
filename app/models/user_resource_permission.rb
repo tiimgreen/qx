@@ -12,7 +12,8 @@ class UserResourcePermission < ApplicationRecord
     "Isometry",
     "Prefabrication",
     "Project",
-    "MaterialCertificate"
+    "MaterialCertificate",
+    "WorkPreparation"
   ].freeze
 
   validates :resource_name, inclusion: { in: RESOURCE_NAMES }
