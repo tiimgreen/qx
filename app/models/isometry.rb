@@ -103,7 +103,7 @@ class Isometry < ApplicationRecord
     return false unless revision_last? # Only allow adding pages to latest revision
 
     # Find all isometries with same line_id and latest revision
-    related_isometries = self.class.where(line_id: line_id, revision_last: true, deleted: false)
+    related_isometries = self.class.where(project_id: project_id, line_id: line_id, revision_last: true, deleted: false)
 
     # Get the first page (page_number = 1) for this line_id and revision
     first_page = related_isometries.find_by(page_number: 1)

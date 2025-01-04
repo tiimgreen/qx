@@ -8,6 +8,7 @@ class IsometryPageCreator
       new_isometry = @isometry.dup
       # Get current number of pages for this line_id and revision
       current_pages = @isometry.class.where(
+        project_id: @isometry.project_id,
         line_id: @isometry.line_id,
         revision_last: true,
         deleted: false
