@@ -12,14 +12,16 @@
         <%= f.file_field :on_hold_images, multiple: true, class: 'form-control' %>
       </div>
     </div>
-    
-    <%= render partial: 'images', locals: { 
-      images: f.object.on_hold_images, 
-      image_type: 'on_hold',
-      edit_mode: true,
-      model_type: f.object
-    } %>
 
+    <% if f.object.respond_to?(:on_hold_images) && f.object.on_hold_images %>
+      <%= render partial: 'images', locals: { 
+        images: f.object.on_hold_images, 
+        image_type: 'on_hold',
+        edit_mode: true,
+        model_type: f.object
+      } %>
+    <% end%>
+    
     <%= f.text_area :on_hold_comment, class: 'form-control mt-2', rows: 2,
                     placeholder: t('activerecord.attributes.delivery_item.on_hold_comment') %>
   </div>

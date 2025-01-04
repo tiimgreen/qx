@@ -9,7 +9,7 @@ export default class extends Controller {
   search() {
     const query = this.batchNumberTarget.value
     if (!query) {
-      this.clearSelection()
+      this.clearSelection()  // Called without event
       return
     }
 
@@ -20,17 +20,13 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(data => {
-      // Check for exact batch number match
       const exactMatch = data.find(cert => cert.batch_number.toLowerCase() === query.toLowerCase())
       
       if (exactMatch) {
-        // If exact match found, automatically select it
         this.selectCertificate(exactMatch)
       } else {
-        // If no exact match, clear any previous selection
-        this.clearSelection()
+        this.clearSelection()  // Called without event
         
-        // Show results if any exist
         if (data.length > 0) {
           this.showResults(data)
         } else {
@@ -44,6 +40,16 @@ export default class extends Controller {
     })
   }
 
+  clearSelection(event = null) {  // Make event parameter optional
+    if (event) {
+      event.preventDefault()
+    }
+    this.certificateIdTarget.value = ""
+    this.batchNumberTarget.value = ""
+    this.searchResultsTarget.innerHTML = ""
+  }
+
+  // Rest of the controller remains the same...
   selectCertificate(certificate) {
     this.certificateIdTarget.value = certificate.id
     this.batchNumberTarget.value = certificate.batch_number
@@ -57,13 +63,6 @@ export default class extends Controller {
         </small>
       </div>
     `
-  }
-
-  clearSelection(event) {
-    event.preventDefault()
-    this.certificateIdTarget.value = ""
-    this.batchNumberTarget.value = ""
-    this.searchResultsTarget.innerHTML = ""
   }
 
   showResults(certificates) {
