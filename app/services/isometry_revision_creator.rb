@@ -7,12 +7,13 @@ class IsometryRevisionCreator
     ActiveRecord::Base.transaction do
       # Get all isometries from current revision
       current_isometries = Isometry.where(
+        project_id: @isometry.project_id,
         line_id: @isometry.line_id,
         revision_number: @isometry.revision_number
       )
 
       # Mark old revisions as not latest
-      Isometry.where(line_id: @isometry.line_id)
+      Isometry.where(project_id: @isometry.project_id, line_id: @isometry.line_id)
               .update_all(revision_last: false)
 
       # Create new revisions for all pages
