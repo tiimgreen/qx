@@ -224,7 +224,8 @@
       <% if @isometry.rt_images.attached? %>
         <%= render partial: 'images', locals: { 
           images: @isometry.rt_images, 
-          image_type: 'rt'
+          image_type: 'rt',
+          model_type: @isometry
         } %>
       <% end %>
 
@@ -235,7 +236,8 @@
       <% if @isometry.vt_images.attached? %>
         <%= render partial: 'images', locals: { 
           images: @isometry.vt_images, 
-          image_type: 'vt'
+          image_type: 'vt',
+          model_type: @isometry
         } %>
       <% end %>
 
@@ -246,7 +248,8 @@
       <% if @isometry.pt_images.attached? %>
         <%= render partial: 'images', locals: { 
           images: @isometry.pt_images, 
-          image_type: 'pt'
+          image_type: 'pt',
+          model_type: @isometry
         } %>
       <% end %>
     </div>

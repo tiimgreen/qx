@@ -113,10 +113,10 @@ class IsometriesController < ApplicationController
           @isometry.pt_images.attach(params[:isometry][:pt_images])
         end
 
-        # Remove image parameters before updating other attributes
+        # Remove only image parameters before updating
         update_params = isometry_params.except(:rt_images, :vt_images, :pt_images)
 
-        if @isometry.update(update_params)
+        if @isometry.update(update_params)  # This will handle weldings through nested attributes
           redirect_to project_isometry_path(@project, @isometry),
                       notice: t("common.messages.updated", model: "Isometry")
         else
@@ -125,7 +125,9 @@ class IsometriesController < ApplicationController
       end
 
       format.json do
-        @isometry.assign_attributes(isometry_params)
+        # For autosave, don't process weldings or images
+        save_params = isometry_params.except(:rt_images, :vt_images, :pt_images, :weldings_attributes)
+        @isometry.assign_attributes(save_params)
         @isometry.draft = true
         if @isometry.save(validate: false)
           render json: {

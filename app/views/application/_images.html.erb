@@ -6,7 +6,7 @@
   edit_mode = local_assigns.fetch(:edit_mode, false)
 %>
 
-<% if images.attached? && !model_type.new_record? %>
+<% if images.attached? && !model_type&.new_record? %>
   <div class="my-3" 
        data-controller="image-removal"
        data-image-removal-project-id-value="<%= @project.id %>"

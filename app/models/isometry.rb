@@ -8,6 +8,8 @@ class Isometry < ApplicationRecord
   has_many :isometry_material_certificates, dependent: :destroy
   has_many :material_certificates, through: :isometry_material_certificates
   has_many :weldings, dependent: :destroy
+  accepts_nested_attributes_for :weldings, allow_destroy: true, reject_if: :all_blank
+
   accepts_nested_attributes_for :weldings, allow_destroy: true
 
   has_many :isometry_documents, dependent: :destroy
@@ -112,6 +114,19 @@ class Isometry < ApplicationRecord
     # Check if we haven't reached the total pages limit
     current_pages_count = related_isometries.count
     current_pages_count < page_total
+  end
+
+  def update_weldings(welding_params)
+    welding_params.each do |_, welding_attrs|
+      if welding_attrs[:id].present?
+        # Update existing welding
+        welding = weldings.find_by(id: welding_attrs[:id])
+        welding&.update(welding_attrs.except(:_destroy))
+      elsif !welding_attrs[:_destroy]
+        # Create new welding only if not marked for destruction
+        weldings.create(welding_attrs)
+      end
+    end
   end
 
   private
