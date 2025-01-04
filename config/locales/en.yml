@@ -278,3 +278,30 @@ en:
       title: "New Final Inspection"
     edit:
       title: "Final Inspection Edit: %{work_package}"  
+  work_preparations:
+    form:
+      complete_button: "Mark as Completed"
+      confirm_complete: "Are you sure you want to mark this work preparation as completed?"
+      errors:
+        header:
+          one: "1 error prohibited this work preparation from being saved"
+          other: "%{count} errors prohibited this work preparation from being saved"
+    complete:
+      success: "Work preparation was successfully marked as completed"
+      failure: "Failed to mark work preparation as completed"
+    create:
+      success: "Work preparation was successfully created"
+    update:
+      success: "Work preparation was successfully updated"
+    destroy:
+      success: "Work preparation was successfully deleted"
+    index:
+      title_for_project: "Work Preparation for %{project}"
+    buttons:
+      new_work_preparation: "New Work Preparation"
+    show:
+      title: "Work Preparation Details"
+    new:
+      title: "New Work Preparation"
+    edit:
+      title: "Work Preparation Edit: %{work_package}"  

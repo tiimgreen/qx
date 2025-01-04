@@ -90,6 +90,7 @@ class WorkPreparationsController < ApplicationController
   end
 
   private
+
   def sort_params
     allowed_columns = %w[
       work_package_number

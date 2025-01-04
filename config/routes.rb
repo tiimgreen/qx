@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         collection do
           post :autosave
           get :search_work_packages
+          get :search_batch_numbers
         end
         member do
           delete :delete_image

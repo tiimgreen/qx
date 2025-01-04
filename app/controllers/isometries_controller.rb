@@ -221,6 +221,25 @@ class IsometriesController < ApplicationController
     render json: [], status: :ok
   end
 
+  def search_batch_numbers
+    Rails.logger.debug "Search params: #{params.inspect}"
+    query = params[:query]
+
+    delivery_items = DeliveryItem
+                     .where("batch_number LIKE ?", "%#{query}%")
+                     .select(:id, :batch_number)
+                     .limit(10)
+
+    render json: delivery_items.map { |i| {
+      id: i.id,
+      label: i.batch_number,
+      value: i.batch_number
+    }}
+  rescue => e
+    Rails.logger.error "Error in search_batch_numbers: #{e.message}"
+    render json: [], status: :ok
+  end
+
   private
 
   def authorize_action!

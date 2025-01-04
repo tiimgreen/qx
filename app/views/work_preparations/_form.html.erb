@@ -39,6 +39,7 @@
                     { prompt: t('common.labels.select'), include_blank: false },
                     class: 'form-control' %>
       </div>
+
       <div class="mb-3">
         <%= f.label :work_package_number, class: 'form-label' %>
         <div class="input-group" 
@@ -52,6 +53,22 @@
                             action: "input->work-package-search#search click@window->work-package-search#clickOutside"
                           } %>
           <div class="dropdown-menu w-100" data-work-package-search-target="results"></div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :batch_number, class: 'form-label' %>
+        <div class="input-group" 
+             data-controller="batch-number-search"
+             data-batch-number-search-url-value="<%= search_batch_numbers_project_isometries_path(@project, format: :json) %>"
+             data-batch-number-search-min-length-value="2">
+          <%= f.text_field :batch_number, 
+                          class: 'form-control',
+                          data: {
+                            batch_number_search_target: "input",
+                            action: "input->batch-number-search#search click@window->batch-number-search#clickOutside"
+                          } %>
+          <div class="dropdown-menu w-100" data-batch-number-search-target="results"></div>
         </div>
       </div>
 
