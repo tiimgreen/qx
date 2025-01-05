@@ -166,6 +166,10 @@ de:
           attributes:
             work_location:
               required: "Arbeitsort darf nicht leer sein"
+        final_inspection:
+          attributes:
+            work_location:
+              required: "Arbeitsort darf nicht leer sein"      
     attributes:
       work_preparation:
         work_location: "Arbeitsort"

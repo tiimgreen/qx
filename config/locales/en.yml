@@ -168,6 +168,10 @@ en:
               greater_than: "Target quantity must be greater than %{count}"
             on_hold:
               inclusion: "must have a valid status"
+      final_inspection:
+        attributes:
+          work_location:
+            required: "Work location can't be blank"
     attributes:
       work_preparation:
         work_location: "Work Location"

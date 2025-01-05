@@ -29,7 +29,7 @@
                               WorkLocation.all,
                               :id,
                               ->(wl) { wl.location_type ? t("work_locations.types.#{wl.location_type}") : "" },
-                              { prompt: true },
+                              { prompt: t('common.labels.select'), include_blank: false },
                               { class: "form-control" } %>
       </div>
 
