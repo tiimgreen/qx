@@ -144,6 +144,10 @@ en:
       prefabrication: "Prefabrication"
       final_inspection: "Final Inspection"
       "final-inspection": "Final Inspection"
+      work_preparation:
+        attributes:
+          work_location:
+            required: "Work location can't be blank"
     errors:
       models:
         delivery_item:

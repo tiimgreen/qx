@@ -155,13 +155,17 @@ de:
             actual_quantity:
               blank: "Ist-Menge darf nicht leer sein"
               not_a_number: "Ist-Menge muss eine Zahl sein"
-              greater_than: "Ist-Menge muss größer als %{count} sein"
+              greater_than: "Ist-Menge muss grandiern als %{count} sein"
             target_quantity:
               blank: "Soll-Ist-Menge darf nicht leer sein"
               not_a_number: "Soll-Ist-Menge muss eine Zahl sein"
               greater_than: "Soll-Ist-Menge muss grandiern als %{count} sein"
             on_hold:
               inclusion: "muss einen gültigen Status haben"
+        work_preparation:
+          attributes:
+            work_location:
+              required: "Arbeitsort darf nicht leer sein"
     attributes:
       work_preparation:
         work_location: "Arbeitsort"
