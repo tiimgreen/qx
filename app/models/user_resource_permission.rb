@@ -12,6 +12,7 @@ class UserResourcePermission < ApplicationRecord
     "Isometry",
     "Prefabrication",
     "Project",
+    "Transport",
     "MaterialCertificate",
     "WorkPreparation"
   ].freeze

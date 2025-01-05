@@ -190,6 +190,13 @@ de:
         on_hold_date: "Halt Datum"
         on_hold_images: "Halt Bilder"
         active: "Aktiv"
+      transport:
+        work_package_number: "Arbeitspaket Nummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"
       final_inspection:
         work_location: "Arbeitsort"
         work_package_number: "Arbeitspaket Nummer"
@@ -204,6 +211,33 @@ de:
         vt2_check_status: "VT2 Endoskop Status"
         vt2_check_comment: "VT2 Endoskop Kommentar"
         vt2_check_images: "VT2 Endoskop Bilder"
+  transports:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diesen Transport als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung des Transports"
+          other: "%{count} Fehler verhindern die Speicherung des Transports"
+    complete:
+      success: "Transport wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren des Transports als abgeschlossen"
+    create:
+      success: "Transport wurde erfolgreich erstellt"
+    update:
+      success: "Transport wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Transport wurde erfolgreich gelöscht"
+    index:
+      title_for_project: "Transport für %{project}"
+    buttons:
+      new_transport: "Neuer Transport"
+    show:
+      title: "Transport Details"
+    new:
+      title: "Neuer Transport"
+    edit:
+      title: "Transport bearbeiten: %{work_package}"
   prefabrications:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -230,7 +264,7 @@ de:
     new:
       title: "Neue Vorfertigung"
     edit:
-      title: "Vorfertigung bearbeiten: %{work_package}"
+      title: "Vorfertigung bearbeiten: %{work_package}"    
   final_inspections:
     form:
       complete_button: "Als abgeschlossen markieren"

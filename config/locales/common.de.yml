@@ -12,7 +12,8 @@ de:
       confirm_delete_with_details: "Sind Sie sicher, dass Sie %{model} '%{name}' (%{number}) löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden und löscht alle zugeordneten Datensätze."
       confirm_delete_title: "Löschen bestätigen"
       unauthorized: "Sie haben keine Berechtigung zum %{action} von %{model}"
-      confirm_complete: "Sind Sie sicher, dass Sie dies als abgeschlossen markieren möchten?"
+      confirm_complete: "Sind Sie sicher, dass Sie dies als abgeschlossen markieren wollen?"
+      confirm_complete_warning: "Sind Sie sicher, dass Sie dies als abgeschlossen markieren wollen? Hinweis: Alle Isometrien und Spools für das Arbeitspaket werden mitgenommen."
       success:
         created: "%{model} wurde erfolgreich erstellt"
         updated: "%{model} wurde erfolgreich aktualisiert"

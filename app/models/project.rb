@@ -5,6 +5,7 @@ class Project < ApplicationRecord
   has_many :isometry_material_certificates, through: :isometries
   has_many :material_certificates, through: :isometry_material_certificates
   has_many :prefabrications, dependent: :destroy
+  has_many :transports, dependent: :destroy
   has_many :final_inspections, dependent: :destroy
   has_many :work_preparations, dependent: :destroy
 

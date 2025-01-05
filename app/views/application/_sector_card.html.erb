@@ -14,6 +14,8 @@
             <i class="bi bi-diagram-3"></i> <%= project.final_inspections.count %>
           <% when 'work_preparation' %>
             <i class="bi bi-diagram-3"></i> <%= project.work_preparations.count %>
+          <% when 'transport' %>
+            <i class="bi bi-diagram-3"></i> <%= project.transports.count %>
           <% else %>
             <i class="bi bi-folder"></i> <%= sector.key.classify.constantize.unscoped.active.count rescue 0 %>
           <% end %>
@@ -64,6 +66,13 @@
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
             <%= link_to new_project_work_preparation_path(project), class: 'btn btn-primary' do %>
+              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+          <% when 'transport' %>
+            <%= link_to project_transports_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
+              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_transport_path(project), class: 'btn btn-primary' do %>
               <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% end %>

@@ -49,6 +49,12 @@ Rails.application.routes.draw do
           delete "delete_image/:image_id", action: :delete_image, as: :delete_image
         end
       end
+      resources :transports do
+        member do
+          patch :complete
+          delete "delete_image/:image_id", action: :delete_image, as: :delete_image
+        end
+      end
       resources :final_inspections do
         member do
           patch :complete

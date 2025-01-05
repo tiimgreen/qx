@@ -193,6 +193,13 @@ en:
         on_hold_date: "On Hold Date"
         on_hold_images: "On Hold Images"
         active: "Active"
+      transport:
+        work_package_number: "Work Package Number"
+        completed: "Completed Date"
+        on_hold_status: "On Hold Status"
+        on_hold_comment: "On Hold Comment"
+        on_hold_date: "On Hold Date"
+        on_hold_images: "On Hold Images"
       final_inspection:
         work_location: "Work Location"
         work_package_number: "Work Package Number"
@@ -260,6 +267,33 @@ en:
       title: "New Prefabrication"
     edit:
       title: "Edit Prefabrication: %{work_package}"
+  transports:
+    form:
+      complete_button: "Mark as Completed"
+      confirm_complete: "Are you sure you want to mark this transport as completed?"
+      errors:
+        header:
+          one: "1 error prohibited this transport from being saved"
+          other: "%{count} errors prohibited this transport from being saved"
+    complete:
+      success: "Transport was successfully marked as completed"
+      failure: "Failed to mark transport as completed"
+    create:
+      success: "Transport was successfully created"
+    update:
+      success: "Transport was successfully updated"
+    destroy:
+      success: "Transport was successfully deleted"
+    index:
+      title_for_project: "Transports for %{project}"
+    buttons:
+      new_transport: "New Transport"
+    show:
+      title: "Transport Details"
+    new:
+      title: "New Transport"
+    edit:
+      title: "Edit Transport: %{work_package}"
   final_inspections:
     form:
       complete_button: "Mark as Completed"

@@ -13,6 +13,7 @@ en:
       confirm_delete_title: "Confirm Deletion"
       unauthorized: "You don't have permission to %{action} %{model}"
       confirm_complete: "Are you sure you want to mark this as completed?"
+      confirm_complete_warning: "Are you sure you want to mark this as completed? Note: All isometries and spools for the work package will be included?"
       success:
         created: "%{model} was successfully created"
         updated: "%{model} was successfully updated"

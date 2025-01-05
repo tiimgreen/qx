@@ -1,0 +1,83 @@
+<%= form_with(
+      model: [@project, @transport],
+      local: true,
+      class: 'needs-validation',
+      id: 'transport_form',
+      data: { 
+        turbo: true,
+        controller: "validation"
+      }
+    ) do |f| %>
+  <% if @transport.errors.any? %>
+    <div class="alert alert-danger">
+      <h6><%= t('.errors.header', count: @transport.errors.count) %></h6>
+      <ul>
+        <% @transport.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id if @project %>
+
+  <div class="row">
+    <div class="col-md-4">
+
+      <div class="mb-3">
+        <%= f.label :work_package_number, class: 'form-label' %>
+        <div class="input-group" 
+             data-controller="work-package-search"
+             data-work-package-search-url-value="<%= search_work_packages_project_isometries_path(@project, format: :json) %>"
+             data-work-package-search-min-length-value="2">
+          <%= f.text_field :work_package_number, 
+                          class: 'form-control',
+                          data: {
+                            work_package_search_target: "input",
+                            action: "input->work-package-search#search click@window->work-package-search#clickOutside"
+                          } %>
+          <div class="dropdown-menu w-100" data-work-package-search-target="results"></div>
+        </div>
+      </div>
+        <div class="mb-3">
+      <% if @transport.persisted? && @transport.completed? %>
+
+          <%= f.label :completed, class: 'form-label' %>
+          <%= f.text_field :completed, 
+                          value: (@transport.completed ? l(@transport.completed, format: :long) : nil),
+                          class: 'form-control', 
+                          disabled: true %>
+        <% end %>
+
+        </div>
+        <div class="mb-3">
+          <% if @transport.persisted? && @transport.completed.nil? && !@transport.on_hold? %>
+            <%= link_to complete_project_transport_path(@project, @transport),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete_warning') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+      <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
+        delete_image_project_transport_path(@project, @transport, image_id: image) 
+      } %>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

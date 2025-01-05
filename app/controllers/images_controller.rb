@@ -7,8 +7,11 @@ class ImagesController < ApplicationController
 
   def destroy
     begin
+      # delete the image fix
       model_class = if params[:model_type].downcase == "finalinspection"
         "FinalInspection"
+      elsif params[:model_type].downcase == "workpreparation"
+        "WorkPreparation"
       else
         params[:model_type].underscore.camelize
       end
@@ -38,7 +41,7 @@ class ImagesController < ApplicationController
         when "on_hold"
           model.on_hold_images
         end
-      when "Prefabrication"
+      when "Prefabrication", "Transport", "WorkPreparation"
         case image_type
         when "on_hold"
           model.on_hold_images
