@@ -14,6 +14,8 @@ class ImagesController < ApplicationController
         "WorkPreparation"
       elsif params[:model_type].downcase == "sitedelivery"
         "SiteDelivery"
+      elsif params[:model_type].downcase == "siteassembly"
+        "SiteAssembly"
       else
         params[:model_type].underscore.camelize
       end
@@ -43,7 +45,7 @@ class ImagesController < ApplicationController
         when "on_hold"
           model.on_hold_images
         end
-      when "Prefabrication", "Transport", "WorkPreparation", "SiteDelivery"
+      when "Prefabrication", "Transport", "WorkPreparation", "SiteDelivery", "SiteAssembly"
         case image_type
         when "on_hold"
           model.on_hold_images

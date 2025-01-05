@@ -118,8 +118,8 @@ de:
     transport_description: "Logistik und Transport"
     site_delivery: "Baustellenlieferung"
     site_delivery_description: "Verwaltung der Baustellenlieferungen"
-    assemblie: "Montage"
-    assemblie_description: "Bauteilmontage und Installation"
+    site_assembly: "Bauteilmontage"
+    site_assembly_description: "Bauteilmontage und Installation"
     as_built: "As-Built"
     as_built_description: "Finale Dokumentation des Bauzustands"
     testing_and_pressur: "Druck Prüfung / Testpack"
@@ -144,6 +144,11 @@ de:
       "final-inspection": "Endkontrolle"
       work_preparation: "Arbeitsvorbereitung"
       site_delivery: "Baustellenlieferung"
+      site_assembly: "Bauteilmontage"
+      as_built: "As-Built"
+      testing_and_pressur: "Druck Prüfung / Testpack"
+      documentation: "Dokumentation"
+      material_certificate: "Materialzertifikat"
     errors:
       models:
         delivery_item:
@@ -205,7 +210,14 @@ de:
         on_hold_status: "Halt Status"
         on_hold_comment: "Halt Kommentar"
         on_hold_date: "Halt Datum"
-        on_hold_images: "Halt Bilder"  
+        on_hold_images: "Halt Bilder" 
+      site_assembly:
+        work_package_number: "Arbeitspaket Nummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"          
       final_inspection:
         work_location: "Arbeitsort"
         work_package_number: "Arbeitspaket Nummer"
@@ -274,6 +286,33 @@ de:
       title: "Neue Baustellenlieferung erstellen"
     edit:
       title: "Baustellenlieferung bearbeiten: %{work_package}"     
+  site_assemblies:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diese Baustellenmontage als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung der Baustellenmontage"
+          other: "%{count} Fehler verhindern die Speicherung der Baustellenmontage"
+    complete:
+      success: "Baustellenmontage wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren der Baustellenmontage als abgeschlossen"
+    create:
+      success: "Baustellenmontage wurde erfolgreich erstellt"
+    update:
+      success: "Baustellenmontage wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Baustellenmontage wurde erfolgreich gelöscht"
+    index:
+      title_for_project: "Baustellenmontagen für %{project}"
+    buttons:
+      new_site_assembly: "Neue Baustellenmontage erstellen"
+    show:
+      title: "Baustellenmontage Details"
+    new:
+      title: "Neue Baustellenmontage erstellen"
+    edit:
+      title: "Baustellenmontage bearbeiten: %{work_package}"     
   prefabrications:
     form:
       complete_button: "Als abgeschlossen markieren"
