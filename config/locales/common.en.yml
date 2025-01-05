@@ -21,6 +21,9 @@ en:
       failure:
         complete: "Failed to complete %{model}"
       pending_deliveries: "Please complete your existing delivery before creating a new one"
+      errors:
+        one: "1 error prohibited this record from being saved"
+        other: "%{count} errors prohibited this record from being saved"
     labels:
       created_by: "Created By"
       actions: "Actions"
@@ -83,10 +86,10 @@ en:
           pt_date1: "PT Date"
           vt_date: "VT Date"
           vt_date1: "VT Date"
-          en:
     errors:
       models:
         user_resource_permission:
           attributes:
             permission:
               required: "The Permission field is required."
+            models:

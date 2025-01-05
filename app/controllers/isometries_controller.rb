@@ -208,14 +208,14 @@ class IsometriesController < ApplicationController
   end
 
   def search_work_packages
-    isometries = @project.isometries
+    isometries = @project.isometries.active
                         .where("work_package_number LIKE ?", "%#{params[:query]}%")
-                        .select(:id, :work_package_number)
-                        .limit(10)
+                        .select(:id, :work_package_number, :line_id)
+                        .limit(10).distinct
 
     render json: isometries.map { |i| {
       id: i.id,
-      label: i.work_package_number,
+      label: "#{i.work_package_number} - #{i.line_id}",
       value: i.work_package_number
     }}
   rescue => e

@@ -39,7 +39,7 @@ class WorkPreparationsController < ApplicationController
 
     if @work_preparation.save
       redirect_to project_work_preparation_path(@project, @work_preparation),
-                  notice: t("common.messages.success.created", model: WorkPreparation.model_name.human)
+                      notice: t("common.messages.success.created", model: "WorkPreparation")
     else
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
@@ -60,7 +60,7 @@ class WorkPreparationsController < ApplicationController
 
     if @work_preparation.update(work_preparation_params_without_images)
       redirect_to project_work_preparation_path(@project, @work_preparation),
-                  notice: t("common.messages.success.updated", model: WorkPreparation.model_name.human)
+                      notice: t("common.messages.updated", model: "Work Preparation")
     else
       respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }

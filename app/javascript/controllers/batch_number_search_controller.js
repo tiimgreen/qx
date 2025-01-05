@@ -9,7 +9,7 @@ export default class extends Controller {
 
   connect() {
     this.resultsTarget.hidden = true
-    this.resultsTarget.classList.add("dropdown-menu", "show")
+    this.resultsTarget.classList.add("dropdown-menu", "mt-4", "show")
   }
 
   search(event) {
