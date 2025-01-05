@@ -4,7 +4,7 @@ class WorkPreparation < ApplicationRecord
   belongs_to :user
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
-  WORK_PREPARATION_TYPES = [ "Zuschnitt Rohr", "Rüstung Kleinteile" ].freeze
+  WORK_PREPARATION_TYPES = [ "cutting_pipes", "small_parts" ].freeze
 
   has_many_attached :on_hold_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 200, 200 ]

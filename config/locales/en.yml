@@ -305,3 +305,6 @@ en:
       title: "New Work Preparation"
     edit:
       title: "Work Preparation Edit: %{work_package}"  
+    types:
+      cutting_pipes: "Cutting Pipes"
+      small_parts: "Small Parts"

@@ -29,13 +29,14 @@
                               WorkLocation.all,
                               :id,
                               ->(wl) { wl.location_type ? t("work_locations.types.#{wl.location_type}") : "" },
-                              { prompt: true },
+                              { prompt: t('common.labels.select'), include_blank: false },
                               { class: "form-control" } %>
       </div>
+
       <div class="mb-3">
         <%= f.label t('activerecord.attributes.work_preparation.work_preparation_type'), for: :work_preparation_type, class: 'form-label' %>
         <%= f.select :work_preparation_type,
-                    WorkPreparation::WORK_PREPARATION_TYPES,
+                    WorkPreparation::WORK_PREPARATION_TYPES.map { |type| [t("work_preparations.types.#{type}"), type] },
                     { prompt: t('common.labels.select'), include_blank: false },
                     class: 'form-control' %>
       </div>

@@ -276,7 +276,10 @@ de:
     new:
       title: "Neue Arbeitsvorbereitung"
     edit:
-      title: "Arbeitsvorbereitung bearbeiten: %{work_package}"    
+      title: "Arbeitsvorbereitung bearbeiten: %{work_package}"  
+    types:
+      cutting_pipes: "Zuschnitt Rohr"
+      small_parts: "Rüstung Kleinteile"  
   isometries:
     actions:
       add_page: "Seite hinzufügen"
