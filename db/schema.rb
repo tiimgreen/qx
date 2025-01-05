@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_05_164518) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_05_171644) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -233,6 +233,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_05_164518) do
     t.string "line_id"
     t.index ["batch_number"], name: "index_material_certificates_on_batch_number"
     t.index ["certificate_number"], name: "index_material_certificates_on_certificate_number", unique: true
+  end
+
+  create_table "on_sites", force: :cascade do |t|
+    t.integer "project_id"
+    t.string "work_package_number"
+    t.datetime "completed", precision: nil
+    t.text "on_hold_status"
+    t.text "on_hold_comment"
+    t.datetime "on_hold_date", precision: nil
+    t.integer "user_id"
+    t.decimal "total_time", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "permissions", force: :cascade do |t|

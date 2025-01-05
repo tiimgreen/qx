@@ -74,9 +74,10 @@
 #   { key: "transport", position: 8 },
 #   { key: "site_delivery", position: 9 },
 #   { key: "site_assembly", position: 10 },
-#   { key: "as_built", position: 11 },
+#   { key: "on_site", position: 11 },
 #   { key: "testing_and_pressur", position: 12 },
 #   { key: "material_certificate", position: 13 }
+#   { key: "site_welding", position: 14}
 # ]
 
 # count = 0
@@ -206,6 +207,6 @@
 #   DeliveryItem.find_or_create_by!(item_attrs)
 # end
 
-(1..4).each_with_index do |permission, index|
-UserResourcePermission.create!(user_id: User.find(1).id, resource_name: "SiteAssembly", permission_id: index + 1)
-end
+# (1..4).each_with_index do |permission, index|
+# UserResourcePermission.create!(user_id: User.find(1).id, resource_name: "SiteAssembly", permission_id: index + 1)
+# end

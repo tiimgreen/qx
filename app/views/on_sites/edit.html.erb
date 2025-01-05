@@ -1,0 +1,20 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.on_sites'),
+    path: project_on_sites_path(@project) },
+  { text: @on_site.work_package_number,
+    path: project_on_site_path(@project, @on_site) },
+  { text: t('common.labels.edit') }
+] %>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0"><%= t('.title', work_package: @on_site.work_package_number) %></h2>
+    </div>
+
+    <div class="card-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.on_sites'),
+    path: project_on_sites_path(@project) }
+] %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><%= t('.title_for_project', project: @project.name) %></h1>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <%= form_tag project_on_sites_path(@project), method: :get do %>
+        <div class="input-group">
+          <%= text_field_tag :search, params[:search],
+                            class: 'form-control',
+                            placeholder: t('common.labels.search_placeholder') %>
+          <div class="input-group-append">
+            <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4 text-end">
+      <%= link_to new_project_on_site_path(@project), class: 'btn btn-primary' do %>
+        <i class="bi bi-plus"></i> <%= t('common.buttons.new') %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-sm">
+      <thead>
+        <tr>
+          <th>
+            <%= link_to t('activerecord.attributes.on_site.work_package_number'),
+                request.params.merge(sort: 'work_package_number', direction: (params[:sort] == 'work_package_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('work_package_number') if params[:sort] == 'work_package_number' %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.on_site.on_hold_status'),
+                request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('on_hold_status') if params[:sort] == 'on_hold_status' %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.on_site.completed'),
+                request.params.merge(sort: 'completed', direction: (params[:sort] == 'completed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('completed') if params[:sort] == 'completed' %>
+          </th>
+          <th><%= t('common.labels.created_by') %></th>
+          <th class="text-end"><%= t('common.labels.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @on_sites.each do |on_site| %>
+          <tr>
+            <td><%= on_site.work_package_number %></td>
+            <td><%= status_label(on_site.on_hold_status) %></td>
+            <td><%= l(on_site.completed, format: :short) if on_site.completed %></td>
+            <td><%= on_site.user.name %></td>
+            <td class="text-end">
+              <% if current_user.can_view?("OnSite") %>
+                <%= link_to project_on_site_path(@project, on_site), class: 'btn btn-sm btn-outline-primary' do %>
+                  <i class="bi bi-eye"></i>
+                <% end %>
+              <% end %>
+              <% if current_user.can_edit?("OnSite") %>
+                <%= link_to edit_project_on_site_path(@project, on_site), class: 'btn btn-sm btn-outline-secondary' do %>
+                  <i class="bi bi-pencil"></i>
+                <% end %>
+              <% end %>
+              <% if current_user.can_delete?("OnSite") %>
+                  <%= button_tag type: 'button',
+                             class: 'btn btn-outline-danger m-1',
+                             title: t('common.buttons.delete'),
+                             data: {
+                               bs_toggle: "modal",
+                               bs_target: "#deleteOnSiteModal",
+                               "project-id": on_site.project.id,
+                               "on-site-id": on_site.id,
+                               "on-site-name": on_site.work_package_number,
+                               "on-site-number": on_site.work_package_number
+                             } do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= render partial: 'delete_confirmation_modal', 
+           locals: {
+             modal_id: 'deleteOnSiteModal',
+             controller_name: 'delete-on-site',
+             model_name: 'on_site'
+           } %>

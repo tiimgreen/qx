@@ -1,0 +1,90 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.on_sites'),
+    path: project_on_sites_path(@project) },
+  { text: @on_site.work_package_number }
+] %>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 class="mb-0"><%= t('.title', work_package: @on_site.work_package_number) %></h2>
+      <div>
+        <%= link_to edit_project_on_site_path(@project, @on_site), class: 'btn btn-outline-primary' do %>
+          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.work_package_number') %></dt>
+            <dd class="col-sm-6"><%= @on_site.work_package_number %></dd>
+
+            <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
+            <dd class="col-sm-6"><%= @on_site.user.name %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.completed') %></dt>
+            <dd class="col-sm-6"><%= l(@on_site.completed, format: :long) if @on_site.completed %></dd>
+          </dl>
+        </div>
+
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.on_hold_status') %></dt>
+            <dd class="col-sm-6"><%= @on_site.on_hold_status %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.on_hold_date') %></dt>
+            <dd class="col-sm-6"><%= l(@on_site.on_hold_date, format: :long) if @on_site.on_hold_date %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.on_hold_comment') %></dt>
+            <dd class="col-sm-6"><%= @on_site.on_hold_comment %></dd>
+
+                  <% if @on_site.on_hold_images.attached? %>
+                  <div class="row row-cols-1 row-cols-md-3 g-3">
+                    <% @on_site.on_hold_images.each do |image| %>
+                      <div class="col">
+                        <div class="card h-100">
+                          <%= link_to image_tag(image.variant(:thumb), 
+                                              class: "card-img-top", 
+                                              style: "object-fit: cover; height: 100px;",
+                                              data: { 
+                                                bs_toggle: "modal",
+                                                bs_target: "#imageModal#{image.id}"
+                                              }),
+                                    "#" %>
+
+                          <!-- Modal for this image -->
+                          <div class="modal fade" id="imageModal<%= image.id %>" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title"><%= t('common.labels.image_preview') %></h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                  <%= image_tag image.variant(:medium), class: "img-fluid" %>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="d-flex justify-content-between">
+        <%= link_to t('common.labels.back'), project_on_sites_path(@project), class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>

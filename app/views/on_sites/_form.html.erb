@@ -1,0 +1,83 @@
+<%= form_with(
+      model: [@project, @on_site],
+      local: true,
+      class: 'needs-validation',
+      id: 'on_site_form',
+      data: { 
+        turbo: true,
+        controller: "validation"
+      }
+    ) do |f| %>
+  <% if @on_site.errors.any? %>
+    <div class="alert alert-danger">
+      <h6><%= t('.errors.header', count: @on_site.errors.count) %></h6>
+      <ul>
+        <% @on_site.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id if @project %>
+
+  <div class="row">
+    <div class="col-md-4">
+
+      <div class="mb-3">
+        <%= f.label :work_package_number, class: 'form-label' %>
+        <div class="input-group" 
+             data-controller="work-package-search"
+             data-work-package-search-url-value="<%= search_work_packages_project_isometries_path(@project, format: :json) %>"
+             data-work-package-search-min-length-value="2">
+          <%= f.text_field :work_package_number, 
+                          class: 'form-control',
+                          data: {
+                            work_package_search_target: "input",
+                            action: "input->work-package-search#search click@window->work-package-search#clickOutside"
+                          } %>
+          <div class="dropdown-menu w-100" data-work-package-search-target="results"></div>
+        </div>
+      </div>
+        <div class="mb-3">
+      <% if @on_site.persisted? && @on_site.completed? %>
+
+          <%= f.label :completed, class: 'form-label' %>
+          <%= f.text_field :completed, 
+                          value: (@on_site.completed ? l(@on_site.completed, format: :long) : nil),
+                          class: 'form-control', 
+                          disabled: true %>
+        <% end %>
+
+        </div>
+        <div class="mb-3">
+          <% if @on_site.persisted? && @on_site.completed.nil? && !@on_site.on_hold? %>
+            <%= link_to complete_project_on_site_path(@project, @on_site),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+      <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
+        delete_image_project_on_site_path(@project, @on_site, image_id: image) 
+      } %>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <%= link_to t('common.labels.back'), project_on_sites_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -157,30 +157,30 @@ class SiteDeliveriesController < ApplicationController
   end
 
   def authorize_view!
-    unless current_user.can_view?("Transport")
-      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.show"), model: Transport.model_name.human)
+    unless current_user.can_view?("SiteDelivery")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.show"), model: SiteDelivery.model_name.human)
       redirect_to request.referer || root_path
     end
   end
 
   def authorize_create!
-    unless current_user.can_create?("Transport")
-      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: Transport.model_name.human)
-      redirect_to request.referer || transports_path
+    unless current_user.can_create?("SiteDelivery")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: SiteDelivery.model_name.human)
+      redirect_to request.referer || site_deliveries_path
     end
   end
 
   def authorize_edit!
-    unless current_user.can_edit?("Transport")
-      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.edit"), model: Transport.model_name.human)
-      redirect_to request.referer || transport_path(@transport)
+    unless current_user.can_edit?("SiteDelivery")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.edit"), model: SiteDelivery.model_name.human)
+      redirect_to request.referer || site_delivery_path(@site_delivery)
     end
   end
 
   def authorize_destroy!
-    unless current_user.can_delete?("Transport")
-      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: Transport.model_name.human)
-      redirect_to request.referer || transport_path(@transport)
+    unless current_user.can_delete?("SiteDelivery")
+      flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: SiteDelivery.model_name.human)
+      redirect_to request.referer || site_delivery_path(@site_delivery)
     end
   end
 end

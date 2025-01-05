@@ -120,8 +120,8 @@ de:
     site_delivery_description: "Verwaltung der Baustellenlieferungen"
     site_assembly: "Bauteilmontage"
     site_assembly_description: "Bauteilmontage und Installation"
-    as_built: "As-Built"
-    as_built_description: "Finale Dokumentation des Bauzustands"
+    on_site: "On Site"
+    on_site_description: "Finale Dokumentation des Bauzustands"
     testing_and_pressur: "Druck Prüfung / Testpack"
     testing_and_pressur_description: "Systemprüfung und Drucktests"
     documentation: "Dokumentation"
@@ -145,7 +145,7 @@ de:
       work_preparation: "Arbeitsvorbereitung"
       site_delivery: "Baustellenlieferung"
       site_assembly: "Bauteilmontage"
-      as_built: "As-Built"
+      on_site: "On Site"
       testing_and_pressur: "Druck Prüfung / Testpack"
       documentation: "Dokumentation"
       material_certificate: "Materialzertifikat"
@@ -211,6 +211,13 @@ de:
         on_hold_comment: "Halt Kommentar"
         on_hold_date: "Halt Datum"
         on_hold_images: "Halt Bilder" 
+      on_site:
+        work_package_number: "Arbeitspaket Nummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"   
       site_assembly:
         work_package_number: "Arbeitspaket Nummer"
         completed: "Abgeschlossen am"
@@ -286,6 +293,33 @@ de:
       title: "Neue Baustellenlieferung erstellen"
     edit:
       title: "Baustellenlieferung bearbeiten: %{work_package}"     
+  on_sites:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diese As-Built als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung der As-Built"
+          other: "%{count} Fehler verhindern die Speicherung der As-Built"
+    complete:
+      success: "As-Built wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren der As-Built als abgeschlossen"
+    create:
+      success: "As-Built wurde erfolgreich erstellt"
+    update:
+      success: "As-Built wurde erfolgreich aktualisiert"
+    destroy:
+      success: "As-Built wurde erfolgreich gelöscht"
+    index:
+      title_for_project: "As-Built für %{project}"
+    buttons:
+      new_site_delivery: "Neue As-Built erstellen"
+    show:
+      title: "As-Built Details"
+    new:
+      title: "Neue As-Built erstellen"
+    edit:
+      title: "As-Built bearbeiten: %{work_package}"     
   site_assemblies:
     form:
       complete_button: "Als abgeschlossen markieren"
