@@ -8,6 +8,7 @@ class Project < ApplicationRecord
   has_many :transports, dependent: :destroy
   has_many :final_inspections, dependent: :destroy
   has_many :work_preparations, dependent: :destroy
+  has_many :site_deliveries, dependent: :destroy
 
   belongs_to :user, optional: true
 

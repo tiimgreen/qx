@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_05_070129) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_05_080252) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -279,6 +279,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_05_070129) do
     t.integer "position"
     t.string "key"
     t.index ["key"], name: "index_sectors_on_key", unique: true
+  end
+
+  create_table "site_deliveries", force: :cascade do |t|
+    t.integer "project_id"
+    t.string "work_package_number"
+    t.datetime "completed"
+    t.text "on_hold_status"
+    t.text "on_hold_comment"
+    t.datetime "on_hold_date"
+    t.integer "user_id"
+    t.decimal "total_time", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transports", force: :cascade do |t|

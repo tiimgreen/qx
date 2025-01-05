@@ -142,6 +142,8 @@ de:
       prefabrication: "Vorfertigung"
       final_inspection: "Endkontrolle"
       "final-inspection": "Endkontrolle"
+      work_preparation: "Arbeitsvorbereitung"
+      site_delivery: "Baustellenlieferung"
     errors:
       models:
         delivery_item:
@@ -197,6 +199,13 @@ de:
         on_hold_comment: "Halt Kommentar"
         on_hold_date: "Halt Datum"
         on_hold_images: "Halt Bilder"
+      site_delivery:
+        work_package_number: "Arbeitspaket Nummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"  
       final_inspection:
         work_location: "Arbeitsort"
         work_package_number: "Arbeitspaket Nummer"
@@ -238,6 +247,33 @@ de:
       title: "Neuer Transport"
     edit:
       title: "Transport bearbeiten: %{work_package}"
+  site_deliveries:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diese Baustellenlieferung als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung der Baustellenlieferung"
+          other: "%{count} Fehler verhindern die Speicherung der Baustellenlieferung"
+    complete:
+      success: "Baustellenlieferung wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren der Baustellenlieferung als abgeschlossen"
+    create:
+      success: "Baustellenlieferung wurde erfolgreich erstellt"
+    update:
+      success: "Baustellenlieferung wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Baustellenlieferung wurde erfolgreich gelöscht"
+    index:
+      title_for_project: "Baustellenlieferungen für %{project}"
+    buttons:
+      new_site_delivery: "Neue Baustellenlieferung erstellen"
+    show:
+      title: "Baustellenlieferung Details"
+    new:
+      title: "Neue Baustellenlieferung erstellen"
+    edit:
+      title: "Baustellenlieferung bearbeiten: %{work_package}"     
   prefabrications:
     form:
       complete_button: "Als abgeschlossen markieren"

@@ -145,6 +145,7 @@ en:
       final_inspection: "Final Inspection"
       "final-inspection": "Final Inspection"
       work_preparation: "Work Preparation"
+      site_delivery: "Site Delivery"
     errors:
       models:
         delivery_item:
@@ -200,6 +201,13 @@ en:
         on_hold_comment: "On Hold Comment"
         on_hold_date: "On Hold Date"
         on_hold_images: "On Hold Images"
+      site_delivery:
+        work_package_number: "Work Package Number"
+        completed: "Completed Date"
+        on_hold_status: "On Hold Status"
+        on_hold_comment: "On Hold Comment"
+        on_hold_date: "On Hold Date"
+        on_hold_images: "On Hold Images"  
       final_inspection:
         work_location: "Work Location"
         work_package_number: "Work Package Number"
@@ -351,3 +359,30 @@ en:
     types:
       cutting_pipes: "Cutting Pipes"
       small_parts: "Small Parts"
+  site_deliveries:
+    form:
+      complete_button: "Mark as Completed"
+      confirm_complete: "Are you sure you want to mark this site delivery as completed?"
+      errors:
+        header:
+          one: "1 error prohibited this site delivery from being saved"
+          other: "%{count} errors prohibited this site delivery from being saved"
+    complete:
+      success: "Site delivery was successfully marked as completed"
+      failure: "Failed to mark site delivery as completed"
+    create:
+      success: "Site delivery was successfully created"
+    update:
+      success: "Site delivery was successfully updated"
+    destroy:
+      success: "Site delivery was successfully deleted"
+    index:
+      title_for_project: "Site Deliveries for %{project}"
+    buttons:
+      new_site_delivery: "New Site Delivery"
+    show:
+      title: "Site Delivery Details"
+    new:
+      title: "New Site Delivery"
+    edit:
+      title: "Site Delivery Edit: %{site_delivery}"      

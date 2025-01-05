@@ -1,6 +1,6 @@
-class CreateTransports < ActiveRecord::Migration[7.2]
+class CreateSiteDeliveries < ActiveRecord::Migration[7.2]
   def change
-    create_table :transports do |t|
+    create_table :site_deliveries do |t|
       t.integer :project_id
       t.string :work_package_number
       t.datetime :completed

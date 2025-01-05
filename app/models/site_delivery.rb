@@ -1,4 +1,4 @@
-class Transport < ApplicationRecord
+class SiteDelivery < ApplicationRecord
   belongs_to :project
   belongs_to :user
 
@@ -18,13 +18,13 @@ class Transport < ApplicationRecord
 
     term = "%#{search_term}%"
 
-   joins("LEFT JOIN users ON transports.user_id = users.id")
+   joins("LEFT JOIN users ON site_deliveries.user_id = users.id")
     .where(
       "users.first_name LIKE :search OR
        users.email LIKE :search OR
-       transports.work_package_number LIKE :search OR
-       transports.on_hold_status LIKE :search OR
-       transports.on_hold_comment LIKE :search",
+       site_deliveries.work_package_number LIKE :search OR
+       site_deliveries.on_hold_status LIKE :search OR
+       site_deliveries.on_hold_comment LIKE :search",
       search: term
     )
     .distinct
