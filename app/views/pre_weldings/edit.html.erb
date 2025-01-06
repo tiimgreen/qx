@@ -1,0 +1,20 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.prefabrications'),
+    path: project_pre_weldings_path(@project) },
+  { text: @pre_welding.work_package_number,
+    path: project_pre_welding_path(@project, @pre_welding) },
+  { text: t('common.labels.edit') }
+] %>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0"><%= t('.title', work_package: @pre_welding.work_package_number) %></h2>
+    </div>
+
+    <div class="card-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

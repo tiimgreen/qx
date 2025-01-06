@@ -12,6 +12,7 @@ class Project < ApplicationRecord
   has_many :site_assemblies, dependent: :destroy
   has_many :on_sites, dependent: :destroy
   has_many :test_packs, dependent: :destroy
+  has_many :pre_weldings, dependent: :destroy
 
   belongs_to :user, optional: true
 

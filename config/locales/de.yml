@@ -110,8 +110,8 @@ de:
     work_preparation_description: "Vorbereitung der Arbeitsprozesse"
     prefabrication: "Vorfertigung"
     prefabrication_description: "Bauteilefertigung"
-    welding: "Schweissen"
-    welding_description: "Schweissprozesse und Dokumentation"
+    pre_welding: "Schweissen"
+    pre_welding_description: "Schweissprozesse und Dokumentation"
     final_inspection: "Endkontrolle"
     final_inspection_description: "Qualitätskontrolle und Endprüfungen"
     transport: "Transport"
@@ -140,6 +140,7 @@ de:
     models:
       project: "Projekt"
       prefabrication: "Vorfertigung"
+      pre_welding: "Schweissen"
       final_inspection: "Endkontrolle"
       "final-inspection": "Endkontrolle"
       work_preparation: "Arbeitsvorbereitung"
@@ -214,7 +215,15 @@ de:
         on_hold_comment: "Halt Kommentar"
         on_hold_date: "Halt Datum"
         on_hold_images: "Halt Bilder"
-        active: "Aktiv"
+        active: "Aktiv"        
+      pre_welding:
+        work_location: "Arbeitsort"
+        work_package_number: "Arbeitspaket Nummer"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"
       transport:
         work_package_number: "Arbeitspaket Nummer"
         completed: "Abgeschlossen am"
@@ -392,6 +401,33 @@ de:
       title: "Neue Vorfertigung"
     edit:
       title: "Vorfertigung bearbeiten: %{work_package}"    
+  pre_weldings:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diese Schweissen als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung der Schweissen"
+          other: "%{count} Fehler verhindern die Speicherung der Schweissen"
+    complete:
+      success: "Schweissen wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren der Schweissen als abgeschlossen"
+    create:
+      success: "Schweissen wurde erfolgreich erstellt"
+    update:
+      success: "Schweissen wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Schweissen wurde erfolgreich gelöscht"
+    index:
+      title_for_project: "Schweissen für %{project}"
+    buttons:
+      new_prefabrication: "Neue Schweissen"
+    show:
+      title: "Schweissen Details"
+    new:
+      title: "Neue Schweissen"
+    edit:
+      title: "Schweissen bearbeiten: %{work_package}"    
   final_inspections:
     form:
       complete_button: "Als abgeschlossen markieren"

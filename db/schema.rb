@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_06_144409) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -236,7 +236,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
   end
 
   create_table "on_sites", force: :cascade do |t|
-    t.integer "project_id"
+    t.integer "project_id", null: false
     t.string "work_package_number"
     t.datetime "completed", precision: nil
     t.text "on_hold_status"
@@ -253,6 +253,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pre_weldings", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "work_location_id"
+    t.string "work_package_number"
+    t.datetime "completed"
+    t.text "on_hold_status"
+    t.text "on_hold_comment"
+    t.datetime "on_hold_date"
+    t.integer "user_id"
+    t.decimal "total_time", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_pre_weldings_on_project_id"
+    t.index ["user_id"], name: "index_pre_weldings_on_user_id"
+    t.index ["work_location_id"], name: "index_pre_weldings_on_work_location_id"
   end
 
   create_table "prefabrications", force: :cascade do |t|
@@ -295,7 +312,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
   end
 
   create_table "site_assemblies", force: :cascade do |t|
-    t.integer "project_id"
+    t.integer "project_id", null: false
     t.string "work_package_number"
     t.datetime "completed", precision: nil
     t.text "on_hold_status"
@@ -308,7 +325,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
   end
 
   create_table "site_deliveries", force: :cascade do |t|
-    t.integer "project_id"
+    t.integer "project_id", null: false
     t.string "work_package_number"
     t.datetime "completed"
     t.text "on_hold_status"
@@ -321,7 +338,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
   end
 
   create_table "test_packs", force: :cascade do |t|
-    t.integer "project_id"
+    t.integer "project_id", null: false
     t.integer "work_location_id"
     t.string "work_package_number"
     t.string "work_preparation_type"
@@ -342,7 +359,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
   end
 
   create_table "transports", force: :cascade do |t|
-    t.integer "project_id"
+    t.integer "project_id", null: false
     t.string "work_package_number"
     t.datetime "completed"
     t.text "on_hold_status"
@@ -481,10 +498,27 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
   add_foreign_key "isometry_documents", "isometries"
   add_foreign_key "isometry_material_certificates", "isometries"
   add_foreign_key "isometry_material_certificates", "material_certificates"
+  add_foreign_key "on_sites", "projects"
+  add_foreign_key "on_sites", "users"
+  add_foreign_key "pre_weldings", "projects"
+  add_foreign_key "pre_weldings", "users"
+  add_foreign_key "pre_weldings", "work_locations"
   add_foreign_key "prefabrications", "projects"
   add_foreign_key "prefabrications", "users"
   add_foreign_key "prefabrications", "work_locations"
   add_foreign_key "projects", "users"
+  add_foreign_key "site_assemblies", "projects"
+  add_foreign_key "site_assemblies", "users"
+  add_foreign_key "site_deliveries", "projects"
+  add_foreign_key "site_deliveries", "users"
+  add_foreign_key "test_packs", "projects"
+  add_foreign_key "test_packs", "projects"
+  add_foreign_key "test_packs", "users"
+  add_foreign_key "test_packs", "users"
+  add_foreign_key "test_packs", "work_locations"
+  add_foreign_key "test_packs", "work_locations"
+  add_foreign_key "transports", "projects"
+  add_foreign_key "transports", "users"
   add_foreign_key "user_resource_permissions", "permissions"
   add_foreign_key "user_resource_permissions", "users"
   add_foreign_key "user_sectors", "sectors"
@@ -492,4 +526,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_114906) do
   add_foreign_key "weldings", "isometries"
   add_foreign_key "weldings", "material_certificates"
   add_foreign_key "weldings", "material_certificates", column: "material_certificate1_id"
+  add_foreign_key "work_preparations", "projects"
+  add_foreign_key "work_preparations", "users"
+  add_foreign_key "work_preparations", "work_locations"
 end

@@ -19,6 +19,7 @@ en:
         deliveries: "Deliveries"
         new_delivery: "New Delivery"
       prefabrications: "Prefabrications"
+      pre_weldings: "Weldings"
   common:
     save: "Save"
     cancel: "Cancel"
@@ -113,6 +114,8 @@ en:
     work_preparation_description: "Preparation of work processes"
     prefabrication: "Prefabrication"
     prefabrication_description: "Component prefabrication"
+    pre_welding: "Pre Welding"
+    pre_welding_description: "Pre Welding processes and documentation"
     welding: "Welding"
     welding_description: "Welding processes and documentation"
     final_inspection: "Final Inspection"
@@ -142,6 +145,7 @@ en:
   activerecord:
     models:
       prefabrication: "Prefabrication"
+      pre_welding: "Welding"
       final_inspection: "Final Inspection"
       "final-inspection": "Final Inspection"
       work_preparation: "Work Preparation"
@@ -218,6 +222,14 @@ en:
         on_hold_date: "On Hold Date"
         on_hold_images: "On Hold Images"
         active: "Active"
+      pre_welding:
+        work_location: "Work Location"
+        work_package_number: "Work Package Number"
+        completed: "Completed Date"
+        on_hold_status: "On Hold Status"
+        on_hold_comment: "On Hold Comment"
+        on_hold_date: "On Hold Date"
+        on_hold_images: "On Hold Images"
       transport:
         work_package_number: "Work Package Number"
         completed: "Completed Date"
@@ -313,6 +325,33 @@ en:
       title: "New Prefabrication"
     edit:
       title: "Edit Prefabrication: %{work_package}"
+  pre_weldings:
+    form:
+      complete_button: "Mark as Completed"
+      confirm_complete: "Are you sure you want to mark this pre welding as completed?"
+      errors:
+        header:
+          one: "1 error prohibited this pre welding from being saved"
+          other: "%{count} errors prohibited this pre welding from being saved"
+    complete:
+      success: "Pre welding was successfully marked as completed"
+      failure: "Failed to mark pre welding as completed"
+    create:
+      success: "Pre welding was successfully created"
+    update:
+      success: "Pre welding was successfully updated"
+    destroy:
+      success: "Pre welding was successfully deleted"
+    index:
+      title_for_project: "Pre-weldings for %{project}"
+    buttons:
+      new_prefabrication: "New Pre-welding"
+    show:
+      title: "Pre-welding Details"
+    new:
+      title: "New Pre-welding"
+    edit:
+      title: "Edit Pre-welding: %{work_package}"
   transports:
     form:
       complete_button: "Mark as Completed"

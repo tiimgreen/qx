@@ -24,6 +24,8 @@
             <i class="bi bi-diagram-3"></i> <%= project.on_sites.count %>
           <% when 'test_pack' %>
             <i class="bi bi-diagram-3"></i> <%= project.test_packs.count %>
+          <% when 'pre_welding' %>
+            <i class="bi bi-diagram-3"></i> <%= project.pre_weldings.count %>
           <% else %>
             <i class="bi bi-folder"></i> <%= sector.key.classify.constantize.unscoped.active.count rescue 0 %>
           <% end %>
@@ -109,6 +111,13 @@
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
             <%= link_to new_project_test_pack_path(project), class: 'btn btn-primary' do %>
+              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %> 
+          <% when 'pre_welding' %>
+            <%= link_to project_pre_weldings_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
+              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_pre_welding_path(project), class: 'btn btn-primary' do %>
               <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% end %>

@@ -91,6 +91,12 @@ Rails.application.routes.draw do
           delete "delete_image/:image_id", action: :delete_image, as: :delete_image
         end
       end
+      resources :pre_weldings do
+        member do
+          patch :complete
+          delete "delete_image/:image_id", action: :delete_image, as: :delete_image
+        end
+      end
     end
 
     resources :incoming_deliveries, only: [] do  # Changed from full resources to only: []
