@@ -38,6 +38,8 @@ class FinalInspectionsController < ApplicationController
     attach_images(:on_hold_images) if params.dig(:final_inspection, :on_hold_images).present?
     attach_images(:visual_check_images) if params.dig(:final_inspection, :visual_check_images).present?
     attach_images(:vt2_check_images) if params.dig(:final_inspection, :vt2_check_images).present?
+    attach_images(:pt2_check_images) if params.dig(:final_inspection, :pt2_check_images).present?
+    attach_images(:rt_check_images) if params.dig(:final_inspection, :rt_check_images).present?
 
     if @final_inspection.save
       redirect_to project_final_inspection_path(@project, @final_inspection),
@@ -61,6 +63,8 @@ class FinalInspectionsController < ApplicationController
     attach_images(:on_hold_images) if params.dig(:final_inspection, :on_hold_images).present?
     attach_images(:visual_check_images) if params.dig(:final_inspection, :visual_check_images).present?
     attach_images(:vt2_check_images) if params.dig(:final_inspection, :vt2_check_images).present?
+    attach_images(:pt2_check_images) if params.dig(:final_inspection, :pt2_check_images).present?
+    attach_images(:rt_check_images) if params.dig(:final_inspection, :rt_check_images).present?
 
     if @final_inspection.update(final_inspection_params_without_images)
       redirect_to project_final_inspection_path(@project, @final_inspection),
@@ -83,7 +87,7 @@ class FinalInspectionsController < ApplicationController
     complete_resource(
       @final_inspection,
       project_final_inspection_path(@project, @final_inspection),
-      {}  # No need for params, completion values will be set by complete_resource
+      {}
     )
   end
 
@@ -125,17 +129,23 @@ class FinalInspectionsController < ApplicationController
       :visual_check_comment,
       :vt2_check_status,
       :vt2_check_comment,
+      :pt2_check_status,
+      :pt2_check_comment,
+      :rt_check_status,
+      :rt_check_comment,
       :completed,
       :total_time,
       :project_id,
       on_hold_images: [],
       visual_check_images: [],
-      vt2_check_images: []
+      vt2_check_images: [],
+      pt2_check_images: [],
+      rt_check_images: []
     )
   end
 
   def final_inspection_params_without_images
-    final_inspection_params.except(:on_hold_images, :visual_check_images, :vt2_check_images)
+    final_inspection_params.except(:on_hold_images, :visual_check_images, :vt2_check_images, :pt2_check_images, :rt_check_images)
   end
 
   def attach_images(image_type)

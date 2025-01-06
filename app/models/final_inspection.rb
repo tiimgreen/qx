@@ -4,7 +4,9 @@ class FinalInspection < ApplicationRecord
   belongs_to :user
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   VISUAL_STATUSES = [ "Passed", "Failed" ].freeze
-  VT2_STATUSES = [ "Passed", "Failed" ].freeze
+  VT2_STATUSES = [ "Passed", "Failed", "N/A" ].freeze
+  PT2_STATUSES = [ "Passed", "Failed", "N/A" ].freeze
+  RT_STATUSES = [ "Passed", "Failed", "N/A" ].freeze
 
   has_many_attached :on_hold_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
@@ -17,6 +19,16 @@ class FinalInspection < ApplicationRecord
   end
 
   has_many_attached :vt2_check_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+
+  has_many_attached :pt2_check_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+
+  has_many_attached :rt_check_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
     attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
   end
@@ -44,7 +56,11 @@ class FinalInspection < ApplicationRecord
        final_inspections.visual_check_status LIKE :search OR
        final_inspections.visual_check_comment LIKE :search OR
        final_inspections.vt2_check_status LIKE :search OR
-       final_inspections.vt2_check_comment LIKE :search",
+       final_inspections.vt2_check_comment LIKE :search OR
+       final_inspections.pt2_check_status LIKE :search OR
+       final_inspections.pt2_check_comment LIKE :search OR
+       final_inspections.rt_check_status LIKE :search OR
+       final_inspections.rt_check_comment LIKE :search",
       search: term
     )
     .distinct
@@ -63,6 +79,8 @@ class FinalInspection < ApplicationRecord
     validate_images(on_hold_images)
     validate_images(visual_check_images)
     validate_images(vt2_check_images)
+    validate_images(pt2_check_images)
+    validate_images(rt_check_images)
   end
 
   def validate_images(images)

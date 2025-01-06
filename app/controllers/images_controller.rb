@@ -64,6 +64,10 @@ class ImagesController < ApplicationController
           model.visual_check_images
         when "vt2_check"
           model.vt2_check_images
+        when "pt2_check"
+          model.pt2_check_images
+        when "rt_check"
+          model.rt_check_images
         end
       else
         Rails.logger.error "Invalid model type: #{model_class}"

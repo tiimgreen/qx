@@ -272,6 +272,12 @@ en:
         vt2_check_status: "VT2 Check Status"
         vt2_check_comment: "VT2 Check Comment"
         vt2_check_images: "VT2 Check Images"  
+        pt2_check_status: "PT2 Check Status"
+        pt2_check_comment: "PT2 Check Comment"
+        pt2_check_images: "PT2 Check Images"
+        rt_check_status: "RT Check Status"
+        rt_check_comment: "RT Check Comment"
+        rt_check_images: "RT Check Images"
       delivery_item:
         name: "Name"
         tag_number: "TAG-Number"

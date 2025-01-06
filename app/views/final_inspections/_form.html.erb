@@ -144,6 +144,69 @@
   </div>
 
   <div class="row mt-3">
+    <div class="col-md-6">
+     
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :rt_check_status, t('activerecord.attributes.final_inspection.rt_check_status'), class: 'form-label' %>
+                <%= f.select :rt_check_status, FinalInspection::RT_STATUSES, { include_blank: false }, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :rt_check_images, t('activerecord.attributes.final_inspection.rt_check_images'), class: 'form-label' %>
+              <%= f.file_field :rt_check_images, multiple: true, class: 'form-control' %>
+            </div>
+          </div>
+          
+          <%= render partial: 'images', locals: { 
+            images: f.object.rt_check_images, 
+            image_type: 'rt_check',
+            edit_mode: true,
+            model_type: f.object
+          } %>
+
+          <%= f.text_area :rt_check_comment, class: 'form-control mt-2', rows: 2,
+                          placeholder: t('activerecord.attributes.final_inspection.rt_check_comment') %>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+
+       <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :pt2_check_status, t('activerecord.attributes.final_inspection.pt2_check_status'), class: 'form-label' %>
+                <%= f.select :pt2_check_status, FinalInspection::PT2_STATUSES, { include_blank: false }, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :pt2_check_images, t('activerecord.attributes.final_inspection.pt2_check_images'), class: 'form-label' %>
+              <%= f.file_field :pt2_check_images, multiple: true, class: 'form-control' %>
+            </div>
+          </div>
+          
+          <%= render partial: 'images', locals: { 
+            images: f.object.pt2_check_images, 
+            image_type: 'pt2_check',
+            edit_mode: true,
+            model_type: f.object
+          } %>
+
+          <%= f.text_area :pt2_check_comment, class: 'form-control mt-2', rows: 2,
+                          placeholder: t('activerecord.attributes.final_inspection.pt2_check_comment') %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row mt-3">
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_final_inspections_path(@project), class: 'btn btn-outline-secondary' %>

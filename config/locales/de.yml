@@ -266,6 +266,12 @@ de:
         vt2_check_status: "VT2 Endoskop Status"
         vt2_check_comment: "VT2 Endoskop Kommentar"
         vt2_check_images: "VT2 Endoskop Bilder"
+        pt2_check_status: "PT2 Status"
+        pt2_check_comment: "PT2 Kommentar"
+        pt2_check_images: "PT2 Bilder"
+        rt_check_status: "RT Status"
+        rt_check_comment: "RT Kommentar"
+        rt_check_images: "RT Bilder"
   transports:
     form:
       complete_button: "Als abgeschlossen markieren"

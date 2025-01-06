@@ -54,6 +54,16 @@
             <%= sort_indicator('vt2_check_status') if params[:sort] == 'vt2_check_status' %>
           </th>
           <th>
+            <%= link_to t('activerecord.attributes.final_inspection.pt2_check_status'),
+                request.params.merge(sort: 'pt2_check_status', direction: (params[:sort] == 'pt2_check_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('pt2_check_status') if params[:sort] == 'pt2_check_status' %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.final_inspection.rt_check_status'),
+                request.params.merge(sort: 'rt_check_status', direction: (params[:sort] == 'rt_check_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('rt_check_status') if params[:sort] == 'rt_check_status' %>
+          </th>
+          <th>
             <%= link_to t('activerecord.attributes.final_inspection.on_hold_status'),
                 request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('on_hold_status') if params[:sort] == 'on_hold_status' %>
@@ -74,6 +84,8 @@
             <td><%= final_inspection.work_package_number %></td>
             <td><%= status_label(final_inspection.visual_check_status) %></td>
             <td><%= status_label(final_inspection.vt2_check_status) %></td>
+            <td><%= status_label(final_inspection.pt2_check_status) %></td>
+            <td><%= status_label(final_inspection.rt_check_status) %></td>
             <td><%= status_label(final_inspection.on_hold_status) %></td>
             <td><%= l(final_inspection.completed, format: :short) if final_inspection.completed %></td>
             <td><%= final_inspection.user.name %></td>
