@@ -150,6 +150,8 @@ de:
       test_pack: "Druck Prüfung / Testpack"
       documentation: "Dokumentation"
       material_certificate: "Materialzertifikat"
+      transport: "Transport"
+      delivery_item: "Lieferschein"
     errors:
       models:
         delivery_item:
@@ -227,10 +229,9 @@ de:
       transport:
         work_package_number: "Arbeitspaket Nummer"
         completed: "Abgeschlossen am"
-        on_hold_status: "Halt Status"
-        on_hold_comment: "Halt Kommentar"
-        on_hold_date: "Halt Datum"
-        on_hold_images: "Halt Bilder"
+        check_spools_status: "Prüfe Spools Status"
+        check_spools_comment: "Prüfe Spools Kommentar"
+        check_spools_images: "Prüfe Spools Bilder"
       site_delivery:
         work_package_number: "Arbeitspaket Nummer"
         completed: "Abgeschlossen am"

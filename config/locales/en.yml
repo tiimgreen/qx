@@ -155,6 +155,8 @@ en:
       test_pack: "Test Pack"
       documentation: "Documentation"
       material_certificate: "Material Certificate"
+      transport: "Transport"
+      delivery_item: "Delivery Item"
     errors:
       models:
         delivery_item:
@@ -233,10 +235,9 @@ en:
       transport:
         work_package_number: "Work Package Number"
         completed: "Completed Date"
-        on_hold_status: "On Hold Status"
-        on_hold_comment: "On Hold Comment"
-        on_hold_date: "On Hold Date"
-        on_hold_images: "On Hold Images"
+        check_spools_status: "Check Spool Status"
+        check_spools_comment: "Check Spool Comment"
+        check_spools_images: "Check Spool Images"
       site_delivery:
         work_package_number: "Work Package Number"
         completed: "Completed Date"

@@ -33,18 +33,15 @@
 
         <div class="col-md-6">
           <dl class="row">
-            <dt class="col-sm-6"><%= t('activerecord.attributes.transport.on_hold_status') %></dt>
-            <dd class="col-sm-6"><%= @transport.on_hold_status %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.transport.check_spools_status') %></dt>
+            <dd class="col-sm-6"><%= @transport.check_spools_status %></dd>
 
-            <dt class="col-sm-6"><%= t('activerecord.attributes.transport.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@transport.on_hold_date, format: :long) if @transport.on_hold_date %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.transport.check_spools_comment') %></dt>
+            <dd class="col-sm-6"><%= @transport.check_spools_comment %></dd>
 
-            <dt class="col-sm-6"><%= t('activerecord.attributes.transport.on_hold_comment') %></dt>
-            <dd class="col-sm-6"><%= @transport.on_hold_comment %></dd>
-
-                  <% if @transport.on_hold_images.attached? %>
+                  <% if @transport.check_spools_images.attached? %>
                   <div class="row row-cols-1 row-cols-md-3 g-3">
-                    <% @transport.on_hold_images.each do |image| %>
+                    <% @transport.check_spools_images.each do |image| %>
                       <div class="col">
                         <div class="card h-100">
                           <%= link_to image_tag(image.variant(:thumb), 

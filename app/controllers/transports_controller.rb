@@ -34,8 +34,7 @@ class TransportsController < ApplicationController
     @transport = @project.transports.new(transport_params_without_images)
     @transport.user = current_user
 
-    # Handle image attachments separately
-    attach_on_hold_images if params.dig(:transport, :on_hold_images).present?
+    attach_check_spools_images if params.dig(:transport, :check_spools_images).present?
 
     if @transport.save
       redirect_to project_transport_path(@project, @transport),
@@ -55,8 +54,8 @@ class TransportsController < ApplicationController
   end
 
   def update
-    on_hold_params(params)
-    attach_on_hold_images if params.dig(:transport, :on_hold_images).present?
+    check_spools_params(params)
+    attach_check_spools_images if params.dig(:transport, :check_spools_images).present?
 
     if @transport.update(transport_params_without_images)
       redirect_to project_transport_path(@project, @transport),
@@ -79,7 +78,7 @@ class TransportsController < ApplicationController
     complete_resource(
       @transport,
       project_transport_path(@project, @transport),
-      {}  # No need for params, completion values will be set by complete_resource
+      {}
     )
   end
 
@@ -93,7 +92,7 @@ class TransportsController < ApplicationController
   def sort_params
     allowed_columns = %w[
       work_package_number
-      on_hold_status
+      check_spools_status
       completed
     ]
     params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
@@ -112,12 +111,11 @@ class TransportsController < ApplicationController
 
     params.require(:transport).permit(
       :work_package_number,
-      :on_hold_status,
-      :on_hold_comment,
-      :on_hold_date,
+      :check_spools_status,
+      :check_spools_comment,
       :completed,
       :total_time,
-      on_hold_images: []
+      check_spools_images: []
     )
   end
 
@@ -125,21 +123,19 @@ class TransportsController < ApplicationController
     transport_params.except(:on_hold_images)
   end
 
-  def attach_on_hold_images
-    return unless params.dig(:transport, :on_hold_images).present?
+  def attach_check_spools_images
+    return unless params.dig(:transport, :check_spools_images).present?
 
-    params[:transport][:on_hold_images].each do |image|
-      @transport.on_hold_images.attach(image)
+    params[:transport][:check_spools_images].each do |image|
+      @transport.check_spools_images.attach(image)
     end
   end
 
-  def on_hold_params(params)
-    if params[:transport][:on_hold_status] == "On Hold"
-      params[:transport][:on_hold_date] = Time.current
+  def check_spools_params(params)
+    if params[:transport][:check_spools_status] == "Failed"
       params[:transport][:completed] = nil
     else
-      params[:transport][:on_hold_date] = nil
-      params[:transport][:on_hold_comment] = nil
+      params[:transport][:check_spools_comment] = nil
     end
   end
 

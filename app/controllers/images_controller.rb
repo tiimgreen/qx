@@ -51,7 +51,7 @@ class ImagesController < ApplicationController
         when "on_hold"
           model.on_hold_images
         end
-      when "Prefabrication", "Transport", "WorkPreparation", "SiteDelivery", "SiteAssembly", "OnSite", "TestPack", "PreWelding"
+      when "Prefabrication", "WorkPreparation", "SiteDelivery", "SiteAssembly", "OnSite", "TestPack", "PreWelding"
         case image_type
         when "on_hold"
           model.on_hold_images
@@ -68,6 +68,11 @@ class ImagesController < ApplicationController
           model.pt2_check_images
         when "rt_check"
           model.rt_check_images
+        end
+      when "Transport"
+        case image_type
+        when "check_spools"
+          model.check_spools_images
         end
       else
         Rails.logger.error "Invalid model type: #{model_class}"
