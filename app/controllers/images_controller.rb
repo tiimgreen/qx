@@ -51,7 +51,7 @@ class ImagesController < ApplicationController
         when "on_hold"
           model.on_hold_images
         end
-      when "Prefabrication", "WorkPreparation", "SiteDelivery", "SiteAssembly", "OnSite", "TestPack", "PreWelding"
+      when "Prefabrication", "WorkPreparation", "SiteAssembly", "OnSite", "TestPack", "PreWelding"
         case image_type
         when "on_hold"
           model.on_hold_images
@@ -69,7 +69,7 @@ class ImagesController < ApplicationController
         when "rt_check"
           model.rt_check_images
         end
-      when "Transport"
+      when "Transport", "SiteDelivery"
         case image_type
         when "check_spools"
           model.check_spools_images

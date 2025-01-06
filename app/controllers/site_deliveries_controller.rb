@@ -35,7 +35,7 @@ class SiteDeliveriesController < ApplicationController
     @site_delivery.user = current_user
 
     # Handle image attachments separately
-    attach_on_hold_images if params.dig(:site_delivery, :on_hold_images).present?
+    attach_check_spool_images if params.dig(:site_delivery, :check_spool_images).present?
 
     if @site_delivery.save
       redirect_to project_site_delivery_path(@project, @site_delivery),
@@ -55,8 +55,8 @@ class SiteDeliveriesController < ApplicationController
   end
 
   def update
-    on_hold_params(params)
-    attach_on_hold_images if params.dig(:site_delivery, :on_hold_images).present?
+    check_spool_params(params)
+    attach_check_spool_images if params.dig(:site_delivery, :check_spool_images).present?
 
     if @site_delivery.update(site_delivery_params_without_images)
       redirect_to project_site_delivery_path(@project, @site_delivery),
@@ -79,7 +79,7 @@ class SiteDeliveriesController < ApplicationController
     complete_resource(
       @site_delivery,
       project_site_delivery_path(@project, @site_delivery),
-      {}  # No need for params, completion values will be set by complete_resource
+      {}
     )
   end
 
@@ -93,7 +93,7 @@ class SiteDeliveriesController < ApplicationController
   def sort_params
     allowed_columns = %w[
       work_package_number
-      on_hold_status
+      check_spools_status
       completed
     ]
     params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
@@ -112,34 +112,31 @@ class SiteDeliveriesController < ApplicationController
 
     params.require(:site_delivery).permit(
       :work_package_number,
-      :on_hold_status,
-      :on_hold_comment,
-      :on_hold_date,
+      :check_spools_status,
+      :check_spools_comment,
       :completed,
       :total_time,
-      on_hold_images: []
+      check_spools_images: []
     )
   end
 
   def site_delivery_params_without_images
-    site_delivery_params.except(:on_hold_images)
+    site_delivery_params.except(:check_spool_images)
   end
 
-  def attach_on_hold_images
-    return unless params.dig(:site_delivery, :on_hold_images).present?
+  def attach_check_spool_images
+    return unless params.dig(:site_delivery, :check_spool_images).present?
 
-    params[:site_delivery][:on_hold_images].each do |image|
-      @site_delivery.on_hold_images.attach(image)
+    params[:site_delivery][:check_spool_images].each do |image|
+      @site_delivery.check_spool_images.attach(image)
     end
   end
 
-  def on_hold_params(params)
-    if params[:site_delivery][:on_hold_status] == "On Hold"
-      params[:site_delivery][:on_hold_date] = Time.current
+  def check_spool_params(params)
+    if params[:site_delivery][:check_spools_status] == "Failed"
       params[:site_delivery][:completed] = nil
     else
-      params[:site_delivery][:on_hold_date] = nil
-      params[:site_delivery][:on_hold_comment] = nil
+      params[:site_delivery][:check_spools_comment] = nil
     end
   end
 

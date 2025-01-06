@@ -51,7 +51,7 @@
 
         </div>
         <div class="mb-3">
-          <% if @transport.persisted? && @transport.completed.nil? && !@transport.passed? %>
+          <% if @transport.persisted? && @transport.completed.nil? && !@transport.failed? %>
             <%= link_to complete_project_transport_path(@project, @transport),
                       method: :patch,
                       class: 'btn btn-success',

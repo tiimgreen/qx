@@ -34,7 +34,10 @@ class Transport < ApplicationRecord
     check_spools_status == "Passed"
   end
 
-  # Validate image format and size
+  def failed?
+    check_spools_status == "Failed"
+  end
+
   validate :validate_image_format
 
   private

@@ -235,10 +235,9 @@ de:
       site_delivery:
         work_package_number: "Arbeitspaket Nummer"
         completed: "Abgeschlossen am"
-        on_hold_status: "Halt Status"
-        on_hold_comment: "Halt Kommentar"
-        on_hold_date: "Halt Datum"
-        on_hold_images: "Halt Bilder" 
+        check_spools_status: "Prüfe Spools Status"
+        check_spools_comment: "Prüfe Spools Kommentar"
+        check_spools_images: "Prüfe Spools Bilder"
       on_site:
         work_package_number: "Arbeitspaket Nummer"
         completed: "Abgeschlossen am"
