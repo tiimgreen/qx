@@ -1,0 +1,138 @@
+<%= form_with(
+      model: [@project, @test_pack],
+      local: true,
+      class: 'needs-validation',
+      id: 'test_pack_form',
+      data: { 
+        turbo: true,
+        controller: "validation"
+      }
+    ) do |f| %>
+  <% if @test_pack.errors.any? %>
+    <div class="alert alert-danger">
+      <h6><%= t('.errors.header', count: @test_pack.errors.count) %></h6>
+      <ul>
+        <% @test_pack.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id if @project %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= f.label t('activerecord.attributes.test_pack.work_location'), for: :work_location_id, class: 'form-label' %>
+        <%= f.collection_select :work_location_id,
+                              WorkLocation.all,
+                              :id,
+                              ->(wl) { wl.location_type ? t("work_locations.types.#{wl.location_type}") : "" },
+                              { prompt: t('common.labels.select'), include_blank: false },
+                              { class: "form-control" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label t('activerecord.attributes.test_pack.test_pack_type'), for: :test_pack_type, class: 'form-label' %>
+        <%= f.select :test_pack_type,
+                    TestPack::TEST_PACK_TYPES.map { |type| [t("test_packs.types.#{type}"), type] },
+                    { prompt: t('common.labels.select'), include_blank: false },
+                    class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :work_package_number, class: 'form-label' %>
+        <div class="input-group" 
+             data-controller="work-package-search"
+             data-work-package-search-url-value="<%= search_work_packages_project_isometries_path(@project, format: :json) %>"
+             data-work-package-search-min-length-value="2">
+          <%= f.text_field :work_package_number, 
+                          class: 'form-control',
+                          data: {
+                            work_package_search_target: "input",
+                            action: "input->work-package-search#search click@window->work-package-search#clickOutside"
+                          } %>
+          <div class="dropdown-menu w-100" data-work-package-search-target="results"></div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :dp_team, class: 'form-label' %>
+        <div class="input-group">
+          <%= f.text_field :dp_team, class: 'form-control'%>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :operating_pressure, class: 'form-label' %>
+        <div class="input-group">
+          <%= f.text_field :operating_pressure, class: 'form-control'%>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <%= f.label :dp_pressure, class: 'form-label' %>
+        <div class="input-group">
+          <%= f.text_field :dp_pressure, class: 'form-control'%>
+        </div>
+      </div>
+
+
+
+      <div class="mb-3">
+        <% if @test_pack.persisted? && @test_pack.completed? %>
+
+            <%= f.label :completed, class: 'form-label' %>
+            <%= f.text_field :completed, 
+                            value: (@test_pack.completed ? l(@test_pack.completed, format: :long) : nil),
+                            class: 'form-control', 
+                            disabled: true %>
+          <% end %>
+
+        </div>
+        <div class="mb-3">
+          <% if @test_pack.persisted? && @test_pack.completed.nil? && !@test_pack.on_hold? %>
+            <%= link_to complete_project_test_pack_path(@project, @test_pack),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="mb-3">
+        <%= f.label :dip_team, class: 'form-label' %>
+        <div class="input-group">
+          <%= f.text_field :dip_team, class: 'form-control'%>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :dip_pressure, class: 'form-label' %>
+        <div class="input-group">
+          <%= f.text_field :dip_pressure, class: 'form-control'%>
+        </div>
+      </div>
+
+      <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
+        delete_image_project_test_pack_path(@project, @test_pack, image_id: image) 
+      } %>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <%= link_to t('common.labels.back'), project_test_packs_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

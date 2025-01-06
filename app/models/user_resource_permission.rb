@@ -17,7 +17,8 @@ class UserResourcePermission < ApplicationRecord
     "WorkPreparation",
     "SiteDelivery",
     "SiteAssembly",
-    "OnSite"
+    "OnSite",
+    "TestPack"
   ].freeze
 
   validates :resource_name, inclusion: { in: RESOURCE_NAMES }

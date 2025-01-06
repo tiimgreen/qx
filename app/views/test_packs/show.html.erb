@@ -1,0 +1,82 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.test_packs'),
+    path: project_test_packs_path(@project) },
+  { text: @test_pack.work_package_number }
+] %>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 class="mb-0"><%= t('.title', work_package: @test_pack.work_package_number) %></h2>
+      <div>
+        <%= link_to edit_project_test_pack_path(@project, @test_pack), class: 'btn btn-outline-primary' do %>
+          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.work_package_number') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.work_package_number %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.test_pack_type') %></dt>
+            <dd class="col-sm-6"><%= t("test_packs.types.#{@test_pack.test_pack_type}") if @test_pack.test_pack_type %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dp_team') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.dp_team %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.operating_pressure') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.operating_pressure %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dp_pressure') %></dt>
+            <dd class="col-sm-6">
+              <% if @test_pack.dp_pressure == @test_pack.operating_pressure %>
+                <%= @test_pack.dp_pressure %>
+              <% else %>
+                <span class="badge bg-danger text-white"><%= @test_pack.dp_pressure %></span>
+              <% end %>
+            </dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dip_team') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.dip_team %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dip_pressure') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.dip_pressure %></dd>
+
+            <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.user.name %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.completed') %>
+            <dd class="col-sm-6"><%= l(@test_pack.completed, format: :long) if @test_pack.completed %></dd>
+          </dl>
+        </div>
+
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.on_hold_status') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.on_hold_status %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.on_hold_date') %></dt>
+            <dd class="col-sm-6"><%= l(@test_pack.on_hold_date, format: :long) if @test_pack.on_hold_date %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.on_hold_comment') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.on_hold_comment %></dd>
+
+            <%= render partial: 'application/image_gallery', locals: { images: @test_pack.on_hold_images } %>
+
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="d-flex justify-content-between">
+        <%= link_to t('common.labels.back'), project_test_packs_path(@project), class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>

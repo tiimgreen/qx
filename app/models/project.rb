@@ -11,6 +11,7 @@ class Project < ApplicationRecord
   has_many :site_deliveries, dependent: :destroy
   has_many :site_assemblies, dependent: :destroy
   has_many :on_sites, dependent: :destroy
+  has_many :test_packs, dependent: :destroy
 
   belongs_to :user, optional: true
 

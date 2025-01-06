@@ -1,0 +1,20 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.test_packs'),
+    path: project_test_packs_path(@project) },
+  { text: @test_pack.work_package_number,
+    path: project_test_pack_path(@project, @test_pack) },
+  { text: t('common.labels.edit') }
+] %>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0"><%= t('.title', test_pack: @test_pack.work_package_number) %></h2>
+    </div>
+
+    <div class="card-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

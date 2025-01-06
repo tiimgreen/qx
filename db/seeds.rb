@@ -75,7 +75,7 @@
 #   { key: "site_delivery", position: 9 },
 #   { key: "site_assembly", position: 10 },
 #   { key: "on_site", position: 11 },
-#   { key: "testing_and_pressur", position: 12 },
+#   { key: "test_pack", position: 12 },
 #   { key: "material_certificate", position: 13 }
 #   { key: "site_welding", position: 14}
 # ]

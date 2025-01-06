@@ -122,8 +122,8 @@ de:
     site_assembly_description: "Bauteilmontage und Installation"
     on_site: "On Site"
     on_site_description: "Finale Dokumentation des Bauzustands"
-    testing_and_pressur: "Druck Prüfung / Testpack"
-    testing_and_pressur_description: "Systemprüfung und Drucktests"
+    test_pack: "Druck Prüfung / Testpack"
+    test_pack_description: "Systemprüfung und Drucktests"
     documentation: "Dokumentation"
     documentation_description: "Projektdokumentation und Aufzeichnungen"
     material_certificate: "Materialzertifikat"
@@ -146,7 +146,7 @@ de:
       site_delivery: "Baustellenlieferung"
       site_assembly: "Bauteilmontage"
       on_site: "On Site"
-      testing_and_pressur: "Druck Prüfung / Testpack"
+      test_pack: "Druck Prüfung / Testpack"
       documentation: "Dokumentation"
       material_certificate: "Materialzertifikat"
     errors:
@@ -173,6 +173,10 @@ de:
           attributes:
             work_location:
               required: "Arbeitsort darf nicht leer sein"
+        test_pack:
+          attributes:
+            work_location:
+              required: "Arbeitsort darf nicht leer sein"      
         final_inspection:
           attributes:
             work_location:
@@ -188,6 +192,20 @@ de:
         on_hold_comment: "Halt Kommentar"
         on_hold_date: "Halt Datum"
         on_hold_images: "Halt Bilder"
+      test_pack:
+        work_location: "Arbeitsort"
+        work_package_number: "Arbeitspaket Nummer"
+        test_pack_type: "Druck Prüfung / Testpack Typ"
+        dp_team: "DP Team"
+        operating_pressure: "Betriebsdruck"
+        dp_pressure: "DP Druck"
+        dip_team: "DIP Team"
+        dip_pressure: "DIP Druck"
+        completed: "Abgeschlossen am"
+        on_hold_status: "Halt Status"
+        on_hold_comment: "Halt Kommentar"
+        on_hold_date: "Halt Datum"
+        on_hold_images: "Halt Bilder"  
       prefabrication:
         work_location: "Arbeitsort"
         work_package_number: "Arbeitspaket Nummer"
@@ -430,7 +448,37 @@ de:
       title: "Arbeitsvorbereitung bearbeiten: %{work_package}"  
     types:
       cutting_pipes: "Zuschnitt Rohr"
-      small_parts: "Rüstung Kleinteile"  
+      small_parts: "Rüstung Kleinteile" 
+  test_packs:
+    form:
+      complete_button: "Als abgeschlossen markieren"
+      confirm_complete: "Sind Sie sicher, dass Sie diese Druckprobe als abgeschlossen markieren wollen?"
+      errors:
+        header:
+          one: "1 Fehler verhindert die Speicherung der Druckprobe"
+          other: "%{count} Fehler verhindern die Speicherung der Druckprobe"
+    complete:
+      success: "Druckprobe wurde erfolgreich als abgeschlossen markiert"
+      failure: "Fehler beim Markieren der Druckprobe als abgeschlossen"
+    create:
+      success: "Druckprobe wurde erfolgreich erstellt"
+    update:
+      success: "Druckprobe wurde erfolgreich aktualisiert"
+    destroy:
+      success: "Druckprobe wurde erfolgreich gelöscht"
+    index:
+      title_for_project: "Druckprobe für %{project}"
+    buttons:
+      new_work_preparation: "Neue Druckprobe"
+    show:
+      title: "Druckprobe Details"
+    new:
+      title: "Neue Druckprobe"
+    edit:
+      title: "Druckprobe bearbeiten: %{work_package}"  
+    types:
+      pressure_test: "Druckpruefung"
+      leak_test: "Leckspruefung"
   isometries:
     actions:
       add_page: "Seite hinzufügen"

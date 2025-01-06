@@ -1,0 +1,154 @@
+<%= render 'application/breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.test_packs'),
+    path: project_test_packs_path(@project) }
+] %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><%= t('.title_for_project', project: @project.name) %></h1>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <%= form_tag project_test_packs_path(@project), method: :get do %>
+        <div class="input-group">
+          <%= text_field_tag :search, params[:search],
+                            class: 'form-control',
+                            placeholder: t('common.labels.search_placeholder') %>
+          <div class="input-group-append">
+            <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4 text-end">
+      <%= link_to new_project_test_pack_path(@project), class: 'btn btn-primary' do %>
+        <i class="bi bi-plus"></i> <%= t('common.buttons.new') %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-sm">
+      <thead>
+        <tr>
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.work_location'),
+                request.params.merge(sort: 'work_location_id', direction: (params[:sort] == 'work_location_id' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('work_location_id') if params[:sort] == 'work_location_id' %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.work_package_number'),
+                request.params.merge(sort: 'work_package_number', direction: (params[:sort] == 'work_package_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('work_package_number') if params[:sort] == 'work_package_number' %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.test_pack_type'),
+                request.params.merge(sort: 'test_pack_type', direction: (params[:sort] == 'test_pack_type' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('test_pack_type') if params[:sort] == 'test_pack_type' %>
+          </th>
+
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.dp_team'),
+                request.params.merge(sort: 'dp_team', direction: (params[:sort] == 'dp_team' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('dp_team') if params[:sort] == 'dp_team' %>
+          </th>
+          
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.operating_pressure'),
+                request.params.merge(sort: 'operating_pressure', direction: (params[:sort] == 'operating_pressure' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('operating_pressure') if params[:sort] == 'operating_pressure' %>
+          </th>
+          
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.dp_pressure'),
+                request.params.merge(sort: 'dp_pressure', direction: (params[:sort] == 'dp_pressure' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('dp_pressure') if params[:sort] == 'dp_pressure' %>
+          </th>
+
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.dip_team'),
+                request.params.merge(sort: 'dip_team', direction: (params[:sort] == 'dip_team' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('dip_team') if params[:sort] == 'dip_team' %>
+          </th>
+
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.dip_pressure'),
+                request.params.merge(sort: 'dip_pressure', direction: (params[:sort] == 'dip_pressure' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('dip_pressure') if params[:sort] == 'dip_pressure' %>
+          </th>
+
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.on_hold_status'),
+                request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('on_hold_status') if params[:sort] == 'on_hold_status' %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.test_pack.completed'),
+                request.params.merge(sort: 'completed', direction: (params[:sort] == 'completed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('completed') if params[:sort] == 'completed' %>
+          </th>
+          <th><%= t('common.labels.created_by') %></th>
+          <th class="text-end"><%= t('common.labels.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @test_packs.each do |test_pack| %>
+          <tr>
+            <td><%= t("work_locations.types.#{test_pack.work_location.location_type}") if test_pack.work_location %></td>
+            <td><%= test_pack.work_package_number %></td>
+            <td><%= t("test_packs.types.#{test_pack.test_pack_type}") if test_pack.test_pack_type %></td>
+            <td><%= test_pack.dp_team %></td>
+            <td><%= test_pack.operating_pressure %></td>
+            <td>              
+              <% if test_pack.dp_pressure == test_pack.operating_pressure %>
+                <%= test_pack.dp_pressure %>
+              <% else %>
+                <span class="badge bg-danger text-white"><%= test_pack.dp_pressure %></span>
+              <% end %></td>
+            <td><%= test_pack.dip_team %></td>
+            <td><%= test_pack.dip_pressure %></td>
+            <td><%= status_label(test_pack.on_hold_status) %></td>
+            <td><%= l(test_pack.completed, format: :short) if test_pack.completed %></td>
+            <td><%= test_pack.user.name %></td>
+            <td class="text-end">
+              <% if current_user.can_view?("TestPack") %>
+                <%= link_to project_test_pack_path(@project, test_pack), class: 'btn btn-sm btn-outline-primary' do %>
+                  <i class="bi bi-eye"></i>
+                <% end %>
+              <% end %>
+              <% if current_user.can_edit?("TestPack") %>
+                <%= link_to edit_project_test_pack_path(@project, test_pack), class: 'btn btn-sm btn-outline-secondary' do %>
+                  <i class="bi bi-pencil"></i>
+                <% end %>
+              <% end %>
+              <% if current_user.can_delete?("TestPack") %>
+                  <%= button_tag type: 'button',
+                             class: 'btn btn-outline-danger m-1',
+                             title: t('common.buttons.delete'),
+                             data: {
+                               bs_toggle: "modal",
+                               bs_target: "#deleteTestPackModal",
+                               "project-id": test_pack.project.id,
+                               "test-pack-id": test_pack.id,
+                               "test-pack-name": test_pack.work_package_number,
+                               "test-pack-number": test_pack.work_package_number
+                             } do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= render partial: 'delete_confirmation_modal', 
+           locals: {
+             modal_id: 'deleteTestPackModal',
+             controller_name: 'delete-test-pack',
+             model_name: 'test_pack'
+           } %>
