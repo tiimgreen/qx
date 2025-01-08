@@ -101,11 +101,11 @@
 
             <div data-nested-weldings-target="container">
               <% if @work_preparation.persisted? %>
-                <% @work_preparation.welding_batch_assignments.each do |assignment| %>
+                <% @weldings.each do |welding| %>
                   <div class="nested-welding-fields row mb-3">
                     <div class="col-md-4">
                       <%= select_tag "weldings[][id]", 
-                          options_from_collection_for_select(@isometry.weldings, :id, :number, assignment.welding_id),
+                          options_from_collection_for_select(@isometry.weldings, :id, :number, welding[:id]),
                           include_blank: true,
                           class: 'form-select',
                           data: {
@@ -118,7 +118,7 @@
                          data-welding-certificate-search-search-url-value="<%= search_material_certificates_path %>"
                          data-welding-certificate-search-field-value="batch_number">
                       <div class="position-relative">
-                        <%= text_field_tag "weldings[][batch_number]", assignment.welding.batch_number,
+                        <%= text_field_tag "weldings[][batch_number]", welding[:batch_number],
                             class: "form-control",
                             placeholder: t('common.weldings.batch_number'),
                             data: {
@@ -126,7 +126,7 @@
                               field: "batch_number",
                               action: "input->welding-certificate-search#search"
                             } %>
-                        <%= hidden_field_tag "weldings[][material_certificate_id]", assignment.welding.material_certificate_id,
+                        <%= hidden_field_tag "weldings[][material_certificate_id]", welding[:material_certificate_id],
                             data: { 
                               welding_certificate_search_target: "certificateId",
                               field: "batch_number"
@@ -139,7 +139,7 @@
                          data-welding-certificate-search-search-url-value="<%= search_material_certificates_path %>"
                          data-welding-certificate-search-field-value="batch_number1">
                       <div class="position-relative">
-                        <%= text_field_tag "weldings[][batch_number1]", assignment.welding.batch_number1,
+                        <%= text_field_tag "weldings[][batch_number1]", welding[:batch_number1],
                             class: "form-control",
                             placeholder: t('common.weldings.batch_number1'),
                             data: {
@@ -147,7 +147,7 @@
                               field: "batch_number1",
                               action: "input->welding-certificate-search#search"
                             } %>
-                        <%= hidden_field_tag "weldings[][material_certificate1_id]", assignment.welding.material_certificate1_id,
+                        <%= hidden_field_tag "weldings[][material_certificate1_id]", welding[:material_certificate1_id],
                             data: { 
                               welding_certificate_search_target: "certificateId",
                               field: "batch_number1"

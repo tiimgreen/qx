@@ -33,6 +33,16 @@ class WorkPreparationsController < ApplicationController
 
   def edit
     @isometry = @work_preparation.isometry if @work_preparation
+    # Initialize weldings array for the form
+    @weldings = @work_preparation.isometry.weldings.map do |welding|
+      {
+        id: welding.id,
+        batch_number: welding.batch_number,
+        batch_number1: welding.batch_number1,
+        material_certificate_id: welding.material_certificate_id,
+        material_certificate1_id: welding.material_certificate1_id
+      }
+    end
   end
 
   def create
