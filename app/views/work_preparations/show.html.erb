@@ -6,16 +6,84 @@
 ] %>
 
 <div class="container mt-4">
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h2 class="mb-0"><%= t('.title', work_package: @work_preparation.work_package_number) %></h2>
-      <div>
-        <%= link_to edit_project_work_preparation_path(@project, @work_preparation), class: 'btn btn-outline-primary' do %>
-          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
-        <% end %>
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0"><i class="bi bi-diagram-2"></i> <%= t('activerecord.models.isometry') %></h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.line_id') %></dt>
+            <dd class="col-sm-6"><%= @work_preparation.isometry.line_id %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.page_number') %></dt>
+            <dd class="col-sm-6"><%= @work_preparation.isometry.page_number %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.revision_number') %></dt>
+            <dd class="col-sm-6"><%= @work_preparation.isometry.revision_number %></dd>
+          </dl>
+        </div>
+
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.pid_number') %></dt>
+            <dd class="col-sm-6"><%= @work_preparation.isometry.pid_number %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.material') %></dt>
+            <dd class="col-sm-6"><%= @work_preparation.isometry.material %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.system') %></dt>
+            <dd class="col-sm-6"><%= @work_preparation.isometry.system %></dd>
+          </dl>
+        </div>
       </div>
     </div>
+  </div>
 
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0"><i class="bi bi-tools"></i> <%= t('activerecord.models.welding.other') %></h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+          <div class="container">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="row"><%= t('common.weldings.number') %></th>
+                  <th scope="row"><%= t('common.weldings.component') %></th>
+                  <th scope="row"><%= t('common.weldings.batch_number') %></th>
+                  <th scope="row"><%= t('common.weldings.material_certificate') %></th>
+                  <th scope="row"><%= t('common.weldings.component1') %></th>
+                  <th scope="row"><%= t('common.weldings.batch_number1') %></th>
+                  <th scope="row"><%= t('common.weldings.material_certificate1') %></th>
+                </tr>
+              </thead>
+                <tbody>
+                  <% @work_preparation.isometry.weldings.each do |welding| %>
+                    <tr>
+                      <td><%= welding.number %></td>
+                      <td><%= welding.component %></td>
+                      <td><%= welding.batch_number %></td>
+                      <td><%= welding.material_certificate&.certificate_number %></td>
+                      <td><%= welding.component1 %></td>
+                      <td><%= welding.batch_number1 %></td>
+                      <td><%= welding.material_certificate1&.certificate_number %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0"><i class="bi bi-clipboard-check"></i> <%= t('activerecord.models.work_preparation') %></h5>
+    </div>
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
@@ -23,36 +91,36 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.work_package_number') %></dt>
             <dd class="col-sm-6"><%= @work_preparation.work_package_number %></dd>
 
-
             <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
             <dd class="col-sm-6"><%= @work_preparation.user.name %></dd>
 
-            <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.completed') %>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.completed') %></dt>
             <dd class="col-sm-6"><%= l(@work_preparation.completed, format: :long) if @work_preparation.completed %></dd>
           </dl>
         </div>
 
         <div class="col-md-6">
           <dl class="row">
-            <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.on_hold_status') %></dt>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.on_hold_status') %></dt>
             <dd class="col-sm-6"><%= @work_preparation.on_hold_status %></dd>
 
-            <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.on_hold_date') %></dt>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.on_hold_date') %></dt>
             <dd class="col-sm-6"><%= l(@work_preparation.on_hold_date, format: :long) if @work_preparation.on_hold_date %></dd>
 
-            <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.on_hold_comment') %></dt>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @work_preparation.on_hold_comment %></dd>
-
-            <%= render partial: 'application/image_gallery', locals: { images: @work_preparation.on_hold_images } %>
-
           </dl>
+
+          <%= render partial: 'application/image_gallery', locals: { images: @work_preparation.on_hold_images } %>
         </div>
       </div>
     </div>
-
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_work_preparations_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to edit_project_work_preparation_path(@project, @work_preparation), class: 'btn btn-outline-primary' do %>
+          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+        <% end %>
       </div>
     </div>
   </div>

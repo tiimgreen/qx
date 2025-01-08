@@ -5,6 +5,11 @@ class WorkPreparation < ApplicationRecord
   belongs_to :work_location
   belongs_to :user
 
+  has_many :welding_batch_assignments, dependent: :destroy
+  has_many :weldings, through: :welding_batch_assignments
+  accepts_nested_attributes_for :welding_batch_assignments, allow_destroy: true,
+    reject_if: proc { |attributes| attributes["welding_id"].blank? }
+
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   WORK_PREPARATION_TYPES = [ "cutting_pipes", "small_parts" ].freeze
 
@@ -13,10 +18,9 @@ class WorkPreparation < ApplicationRecord
     attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
   end
 
-  validates :work_package_number, presence: true, uniqueness: { scope: :project_id }
+  validates :work_package_number, presence: true # , uniqueness: { scope: :project_id }
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
   validates :on_hold_comment, length: { maximum: 2000 }
-  validates :batch_number, presence: true
   validates :work_preparation_type, presence: true
 
   scope :search_by_term, ->(search_term) {
@@ -34,7 +38,6 @@ class WorkPreparation < ApplicationRecord
        users.email LIKE :search OR
        work_preparations.work_package_number LIKE :search OR
        work_preparations.on_hold_status LIKE :search OR
-       work_preparations.batch_number LIKE :search OR
        work_preparations.on_hold_comment LIKE :search",
       search: term
     )

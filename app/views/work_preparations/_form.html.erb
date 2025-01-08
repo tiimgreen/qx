@@ -19,10 +19,9 @@
     </div>
   <% end %>
 
-<%= f.hidden_field :isometry_id if @isometry %>
+<%= f.hidden_field :isometry_id, value: @isometry&.id %>
 
 <%= render "isometry_details", isometry: @isometry %>
-
 
   <div class="row">
     <div class="col-md-4">
@@ -61,22 +60,6 @@
       </div>
 
       <div class="mb-3">
-        <%= f.label :batch_number, class: 'form-label' %>
-        <div class="input-group" 
-             data-controller="batch-number-search"
-             data-batch-number-search-url-value="<%= search_batch_numbers_project_isometries_path(@project, format: :json) %>"
-             data-batch-number-search-min-length-value="2">
-          <%= f.text_field :batch_number, 
-                          class: 'form-control',
-                          data: {
-                            batch_number_search_target: "input",
-                            action: "input->batch-number-search#search click@window->batch-number-search#clickOutside"
-                          } %>
-          <div class="dropdown-menu w-100" data-batch-number-search-target="results"></div>
-        </div>
-      </div>
-
-      <div class="mb-3">
         <% if @work_preparation.persisted? && @work_preparation.completed? %>
 
             <%= f.label :completed, class: 'form-label' %>
@@ -101,8 +84,90 @@
           <% end %>
         </div>
     </div>
-
     <div class="col-md-8">
+      <% if @isometry&.weldings&.any? %>
+        <div class="card mb-3" data-controller="nested-weldings">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><%= t('activerecord.models.weldings') %></h5>
+            <button type="button" class="btn btn-primary btn-sm" data-action="nested-weldings#addWelding">
+              <i class="bi bi-plus"></i> <%= t('common.actions.add') %>
+            </button>
+          </div>
+          
+          <div class="card-body">
+            <template data-nested-weldings-target="template">
+              <%= render 'welding_fields' %>
+            </template>
+
+            <div data-nested-weldings-target="container">
+              <% if @work_preparation.persisted? %>
+                <% @work_preparation.welding_batch_assignments.each do |assignment| %>
+                  <div class="nested-welding-fields row mb-3">
+                    <div class="col-md-4">
+                      <%= select_tag "weldings[][id]", 
+                          options_from_collection_for_select(@isometry.weldings, :id, :number, assignment.welding_id),
+                          include_blank: true,
+                          class: 'form-select',
+                          data: {
+                            action: "change->welding-certificate-search#updateFromWelding"
+                          }
+                      %>
+                    </div>
+
+                    <div class="col-md-3" data-controller="welding-certificate-search"
+                         data-welding-certificate-search-search-url-value="<%= search_material_certificates_path %>"
+                         data-welding-certificate-search-field-value="batch_number">
+                      <div class="position-relative">
+                        <%= text_field_tag "weldings[][batch_number]", assignment.welding.batch_number,
+                            class: "form-control",
+                            placeholder: t('common.weldings.batch_number'),
+                            data: {
+                              welding_certificate_search_target: "batchNumber",
+                              field: "batch_number",
+                              action: "input->welding-certificate-search#search"
+                            } %>
+                        <%= hidden_field_tag "weldings[][material_certificate_id]", assignment.welding.material_certificate_id,
+                            data: { 
+                              welding_certificate_search_target: "certificateId",
+                              field: "batch_number"
+                            } %>
+                        <div data-welding-certificate-search-target="searchResults" class="position-absolute w-100 z-1000"></div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3" data-controller="welding-certificate-search"
+                         data-welding-certificate-search-search-url-value="<%= search_material_certificates_path %>"
+                         data-welding-certificate-search-field-value="batch_number1">
+                      <div class="position-relative">
+                        <%= text_field_tag "weldings[][batch_number1]", assignment.welding.batch_number1,
+                            class: "form-control",
+                            placeholder: t('common.weldings.batch_number1'),
+                            data: {
+                              welding_certificate_search_target: "batchNumber",
+                              field: "batch_number1",
+                              action: "input->welding-certificate-search#search"
+                            } %>
+                        <%= hidden_field_tag "weldings[][material_certificate1_id]", assignment.welding.material_certificate1_id,
+                            data: { 
+                              welding_certificate_search_target: "certificateId",
+                              field: "batch_number1"
+                            } %>
+                        <div data-welding-certificate-search-target="searchResults" class="position-absolute w-100 z-1000"></div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-danger btn-sm" data-action="nested-weldings#removeWelding">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
       <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
         delete_image_project_work_preparation_path(@project, @work_preparation, image_id: image) 
       } %>

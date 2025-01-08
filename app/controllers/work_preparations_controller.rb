@@ -3,7 +3,7 @@ class WorkPreparationsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_isometry
+  before_action :set_isometry, except: [ :index ]
   before_action :set_work_preparation, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -32,50 +32,27 @@ class WorkPreparationsController < ApplicationController
   end
 
   def edit
+    @isometry = @work_preparation.isometry if @work_preparation
   end
 
   def create
-    @work_preparation = @project.work_preparations.new(work_preparation_params_without_images)
+    @work_preparation = @project.work_preparations.build(work_preparation_params)
     @work_preparation.user = current_user
 
-    # Handle image attachments separately
-    attach_images(:on_hold_images) if params.dig(:work_preparation, :on_hold_images).present?
-
     if @work_preparation.save
-      redirect_to project_work_preparation_path(@project, @work_preparation),
-                      notice: t("common.messages.success.created", model: "WorkPreparation")
+      update_weldings if params[:weldings].present?
+      redirect_to project_work_preparations_path(@project), notice: t(".success")
     else
-      respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "work_preparation_form",
-            partial: "form",
-            locals: { project: @project, work_preparation: @work_preparation }
-          )
-        }
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    on_hold_params(params)
-    attach_images(:on_hold_images) if params.dig(:work_preparation, :on_hold_images).present?
-
-    if @work_preparation.update(work_preparation_params_without_images)
-      redirect_to project_work_preparation_path(@project, @work_preparation),
-                      notice: t("common.messages.updated", model: "Work Preparation")
+    if @work_preparation.update(work_preparation_params)
+      update_weldings if params[:weldings].present?
+      redirect_to project_work_preparations_path(@project), notice: t(".success")
     else
-      respond_to do |format|
-        format.html { render :edit, status: :unprocessable_entity }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "work_preparation_form",
-            partial: "form",
-            locals: { project: @project, work_preparation: @work_preparation }
-          )
-        }
-      end
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -114,48 +91,42 @@ class WorkPreparationsController < ApplicationController
   end
 
   def set_isometry
-    @isometry = @project.isometries.find(params[:work_preparation][:isometry_id])
+    @isometry = @project.isometries.find(params[:work_preparation][:isometry_id]) if params[:work_preparation].present?
   end
 
   def work_preparation_params
-    return {} unless params[:work_preparation].present?
-
     params.require(:work_preparation).permit(
+      :isometry_id,
       :work_location_id,
+      :work_preparation_type,
       :work_package_number,
       :on_hold_status,
       :on_hold_comment,
-      :on_hold_date,
-      :batch_number,
-      :work_preparation_type,
       :completed,
       :total_time,
       :project_id,
-      :sector_id,
-      :isometry_id,
+      welding_batch_assignments_attributes: [
+        :id,
+        :welding_id,
+        :batch_number,
+        :batch_number1,
+        :material_certificate_id,
+        :material_certificate1_id,
+        :_destroy
+      ],
       on_hold_images: []
     )
   end
 
-  def work_preparation_params_without_images
-    work_preparation_params.except(:on_hold_images)
-  end
-
-  def attach_images(image_type)
-    return unless params.dig(:work_preparation, image_type).present?
-
-    params[:work_preparation][image_type].each do |image|
-      @work_preparation.send(image_type).attach(image)
-    end
-  end
-
-  def on_hold_params(params)
-    if params[:work_preparation][:on_hold_status] == "On Hold"
-      params[:work_preparation][:on_hold_date] = Time.current
-      params[:work_preparation][:completed] = nil
-    else
-      params[:work_preparation][:on_hold_date] = nil
-      params[:work_preparation][:on_hold_comment] = nil
+  def update_weldings
+    params[:weldings].each do |welding_params|
+      welding = @isometry.weldings.find(welding_params[:id])
+      welding.update(
+        batch_number: welding_params[:batch_number],
+        batch_number1: welding_params[:batch_number1],
+        material_certificate_id: welding_params[:material_certificate_id],
+        material_certificate1_id: welding_params[:material_certificate1_id]
+      )
     end
   end
 

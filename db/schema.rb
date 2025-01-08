@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_08_070321) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_08_095715) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -435,6 +435,22 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_070321) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "welding_batch_assignments", force: :cascade do |t|
+    t.integer "work_preparation_id", null: false
+    t.integer "welding_id", null: false
+    t.string "batch_number"
+    t.string "batch_number1"
+    t.integer "material_certificate_id"
+    t.integer "material_certificate1_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["material_certificate1_id"], name: "index_welding_batch_assignments_on_material_certificate1_id"
+    t.index ["material_certificate_id"], name: "index_welding_batch_assignments_on_material_certificate_id"
+    t.index ["welding_id"], name: "index_welding_batch_assignments_on_welding_id"
+    t.index ["work_preparation_id", "welding_id"], name: "index_welding_assignments_on_work_prep_and_welding", unique: true
+    t.index ["work_preparation_id"], name: "index_welding_batch_assignments_on_work_preparation_id"
+  end
+
   create_table "weldings", force: :cascade do |t|
     t.string "number"
     t.string "component"
@@ -492,7 +508,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_070321) do
     t.integer "project_id", null: false
     t.integer "work_location_id"
     t.string "work_package_number"
-    t.string "batch_number"
     t.string "work_preparation_type"
     t.datetime "completed", precision: nil
     t.text "on_hold_status"
@@ -554,6 +569,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_070321) do
   add_foreign_key "user_resource_permissions", "users"
   add_foreign_key "user_sectors", "sectors"
   add_foreign_key "user_sectors", "users"
+  add_foreign_key "welding_batch_assignments", "material_certificates"
+  add_foreign_key "welding_batch_assignments", "material_certificates", column: "material_certificate1_id"
+  add_foreign_key "welding_batch_assignments", "weldings"
+  add_foreign_key "welding_batch_assignments", "work_preparations"
   add_foreign_key "weldings", "isometries"
   add_foreign_key "weldings", "material_certificates"
   add_foreign_key "weldings", "material_certificates", column: "material_certificate1_id"

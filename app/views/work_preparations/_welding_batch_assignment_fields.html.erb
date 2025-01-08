@@ -1,0 +1,52 @@
+<div class="welding-batch-assignment mb-3" data-controller="welding-certificate-search">
+  <%= f.hidden_field :_destroy %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.label :welding_id, t('activerecord.attributes.welding.number'), class: 'form-label' %>
+      <%= f.select :welding_id, 
+          @isometry&.weldings&.map { |w| [w.number, w.id] } || [], 
+          { include_blank: true }, 
+          { class: 'form-select',
+            data: { 
+              action: "change->welding-certificate-search#updateFromWelding",
+              welding_certificate_search_target: "weldingSelect" 
+            } 
+          } 
+      %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.label :batch_number, t('common.weldings.batch_number'), class: "form-label" %>
+      <div class="position-relative">
+        <%= f.text_field :batch_number, class: "form-control",
+            data: {
+              welding_certificate_search_target: "batchNumber",
+              action: "input->welding-certificate-search#search"
+            } %>
+        <%= f.hidden_field :material_certificate_id,
+            data: { welding_certificate_search_target: "certificateId" } %>
+        <div data-welding-certificate-search-target="searchResults" class="position-absolute w-100"></div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.label :batch_number1, t('common.weldings.batch_number1'), class: "form-label" %>
+      <div class="position-relative">
+        <%= f.text_field :batch_number1, class: "form-control",
+            data: {
+              welding_certificate_search_target: "batchNumber1",
+              action: "input->welding-certificate-search#search"
+            } %>
+        <%= f.hidden_field :material_certificate1_id,
+            data: { welding_certificate_search_target: "certificateId1" } %>
+        <div data-welding-certificate-search-target="searchResults1" class="position-absolute w-100"></div>
+      </div>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+      <button type="button" class="btn btn-danger btn-sm" data-action="click->nested-form#removeAssociation">
+        <i class="bi bi-trash"></i>
+      </button>
+    </div>
+  </div>
+</div>

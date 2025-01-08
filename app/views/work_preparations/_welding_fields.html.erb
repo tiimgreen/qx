@@ -1,0 +1,62 @@
+<div class="nested-welding-fields row mb-3">
+  <div class="col-md-4">
+    <%= select_tag "weldings[][id]", 
+        options_from_collection_for_select(@isometry&.weldings || [], :id, :number),
+        include_blank: true,
+        class: 'form-select',
+        data: {
+          action: "change->welding-certificate-search#updateFromWelding"
+        }
+    %>
+  </div>
+
+  <div class="col-md-3" data-controller="welding-certificate-search"
+       data-welding-certificate-search-search-url-value="<%= search_material_certificates_path %>"
+       data-welding-certificate-search-field-value="batch_number">
+    <div class="position-relative">
+      <div data-welding-certificate-search-target="searchResults" 
+           class="position-absolute w-100 search-results-dropdown"></div>
+      <%= text_field_tag "weldings[][batch_number]", nil,
+          class: "form-control",
+          placeholder: t('common.weldings.batch_number'),
+          data: {
+            welding_certificate_search_target: "batchNumber",
+            field: "batch_number",
+            action: "input->welding-certificate-search#search"
+          } %>
+      <%= hidden_field_tag "weldings[][material_certificate_id]", nil,
+          data: { 
+            welding_certificate_search_target: "certificateId",
+            field: "batch_number"
+          } %>
+    </div>
+  </div>
+
+  <div class="col-md-3" data-controller="welding-certificate-search"
+       data-welding-certificate-search-search-url-value="<%= search_material_certificates_path %>"
+       data-welding-certificate-search-field-value="batch_number1">
+    <div class="position-relative">
+      <div data-welding-certificate-search-target="searchResults" 
+           class="position-absolute w-100 search-results-dropdown"></div>
+      <%= text_field_tag "weldings[][batch_number1]", nil,
+          class: "form-control",
+          placeholder: t('common.weldings.batch_number1'),
+          data: {
+            welding_certificate_search_target: "batchNumber",
+            field: "batch_number1",
+            action: "input->welding-certificate-search#search"
+          } %>
+      <%= hidden_field_tag "weldings[][material_certificate1_id]", nil,
+          data: { 
+            welding_certificate_search_target: "certificateId",
+            field: "batch_number1"
+          } %>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <button type="button" class="btn btn-danger btn-sm" data-action="nested-weldings#removeWelding">
+      <i class="bi bi-trash"></i>
+    </button>
+  </div>
+</div>

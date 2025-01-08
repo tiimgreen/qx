@@ -3,13 +3,55 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["batchNumber", "certificateId", "searchResults"]
   static values = {
-    searchUrl: String
+    searchUrl: String,
+    field: String
+  }
+
+  connect() {
+    // Store initial values
+    this.originalBatchNumber = this.batchNumberTarget.value
+    this.originalCertificateId = this.certificateIdTarget.value
+  }
+
+  updateFromWelding(event) {
+    const weldingId = event.target.value
+    if (!weldingId) {
+      this.clearFields()
+      return
+    }
+
+    // Fetch welding details including its material certificate
+    fetch(`/weldings/${weldingId}`, {
+      headers: {
+        "Accept": "application/json"
+      }
+    })
+    .then(response => response.json())
+    .then(welding => {
+      const row = event.target.closest('.nested-welding-fields')
+      if (!row) return
+
+      // Update batch number fields in this row
+      const batchNumberField = row.querySelector('[data-welding-certificate-search-target="batchNumber"][data-field="batch_number"]')
+      const batchNumber1Field = row.querySelector('[data-welding-certificate-search-target="batchNumber"][data-field="batch_number1"]')
+      const certificateIdField = row.querySelector('[data-welding-certificate-search-target="certificateId"][data-field="batch_number"]')
+      const certificateId1Field = row.querySelector('[data-welding-certificate-search-target="certificateId"][data-field="batch_number1"]')
+
+      if (batchNumberField) {
+        batchNumberField.value = welding.batch_number || ''
+        certificateIdField.value = welding.material_certificate_id || ''
+      }
+      if (batchNumber1Field) {
+        batchNumber1Field.value = welding.batch_number1 || ''
+        certificateId1Field.value = welding.material_certificate1_id || ''
+      }
+    })
   }
 
   search() {
     const query = this.batchNumberTarget.value
     if (!query) {
-      this.clearSelection()  // Called without event
+      this.searchResultsTarget.innerHTML = ''
       return
     }
 
@@ -19,80 +61,58 @@ export default class extends Controller {
       }
     })
     .then(response => response.json())
-    .then(data => {
-      const exactMatch = data.find(cert => cert.batch_number.toLowerCase() === query.toLowerCase())
-      
-      if (exactMatch) {
-        this.selectCertificate(exactMatch)
-      } else {
-        this.clearSelection()  // Called without event
-        
-        if (data.length > 0) {
-          this.showResults(data)
-        } else {
-          this.searchResultsTarget.innerHTML = `
-            <div class="alert alert-warning">
-              <small>No certificates found</small>
-            </div>
-          `
-        }
-      }
+    .then(data => this.showResults(data))
+  }
+
+  clearFields() {
+    const row = this.element.closest('.nested-welding-fields')
+    if (!row) return
+
+    row.querySelectorAll('[data-welding-certificate-search-target="batchNumber"]').forEach(field => {
+      field.value = ''
+    })
+    row.querySelectorAll('[data-welding-certificate-search-target="certificateId"]').forEach(field => {
+      field.value = ''
     })
   }
 
-  clearSelection(event = null) {  // Make event parameter optional
-    if (event) {
-      event.preventDefault()
-    }
-    this.certificateIdTarget.value = ""
-    this.batchNumberTarget.value = ""
-    this.searchResultsTarget.innerHTML = ""
-  }
-
-  // Rest of the controller remains the same...
-  selectCertificate(certificate) {
-    this.certificateIdTarget.value = certificate.id
-    this.batchNumberTarget.value = certificate.batch_number
-    this.searchResultsTarget.innerHTML = `
-      <div class="alert alert-success">
-        <small>
-          ${certificate.certificate_number} (${certificate.batch_number})
-          <a href="#" data-action="click->welding-certificate-search#clearSelection" class="float-end text-danger">
-            <i class="bi bi-x"></i>
-          </a>
-        </small>
-      </div>
-    `
-  }
-
   showResults(certificates) {
-    if (certificates.length === 0) {
-      this.searchResultsTarget.innerHTML = `
-        <div class="alert alert-warning">
-          <small>No certificates found</small>
-        </div>
-      `
+    if (!certificates.length) {
+      this.searchResultsTarget.innerHTML = '<div class="list-group"><div class="list-group-item">No results found</div></div>'
       return
     }
 
-    const html = certificates.map(cert => `
-      <a href="#" class="list-group-item list-group-item-action py-1" 
-         data-action="click->welding-certificate-search#selectFromList"
-         data-certificate='${JSON.stringify(cert)}'>
-        <small>${cert.certificate_number} (${cert.batch_number})</small>
-      </a>
-    `).join("")
-
-    this.searchResultsTarget.innerHTML = `
-      <div class="list-group position-absolute w-100 shadow-sm" style="z-index: 1000">
-        ${html}
+    const html = `
+      <div class="list-group">
+        ${certificates.map(cert => `
+          <button type="button" class="list-group-item list-group-item-action"
+                  data-action="click->welding-certificate-search#selectFromList"
+                  data-certificate='${JSON.stringify(cert)}'>
+            ${cert.batch_number} - ${cert.heat_number}
+          </button>
+        `).join('')}
       </div>
     `
+    this.searchResultsTarget.innerHTML = html
   }
 
   selectFromList(event) {
     event.preventDefault()
-    const certificate = JSON.parse(event.currentTarget.dataset.certificate)
+    const certificate = JSON.parse(event.target.dataset.certificate)
     this.selectCertificate(certificate)
+  }
+
+  selectCertificate(certificate) {
+    const field = this.fieldValue || 'batch_number'
+    const row = this.element.closest('.nested-welding-fields')
+    if (!row) return
+
+    const batchNumberField = row.querySelector(`[data-welding-certificate-search-target="batchNumber"][data-field="${field}"]`)
+    const certificateIdField = row.querySelector(`[data-welding-certificate-search-target="certificateId"][data-field="${field}"]`)
+
+    if (batchNumberField) batchNumberField.value = certificate.batch_number
+    if (certificateIdField) certificateIdField.value = certificate.id
+
+    this.searchResultsTarget.innerHTML = ''
   }
 }

@@ -7,6 +7,7 @@ en:
       delete: "Delete"
       cancel: "Cancel"
       complete: "Complete"
+      add: "Add"
     messages:
       confirm_delete: "Are you sure you want to delete this %{model}?"
       confirm_delete_with_details: "Are you sure you want to delete %{model} '%{name}' (%{number})? This action cannot be undone and will delete all associated records."
@@ -60,6 +61,7 @@ en:
       dimension: "Dimension"
       material: "Material"
       batch_number: "Batch Number"
+      batch_number1: "Batch Number1"
       material_certificate: "Material Certificate"
       type_code: "Type Code"
       wps: "WPS"

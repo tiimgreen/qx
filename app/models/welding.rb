@@ -7,7 +7,6 @@ class Welding < ApplicationRecord
   # Validations
   validates :number, presence: true
   validates :component, presence: true
-  validates :batch_number, presence: true
 
   # Define allowed values for process fields
   PROCESS_TYPES = [ "Manuel", "Orbital" ].freeze
