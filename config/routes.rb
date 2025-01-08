@@ -1,5 +1,8 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  # QR Code handling route
+  get "/qr/:isometry_id", to: "qr_codes#redirect", as: :qr_redirect
+
   # Add specific route for locale switching outside the locale scope
   post "/switch_locale/:new_locale", to: "application#switch_locale", as: :switch_locale
 

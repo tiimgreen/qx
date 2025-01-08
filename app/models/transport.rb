@@ -1,4 +1,6 @@
 class Transport < ApplicationRecord
+  include SectorModel
+
   belongs_to :project
   belongs_to :user
 

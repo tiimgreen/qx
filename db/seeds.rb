@@ -207,6 +207,33 @@
 #   DeliveryItem.find_or_create_by!(item_attrs)
 # end
 
+
+# Create Sector-specific Users
+# puts "Creating sector-specific users..."
+# Sector.all.each do |sector_data|
+#   sector_key = sector_data[:key]
+#   user = User.find_or_create_by!(email: "#{sector_key}@qx.com") do |u|
+#     u.password = "123123123"
+#     u.password_confirmation = "123123123"
+#     u.first_name = sector_key.titleize
+#     u.last_name = "User"
+#     u.phone = "12345678"
+#     u.address = "QX Address"
+#     u.city = "QX City"
+#   end
+
+# Associate user with their sector
+#   sector = Sector.find_by(key: sector_key)
+#   UserSector.find_or_create_by!(user: user, sector: sector)
+# end
+
+# puts "Completed creating sector-specific users!"
+
+
+
+# http://localhost:3000/en/projects/20/isometries/131
+
+
 # (1..4).each_with_index do |permission, index|
-# UserResourcePermission.create!(user_id: User.find(1).id, resource_name: "SiteAssembly", permission_id: index + 1)
+# UserResourcePermission.create!(user_id: User.find(7).id, resource_name: "Project", permission_id: index + 1)
 # end

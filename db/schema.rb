@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_08_070321) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -117,6 +117,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.text "pt2_check_comment"
     t.text "rt_check_status"
     t.text "rt_check_comment"
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_final_inspections_on_isometry_id"
     t.index ["project_id"], name: "index_final_inspections_on_project_id"
     t.index ["user_id"], name: "index_final_inspections_on_user_id"
     t.index ["work_location_id"], name: "index_final_inspections_on_work_location_id"
@@ -139,7 +141,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.text "on_hold_status"
     t.text "on_hold_comment"
     t.datetime "on_hold_date"
+    t.integer "isometry_id"
     t.index ["delivery_note_number"], name: "index_incoming_deliveries_on_delivery_note_number"
+    t.index ["isometry_id"], name: "index_incoming_deliveries_on_isometry_id"
     t.index ["order_number"], name: "index_incoming_deliveries_on_order_number"
     t.index ["project_id"], name: "index_incoming_deliveries_on_project_id"
     t.index ["user_id"], name: "index_incoming_deliveries_on_user_id"
@@ -250,6 +254,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.decimal "total_time", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_on_sites_on_isometry_id"
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -271,6 +277,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.decimal "total_time", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_pre_weldings_on_isometry_id"
     t.index ["project_id"], name: "index_pre_weldings_on_project_id"
     t.index ["user_id"], name: "index_pre_weldings_on_user_id"
     t.index ["work_location_id"], name: "index_pre_weldings_on_work_location_id"
@@ -289,6 +297,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "total_time", precision: 10, scale: 2
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_prefabrications_on_isometry_id"
     t.index ["project_id"], name: "index_prefabrications_on_project_id"
     t.index ["user_id"], name: "index_prefabrications_on_user_id"
     t.index ["work_location_id"], name: "index_prefabrications_on_work_location_id"
@@ -326,6 +336,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.decimal "total_time", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_site_assemblies_on_isometry_id"
   end
 
   create_table "site_deliveries", force: :cascade do |t|
@@ -338,6 +350,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.decimal "total_time", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_site_deliveries_on_isometry_id"
   end
 
   create_table "test_packs", force: :cascade do |t|
@@ -359,6 +373,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.decimal "total_time", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_test_packs_on_isometry_id"
   end
 
   create_table "transports", force: :cascade do |t|
@@ -371,6 +387,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.decimal "total_time", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_transports_on_isometry_id"
   end
 
   create_table "user_resource_permissions", force: :cascade do |t|
@@ -484,13 +502,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
     t.decimal "total_time", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "isometry_id"
+    t.index ["isometry_id"], name: "index_work_preparations_on_isometry_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "final_inspections", "isometries"
   add_foreign_key "final_inspections", "projects"
   add_foreign_key "final_inspections", "users"
   add_foreign_key "final_inspections", "work_locations"
+  add_foreign_key "incoming_deliveries", "isometries"
   add_foreign_key "incoming_deliveries", "projects"
   add_foreign_key "incoming_deliveries", "users"
   add_foreign_key "incoming_deliveries", "work_locations"
@@ -500,25 +522,32 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
   add_foreign_key "isometry_documents", "isometries"
   add_foreign_key "isometry_material_certificates", "isometries"
   add_foreign_key "isometry_material_certificates", "material_certificates"
+  add_foreign_key "on_sites", "isometries"
   add_foreign_key "on_sites", "projects"
   add_foreign_key "on_sites", "users"
+  add_foreign_key "pre_weldings", "isometries"
   add_foreign_key "pre_weldings", "projects"
   add_foreign_key "pre_weldings", "users"
   add_foreign_key "pre_weldings", "work_locations"
+  add_foreign_key "prefabrications", "isometries"
   add_foreign_key "prefabrications", "projects"
   add_foreign_key "prefabrications", "users"
   add_foreign_key "prefabrications", "work_locations"
   add_foreign_key "projects", "users"
+  add_foreign_key "site_assemblies", "isometries"
   add_foreign_key "site_assemblies", "projects"
   add_foreign_key "site_assemblies", "users"
+  add_foreign_key "site_deliveries", "isometries"
   add_foreign_key "site_deliveries", "projects"
   add_foreign_key "site_deliveries", "users"
+  add_foreign_key "test_packs", "isometries"
   add_foreign_key "test_packs", "projects"
   add_foreign_key "test_packs", "projects"
   add_foreign_key "test_packs", "users"
   add_foreign_key "test_packs", "users"
   add_foreign_key "test_packs", "work_locations"
   add_foreign_key "test_packs", "work_locations"
+  add_foreign_key "transports", "isometries"
   add_foreign_key "transports", "projects"
   add_foreign_key "transports", "users"
   add_foreign_key "user_resource_permissions", "permissions"
@@ -528,6 +557,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_06_144411) do
   add_foreign_key "weldings", "isometries"
   add_foreign_key "weldings", "material_certificates"
   add_foreign_key "weldings", "material_certificates", column: "material_certificate1_id"
+  add_foreign_key "work_preparations", "isometries"
   add_foreign_key "work_preparations", "projects"
   add_foreign_key "work_preparations", "users"
   add_foreign_key "work_preparations", "work_locations"

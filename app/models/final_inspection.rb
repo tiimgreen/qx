@@ -1,4 +1,6 @@
 class FinalInspection < ApplicationRecord
+  include SectorModel
+
   belongs_to :project
   belongs_to :work_location
   belongs_to :user

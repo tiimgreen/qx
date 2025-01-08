@@ -19,7 +19,10 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :project_id if @project %>
+<%= f.hidden_field :isometry_id if @isometry %>
+
+<%= render "isometry_details", isometry: @isometry %>
+
 
   <div class="row">
     <div class="col-md-4">

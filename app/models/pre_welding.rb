@@ -1,4 +1,6 @@
 class PreWelding < ApplicationRecord
+  include SectorModel
+
   belongs_to :project
   belongs_to :work_location, optional: true
   belongs_to :user

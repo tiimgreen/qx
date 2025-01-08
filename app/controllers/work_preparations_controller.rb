@@ -3,6 +3,7 @@ class WorkPreparationsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry
   before_action :set_work_preparation, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,6 +26,9 @@ class WorkPreparationsController < ApplicationController
 
   def new
     @work_preparation = @project.work_preparations.new
+    if @isometry
+      @work_preparation.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
@@ -109,6 +113,10 @@ class WorkPreparationsController < ApplicationController
     @work_preparation = @project.work_preparations.find(params[:id])
   end
 
+  def set_isometry
+    @isometry = @project.isometries.find(params[:work_preparation][:isometry_id])
+  end
+
   def work_preparation_params
     return {} unless params[:work_preparation].present?
 
@@ -123,6 +131,8 @@ class WorkPreparationsController < ApplicationController
       :completed,
       :total_time,
       :project_id,
+      :sector_id,
+      :isometry_id,
       on_hold_images: []
     )
   end
@@ -172,7 +182,7 @@ class WorkPreparationsController < ApplicationController
   def authorize_create!
     unless current_user.can_create?("WorkPreparation")
       flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: WorkPreparation.model_name.human)
-      redirect_to request.referer || work_preparations_path
+      redirect_to request.referer || project_work_preparations_path(@project)
     end
   end
 

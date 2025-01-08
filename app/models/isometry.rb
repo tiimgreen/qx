@@ -5,6 +5,10 @@ class Isometry < ApplicationRecord
 
   include QrCodeable
 
+  def qr_code_url
+    Rails.application.routes.url_helpers.qr_redirect_url(self, host: ENV["HOST"])
+  end
+
   has_many :isometry_material_certificates, dependent: :destroy
   has_many :material_certificates, through: :isometry_material_certificates
   has_many :weldings, dependent: :destroy
@@ -22,6 +26,17 @@ class Isometry < ApplicationRecord
   has_many_attached :rt_images
   has_many_attached :vt_images
   has_many_attached :pt_images
+
+  has_one :work_preparation, dependent: :destroy
+  has_one :prefabrication, dependent: :destroy
+  has_one :final_inspection, dependent: :destroy
+  has_one :transport, dependent: :destroy
+  has_one :site_delivery, dependent: :destroy
+  has_one :site_assembly, dependent: :destroy
+  has_one :on_site, dependent: :destroy
+  has_one :test_pack, dependent: :destroy
+  has_one :pre_welding, dependent: :destroy
+  has_one :incoming_delivery, dependent: :destroy
 
   after_commit :process_isometry_documents, on: [ :create, :update ]
 
