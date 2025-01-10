@@ -47,40 +47,37 @@
     </div>
     <div class="card-body">
       <div class="row">
-          <div class="container">
-            <table class="table table-bordered">
-              <thead>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="row"><%= t('common.weldings.number') %></th>
+              <th scope="row"><%= t('common.weldings.component') %></th>
+              <th scope="row"><%= t('common.weldings.batch_number') %></th>
+              <th scope="row"><%= t('common.weldings.material_certificate') %></th>
+              <th scope="row"><%= t('common.weldings.component1') %> 1</th>
+              <th scope="row"><%= t('common.weldings.batch_number1') %> 1</th>
+              <th scope="row"><%= t('common.weldings.material_certificate1') %> 1</th>
+            </tr>
+          </thead>
+            <tbody>
+              <% @work_preparation.isometry.weldings.each do |welding| %>
                 <tr>
-                  <th scope="row"><%= t('common.weldings.number') %></th>
-                  <th scope="row"><%= t('common.weldings.component') %></th>
-                  <th scope="row"><%= t('common.weldings.batch_number') %></th>
-                  <th scope="row"><%= t('common.weldings.material_certificate') %></th>
-                  <th scope="row"><%= t('common.weldings.component1') %></th>
-                  <th scope="row"><%= t('common.weldings.batch_number1') %></th>
-                  <th scope="row"><%= t('common.weldings.material_certificate1') %></th>
+                  <td><%= link_to welding.number, project_isometry_path(@project, @work_preparation.isometry) %></td>
+                  <td><%= welding.component %></td>
+                  <td><%= welding.batch_number %></td>
+                  <td><%= welding.material_certificate&.certificate_number %></td>
+                  <td><%= welding.component1 %></td>
+                  <td><%= welding.batch_number1 %></td>
+                  <td><%= welding.material_certificate1&.certificate_number %></td>
                 </tr>
-              </thead>
-                <tbody>
-                  <% @work_preparation.isometry.weldings.each do |welding| %>
-                    <tr>
-                      <td><%= link_to welding.number, project_isometry_path(@project, @work_preparation.isometry) %></td><td><%= welding.number %></td>
-                      <td><%= welding.component %></td>
-                      <td><%= welding.batch_number %></td>
-                      <td><%= welding.material_certificate&.certificate_number %></td>
-                      <td><%= welding.component1 %></td>
-                      <td><%= welding.batch_number1 %></td>
-                      <td><%= welding.material_certificate1&.certificate_number %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-            </table>
-          </div>
-        </div>
+              <% end %>
+            </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card mb-4">
     <div class="card-header">
       <h5 class="mb-0"><i class="bi bi-clipboard-check"></i> <%= t('activerecord.models.work_preparation') %></h5>
     </div>

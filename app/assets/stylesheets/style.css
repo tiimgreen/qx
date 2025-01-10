@@ -31,6 +31,12 @@
     --bs-gradient: none;
 }
 
+.card-header {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+  color: white;
+}
+
 /* start pagy */
 .pagy {
   display: flex;
