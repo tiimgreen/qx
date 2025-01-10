@@ -88,7 +88,7 @@ export default class extends Controller {
           <button type="button" class="list-group-item list-group-item-action"
                   data-action="click->welding-certificate-search#selectFromList"
                   data-certificate='${JSON.stringify(cert)}'>
-            ${cert.batch_number} - ${cert.heat_number}
+            ${cert.batch_number} - ${cert.certificate_number}
           </button>
         `).join('')}
       </div>
