@@ -72,9 +72,9 @@
             <td><%= link_to work_preparation.isometry.line_id, project_isometry_path(@project, work_preparation.isometry) %></td>
             <td><%= work_preparation.isometry.page_number %></td>
             <td><%= work_preparation.isometry.revision_number %></td>
-            <td><%= t("work_locations.types.#{work_preparation.work_location.location_type}") if work_preparation.work_location %></td>
+            <td><%= t("work_locations.types.#{work_preparation.work_location.location_type}") %></td>
             <td><%= work_preparation.work_package_number %></td>
-            <td><%= t("work_preparations.types.#{work_preparation.work_preparation_type}") if work_preparation.work_preparation_type %></td>
+            <td><%= t("work_preparations.types.#{work_preparation.work_preparation_type}") %></td>
             <td><%= status_label(work_preparation.on_hold_status) %></td>
             <td><%= l(work_preparation.completed, format: :short) if work_preparation.completed %></td>
             <td><%= work_preparation.user.name %></td>
