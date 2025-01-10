@@ -230,7 +230,7 @@
 # puts "Completed creating sector-specific users!"
 
 
-
+# http://localhost:3000/de/qr/131
 # http://localhost:3000/en/projects/20/isometries/131
 
 

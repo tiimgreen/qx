@@ -6,7 +6,7 @@ class IsometriesController < ApplicationController
   before_action :set_project
   before_action :set_isometry, only: [ :show, :edit, :update, :destroy, :remove_certificate, :download_welding_report, :new_page, :create_revision ]
   before_action :authorize_action!
-  before_action :handle_sector_user, only: [ :show, :edit ]
+
   def index
     base_scope = if @project
       @project.isometries.active
@@ -365,15 +365,5 @@ class IsometriesController < ApplicationController
 
   def remove_isometry_images_params(params_hash)
     params_hash.except(:isometry_images)
-  end
-
-  def handle_sector_user
-    return unless current_user.sectors.any?
-
-    sector = current_user.sectors.first
-    return if sector.key == "isometric" # Allow isometric sector users to view directly
-
-    # Redirect to sector-specific view through QR code controller
-    redirect_to qr_redirect_path(isometry_id: @isometry.id)
   end
 end

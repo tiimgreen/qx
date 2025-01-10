@@ -18,7 +18,7 @@ module QrCodeable
     begin
       # Generate QR code
       Rails.logger.info "Generating QR code"
-      qr_code_url = project_isometry_url(project, isometry, locale: I18n.locale)
+      qr_code_url = qr_redirect_url(isometry, locale: I18n.locale)
       Rails.logger.info "Generated QR URL: #{qr_code_url}"
 
       generate_qr_code_image(qr_code_url, qr_temp_file.path)

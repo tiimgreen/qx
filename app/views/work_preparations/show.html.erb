@@ -15,7 +15,7 @@
         <div class="col-md-6">
           <dl class="row">
             <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.line_id') %></dt>
-            <dd class="col-sm-6"><%= @work_preparation.isometry.line_id %></dd>
+            <dd class="col-sm-6"><%=link_to @work_preparation.isometry.line_id, project_isometry_path(@project, @work_preparation.isometry) %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.page_number') %></dt>
             <dd class="col-sm-6"><%= @work_preparation.isometry.page_number %></dd>
@@ -63,7 +63,7 @@
                 <tbody>
                   <% @work_preparation.isometry.weldings.each do |welding| %>
                     <tr>
-                      <td><%= welding.number %></td>
+                      <td><%= link_to welding.number, project_isometry_path(@project, @work_preparation.isometry) %></td><td><%= welding.number %></td>
                       <td><%= welding.component %></td>
                       <td><%= welding.batch_number %></td>
                       <td><%= welding.material_certificate&.certificate_number %></td>
