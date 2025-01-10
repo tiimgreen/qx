@@ -28,8 +28,7 @@ class WorkPreparation < ApplicationRecord
 
     term = "%#{search_term}%"
 
-    joins("LEFT JOIN work_locations ON work_preparations.work_location_id = work_locations.id")
-    .joins("LEFT JOIN users ON work_preparations.user_id = users.id")
+    left_joins(:work_location, :user, :isometry, weldings: :isometry)
     .where(
       "work_locations.location_type LIKE :search OR
        work_locations.name LIKE :search OR
@@ -38,10 +37,14 @@ class WorkPreparation < ApplicationRecord
        users.email LIKE :search OR
        work_preparations.work_package_number LIKE :search OR
        work_preparations.on_hold_status LIKE :search OR
-       work_preparations.on_hold_comment LIKE :search",
+       work_preparations.on_hold_comment LIKE :search OR
+       isometries.line_id LIKE :search OR
+       isometries.page_number LIKE :search OR
+       isometries.revision_number LIKE :search OR
+       isometries.pid_number LIKE :search",
       search: term
     )
-    .distinct # Add this to avoid duplicate results
+    .distinct
   }
 
   def on_hold?
