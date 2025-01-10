@@ -5,7 +5,8 @@
       id: 'work_preparation_form',
       data: { 
         turbo: true,
-        controller: "validation"
+        controller: "validation autosave",
+        autosave_interval_value: 30000 # 3 minutes
       }
     ) do |f| %>
   <% if @work_preparation.errors.any? %>

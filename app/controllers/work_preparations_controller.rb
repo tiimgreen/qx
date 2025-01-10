@@ -131,12 +131,13 @@ class WorkPreparationsController < ApplicationController
   def update_weldings
     params[:weldings].each do |welding_params|
       welding = @isometry.weldings.find(welding_params[:id])
-      welding.update(
+      update_params = {
         batch_number: welding_params[:batch_number],
         batch_number1: welding_params[:batch_number1],
-        material_certificate_id: welding_params[:material_certificate_id],
-        material_certificate1_id: welding_params[:material_certificate1_id]
-      )
+        material_certificate_id: welding_params[:batch_number].blank? ? nil : welding_params[:material_certificate_id],
+        material_certificate1_id: welding_params[:batch_number1].blank? ? nil : welding_params[:material_certificate1_id]
+      }
+      welding.update(update_params)
     end
   end
 
