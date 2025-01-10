@@ -1,27 +1,18 @@
 <% if isometry %>
   <div class="card mb-3">
-    <div class="card-header">
-      <h5 class="card-title mb-0"><%= t('.isometry_details') %></h5>
-    </div>
     <div class="card-body">
+      <h5 class="card-title mb-4"><%= t('.isometry_details') %></h5>
       <div class="row">
-        <div class="col-md-2">
-          <p><strong><%= t('activerecord.attributes.isometry.line_id') %>:</strong> <%= isometry.line_id %></p>
+        <div class="col-md-6">
+          <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.line_id') %>:</strong> <%= isometry.line_id %></p>
+          <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.page_number') %>:</strong> <%= isometry.page_number %></p>
+          <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.system') %>:</strong> <%= isometry.system %></p>
         </div>
-        <div class="col-md-2">
-          <p><strong><%= t('activerecord.attributes.isometry.page_number') %>:</strong> <%= isometry.page_number %></p>
-        </div>
-        <div class="col-md-2">
-          <p><strong><%= t('activerecord.attributes.isometry.system') %>:</strong> <%= isometry.system %></p>
-        </div>
-        <div class="col-md-2">
-          <p><strong><%= t('activerecord.attributes.isometry.pid_number') %>:</strong> <%= isometry.pid_number %></p>
-        </div>
-        <div class="col-md-2">
-          <p><strong><%= t('activerecord.attributes.isometry.work_package_number') %>:</strong> <%= isometry.work_package_number %></p>
-        </div>
-        <div class="col-md-2">
-          <p><strong><%= t('activerecord.attributes.isometry.material') %>:</strong> <%= isometry.material %></p>
+
+        <div class="col-md-6">
+          <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.pid_number') %>:</strong> <%= isometry.pid_number %></p>
+          <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.work_package_number') %>:</strong> <%= isometry.work_package_number %></p>
+          <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.material') %>:</strong> <%= isometry.material %></p>
         </div>
       </div>
     </div>

@@ -21,8 +21,6 @@
 
 <%= f.hidden_field :isometry_id, value: @isometry&.id %>
 
-<%= render "isometry_details", isometry: @isometry %>
-
   <div class="row">
     <div class="col-md-4">
       <div class="mb-3">
@@ -85,16 +83,18 @@
         </div>
     </div>
     <div class="col-md-8">
+      <%= render "isometry_details", isometry: @isometry %>
+      
       <% if @isometry&.weldings&.any? %>
         <div class="card mb-3" data-controller="nested-weldings">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0"><%= t('activerecord.models.weldings') %></h5>
-            <button type="button" class="btn btn-primary btn-sm" data-action="nested-weldings#addWelding">
-              <i class="bi bi-plus"></i> <%= t('common.actions.add') %>
-            </button>
-          </div>
           
           <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h5 class="mb-0"><%= t('activerecord.models.weldings') %></h5>
+              <button type="button" class="btn btn-primary btn-sm" data-action="nested-weldings#addWelding">
+                <i class="bi bi-plus"></i> <%= t('common.actions.add') %>
+              </button>
+            </div>
             <template data-nested-weldings-target="template">
               <%= render 'welding_fields' %>
             </template>
