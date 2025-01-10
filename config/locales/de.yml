@@ -110,6 +110,8 @@ de:
     work_preparation_description: "Vorbereitung der Arbeitsprozesse"
     prefabrication: "Vorfertigung"
     prefabrication_description: "Bauteilefertigung"
+    welding: "Schweissen"
+    welding_description: "Schweissprozesse und Dokumentation"
     pre_welding: "Schweissen"
     pre_welding_description: "Schweissprozesse und Dokumentation"
     final_inspection: "Endkontrolle"
@@ -140,6 +142,7 @@ de:
     models:
       project: "Projekt"
       prefabrication: "Vorfertigung"
+      welding: "Schweissen"
       pre_welding: "Schweissen"
       final_inspection: "Endkontrolle"
       "final-inspection": "Endkontrolle"
