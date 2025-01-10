@@ -30,7 +30,10 @@
     --bs-btn-disabled-border-color: #013a75;
     --bs-gradient: none;
 }
-
+.list-group {
+  z-index: 1;
+  position: relative;
+}
 .card-header {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
