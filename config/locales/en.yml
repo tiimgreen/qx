@@ -502,7 +502,7 @@ en:
     new:
       title: "New Site Delivery"
     edit:
-      title: "Site Delivery Edit: %{site_delivery}"
+      title: "Site Delivery Edit: %{work_package}"
   on_sites:
     form:
       complete_button: "Mark as Completed"
@@ -556,5 +556,4 @@ en:
     new:
       title: "New Site Assembly"
     edit:
-      title: "Site Assembly Edit: %{site_assembly}"          
-        
+      title: "Site Assembly Edit: %{site_assembly}"

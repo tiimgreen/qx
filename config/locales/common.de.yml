@@ -8,6 +8,7 @@ de:
       cancel: "Abbrechen"
       complete: "Abschließen"
       add: "Hinzufügen"
+      saving: "Speichern"
     messages:
       confirm_delete: "Sind Sie sicher, dass Sie dieses %{model} löschen wollen?"
       confirm_delete_with_details: "Sind Sie sicher, dass Sie %{model} '%{name}' (%{number}) löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden und löscht alle zugeordneten Datensätze."

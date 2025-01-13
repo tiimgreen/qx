@@ -3,6 +3,7 @@ class SiteDeliveriesController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry, except: [ :index ]
   before_action :set_site_delivery, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class SiteDeliveriesController < ApplicationController
 
   def new
     @site_delivery = @project.site_deliveries.new
+    if @isometry
+      @site_delivery.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
+    @isometry = @site_delivery.isometry
   end
 
   def create
@@ -103,6 +108,10 @@ class SiteDeliveriesController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
+  def set_isometry
+    @isometry = @project.isometries.find(params[:site_delivery][:isometry_id]) if params[:site_delivery].present?
+  end
+
   def set_site_delivery
     @site_delivery = @project.site_deliveries.find(params[:id])
   end
@@ -115,6 +124,7 @@ class SiteDeliveriesController < ApplicationController
       :check_spools_status,
       :check_spools_comment,
       :completed,
+      :isometry_id,
       :total_time,
       check_spools_images: []
     )
@@ -163,7 +173,7 @@ class SiteDeliveriesController < ApplicationController
   def authorize_create!
     unless current_user.can_create?("SiteDelivery")
       flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: SiteDelivery.model_name.human)
-      redirect_to request.referer || site_deliveries_path
+      redirect_to request.referer || project_site_deliveries_path(@project)
     end
   end
 

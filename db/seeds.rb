@@ -239,9 +239,16 @@
 # end
 
 # we need right on isometry + projects for each module
-# (1..4).each_with_index do |permission, index|
-# UserResourcePermission.create!(user_id: User.find(11).id, resource_name: "Project", permission_id: index + 1)
+# [ "Project", "Isometry", "SiteDelivery" ].each do |resource_name|
+#   (1..4).each_with_index do |permission, index|
+#     UserResourcePermission.create!(user_id: User.find(12).id, resource_name: resource_name, permission_id: index + 1)
+#   end
 # end
+
+# (1..4).each_with_index do |permission, index|
+# UserResourcePermission.create!(user_id: User.find(12).id, resource_name: "Project", permission_id: index + 1)
+# end
+
 
 
 
