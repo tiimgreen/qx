@@ -126,7 +126,7 @@ en:
     site_delivery_description: "On-site delivery management"
     site_assembly: "Site Assembly"
     site_assembly_description: "Component assembly and installation"
-    on_site: "On Site"
+    on_site: "As Built"
     on_site_description: "Final documentation of built state"
     test_pack: "Test Pack"
     test_pack_description: "System testing and pressure checks"
@@ -152,7 +152,7 @@ en:
       work_preparation: "Work Preparation"
       site_delivery: "Site Delivery"
       site_assembly: "Site Assembly"
-      on_site: "On Site"
+      on_site: "As Built"
       test_pack: "Test Pack"
       documentation: "Documentation"
       material_certificate: "Material Certificate"
@@ -503,30 +503,30 @@ en:
   on_sites:
     form:
       complete_button: "Mark as Completed"
-      confirm_complete: "Are you sure you want to mark this On site as completed?"
+      confirm_complete: "Are you sure you want to mark this As Built as completed?"
       errors:
         header:
-          one: "1 error prohibited this On site from being saved"
-          other: "%{count} errors prohibited this On site from being saved"
+          one: "1 error prohibited this As Built from being saved"
+          other: "%{count} errors prohibited this As Built from being saved"
     complete:
-      success: "On site was successfully marked as completed"
-      failure: "Failed to mark On site as completed"
+      success: "As Built was successfully marked as completed"
+      failure: "Failed to mark As Built as completed"
     create:
-      success: "On site was successfully created"
+      success: "As Built was successfully created"
     update:
-      success: "On site was successfully updated"
+      success: "As Built was successfully updated"
     destroy:
-      success: "On site was successfully deleted"
+      success: "As Built was successfully deleted"
     index:
-      title_for_project: "On Sites for %{project}"
+      title_for_project: "As Built for %{project}"
     buttons:
-      new_on_site: "New On Site"
+      new_on_site: "New As Built"
     show:
-      title: "On Site Details"
+      title: "As Built Details"
     new:
-      title: "New On Site"
+      title: "New As Built"
     edit:
-      title: "On Site Edit: %{on_site}"
+      title: "As Built Edit: %{on_site}"
   site_assemblies:
     form:
       complete_button: "Mark as Completed"
