@@ -162,7 +162,7 @@ class TransportsController < ApplicationController
   def authorize_create!
     unless current_user.can_create?("Transport")
       flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.new"), model: Transport.model_name.human)
-      redirect_to request.referer || transports_path
+      redirect_to request.referer || project_transports_path(@project)
     end
   end
 
