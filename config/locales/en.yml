@@ -305,6 +305,8 @@ en:
       page_created: "New page was successfully created"
     errors:
       page_creation_failed: "Failed to create new page"
+    isometry_details:
+      confirm_spools_count: "I confirm that the number of spools is correct"
   prefabrications:
     form:
       complete_button: "Mark as Completed"
@@ -363,6 +365,7 @@ en:
     form:
       complete_button: "Mark as Completed"
       confirm_complete: "Are you sure you want to mark this transport as completed?"
+      confirm_spools_count: "I confirm that the number of spools is correct"
       errors:
         header:
           one: "1 error prohibited this transport from being saved"

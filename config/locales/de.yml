@@ -279,6 +279,7 @@ de:
     form:
       complete_button: "Als abgeschlossen markieren"
       confirm_complete: "Sind Sie sicher, dass Sie diesen Transport als abgeschlossen markieren wollen?"
+      confirm_spools_count: "Ich bestätige, dass die Anzahl der Spools korrekt ist"
       errors:
         header:
           one: "1 Fehler verhindert die Speicherung des Transports"
@@ -531,3 +532,5 @@ de:
       page_created: "Neue Seite wurde erfolgreich erstellt"
     errors:
       page_creation_failed: "Fehler beim Erstellen einer neuen Seite"
+    isometry_details:
+      confirm_spools_count: "Ich bestätige, dass die Anzahl der Spools korrekt ist"

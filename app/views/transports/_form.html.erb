@@ -5,7 +5,7 @@
       id: 'transport_form',
       data: { 
         turbo: true,
-        controller: "validation"
+        controller: "validation spool-confirmation"
       }
     ) do |f| %>
   <% if @transport.errors.any? %>
@@ -19,7 +19,7 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :project_id if @project %>
+  <%= f.hidden_field :isometry_id, value: @isometry&.id %>
 
   <div class="row">
     <div class="col-md-4">
@@ -66,7 +66,8 @@
     </div>
 
     <div class="col-md-8">
-     
+      <%= render "isometry_details", isometry: @isometry %>
+      
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -100,7 +101,13 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-outline-secondary' %>
-        <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
+        <%= f.submit t("common.actions.save"), 
+                    class: "btn btn-primary", 
+                    data: { 
+                      spool_confirmation_target: "submitButton",
+                      disable_with: t('common.actions.saving')
+                    },
+                    disabled: true %>
       </div>
     </div>
   </div>

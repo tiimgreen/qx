@@ -3,6 +3,7 @@ class TransportsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry, except: [ :index ]
   before_action :set_transport, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class TransportsController < ApplicationController
 
   def new
     @transport = @project.transports.new
+    if @isometry
+      @transport.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
+    @isometry = @transport.isometry
   end
 
   def create
@@ -106,6 +111,12 @@ class TransportsController < ApplicationController
     @transport = @project.transports.find(params[:id])
   end
 
+  def set_isometry
+    if params[:transport].present? && params[:transport][:isometry_id].present?
+      @isometry = @project.isometries.find(params[:transport][:isometry_id])
+    end
+  end
+
   def transport_params
     return {} unless params[:transport].present?
 
@@ -115,12 +126,13 @@ class TransportsController < ApplicationController
       :check_spools_comment,
       :completed,
       :total_time,
+      :isometry_id,
       check_spools_images: []
     )
   end
 
   def transport_params_without_images
-    transport_params.except(:on_hold_images)
+    transport_params.except(:check_spools_images)
   end
 
   def attach_check_spools_images

@@ -7,12 +7,28 @@
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.line_id') %>:</strong> <%= isometry.line_id %></p>
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.page_number') %>:</strong> <%= isometry.page_number %></p>
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.system') %>:</strong> <%= isometry.system %></p>
+          <% if controller_name == 'transports' %>
+            <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.total_spols') %>:</strong> <%= isometry.total_spools %></p>
+          <% end %>
         </div>
 
         <div class="col-md-6">
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.pid_number') %>:</strong> <%= isometry.pid_number %></p>
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.work_package_number') %>:</strong> <%= isometry.work_package_number %></p>
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.material') %>:</strong> <%= isometry.material %></p>
+          <% if controller_name == 'transports' %>
+            <div class="col-12 mb-3">
+              <div class="form-check">
+                <%= check_box_tag :spool_confirmation, '1', false, 
+                    class: 'form-check-input',
+                    data: { 
+                      spool_confirmation_target: 'checkbox',
+                      action: 'spool-confirmation#updateSubmitButton'
+                    } %>
+                <%= label_tag :spool_confirmation, t('isometry_details.confirm_spools_count'), class: 'form-check-label' %>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
