@@ -33,6 +33,9 @@
     <table class="table table-striped table-hover table-sm">
       <thead>
         <tr>
+          <th><%= t('activerecord.attributes.isometry.line_id') %></th>
+          <th><%= t('activerecord.attributes.isometry.page_number') %></th>
+          <th><%= t('activerecord.attributes.isometry.revision_number') %></th>
           <th>
             <%= link_to t('activerecord.attributes.transport.work_package_number'),
                 request.params.merge(sort: 'work_package_number', direction: (params[:sort] == 'work_package_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
@@ -55,6 +58,9 @@
       <tbody>
         <% @transports.each do |transport| %>
           <tr>
+            <td><%= link_to transport.isometry&.line_id, project_isometry_path(@project, transport.isometry) %></td>
+            <td><%= transport.isometry.page_number %></td>
+            <td><%= transport.isometry.revision_number %></td>
             <td><%= transport.work_package_number %></td>
             <td><%= status_label(transport.check_spools_status) %></td>
             <td><%= l(transport.completed, format: :short) if transport.completed %></td>
