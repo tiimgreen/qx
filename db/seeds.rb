@@ -237,3 +237,19 @@
 # (1..4).each_with_index do |permission, index|
 # UserResourcePermission.create!(user_id: User.find(7).id, resource_name: "Project", permission_id: index + 1)
 # end
+
+
+
+# def assign_all_permissions_to_user(user_id)
+#   UserResourcePermission::RESOURCE_NAMES.each do |resource|
+#     (1..4).each do |permission_id|
+#       UserResourcePermission.find_or_create_by!(
+#         user_id: user_id,
+#         resource_name: resource,
+#         permission_id: permission_id
+#       )
+#     end
+#   end
+# end
+
+# assign_all_permissions_to_user(4)
