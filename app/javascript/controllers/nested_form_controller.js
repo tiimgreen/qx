@@ -14,11 +14,14 @@ export default class extends Controller {
     event.preventDefault()
     const wrapper = event.target.closest('.nested-fields')
     
-    if (wrapper.dataset.newRecord) {
+    if (wrapper.dataset.newRecord === 'true') {
       wrapper.remove()
     } else {
-      wrapper.querySelector("input[name*='_destroy']").value = 1
-      wrapper.style.display = 'none'
+      const destroyField = wrapper.querySelector("input[name*='_destroy']")
+      if (destroyField) {
+        destroyField.value = '1'
+        wrapper.style.display = 'none'
+      }
     }
   }
 }

@@ -125,8 +125,8 @@ class IsometriesController < ApplicationController
       end
 
       format.json do
-        # For autosave, don't process weldings or images
-        save_params = isometry_params.except(:rt_images, :vt_images, :pt_images, :weldings_attributes)
+        # For autosave, only exclude image parameters
+        save_params = isometry_params.except(:rt_images, :vt_images, :pt_images)
         @isometry.assign_attributes(save_params)
         @isometry.draft = true
         if @isometry.save(validate: false)

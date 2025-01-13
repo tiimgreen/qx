@@ -1,5 +1,5 @@
 <div class="nested-fields" data-new-record="<%= f.object.new_record? %>">
-  <%= f.hidden_field :_destroy %>
+  <%= f.hidden_field :_destroy, value: false %>
   
   <div class="row g-3 mt-4">
     <div class="col-12"><hr><h5><%= t('common.weldings.first_set') %></h5></div>

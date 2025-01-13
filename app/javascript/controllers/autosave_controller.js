@@ -109,10 +109,10 @@ export default class extends Controller {
     
     const formData = new FormData(this.form)
     
-    // Create a new FormData without empty values and welding fields
+    // Create a new FormData without empty values, but keep _destroy fields
     const saveData = new FormData()
     for (let [key, value] of formData.entries()) {
-      if (value !== '' && !key.includes('weldings_attributes')) {
+      if (value !== '' || key.includes('_destroy')) {
         saveData.append(key, value)
       }
     }
