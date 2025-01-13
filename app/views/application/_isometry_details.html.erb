@@ -16,7 +16,7 @@
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.pid_number') %>:</strong> <%= isometry.pid_number %></p>
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.work_package_number') %>:</strong> <%= isometry.work_package_number %></p>
           <p class="mb-2"><strong><%= t('activerecord.attributes.isometry.material') %>:</strong> <%= isometry.material %></p>
-          <% if controller_name == 'transports' %>
+          <% if controller_name == 'transports' || controller_name == 'site_delivery' %>
             <div class="col-12 mb-3">
               <div class="form-check">
                 <%= check_box_tag :spool_confirmation, '1', false, 
@@ -25,7 +25,7 @@
                       spool_confirmation_target: 'checkbox',
                       action: 'spool-confirmation#updateSubmitButton'
                     } %>
-                <%= label_tag :spool_confirmation, t('isometry_details.confirm_spools_count'), class: 'form-check-label' %>
+                <%= label_tag :spool_confirmation, t('transports.form.confirm_spools_count'), class: 'form-check-label' %>
               </div>
             </div>
           <% end %>
