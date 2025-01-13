@@ -33,6 +33,9 @@
     <table class="table table-striped table-hover table-sm">
       <thead>
         <tr>
+          <th><%= t('activerecord.attributes.isometry.line_id') %></th>
+          <th><%= t('activerecord.attributes.isometry.page_number') %></th>
+          <th><%= t('activerecord.attributes.isometry.revision_number') %></th>
           <th>
             <%= link_to t('activerecord.attributes.final_inspection.work_location'),
                 request.params.merge(sort: 'work_location_id', direction: (params[:sort] == 'work_location_id' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
@@ -80,6 +83,9 @@
       <tbody>
         <% @final_inspections.each do |final_inspection| %>
           <tr>
+            <td><%= link_to final_inspection.isometry&.line_id, project_isometry_path(@project, final_inspection.isometry) %></td>
+            <td><%= final_inspection.isometry.page_number %></td>
+            <td><%= final_inspection.isometry.revision_number %></td>
             <td><%= t("work_locations.types.#{final_inspection.work_location.location_type}") if final_inspection.work_location %></td>
             <td><%= final_inspection.work_package_number %></td>
             <td><%= status_label(final_inspection.visual_check_status) %></td>

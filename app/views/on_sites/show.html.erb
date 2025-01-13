@@ -6,6 +6,42 @@
 ] %>
 
 <div class="container mt-4">
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0"><i class="bi bi-diagram-2"></i> <%= t('activerecord.models.isometry') %></h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.line_id') %></dt>
+            <dd class="col-sm-6"><%=link_to @on_site.isometry&.line_id, project_isometry_path(@project, @on_site.isometry) %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.page_number') %></dt>
+            <dd class="col-sm-6"><%= @on_site.isometry.page_number %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.revision_number') %></dt>
+            <dd class="col-sm-6"><%= @on_site.isometry.revision_number %></dd>
+
+          </dl>
+        </div>
+
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.pid_number') %></dt>
+            <dd class="col-sm-6"><%= @on_site.isometry.pid_number %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.material') %></dt>
+            <dd class="col-sm-6"><%= @on_site.isometry.material %></dd>
+
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.system') %></dt>
+            <dd class="col-sm-6"><%= @on_site.isometry.system %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h2 class="mb-0"><%= t('.title', work_package: @on_site.work_package_number) %></h2>
@@ -84,6 +120,9 @@
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_on_sites_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to edit_project_on_site_path(@project, @on_site), class: 'btn btn-outline-primary' do %>
+          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+        <% end %>
       </div>
     </div>
   </div>

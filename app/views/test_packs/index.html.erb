@@ -33,6 +33,9 @@
     <table class="table table-striped table-hover table-sm">
       <thead>
         <tr>
+          <th><%= t('activerecord.attributes.isometry.line_id') %></th>
+          <th><%= t('activerecord.attributes.isometry.page_number') %></th>
+          <th><%= t('activerecord.attributes.isometry.revision_number') %></th>
           <th>
             <%= link_to t('activerecord.attributes.test_pack.work_location'),
                 request.params.merge(sort: 'work_location_id', direction: (params[:sort] == 'work_location_id' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
@@ -96,6 +99,9 @@
       <tbody>
         <% @test_packs.each do |test_pack| %>
           <tr>
+            <td><%= link_to test_pack.isometry&.line_id, project_isometry_path(@project, test_pack.isometry) %></td>
+            <td><%= test_pack.isometry.page_number %></td>
+            <td><%= test_pack.isometry.revision_number %></td>
             <td><%= t("work_locations.types.#{test_pack.work_location.location_type}") if test_pack.work_location %></td>
             <td><%= test_pack.work_package_number %></td>
             <td><%= t("test_packs.types.#{test_pack.test_pack_type}") if test_pack.test_pack_type %></td>

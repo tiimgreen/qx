@@ -3,6 +3,7 @@ class PreWeldingsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry, except: [ :index ]
   before_action :set_pre_welding, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class PreWeldingsController < ApplicationController
 
   def new
     @pre_welding = @project.pre_weldings.new
+    if @isometry
+      @pre_welding.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
+    @isometry = @pre_welding.isometry
   end
 
   def create
@@ -108,6 +113,12 @@ class PreWeldingsController < ApplicationController
     @pre_welding = @project.pre_weldings.find(params[:id])
   end
 
+  def set_isometry
+    if params[:pre_welding].present? && params[:pre_welding][:isometry_id].present?
+      @isometry = @project.isometries.find(params[:pre_welding][:isometry_id])
+    end
+  end
+
   def pre_welding_params
     return {} unless params[:pre_welding].present?
 
@@ -118,6 +129,7 @@ class PreWeldingsController < ApplicationController
       :on_hold_comment,
       :on_hold_date,
       :completed,
+      :isometry_id,
       :total_time,
       on_hold_images: []
     )

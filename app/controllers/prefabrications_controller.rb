@@ -3,6 +3,7 @@ class PrefabricationsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry, except: [ :index ]
   before_action :set_prefabrication, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class PrefabricationsController < ApplicationController
 
   def new
     @prefabrication = @project.prefabrications.new
+    if @isometry
+      @prefabrication.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
+    @isometry = @prefabrication.isometry
   end
 
   def create
@@ -109,6 +114,12 @@ class PrefabricationsController < ApplicationController
     @prefabrication = @project.prefabrications.find(params[:id])
   end
 
+  def set_isometry
+    if params[:prefabrication].present? && params[:prefabrication][:isometry_id].present?
+      @isometry = @project.isometries.find(params[:prefabrication][:isometry_id])
+    end
+  end
+
   def prefabrication_params
     return {} unless params[:prefabrication].present?
 
@@ -120,6 +131,7 @@ class PrefabricationsController < ApplicationController
       :on_hold_date,
       :active,
       :completed,
+      :isometry_id,
       :total_time,
       on_hold_images: []
     )

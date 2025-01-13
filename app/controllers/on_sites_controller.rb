@@ -3,6 +3,7 @@ class OnSitesController < ApplicationController
     include CompletableController
     before_action :authenticate_user!
     before_action :set_project
+    before_action :set_isometry, except: [ :index ]
     before_action :set_on_site, only: [ :show, :edit, :update, :destroy, :complete ]
     before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class OnSitesController < ApplicationController
 
     def new
       @on_site = @project.on_sites.new
+      if @isometry
+        @on_site.work_package_number = @isometry.work_package_number
+      end
     end
 
     def edit
+      @isometry = @on_site.isometry
     end
 
     def create
@@ -106,6 +111,12 @@ class OnSitesController < ApplicationController
       @on_site = @project.on_sites.find(params[:id])
     end
 
+    def set_isometry
+      if params[:on_site].present? && params[:on_site][:isometry_id].present?
+        @isometry = @project.isometries.find(params[:on_site][:isometry_id])
+      end
+    end
+
     def on_site_params
       return {} unless params[:on_site].present?
 
@@ -115,6 +126,7 @@ class OnSitesController < ApplicationController
         :on_hold_comment,
         :on_hold_date,
         :completed,
+        :isometry_id,
         :total_time,
         on_hold_images: []
       )

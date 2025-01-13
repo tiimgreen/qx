@@ -3,6 +3,7 @@ class FinalInspectionsController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry, except: [ :index ]
   before_action :set_final_inspection, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class FinalInspectionsController < ApplicationController
 
   def new
     @final_inspection = @project.final_inspections.new
+    if @isometry
+      @final_inspection.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
+    @isometry = @final_inspection.isometry
   end
 
   def create
@@ -116,6 +121,12 @@ class FinalInspectionsController < ApplicationController
     @final_inspection = @project.final_inspections.find(params[:id])
   end
 
+  def set_isometry
+    if params[:final_inspection].present? && params[:final_inspection][:isometry_id].present?
+      @isometry = @project.isometries.find(params[:final_inspection][:isometry_id])
+    end
+  end
+
   def final_inspection_params
     return {} unless params[:final_inspection].present?
 
@@ -136,6 +147,7 @@ class FinalInspectionsController < ApplicationController
       :completed,
       :total_time,
       :project_id,
+      :isometry_id,
       on_hold_images: [],
       visual_check_images: [],
       vt2_check_images: [],

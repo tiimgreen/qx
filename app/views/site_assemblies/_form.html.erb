@@ -19,7 +19,7 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :project_id if @project %>
+  <%= f.hidden_field :isometry_id, value: @isometry&.id %>
 
   <div class="row">
     <div class="col-md-4">
@@ -66,6 +66,8 @@
     </div>
 
     <div class="col-md-8">
+      <%= render "isometry_details", isometry: @isometry %>
+
       <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
         delete_image_project_site_assembly_path(@project, @site_assembly, image_id: image) 
       } %>

@@ -116,8 +116,8 @@ en:
     prefabrication_description: "Component prefabrication"
     _welding: "Welding"
     welding_description: "Welding processes and documentation"
-    pre_welding: "Pre Welding"
-    pre_welding_description: "Pre Welding processes and documentation"
+    pre_welding: "Welding"
+    pre_welding_description: "Welding processes and documentation"
     final_inspection: "Final Inspection"
     final_inspection_description: "Quality control and final checks"
     transport: "Transport"
@@ -337,20 +337,20 @@ en:
   pre_weldings:
     form:
       complete_button: "Mark as Completed"
-      confirm_complete: "Are you sure you want to mark this pre welding as completed?"
+      confirm_complete: "Are you sure you want to mark this Welding as completed?"
       errors:
         header:
-          one: "1 error prohibited this pre welding from being saved"
-          other: "%{count} errors prohibited this pre welding from being saved"
+          one: "1 error prohibited this Welding from being saved"
+          other: "%{count} errors prohibited this Welding from being saved"
     complete:
-      success: "Pre welding was successfully marked as completed"
-      failure: "Failed to mark pre welding as completed"
+      success: "Welding was successfully marked as completed"
+      failure: "Failed to mark Welding as completed"
     create:
-      success: "Pre welding was successfully created"
+      success: "Welding was successfully created"
     update:
-      success: "Pre welding was successfully updated"
+      success: "Welding was successfully updated"
     destroy:
-      success: "Pre welding was successfully deleted"
+      success: "Welding was successfully deleted"
     index:
       title_for_project: "Pre-weldings for %{project}"
     buttons:
@@ -472,7 +472,7 @@ en:
     new:
       title: "New Test Pack"
     edit:
-      title: "Test Pack Edit: %{test_pack}"  
+      title: "Test Pack Edit: %{work_package}"  
     types:
       pressure_test: "Pressure Test"
       leak_test: "Leak Test"    
@@ -556,4 +556,4 @@ en:
     new:
       title: "New Site Assembly"
     edit:
-      title: "Site Assembly Edit: %{site_assembly}"
+      title: "Site Assembly Edit: %{work_package}"

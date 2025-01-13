@@ -19,7 +19,7 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :project_id if @project %>
+  <%= f.hidden_field :isometry_id, value: @isometry&.id %>
 
   <div class="row">
     <div class="col-md-4">
@@ -120,6 +120,8 @@
           <%= f.text_field :dip_pressure, class: 'form-control'%>
         </div>
       </div>
+
+      <%= render "isometry_details", isometry: @isometry %>
 
       <%= render 'application/hold_fields', f: f, delete_path: ->(image) { 
         delete_image_project_test_pack_path(@project, @test_pack, image_id: image) 

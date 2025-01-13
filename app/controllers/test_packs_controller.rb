@@ -3,6 +3,7 @@ class TestPacksController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry, except: [ :index ]
   before_action :set_test_pack, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class TestPacksController < ApplicationController
 
   def new
     @test_pack = @project.test_packs.new
+    if @isometry
+      @test_pack.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
+    @isometry = @test_pack.isometry
   end
 
   def create
@@ -115,6 +120,12 @@ class TestPacksController < ApplicationController
     @test_pack = @project.test_packs.find(params[:id])
   end
 
+  def set_isometry
+    if params[:test_pack].present? && params[:test_pack][:isometry_id].present?
+      @isometry = @project.isometries.find(params[:test_pack][:isometry_id])
+    end
+  end
+
   def test_pack_params
     return {} unless params[:test_pack].present?
 
@@ -133,6 +144,7 @@ class TestPacksController < ApplicationController
       :batch_number,
       :work_preparation_type,
       :completed,
+      :isometry_id,
       :total_time,
       :project_id,
       on_hold_images: []

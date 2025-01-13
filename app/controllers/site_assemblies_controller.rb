@@ -3,6 +3,7 @@ class SiteAssembliesController < ApplicationController
   include CompletableController
   before_action :authenticate_user!
   before_action :set_project
+  before_action :set_isometry, except: [ :index ]
   before_action :set_site_assembly, only: [ :show, :edit, :update, :destroy, :complete ]
   before_action :authorize_action!
 
@@ -25,9 +26,13 @@ class SiteAssembliesController < ApplicationController
 
   def new
     @site_assembly = @project.site_assemblies.new
+    if @isometry
+      @site_assembly.work_package_number = @isometry.work_package_number
+    end
   end
 
   def edit
+    @isometry = @site_assembly.isometry
   end
 
   def create
@@ -107,6 +112,12 @@ class SiteAssembliesController < ApplicationController
     @site_assembly = @project.site_assemblies.find(params[:id])
   end
 
+  def set_isometry
+    if params[:site_assembly].present? && params[:site_assembly][:isometry_id].present?
+      @isometry = @project.isometries.find(params[:site_assembly][:isometry_id])
+    end
+  end
+
   def site_assembly_params
     return {} unless params[:site_assembly].present?
 
@@ -116,6 +127,7 @@ class SiteAssembliesController < ApplicationController
       :on_hold_comment,
       :on_hold_date,
       :completed,
+      :isometry_id,
       :total_time,
       on_hold_images: []
     )
