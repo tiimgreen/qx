@@ -19,7 +19,10 @@
                 </a>
                 <div class="dropdown-menu">
                   <%= link_to t('navigation.menu.projects.list'), projects_path, class: 'dropdown-item' %>
-                  <%= link_to t('navigation.menu.projects.new'), new_project_path, class: 'dropdown-item' %>
+
+                  <% if current_user.can_create?("Project") %>
+                    <%= link_to t('navigation.menu.projects.new'), new_project_path, class: 'dropdown-item' %>
+                  <% end %>
                 </div>
               </li>
 
@@ -30,7 +33,10 @@
                 </a>
                 <div class="dropdown-menu">
                   <%= link_to t('navigation.menu.material_certificates.list'), material_certificates_path, class: 'dropdown-item' %>
-                  <%= link_to t('navigation.menu.material_certificates.new'), new_material_certificate_path, class: 'dropdown-item' %>
+
+                  <% if current_user.can_create?("MaterialCertificate") %>
+                    <%= link_to t('navigation.menu.material_certificates.new'), new_material_certificate_path, class: 'dropdown-item' %>
+                  <% end %>
                 </div>
               </li>
 
