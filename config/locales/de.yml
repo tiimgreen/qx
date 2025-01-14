@@ -142,11 +142,12 @@ de:
     models:
       project: "Projekt"
       prefabrication: "Vorfertigung"
-      welding: "Schweissen"
+      welding: "Weldlog"
       pre_welding: "Schweissen"
       final_inspection: "Endkontrolle"
       "final-inspection": "Endkontrolle"
       work_preparation: "Arbeitsvorbereitung"
+      work_location: "Arbeitsort"
       site_delivery: "Baustellenlieferung"
       site_assembly: "Montage"
       on_site: "As Built"
@@ -155,6 +156,15 @@ de:
       material_certificate: "Materialzertifikat"
       transport: "Transport"
       delivery_item: "Lieferschein"
+      user_resource_permission: "Benutzerresourcen"
+      permission: "Berechtigung"
+      user: "Benutzer"
+      admin: "Administrator"
+      isometry: "Isometrie"
+      user_sector: "Benutzerbereich"
+      sector: "Bereich"
+      isometry_document: "Isometriedokument"
+      isometry_material_certificate: "Isometriezertifikat"
     errors:
       models:
         delivery_item:

@@ -146,10 +146,11 @@ en:
     models:
       prefabrication: "Prefabrication"
       pre_welding: "Welding"
-      welding: "Welding"
+      welding: "Weldlog"
       final_inspection: "Final Inspection"
       "final-inspection": "Final Inspection"
       work_preparation: "Work Preparation"
+      work_location: "Work Location"
       site_delivery: "Site Delivery"
       site_assembly: "Site Assembly"
       on_site: "As Built"
@@ -158,6 +159,15 @@ en:
       material_certificate: "Material Certificate"
       transport: "Transport"
       delivery_item: "Delivery Item"
+      user_resource_permission: "User Resource Permissions"
+      permission: "Permission"
+      user: "User"
+      admin: "Administrator"
+      isometry: "Isometry"
+      user_sector: "User Sector"
+      sector: "Sector"
+      isometry_document: "Isometry Document"
+      isometry_material_certificate: "Isometry Material Certificate"
     errors:
       models:
         delivery_item:
