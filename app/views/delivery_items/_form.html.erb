@@ -166,13 +166,14 @@
       </div>
 
       <div class="d-flex justify-content-between align-items-center my-5">
-        <%= f.submit t('common.save'), class: 'btn btn-primary' %>
         <%= link_to t('common.cancel'), :back, class: 'btn btn-secondary' %>
         <% unless @delivery_item.new_record? || @delivery_item.completed? || @delivery_item.on_hold? %>
           <%= f.submit t('common.complete'),
                       name: 'complete_delivery_item',
                       class: 'btn btn-success' %>
         <% end %>
+        <%= f.submit t('common.save'), class: 'btn btn-primary' %>
+
       </div>
     </div>
   </div>

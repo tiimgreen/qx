@@ -7,13 +7,15 @@
           <%= f.select :on_hold_status, DeliveryItem::ON_HOLD_STATUSES, { include_blank: false }, class: 'form-control' %>
         </div>
       </div>
-      <div class="col-md-6">
-        <%= f.label :on_hold_images, t('common.labels.on_hold_images'), class: 'form-label' %>
-        <%= f.file_field :on_hold_images, multiple: true, class: 'form-control' %>
-      </div>
+      <% if f.object.respond_to?(:on_hold_images) %>
+        <div class="col-md-6">
+          <%= f.label :on_hold_images, t('common.labels.on_hold_images'), class: 'form-label' %>
+          <%= f.file_field :on_hold_images, multiple: true, class: 'form-control' %>
+        </div>
+      <% end %>
     </div>
 
-    <% if f.object.respond_to?(:on_hold_images) && f.object.on_hold_images %>
+    <% if f.object.respond_to?(:on_hold_images) && f.object.on_hold_images.attached? %>
       <%= render partial: 'images', locals: { 
         images: f.object.on_hold_images, 
         image_type: 'on_hold',
