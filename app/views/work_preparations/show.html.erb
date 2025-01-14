@@ -126,8 +126,10 @@
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_work_preparations_path(@project), class: 'btn btn-outline-secondary' %>
-        <%= link_to edit_project_work_preparation_path(@project, @work_preparation), class: 'btn btn-outline-primary' do %>
-          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+        <% if current_user.can_edit?("WorkPreparation") %>
+          <%= link_to edit_project_work_preparation_path(@project, @work_preparation), class: 'btn btn-outline-primary' do %>
+            <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+          <% end %>
         <% end %>
       </div>
     </div>

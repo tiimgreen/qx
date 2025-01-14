@@ -46,11 +46,6 @@
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h2 class="mb-0"><%= t('.title', work_package: @final_inspection.work_package_number) %></h2>
-      <div>
-        <%= link_to edit_project_final_inspection_path(@project, @final_inspection), class: 'btn btn-outline-primary' do %>
-          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
-        <% end %>
-      </div>
     </div>
 
     <div class="card-body">
@@ -122,8 +117,11 @@
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_final_inspections_path(@project), class: 'btn btn-outline-secondary' %>
-        <%= link_to edit_project_final_inspection_path(@project, @final_inspection), class: 'btn btn-outline-primary' do %>
-          <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+
+        <% if current_user.can_edit?("FinalInspection") %>
+          <%= link_to edit_project_final_inspection_path(@project, @final_inspection), class: 'btn btn-outline-primary' do %>
+            <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
+          <% end %>
         <% end %>
       </div>
     </div>
