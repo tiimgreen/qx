@@ -209,6 +209,8 @@
 
 
 # Create Sector-specific Users
+# Associate user with their sector
+
 # puts "Creating sector-specific users..."
 # Sector.all.each do |sector_data|
 #   sector_key = sector_data[:key]
@@ -222,7 +224,6 @@
 #     u.city = "QX City"
 #   end
 
-# Associate user with their sector
 #   sector = Sector.find_by(key: sector_key)
 #   UserSector.find_or_create_by!(user: user, sector: sector)
 # end
@@ -250,6 +251,13 @@
 # UserResourcePermission.create!(user_id: User.find(12).id, resource_name: "Project", permission_id: index + 1)
 # end
 
+# (1..4).each_with_index do |permission, index|
+# UserResourcePermission.create!(user_id: User.find(12).id, resource_name: "Isometry", permission_id: index + 1)
+# end
+
+# (1..4).each_with_index do |permission, index|
+# UserResourcePermission.create!(user_id: User.find(12).id, resource_name: "Transport", permission_id: index + 1)
+# end
 
 
 
@@ -265,4 +273,4 @@
 #   end
 # end
 
-# assign_all_permissions_to_user(4)
+# assign_all_permissions_to_user(18)
