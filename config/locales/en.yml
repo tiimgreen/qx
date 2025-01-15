@@ -578,3 +578,10 @@ en:
     invalid_sector_model: "Invalid sector model"
     qr_processing_error: "Error processing QR code"
     no_valid_sector: "No valid sector found for this isometry"
+  reports:
+    isometries:
+      title: Isometries Report
+      overall_progress: Overall Progress
+      completed: Completed
+      in_progress: In Progress
+      not_started: Not Started

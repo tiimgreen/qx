@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     resources :projects do
       delete "images/:model_type/:model_id", to: "images#destroy", as: :delete_image
 
+      # Add reports routes
+      get 'reports/isometries', to: 'reports#isometries', as: :isometries_report
+
       resources :incoming_deliveries do
         resources :delivery_items do
           delete "delete_image", on: :member

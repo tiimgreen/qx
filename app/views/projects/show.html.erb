@@ -8,28 +8,38 @@
   </div>
 
   <div class="card-body">
-    <dl class="row">
-      <dt class="col-sm-3"><%= t('.project_number') %></dt>
-      <dd class="col-sm-9"><%= @project.project_number %></dd>
+    <div class="row">
+      <div class="col-md-8">
+        <dl class="row">
+          <dt class="col-sm-3"><%= t('.project_number') %></dt>
+          <dd class="col-sm-9"><%= @project.project_number %></dd>
 
-      <dt class="col-sm-3"><%= t('.name') %></dt>
-      <dd class="col-sm-9"><%= @project.name %></dd>
+          <dt class="col-sm-3"><%= t('.name') %></dt>
+          <dd class="col-sm-9"><%= @project.name %></dd>
 
-      <dt class="col-sm-3"><%= t('.description') %></dt>
-      <dd class="col-sm-9"><%= @project.description %></dd>
+          <dt class="col-sm-3"><%= t('.description') %></dt>
+          <dd class="col-sm-9"><%= @project.description %></dd>
 
-      <dt class="col-sm-3"><%= t('.project_manager') %></dt>
-      <dd class="col-sm-9"><%= @project.project_manager %></dd>
+          <dt class="col-sm-3"><%= t('.project_manager') %></dt>
+          <dd class="col-sm-9"><%= @project.project_manager %></dd>
 
-      <dt class="col-sm-3"><%= t('.client_name') %></dt>
-      <dd class="col-sm-9"><%= @project.client_name %></dd>
+          <dt class="col-sm-3"><%= t('.client_name') %></dt>
+          <dd class="col-sm-9"><%= @project.client_name %></dd>
 
-      <dt class="col-sm-3"><%= t('.created_by') %></dt>
-      <dd class="col-sm-9"><%= @project.user&.name %></dd>
+          <dt class="col-sm-3"><%= t('.created_by') %></dt>
+          <dd class="col-sm-9"><%= @project.user&.name %></dd>
 
-      <dt class="col-sm-3"><%= t('.created') %></dt>
-      <dd class="col-sm-9"><%= @project.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
-    </dl>
+          <dt class="col-sm-3"><%= t('.created') %></dt>
+          <dd class="col-sm-9"><%= @project.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
+        </dl>
+      </div>
+      <div class="col-md-4 text-center">
+        <h5><%= t('reports.isometries.title') %></h5>
+        <%= link_to project_isometries_report_path(@project), class: 'text-decoration-none' do %>
+          <%= image_tag 'report.png', alt: t('reports.isometries.title'), class: 'img-fluid mb-3', style: 'max-width: 150px;' %>
+        <% end %>
+      </div>
+    </div>
     <div class="row g-4">
       <%= render 'application/sector_card', sectors: @sectors, project: @project %>
     </div>
