@@ -65,7 +65,7 @@
 
 # sectors_data = [
 #   { key: "project", position: 1 },
-#   { key: "isometric", position: 2 },
+#   { key: "isometry", position: 2 },
 #   { key: "incoming_delivery", position: 3 },
 #   { key: "work_preparation", position: 4 },
 #   { key: "prefabrication", position: 5 },

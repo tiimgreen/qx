@@ -4,27 +4,50 @@ class QrCodesController < ApplicationController
   before_action :validate_user_sector
 
   def redirect
-    sector = current_user.sectors.first
-    handle_sector_redirect(sector)
+    sectors = current_user.sectors.select { |s| Sector::QR_SECTOR_MODELS.include?(s.key) }
+
+    if sectors.empty?
+      redirect_to root_path, alert: t("alerts.no_valid_sector")
+    elsif sectors.count == 1
+      handle_sector_redirect(sectors.first)
+    else
+      @sectors = sectors
+      render :select_sector
+    end
+  end
+
+  def select_sector
+    sector = current_user.sectors.find_by(id: params[:sector_id])
+    if sector && Sector::QR_SECTOR_MODELS.include?(sector.key)
+      handle_sector_redirect(sector)
+    else
+      redirect_to root_path, alert: t("alerts.invalid_sector")
+    end
   end
 
   private
 
   def set_isometry
-    @isometry = Isometry.find(params[:isometry_id])
+    id = params[:isometry_id] || params[:id]
+    @isometry = Isometry.find(id)
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: "Isometry not found"
+    redirect_to root_path, alert: t("alerts.isometry_not_found")
   end
 
   def validate_user_sector
     unless current_user.sectors.any?
-      redirect_to root_path, alert: "No sector assigned to user"
+      redirect_to root_path, alert: t("alerts.no_sector_assigned")
     end
   end
 
   def handle_sector_redirect(sector)
+    if sector.key == "isometry"
+      redirect_to project_isometry_path(@isometry.project, @isometry)
+      return
+    end
+
     model_class = sector.key.classify.constantize rescue nil
-    return redirect_to root_path, alert: "Invalid sector model" unless model_class
+    return redirect_to root_path, alert: t("alerts.invalid_sector_model") unless model_class
 
     record = model_class.find_by(isometry: @isometry)
 
@@ -40,6 +63,6 @@ class QrCodesController < ApplicationController
     end
   rescue => e
     Rails.logger.error "Error in QR redirect: #{e.message}"
-    redirect_to root_path, alert: "Error processing QR code"
+    redirect_to root_path, alert: t("alerts.qr_processing_error")
   end
 end

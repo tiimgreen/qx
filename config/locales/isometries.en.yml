@@ -141,8 +141,8 @@ en:
         notes: "Notes"
 
   sectors:
-    isometric: "Isometries"
-    isometric_description: "Isometry Management and Technical Specification"
+    isometry: "Isometry"
+    isometry_description: "Isometry Management and Technical Specification"
 
   navigation:
     menu:

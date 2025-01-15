@@ -106,8 +106,8 @@ en:
   sectors:
     project: "Project"
     project_description: "Project-related activities"
-    isometric: "Isometric"
-    isometric_description: "Isometric recording and management"
+    isometry: "Isometry"
+    isometry_description: "Isometry recording and management"
     incoming_delivery: "Incoming Delivery"
     incoming_delivery_description: "Incoming delivery and inspection"
     work_preparation: "Work Preparation"
@@ -567,3 +567,14 @@ en:
       title: "New Site Assembly"
     edit:
       title: "Site Assembly Edit: %{work_package}"
+  qr_codes:
+    select_sector:
+      select_sector: "Select Sector"
+      please_select_sector: "Please select which sector you would like to view this isometry in:"
+  alerts:
+    isometry_not_found: "Isometry not found"
+    no_sector_assigned: "No sector assigned to user"
+    invalid_sector: "Invalid sector"
+    invalid_sector_model: "Invalid sector model"
+    qr_processing_error: "Error processing QR code"
+    no_valid_sector: "No valid sector found for this isometry"

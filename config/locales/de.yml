@@ -102,8 +102,8 @@ de:
   sectors:
     project: "Projekt"
     project_description: "Projektbezogene Aktivitäten"
-    isometric: "Isometrie"
-    isometric_description: "Erfassung und Verwaltung von Isometrien"
+    isometry: "Isometrie"
+    isometry_description: "Erfassung und Verwaltung von Isometrien"
     incoming_delivery: "Wareneingang"
     incoming_delivery_description: "Warenannahme und Eingangskontrolle"
     work_preparation: "Arbeitsvorbereitung"
@@ -544,3 +544,14 @@ de:
       page_creation_failed: "Fehler beim Erstellen einer neuen Seite"
     isometry_details:
       confirm_spools_count: "Ich bestätige, dass die Anzahl der Spools korrekt ist"
+  qr_codes:
+    select_sector:
+      select_sector: "Sektor auswählen"
+      please_select_sector: "Bitte wahlen Sie den Sektor, den Sie ansehen wollen:"
+  alerts:
+    isometry_not_found: "Isometrie nicht gefunden"
+    no_sector_assigned: "Kein Sektor für den Benutzer zugewiesen"
+    invalid_sector: "Ungültiger Sektor"
+    invalid_sector_model: "Ungültiges Sektor-Modell"
+    qr_processing_error: "Fehler beim Verarbeiten des QR-Codes"
+    no_valid_sector: "Kein gültiger Sektor für diese Isometrie gefunden"

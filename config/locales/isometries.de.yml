@@ -143,8 +143,8 @@ de:
         notes: "Notizen"
 
   sectors:
-    isometric: "Isometrien"
-    isometric_description: "Isometrieverwaltung und technische Spezifikation"
+    isometry: "Isometrie"
+    isometry_description: "Isometrieverwaltung und technische Spezifikation"
 
   navigation:
     menu:

@@ -6,7 +6,7 @@
           <% case sector.key %>
           <% when 'incoming_delivery' %>
             <i class="bi bi-folder"></i> <%= project.incoming_deliveries.count %>
-          <% when 'isometric' %>
+          <% when 'isometry' %>
             <i class="bi bi-diagram-3"></i> <%= project.isometries.active.count %>
           <% when 'prefabrication' %>
             <i class="bi bi-diagram-3"></i> <%= project.prefabrications.active.count %>
@@ -43,7 +43,7 @@
             <%= link_to new_project_incoming_delivery_path(project), class: 'btn btn-primary' do %>
               <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
-          <% when 'isometric' %>
+          <% when 'isometry' %>
             <%= link_to project_isometries_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>

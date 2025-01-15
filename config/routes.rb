@@ -111,6 +111,13 @@ Rails.application.routes.draw do
       delete "delete_image", on: :member
     end
 
+    resources :qr_codes, only: [] do
+      member do
+        get :redirect
+        get :select_sector
+      end
+    end
+
     # Existing routes...
     get "up" => "rails/health#show", as: :rails_health_check
     get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
