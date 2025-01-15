@@ -199,7 +199,11 @@ en:
       test_pack:
         attributes:
           work_location:
-            required: "Work location can't be blank"            
+            required: "Work location can't be blank"       
+      incoming_delivery:
+        attributes:
+          work_location:
+            required: "Work location can't be blank"           
     attributes:
       work_preparation:
         work_location: "Work Location"

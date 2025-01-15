@@ -1,0 +1,95 @@
+<div class="row row-cols-2 row-cols-md-3 row-cols-xl-5 g-4 mb-4">
+  <% current_user.sectors.each do |sector| %>
+    <% next if sector.key == 'isometry' || sector.key == 'incoming_delivery'%>
+    <div class="col">
+        <div class="d-flex align-items-center mb-3">
+        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center bg-gradient fs-4 rounded-3 me-3">
+            <i class="bi bi-folder"></i>
+        </div>
+        <h3 class="fs-5 mb-0"><%= t("sectors.#{sector.key}") %></h3>
+        </div>
+        
+        <div class="mt-3">
+        <% case sector.key %>
+        <% when 'incoming_delivery' %>
+            <%= link_to project_incoming_deliveries_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_incoming_delivery_path(@project, incoming_delivery: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'material_certificate' %>
+            <%= link_to material_certificates_path, class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_material_certificate_path(material_certificate: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'prefabrication' %>
+            <%= link_to project_prefabrications_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_prefabrication_path(@project, prefabrication: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'final_inspection' %>
+            <%= link_to project_final_inspections_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_final_inspection_path(@project, final_inspection: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'work_preparation' %>
+            <%= link_to project_work_preparations_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_work_preparation_path(@project, work_preparation: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'transport' %>
+            <%= link_to project_transports_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_transport_path(@project, transport: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'site_delivery' %>
+            <%= link_to project_site_deliveries_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_site_delivery_path(@project, site_delivery: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'site_assembly' %>
+            <%= link_to project_site_assemblies_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_site_assembly_path(@project, site_assembly: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'on_site' %>
+            <%= link_to project_on_sites_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_on_site_path(@project, on_site: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'test_pack' %>
+            <%= link_to project_test_packs_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_test_pack_path(@project, test_pack: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% when 'pre_welding' %>
+            <%= link_to project_pre_weldings_path(@project), class: 'btn btn-outline-primary m-1 me-2' do %>
+            <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+            <%= link_to new_project_pre_welding_path(@project, pre_welding: { isometry_id: @isometry.id }), class: 'btn btn-primary' do %>
+            <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <% end %>
+        <% end %>
+        </div>
+    </div>
+  <% end %>
+</div>

@@ -61,64 +61,37 @@
             <%= link_to project_prefabrications_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
-            <%= link_to new_project_prefabrication_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
-            <% end %>
           <% when 'final_inspection' %>
             <%= link_to project_final_inspections_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
-            <% end %>
-            <%= link_to new_project_final_inspection_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% when 'work_preparation' %>
             <%= link_to project_work_preparations_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
-            <%= link_to new_project_work_preparation_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
-            <% end %>
           <% when 'transport' %>
             <%= link_to project_transports_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
-            <% end %>
-            <%= link_to new_project_transport_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% when 'site_delivery' %>
             <%= link_to project_site_deliveries_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
-            <%= link_to new_project_site_delivery_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
-            <% end %>
           <% when 'site_assembly' %>
             <%= link_to project_site_assemblies_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
-            <% end %>
-            <%= link_to new_project_site_assembly_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% when 'on_site' %>
             <%= link_to project_on_sites_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
-            <%= link_to new_project_on_site_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
-            <% end %>
           <% when 'test_pack' %>
             <%= link_to project_test_packs_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
-            <%= link_to new_project_test_pack_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
-            <% end %> 
           <% when 'pre_welding' %>
             <%= link_to project_pre_weldings_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
-            <% end %>
-            <%= link_to new_project_pre_welding_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
             <% end %>
           <% end %>
         </div>
