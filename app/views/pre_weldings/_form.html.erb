@@ -59,19 +59,6 @@
         <% end %>
 
         </div>
-        <div class="mb-3">
-          <% if @pre_welding.persisted? && @pre_welding.completed.nil? && !@pre_welding.on_hold? %>
-            <%= link_to complete_project_pre_welding_path(@project, @pre_welding),
-                      method: :patch,
-                      class: 'btn btn-success',
-                      data: { 
-                        turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete') 
-                      } do %>
-              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
-            <% end %>
-          <% end %>
-        </div>
     </div>
 
     <div class="col-md-8">
@@ -87,6 +74,17 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_pre_weldings_path(@project), class: 'btn btn-outline-secondary' %>
+          <% if @pre_welding.persisted? && @pre_welding.completed.nil? && !@pre_welding.on_hold? %>
+            <%= link_to complete_project_pre_welding_path(@project, @pre_welding),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
         <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
       </div>
     </div>

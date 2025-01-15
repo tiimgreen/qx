@@ -59,19 +59,6 @@
         <% end %>
 
         </div>
-        <div class="mb-3">
-          <% if @final_inspection.persisted? && @final_inspection.completed.nil? && !@final_inspection.on_hold? %>
-            <%= link_to complete_project_final_inspection_path(@project, @final_inspection),
-                      method: :patch,
-                      class: 'btn btn-success',
-                      data: { 
-                        turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete') 
-                      } do %>
-              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
-            <% end %>
-          <% end %>
-        </div>
     </div>
 
     <div class="col-md-8">
@@ -212,6 +199,17 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_final_inspections_path(@project), class: 'btn btn-outline-secondary' %>
+          <% if @final_inspection.persisted? && @final_inspection.completed.nil? && !@final_inspection.on_hold? %>
+            <%= link_to complete_project_final_inspection_path(@project, @final_inspection),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
         <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
       </div>
     </div>

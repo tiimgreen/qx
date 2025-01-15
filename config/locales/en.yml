@@ -539,7 +539,7 @@ en:
     new:
       title: "New As Built"
     edit:
-      title: "As Built Edit: %{on_site}"
+      title: "As Built Edit: %{work_package}"
   site_assemblies:
     form:
       complete_button: "Mark as Completed"

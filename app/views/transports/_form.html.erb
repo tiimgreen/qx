@@ -50,19 +50,6 @@
         <% end %>
 
         </div>
-        <div class="mb-3">
-          <% if @transport.persisted? && @transport.completed.nil? && !@transport.failed? %>
-            <%= link_to complete_project_transport_path(@project, @transport),
-                      method: :patch,
-                      class: 'btn btn-success',
-                      data: { 
-                        turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete_warning') 
-                      } do %>
-              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
-            <% end %>
-          <% end %>
-        </div>
     </div>
 
     <div class="col-md-8">
@@ -101,6 +88,17 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-outline-secondary' %>
+          <% if @transport.persisted? && @transport.completed.nil? && !@transport.failed? %>
+            <%= link_to complete_project_transport_path(@project, @transport),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete_warning') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
         <%= f.submit t("common.actions.save"), 
                     class: "btn btn-primary", 
                     data: { 

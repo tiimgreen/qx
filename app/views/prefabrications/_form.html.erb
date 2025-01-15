@@ -48,7 +48,7 @@
           <div class="dropdown-menu w-100" data-work-package-search-target="results"></div>
         </div>
       </div>
-        <div class="mb-3">
+      <div class="mb-3">
       <% if @prefabrication.persisted? && @prefabrication.completed? %>
 
           <%= f.label :completed, class: 'form-label' %>
@@ -58,19 +58,6 @@
                           disabled: true %>
         <% end %>
 
-        </div>
-        <div class="mb-3">
-          <% if @prefabrication.persisted? && @prefabrication.completed.nil? && !@prefabrication.on_hold? %>
-            <%= link_to complete_project_prefabrication_path(@project, @prefabrication),
-                      method: :patch,
-                      class: 'btn btn-success',
-                      data: { 
-                        turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete') 
-                      } do %>
-              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
-            <% end %>
-          <% end %>
         </div>
     </div>
 
@@ -87,6 +74,17 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-outline-secondary' %>
+          <% if @prefabrication.persisted? && @prefabrication.completed.nil? && !@prefabrication.on_hold? %>
+            <%= link_to complete_project_prefabrication_path(@project, @prefabrication),
+                      method: :patch,
+                      class: 'btn btn-success',
+                      data: { 
+                        turbo_method: :patch,
+                        turbo_confirm: t('common.messages.confirm_complete') 
+                      } do %>
+              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+            <% end %>
+          <% end %>
         <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>
       </div>
     </div>
