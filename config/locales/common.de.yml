@@ -23,6 +23,8 @@ de:
         completed: "%{model} wurde erfolgreich abgeschlossen"
       failure:
         complete: "Fehler beim Abschließen von %{model}"
+      pending_deliveries: "Bitte beenden Sie Ihre aktuelle Lieferung, bevor Sie eine neue erstellen"
+      errors:
     labels:
       created_by: "Erstellt von"
       actions: "Aktionen"
