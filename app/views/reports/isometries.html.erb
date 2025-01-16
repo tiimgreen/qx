@@ -1,31 +1,88 @@
 <div class="container mt-4">
   <h2>Isometries Report for <%= @project.name %></h2>
 
-<!-- Total Progress Bar -->
-<div class="card mb-4">
-  <div class="card-body">
-    <h5>Total Progress</h5>
-    <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-      <% total_possible = @isometries.count * (Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }.size) %>
-      <% total_completed = Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }.sum { |sector| @isometries.count { |iso| iso.send(sector)&.completed? } } %>
-      <% total_percentage = (total_completed * 100.0 / total_possible).round(2) %>
-      <div class="progress-bar" role="progressbar" 
-           style="width: <%= total_percentage %>%; background-color: lawngreen;">
-      </div>
-      <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
-        <span style="color: #000; font-weight: 500;">
-          <%= total_completed %>/<%= total_possible %> (<%= total_percentage %>%)
-        </span>
+  <!-- Filters -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5>Filters</h5>
+      <%= form_tag project_isometries_report_path(@project), method: :get, class: 'row g-3', data: { controller: 'form-submission' } do %>
+        <div class="col-md-2">
+          <label class="form-label">Line ID</label>
+          <%= select_tag :line_id, 
+              options_for_select([['All', '']] + @line_ids.map { |id| [id, id] }, params[:line_id]),
+              class: 'form-select',
+              data: { action: 'change->form-submission#submit' } %>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">System</label>
+          <%= select_tag :system,
+              options_for_select([['All', '']] + @systems.map { |s| [s, s] }, params[:system]),
+              class: 'form-select',
+              data: { action: 'change->form-submission#submit' } %>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Work Package</label>
+          <%= select_tag :work_package_number,
+              options_for_select([['All', '']] + @work_package_numbers.map { |wp| [wp, wp] }, params[:work_package_number]),
+              class: 'form-select',
+              data: { action: 'change->form-submission#submit' } %>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Pipe Class</label>
+          <%= select_tag :pipe_class,
+              options_for_select([['All', '']] + @pipe_classes.map { |pc| [pc, pc] }, params[:pipe_class]),
+              class: 'form-select',
+              data: { action: 'change->form-submission#submit' } %>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Material</label>
+          <%= select_tag :material,
+              options_for_select([['All', '']] + @materials.map { |m| [m, m] }, params[:material]),
+              class: 'form-select',
+              data: { action: 'change->form-submission#submit' } %>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Medium</label>
+          <%= select_tag :medium,
+              options_for_select([['All', '']] + @mediums.map { |m| [m, m] }, params[:medium]),
+              class: 'form-select',
+              data: { action: 'change->form-submission#submit' } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Total Progress Bar -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5>Total Progress</h5>
+      <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
+        <% total_possible = @isometries.count * @sector_models.size %>
+        <% total_completed = @sector_models.sum { |sector| @isometries.count { |iso| iso.send(sector)&.completed? } } %>
+        <% total_percentage = (total_completed * 100.0 / total_possible).round(2) %>
+        <div class="progress-bar" role="progressbar" 
+             style="width: <%= total_percentage %>%; background-color: lawngreen;">
+        </div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+          <span style="color: #000; font-weight: 500;">
+            <%= total_completed %>/<%= total_possible %> (<%= total_percentage %>%)
+          </span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- Sector Progress -->
   <div class="card mb-4">
     <div class="card-body">
       <h5>Sector Progress</h5>
       <div class="row">
-        <% Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }.each do |sector| %>
+        <% @sector_models.each do |sector| %>
           <div class="col-md-3 mb-3">
             <div class="card">
               <div class="card-body">
@@ -50,13 +107,19 @@
     </div>
   </div>
 
+  <!-- Isometries Table -->
   <div class="table-responsive">
     <table class="table table-striped table-bordered" data-controller="datatable">
       <thead>
         <tr>
           <th>Line ID</th>
+          <th>System</th>
+          <th>Work Package</th>
+          <th>Pipe Class</th>
+          <th>Material</th>
+          <th>Medium</th>
           <th>Page Number</th>
-          <% Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }.each do |sector| %>
+          <% @sector_models.each do |sector| %>
             <th><%= t("sectors.#{sector}") %></th>
           <% end %>
           <th>Overall Progress</th>
@@ -66,8 +129,13 @@
         <% @isometries.each do |isometry| %>
           <tr>
             <td><%= link_to isometry.line_id, project_isometry_path(@project, isometry) %></td>
+            <td><%= isometry.system %></td>
+            <td><%= isometry.work_package_number %></td>
+            <td><%= isometry.pipe_class %></td>
+            <td><%= isometry.material %></td>
+            <td><%= isometry.medium %></td>
             <td><%= isometry.page_number %></td>
-            <% Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }.each do |sector| %>
+            <% @sector_models.each do |sector| %>
               <td>
                 <% if sector_record = isometry.send(sector) %>
                   <% if sector_record.completed? %>
@@ -81,8 +149,8 @@
               </td>
             <% end %>
             <td>
-              <% completed_sectors = Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }.count { |sector| isometry.send(sector)&.completed? } %>
-              <% total_sectors = Sector::QR_SECTOR_MODELS.size - 1 %>
+              <% completed_sectors = @sector_models.count { |sector| isometry.send(sector)&.completed? } %>
+              <% total_sectors = @sector_models.size %>
               <% progress = (completed_sectors * 100.0 / total_sectors).round(2) %>
               <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
                 <div class="progress-bar" role="progressbar" 
