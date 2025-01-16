@@ -118,23 +118,21 @@
           <th>Pipe Class</th>
           <th>Material</th>
           <th>Medium</th>
-          <th>Page Number</th>
           <% @sector_models.each do |sector| %>
             <th><%= t("sectors.#{sector}") %></th>
           <% end %>
-          <th>Overall Progress</th>
+          <th>Total Progress</th>
         </tr>
       </thead>
       <tbody>
         <% @isometries.each do |isometry| %>
           <tr>
-            <td><%= link_to isometry.line_id, project_isometry_path(@project, isometry) %></td>
+            <td><%= link_to "#{isometry.line_id} / #{isometry.page_number}", project_isometry_path(@project, isometry) %></td>
             <td><%= isometry.system %></td>
             <td><%= isometry.work_package_number %></td>
             <td><%= isometry.pipe_class %></td>
             <td><%= isometry.material %></td>
             <td><%= isometry.medium %></td>
-            <td><%= isometry.page_number %></td>
             <% @sector_models.each do |sector| %>
               <td>
                 <% if sector_record = isometry.send(sector) %>
