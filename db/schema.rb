@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_08_095715) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_16_073639) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -122,6 +122,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_095715) do
     t.index ["project_id"], name: "index_final_inspections_on_project_id"
     t.index ["user_id"], name: "index_final_inspections_on_user_id"
     t.index ["work_location_id"], name: "index_final_inspections_on_work_location_id"
+  end
+
+  create_table "guests", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "first_name"
+    t.string "last_name"
+    t.boolean "active"
+    t.integer "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_guests_on_email", unique: true
+    t.index ["project_id"], name: "index_guests_on_project_id"
+    t.index ["reset_password_token"], name: "index_guests_on_reset_password_token", unique: true
   end
 
   create_table "incoming_deliveries", force: :cascade do |t|

@@ -230,6 +230,14 @@
 
 # puts "Completed creating sector-specific users!"
 
+# Guest.create(
+#   first_name: "Guest",
+#   last_name: "G",
+#   email: "quest@qx.com",
+#   password: "123123123",
+#   active: true,
+#   project_id: 20
+# )
 
 # http://localhost:3000/de/qr/131
 # http://localhost:3000/en/projects/20/isometries/131
