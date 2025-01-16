@@ -18,7 +18,7 @@
               <%= link_to t('navigation.profile'), edit_admin_registration_path, class: 'dropdown-item' %>
               <%= button_to t('navigation.sign_out'), destroy_admin_session_path, method: :delete, class: 'dropdown-item' %>
             <% elsif current_guest %>
-              <%= link_to project.name, project_isometries_report_path(project), class: 'dropdown-item' %>
+              <%= link_to current_guest&.project&.name, project_isometries_report_path(current_guest&.project), class: 'dropdown-item' %>
               <%= button_to t('navigation.sign_out'), destroy_guest_session_path, method: :delete, class: 'dropdown-item' %>
             <% end %>
           </div>
