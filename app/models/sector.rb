@@ -3,16 +3,16 @@ class Sector < ApplicationRecord
   has_many :users, through: :user_sectors
 
   QR_SECTOR_MODELS = [
-    "final_inspection",
-    "isometry",
-    "on_site",
-    "pre_welding",
+    "work_preparation",
     "prefabrication",
-    "site_assembly",
-    "site_delivery",
-    "test_pack",
+    "pre_welding",
+    "final_inspection",
     "transport",
-    "work_preparation"
+    "site_delivery",
+    "site_assembly",
+    "on_site",
+    "test_pack",
+    "isometry"
   ].freeze
 
   validates :key, presence: true, uniqueness: true
