@@ -233,7 +233,7 @@
 # Guest.create(
 #   first_name: "Guest",
 #   last_name: "G",
-#   email: "quest@qx.com",
+#   email: "guest@qx.com",
 #   password: "123123123",
 #   active: true,
 #   project_id: 20

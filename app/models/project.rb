@@ -14,6 +14,8 @@ class Project < ApplicationRecord
   has_many :test_packs, dependent: :destroy
   has_many :pre_weldings, dependent: :destroy
 
+  has_many :projects, dependent: :destroy
+
   belongs_to :user, optional: true
 
   validates :project_number, presence: true, uniqueness: true

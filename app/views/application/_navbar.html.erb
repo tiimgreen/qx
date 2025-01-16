@@ -4,10 +4,10 @@
       <%= image_tag "logo.svg", height: 40, alt: "Logo" %>
     <% end %>
     <div class="ms-auto">
-      <% if user_signed_in? || admin_signed_in? %>
+      <% if user_signed_in? || admin_signed_in? || guest_signed_in? %>
         <div class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-            <%= current_user&.email || current_admin&.email %>
+            <%= current_user&.email || current_admin&.email || current_guest&.email %>
           </a>
           <div class="dropdown-menu dropdown-menu-end">
             <% if current_user %>
@@ -17,6 +17,9 @@
               <%= link_to t('navigation.admin'), rails_admin_path, class: 'dropdown-item' %>
               <%= link_to t('navigation.profile'), edit_admin_registration_path, class: 'dropdown-item' %>
               <%= button_to t('navigation.sign_out'), destroy_admin_session_path, method: :delete, class: 'dropdown-item' %>
+            <% elsif current_guest %>
+              <%= link_to project.name, project_isometries_report_path(project), class: 'dropdown-item' %>
+              <%= button_to t('navigation.sign_out'), destroy_guest_session_path, method: :delete, class: 'dropdown-item' %>
             <% end %>
           </div>
         </div>
@@ -24,6 +27,7 @@
         <div class="ms-auto">
           <%= link_to "#{t('home.sign_in')} #{t('home.users')}", new_user_session_path, class: "btn base-color-bg-dark text-white" %>
           <%= link_to "#{t('home.sign_in')} #{t('home.admins')}", new_admin_session_path, class: "btn base-color-bg-dark text-white" %>
+          <%= link_to "#{t('home.sign_in')} #{t('home.guests', default: 'Guests')}", new_guest_session_path, class: "btn base-color-bg-dark text-white" %>
         </div>
       <% end %>
     </div>
