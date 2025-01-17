@@ -55,7 +55,7 @@ en:
       rt_percentage: "RT"
       vt_percentage: "VT2"
       pt_percentage: "PT2"
-      total_pipe_length: "TOTAL Pipe Length"
+      total_pipe_length: "TOTAL m"
       workshop_sn: "Workshop SN"
       assembly_sn: "As Built SN"
       total_sn: "TOTAL SN"
