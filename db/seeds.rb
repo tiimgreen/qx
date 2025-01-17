@@ -282,3 +282,26 @@
 # end
 
 # assign_all_permissions_to_user(18)
+
+
+# Sector.all.each do |sector_data|
+#   sector_key = sector_data[:key]
+#   user = User.find(3)
+
+#   sector = Sector.find_by(key: sector_key)
+#   UserSector.find_or_create_by!(user: user, sector: sector)
+# end
+
+# def assign_all_permissions_to_user(user_id)
+#   UserResourcePermission::RESOURCE_NAMES.each do |resource|
+#     (1..4).each do |permission_id|
+#       UserResourcePermission.find_or_create_by!(
+#         user_id: user_id,
+#         resource_name: resource,
+#         permission_id: permission_id
+#       )
+#     end
+#   end
+# end
+
+# assign_all_permissions_to_user(3)

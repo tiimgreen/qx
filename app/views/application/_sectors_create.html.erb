@@ -6,7 +6,7 @@
     <div class="card-body" data-collapse-target="content">
         <div class="row row-cols-2 row-cols-md-3 row-cols-xl-5 g-4 mb-4">
         <% current_user.sectors.each do |sector| %>
-            <% next if sector.key == 'isometry' || sector.key == 'incoming_delivery'%>
+            <% next if sector.key == 'isometry' || sector.key == 'incoming_delivery' || sector.key == 'project'%>
             <div class="col">
                 <div class="d-flex align-items-center mb-3">
                 <div class="feature-icon-small d-inline-flex align-items-center justify-content-center bg-gradient fs-4 rounded-3 me-3">
