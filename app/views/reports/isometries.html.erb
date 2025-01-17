@@ -113,12 +113,12 @@
     <table class="table table-striped table-bordered" data-controller="datatable">
       <thead>
         <tr>
-          <th>Line ID</th>
-          <th>System</th>
-          <th>Work Package</th>
-          <th>Pipe Class</th>
-          <th>Material</th>
-          <th>Medium</th>
+          <th><%= t('activerecord.attributes.isometry.line_id') %></th>
+          <th><%= t('activerecord.attributes.isometry.system') %></th>
+          <th><%= t('activerecord.attributes.isometry.work_package_number') %></th>
+          <th><%= t('activerecord.attributes.isometry.pipe_class') %></th>
+          <th><%= t('activerecord.attributes.isometry.material') %></th>
+          <th><%= t('activerecord.attributes.isometry.medium') %></th>
           <% @sector_models.each do |sector| %>
             <th><%= t("sectors.#{sector}") %></th>
           <% end %>
