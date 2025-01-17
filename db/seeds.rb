@@ -283,7 +283,7 @@
 
 # assign_all_permissions_to_user(18)
 
-
+# set user to sectors and allow all permissions inside sectors
 # Sector.all.each do |sector_data|
 #   sector_key = sector_data[:key]
 #   user = User.find(3)
