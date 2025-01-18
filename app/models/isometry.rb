@@ -39,7 +39,7 @@ class Isometry < ApplicationRecord
   after_commit :process_isometry_documents, on: [ :create, :update ]
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
-  PED_CATEGORIES = [ "N/A", "I", "II", "III", "IV" ].freeze
+  PED_CATEGORIES = [ "N/A", "Not Relevant", "0", "I", "II", "III", "IV" ].freeze
 
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
   VALID_QR_POSITIONS = %w[top_left top_right bottom_left bottom_right].freeze

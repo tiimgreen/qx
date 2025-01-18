@@ -63,13 +63,13 @@
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <% total_possible = @isometries.count * @sector_models.size %>
         <% total_completed = @sector_models.sum { |sector| @isometries.count { |iso| iso.send(sector)&.completed? } } %>
-        <% total_percentage = (total_completed * 100.0 / total_possible).round(2) %>
+        <% total_percentage = (total_completed * 100.0 / total_possible).round() %>
         <div class="progress-bar" role="progressbar" 
              style="width: <%= total_percentage %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= total_completed %>/<%= total_possible %> (<%= total_percentage %>%)
+            <%= total_completed %>/<%= total_possible %> (<%= total_percentage %>%) m
           </span>
         </div>
       </div>
@@ -88,13 +88,13 @@
                 <h5 class="card-title"><%= t("sectors.#{sector}") %></h5>
                 <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
                   <% completed_count = @isometries.count { |iso| iso.send(sector)&.completed? } %>
-                  <% completion_percentage = (completed_count * 100.0 / @isometries.count).round(2) %>
+                  <% completion_percentage = (completed_count * 100.0 / @isometries.count).round() %>
                   <div class="progress-bar" role="progressbar" 
                        style="width: <%= completion_percentage %>%; background-color: lawngreen;">
                   </div>
                   <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                     <span style="color: #000; font-weight: 500;">
-                      <%= completed_count %>/<%= @isometries.count %> (<%= completion_percentage %>%)
+                      <%= completed_count %>/<%= @isometries.count %> (<%= completion_percentage %>%) m
                     </span>
                   </div>
                 </div>
@@ -148,14 +148,14 @@
             <td>
               <% completed_sectors = @sector_models.count { |sector| isometry.send(sector)&.completed? } %>
               <% total_sectors = @sector_models.size %>
-              <% progress = (completed_sectors * 100.0 / total_sectors).round(2) %>
+              <% progress = (completed_sectors * 100.0 / total_sectors).round() %>
               <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
                 <div class="progress-bar" role="progressbar" 
                      style="width: <%= progress %>%; background-color: lawngreen;">
                 </div>
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                   <span style="color: #000; font-weight: 500; font-size: 0.8rem;">
-                    (<%= progress %>%)
+                    (<%= progress %>%) m
                   </span>
                 </div>
               </div>
