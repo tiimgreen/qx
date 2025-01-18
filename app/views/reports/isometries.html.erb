@@ -29,7 +29,6 @@
               class: 'form-select',
               data: { action: 'change->form-submission#submit' } %>
         </div>
-<% if Rails.env.development? %>
         <div class="col-md-2">
           <label class="form-label">Pipe Class</label>
           <%= select_tag :pipe_class,
@@ -53,7 +52,6 @@
               class: 'form-select',
               data: { action: 'change->form-submission#submit' } %>
         </div>
-<% end %>
       <% end %>
     </div>
   </div>
