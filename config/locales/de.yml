@@ -559,3 +559,10 @@ de:
     invalid_sector_model: "Ungültiges Sektor-Modell"
     qr_processing_error: "Fehler beim Verarbeiten des QR-Codes"
     no_valid_sector: "Kein gültiger Sektor für diese Isometrie gefunden"
+  reports:
+    isometries:
+      title: Isometrien-Bericht
+      overall_progress: Gesamtfortschritt
+      completed: Abgeschlossen
+      in_progress: In Arbeit
+      not_started: Noch nicht begonnen
