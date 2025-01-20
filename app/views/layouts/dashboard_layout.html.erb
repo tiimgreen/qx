@@ -22,6 +22,8 @@
     <%= render "dashboard_navbar" %>
     <!-- Main Content -->
     <div class="container">
+      <div class="text-x-small text-muted text-center"><%= t('common.labels.permissions_info') %></div>
+
       <%= render "flash_messages" %>
 
       <%= yield %>
