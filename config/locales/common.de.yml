@@ -49,6 +49,8 @@ de:
       active: "Aktiv"
       completed: "Abgeschlossen"
       select: "Bitte auswählen"
+      view_sectors_info: "Um Sektor zu sehen, muss ein Benutzer in der Tabelle 'benutzerbereich' hinzugefügen werden! Auch der Benutzer muss View-Zugriff auf Projekt und Isometrie haben."
+      permissions_info: "Jeder Benutzer muss in der Tabelle 'benutzerresourcen' hinzugefügt werden! Auch der Benutzer muss die richtigen Zugriffsrechte pro Sektor/Model haben."
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"

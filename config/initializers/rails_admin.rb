@@ -9,6 +9,16 @@ RailsAdmin.config do |config|
   end
   config.current_user_method(&:current_admin)
 
+  # Set the current locale for RailsAdmin
+  config.main_app_name = proc { |controller|
+    [
+      I18n.t("admin.site_title", default: "Admin"),
+      I18n.t("admin.site_title_main", default: "Site")
+    ]
+  }
+
+  # Configure RailsAdmin to use the current locale
+  config.parent_controller = "::ApplicationController"
 
   ## == CancanCan ==
   # config.authorize_with :cancancan
