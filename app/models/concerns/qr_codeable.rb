@@ -108,9 +108,9 @@ module QrCodeable
         # Calculate position based on the PDF coordinate system (origin at bottom-left)
         x, y = case qr_position.to_s
         when "bottom_left"
-          [ margin_pts, margin_pts ]
+          [ margin_pts - 70, margin_pts - 38 ]
         when "bottom_right"
-          [ @page_width - margin_pts - qr_size, margin_pts ]
+          [ @page_width - margin_pts - qr_size, margin_pts - 38 ]
         when "top_left"
           [ margin_pts, @page_height - margin_pts - qr_size ]
         when "top_right"
