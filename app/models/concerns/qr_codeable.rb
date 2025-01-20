@@ -112,7 +112,7 @@ module QrCodeable
         when "bottom_right"
           [ @page_width - margin_pts - qr_size, margin_pts - 38 ]
         when "top_left"
-          [ margin_pts, @page_height - margin_pts - qr_size ]
+          [ margin_pts + 50, @page_height - margin_pts - qr_size + 10 ]
         when "top_right"
           [ @page_width - margin_pts - qr_size, @page_height - (margin_pts - 12 * mm_to_points) - qr_size ]
         else
