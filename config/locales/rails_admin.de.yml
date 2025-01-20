@@ -9,6 +9,7 @@ de:
         title: "Liste der %{model_label_plural}"
         menu: "Liste"
         breadcrumb: "%{model_label_plural}"
+        no_records: "Keine gefunden"
       show:
         title: "Details für %{model_label} '%{object_label}'"
         menu: "Anzeigen"
