@@ -89,24 +89,24 @@ module QrCodeable
     Rails.logger.info "Page dimensions: #{@page_width}x#{@page_height}"
 
     begin
+      # Read rotation from the first page
+      reader = PDF::Reader.new(input_path)
+      page_rotation = reader.pages.first.attributes[:Rotate] || 0
+      Rails.logger.info "Page rotation: #{page_rotation} degrees"
+
       Prawn::Document.generate(output_path,
                              template: input_path,
                              page_size: [ @page_width, @page_height ]) do |pdf|
         pdf.go_to_page(1)
 
         # Convert measurements
-        # 1 millimeter = 2.83465 points in PDF
         mm_to_points = 2.83465
-
-        # QR code size (40 points)
         qr_size = 40
-
-        # 5mm margin converted to points
         margin_mm = 15
         margin_pts = margin_mm * mm_to_points
 
-        # Calculate position based on the PDF coordinate system (origin at bottom-left)
-        x, y = case qr_position.to_s
+        # Get base coordinates
+        base_x, base_y = case qr_position.to_s
         when "bottom_left"
           [ margin_pts - 70, margin_pts - 38 ]
         when "bottom_right"
@@ -119,7 +119,28 @@ module QrCodeable
           [ margin_pts, margin_pts ]
         end
 
-        Rails.logger.info "Final QR position: x=#{x}, y=#{y}, size=#{qr_size}, margin=#{margin_pts}pts (#{margin_mm}mm)"
+        # Adjust coordinates based on rotation
+        x, y = case page_rotation
+        when 90
+          # For 90-degree rotation, swap width and height and adjust coordinates
+          case qr_position.to_s
+          when "bottom_left"
+            [ margin_pts - 70, @page_width - margin_pts - qr_size ]
+          when "bottom_right"
+            [ @page_height - margin_pts - qr_size, @page_width - margin_pts - qr_size ]
+          when "top_left"
+            [ margin_pts + 50, margin_pts - 38 ]
+          when "top_right"
+            [ @page_height - margin_pts - qr_size, margin_pts - 38 ]
+          else
+            [ base_x, base_y ]
+          end
+        else
+          [ base_x, base_y ]
+        end
+
+        Rails.logger.info "Final QR position: x=#{x}, y=#{y}, size=#{qr_size}, " \
+                         "margin=#{margin_pts}pts (#{margin_mm}mm), rotation=#{page_rotation}"
 
         pdf.image qr_path,
                  at: [ x, y ],
