@@ -79,10 +79,12 @@
 <!-- Prefabrication Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5>Prefabrication Progress</h5>
+      <h5><%= t('activerecord.models.prefabrication') %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
+
         <% total_pipe_length = @isometries.sum { |iso| iso.pipe_length&.to_f || 0 } %>
         <% completed_pipe_length = @isometries.select { |iso| iso.prefabrication&.completed? }.sum { |iso| iso.pipe_length&.to_f || 0 } %>
+
         <% prefab_percentage = total_pipe_length.zero? ? 0 : (completed_pipe_length * 100.0 / total_pipe_length).round() %>
         <div class="progress-bar" role="progressbar" 
              style="width: <%= prefab_percentage %>%; background-color: lawngreen;">
@@ -99,7 +101,7 @@
   <!-- Site Assembly Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5>Site Assembly Progress</h5>
+      <h5><%= t('activerecord.models.site_assembly') %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <% site_possible = @isometries.count %>
         <% site_completed = @isometries.count { |iso| iso.site_assembly&.completed? } %>
