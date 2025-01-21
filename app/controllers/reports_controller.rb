@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
       :on_site,
       :test_pack,
       :sector
-    ).where(deleted: false)
+    ).where(deleted: false, revision_last: true)
 
     # Filter by line_id
     @isometries = @isometries.where(line_id: params[:line_id]) if params[:line_id].present?

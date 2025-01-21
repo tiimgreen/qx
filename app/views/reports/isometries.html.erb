@@ -56,6 +56,18 @@
     </div>
   </div>
 
+<% # Calculate pipe lengths at the top for reuse
+total_pipe_length = @isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
+completed_pipe_length = @isometries.select { |iso| iso.prefabrication&.completed? }.sum { |iso| iso.pipe_length&.to_f || 0 }
+completed_sa_pipe_length = @isometries.select { |iso| iso.site_assembly&.completed? }.sum { |iso| iso.pipe_length&.to_f || 0 }
+
+# Calculate percentages
+prefab_percentage = total_pipe_length.zero? ? 0 : (completed_pipe_length * 100.0 / total_pipe_length).round()
+site_percentage = total_pipe_length.zero? ? 0 : (completed_sa_pipe_length * 100.0 / total_pipe_length).round()
+average_pipe_length = ((completed_pipe_length + completed_sa_pipe_length) / 2.0).round()
+average_percentage = total_pipe_length.zero? ? 0 : (average_pipe_length * 100.0 / total_pipe_length).round()
+%>
+
   <!-- Total Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
@@ -69,7 +81,7 @@
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= total_completed %>/<%= total_possible %> (<%= total_percentage %>%) m
+            <%= total_completed %>/<%= total_possible %> (<%= total_percentage %>%) pcs | <%= average_percentage %>%
           </span>
         </div>
       </div>
@@ -82,16 +94,12 @@
       <h5><%= t('activerecord.models.prefabrication') %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
 
-        <% total_pipe_length = @isometries.sum { |iso| iso.pipe_length&.to_f || 0 } %>
-        <% completed_pipe_length = @isometries.select { |iso| iso.prefabrication&.completed? }.sum { |iso| iso.pipe_length&.to_f || 0 } %>
-
-        <% prefab_percentage = total_pipe_length.zero? ? 0 : (completed_pipe_length * 100.0 / total_pipe_length).round() %>
         <div class="progress-bar" role="progressbar" 
              style="width: <%= prefab_percentage %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= completed_pipe_length.round(1) %>/<%= total_pipe_length.round(1) %>m 
+            <%= @isometries.count { |iso| iso.prefabrication&.completed? } %>/<%= @isometries.count %> pcs (<%= (@isometries.count { |iso| iso.prefabrication&.completed? } * 100.0 / @isometries.count).round() %>%) | <%= completed_pipe_length.round() %>/<%= total_pipe_length.round() %>m (<%= prefab_percentage %>%)
           </span>
         </div>
       </div>
@@ -103,15 +111,13 @@
     <div class="card-body">
       <h5><%= t('activerecord.models.site_assembly') %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-        <% site_possible = @isometries.count %>
-        <% site_completed = @isometries.count { |iso| iso.site_assembly&.completed? } %>
-        <% site_percentage = (site_completed * 100.0 / site_possible).round() %>
+       
         <div class="progress-bar" role="progressbar" 
              style="width: <%= site_percentage %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= site_completed %>/<%= site_possible %> (<%= site_percentage %>%)
+            <%= @isometries.count { |iso| iso.site_assembly&.completed? } %>/<%= @isometries.count %> pcs (<%= (@isometries.count { |iso| iso.site_assembly&.completed? } * 100.0 / @isometries.count).round() %>%) | <%= completed_sa_pipe_length.round() %>/<%= total_pipe_length.round() %>m (<%= site_percentage %>%)
           </span>
         </div>
       </div>
@@ -136,7 +142,7 @@
                   </div>
                   <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                     <span style="color: #000; font-weight: 500;">
-                      <%= completed_count %>/<%= @isometries.count %> (<%= completion_percentage %>%) m
+                      <%= completed_count %>/<%= @isometries.count %> (<%= completion_percentage %>%) pcs
                     </span>
                   </div>
                 </div>
@@ -197,7 +203,7 @@
                 </div>
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                   <span style="color: #000; font-weight: 500; font-size: 0.8rem;">
-                    (<%= progress %>%) m
+                    <%= progress %>%
                   </span>
                 </div>
               </div>
