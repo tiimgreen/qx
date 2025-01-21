@@ -117,6 +117,7 @@
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_final_inspections_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @final_inspection.isometry), class: 'btn btn-outline-secondary' %>
 
         <% if current_user.can_edit?("FinalInspection") %>
           <%= link_to edit_project_final_inspection_path(@project, @final_inspection), class: 'btn btn-outline-primary' do %>

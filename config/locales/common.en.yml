@@ -53,6 +53,7 @@ en:
       select: "Please select"
       view_sectors_info: "To be able to see Sector, user must be added to 'user_sector' table!. Also, user must have View access to Project and Isometry"
       permissions_info: "Every User should be added into 'user_resource_permission' table! Also, User needs to have correct permissions per Sector/model."
+      back_isometry: "Back to Isometry"
     buttons:
       cancel: "Cancel"
       delete: "Delete"

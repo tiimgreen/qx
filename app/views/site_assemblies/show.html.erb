@@ -114,6 +114,8 @@
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_site_assemblies_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @site_assembly.isometry), class: 'btn btn-outline-secondary' %>
+
         <% if current_user.can_edit?("SiteAssembly") %>
           <%= link_to edit_project_site_assembly_path(@project, @site_assembly), class: 'btn btn-outline-primary' do %>
             <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>

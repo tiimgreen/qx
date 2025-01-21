@@ -115,6 +115,7 @@
     <div class="card-footer">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_pre_weldings_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @pre_welding.isometry), class: 'btn btn-outline-secondary' %>
 
         <% if current_user.can_edit?("PreWelding") %>
           <%= link_to edit_project_pre_welding_path(@project, @pre_welding), class: 'btn btn-outline-primary' do %>
