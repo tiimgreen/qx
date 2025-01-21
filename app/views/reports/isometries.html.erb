@@ -76,6 +76,46 @@
     </div>
   </div>
 
+<!-- Prefabrication Progress Bar -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5>Prefabrication Progress</h5>
+      <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
+        <% total_pipe_length = @isometries.sum { |iso| iso.pipe_length&.to_f || 0 } %>
+        <% completed_pipe_length = @isometries.select { |iso| iso.prefabrication&.completed? }.sum { |iso| iso.pipe_length&.to_f || 0 } %>
+        <% prefab_percentage = total_pipe_length.zero? ? 0 : (completed_pipe_length * 100.0 / total_pipe_length).round() %>
+        <div class="progress-bar" role="progressbar" 
+             style="width: <%= prefab_percentage %>%; background-color: lawngreen;">
+        </div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+          <span style="color: #000; font-weight: 500;">
+            <%= completed_pipe_length.round(1) %>/<%= total_pipe_length.round(1) %>m 
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Assembly Progress Bar -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5>Site Assembly Progress</h5>
+      <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
+        <% site_possible = @isometries.count %>
+        <% site_completed = @isometries.count { |iso| iso.site_assembly&.completed? } %>
+        <% site_percentage = (site_completed * 100.0 / site_possible).round() %>
+        <div class="progress-bar" role="progressbar" 
+             style="width: <%= site_percentage %>%; background-color: lawngreen;">
+        </div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+          <span style="color: #000; font-weight: 500;">
+            <%= site_completed %>/<%= site_possible %> (<%= site_percentage %>%)
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Sector Progress -->
   <div class="card mb-4">
     <div class="card-body">
