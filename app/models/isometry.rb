@@ -61,7 +61,7 @@ class Isometry < ApplicationRecord
   validates :medium, presence: true
 
   # Numeric validations
-  validates :pipe_length, numericality: { greater_than: 0 }, allow_nil: true
+  validates :pipe_length, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :workshop_sn, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
   validates :assembly_sn, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
   validates :total_supports, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true

@@ -11,7 +11,7 @@ class Transport < ApplicationRecord
     attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
   end
 
-  validates :work_package_number, presence: true, uniqueness: { scope: :project_id }
+  validates :work_package_number, presence: true, uniqueness: { scope: [ :project_id, :isometry_id ] }
   validates :check_spools_status, inclusion: { in: CHECK_SPOOLS_STATUSES }
   validates :check_spools_comment, length: { maximum: 2000 }
 
