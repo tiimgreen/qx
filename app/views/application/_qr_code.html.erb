@@ -1,0 +1,19 @@
+ <% if @isometry.qr_code.attached? %>
+  <div class="d-flex align-items-center">
+    <div class="me-4">
+      <div class="text-center">
+        <%= image_tag @isometry.qr_code.variant(:thumb), class: "img-fluid mb-2" %>
+        <%= link_to rails_blob_path(@isometry.qr_code, disposition: "attachment"), 
+            class: "btn btn-sm btn-primary d-block" do %>
+          <i class="bi bi-download"></i> <%= t('common.labels.download') %>
+        <% end %>
+      </div>
+    </div>
+    <h1 class="h2 mb-0"><%= @isometry.line_id %></h1>
+  </div>
+<% else %>
+  <div class="d-flex align-items-center">
+    <p class="text-muted mb-0 me-4"><%= t('.no_qr_code') %></p>
+    <h1 class="h2 mb-0"><%= @isometry.line_id %></h1>
+  </div>
+<% end %>

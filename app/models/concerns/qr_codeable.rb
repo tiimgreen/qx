@@ -17,13 +17,54 @@ module QrCodeable
     input_pdf_file = Tempfile.new([ "input", ".pdf" ])
 
     begin
-      # Generate QR code
-      Rails.logger.info "Generating QR code"
-      qr_code_url = qr_redirect_url(isometry, locale: I18n.locale)
-      Rails.logger.info "Generated QR URL: #{qr_code_url}"
+      # Generate QR code only if needed
+      Rails.logger.info "Checking if QR code needs to be generated"
+      target = self.is_a?(IsometryDocument) ? isometry : self
+      current_url = qr_redirect_url(isometry, locale: I18n.locale)
 
-      generate_qr_code_image(qr_code_url, qr_temp_file.path)
-      Rails.logger.info "QR code image generated successfully"
+      needs_new_qr = if target.qr_code.attached?
+        # Check if the URL has changed by comparing with stored metadata
+        stored_url = target.qr_code.blob.metadata["qr_url"]
+        stored_url != current_url
+      else
+        # No QR code exists yet
+        true
+      end
+
+      if needs_new_qr
+        Rails.logger.info "Generating new QR code"
+        generate_qr_code_image(current_url, qr_temp_file.path)
+        Rails.logger.info "QR code image generated successfully"
+
+        # Attach QR code with URL metadata
+        if self.is_a?(IsometryDocument)
+          isometry.qr_code.attach(
+            io: File.open(qr_temp_file.path),
+            filename: "qr_code_#{isometry.id}.png",
+            content_type: "image/png",
+            metadata: { qr_url: current_url }
+          )
+        elsif self.is_a?(Isometry)
+          qr_code.attach(
+            io: File.open(qr_temp_file.path),
+            filename: "qr_code_#{id}.png",
+            content_type: "image/png",
+            metadata: { qr_url: current_url }
+          )
+        end
+      else
+        Rails.logger.info "Using existing QR code"
+        # Copy existing QR code to temp file for PDF processing
+        if self.is_a?(IsometryDocument)
+          isometry.qr_code.download do |content|
+            File.binwrite(qr_temp_file.path, content)
+          end
+        else
+          qr_code.download do |content|
+            File.binwrite(qr_temp_file.path, content)
+          end
+        end
+      end
 
       # Ensure the blob is persisted and analyzed
       pdf_attachment.blob.analyze if !pdf_attachment.blob.analyzed?

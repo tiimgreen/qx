@@ -51,4 +51,9 @@ class IsometryDocument < ApplicationRecord
   def project
     isometry.project
   end
+
+  # Override QrCodeable to use parent isometry's URL
+  def qr_code_url
+    Rails.application.routes.url_helpers.qr_redirect_url(isometry, Rails.application.routes.default_url_options[:host])
+  end
 end

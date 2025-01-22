@@ -7,7 +7,10 @@
 <%= render "sectors_create" %>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2"><%= @isometry.line_id %></h1>
+  <div class="d-flex align-items-center">
+    <%= render "qr_code"%>
+  </div>
+  
   <div class="btn-toolbar mb-2 mb-md-0">
     <% if current_user.can_edit?("Isometry") && @isometry.can_add_page? %>
       <%= link_to new_page_project_isometry_path(@project, @isometry), 

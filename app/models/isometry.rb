@@ -6,7 +6,7 @@ class Isometry < ApplicationRecord
   include QrCodeable
 
   def qr_code_url
-    Rails.application.routes.url_helpers.qr_redirect_url(self, host: ENV["HOST"])
+    Rails.application.routes.url_helpers.qr_redirect_url(self, host: Rails.application.routes.default_url_options[:host])
   end
 
   has_many :isometry_material_certificates, dependent: :destroy
@@ -20,6 +20,9 @@ class Isometry < ApplicationRecord
   has_many_attached :on_hold_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
     attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+  has_one_attached :qr_code do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 100, 100 ]
   end
   has_many_attached :rt_images
   has_many_attached :vt_images

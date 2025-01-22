@@ -52,6 +52,7 @@ de:
       view_sectors_info: "Um Sektor zu sehen, muss ein Benutzer in der Tabelle 'benutzerbereich' hinzugefügt werden! Auch der Benutzer muss View-Zugriff auf Projekt und Isometrie haben."
       permissions_info: "Jeder Benutzer muss in der Tabelle 'benutzerresourcen' hinzugefügt werden! Auch der Benutzer muss die richtigen Zugriffsrechte pro Sektor/Model haben."
       back_isometry: "Zur Isometrie zurück"
+      download: "Herunterladen" 
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"
