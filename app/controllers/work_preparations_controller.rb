@@ -101,7 +101,12 @@ class WorkPreparationsController < ApplicationController
   end
 
   def set_isometry
-    @isometry = @project.isometries.find(params[:work_preparation][:isometry_id]) if params[:work_preparation].present?
+    isometry_id = if params[:work_preparation].present?
+                   params[:work_preparation][:isometry_id]
+    else
+                   params[:isometry_id]
+    end
+    @isometry = @project.isometries.find(isometry_id) if isometry_id.present?
   end
 
   def work_preparation_params

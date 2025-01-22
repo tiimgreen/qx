@@ -46,6 +46,17 @@ class QrCodesController < ApplicationController
       return
     end
 
+    if sector.key == "work_preparation"
+      items = WorkPreparation.where(isometry: @isometry)
+      if items.count == 1
+        redirect_to edit_project_work_preparation_path(@isometry.project, items.first)
+      else
+        @sectors = [ sector ]
+        render :select_sector
+      end
+      return
+    end
+
     model_class = sector.key.classify.constantize rescue nil
     return redirect_to root_path, alert: t("alerts.invalid_sector_model") unless model_class
 

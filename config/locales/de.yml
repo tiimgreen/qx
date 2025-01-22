@@ -552,6 +552,10 @@ de:
     select_sector:
       select_sector: "Sektor auswählen"
       please_select_sector: "Bitte wahlen Sie den Sektor, den Sie ansehen wollen:"
+      existing_items: "Bestehende Elemente"
+      create_new: "Neu erstellen"
+      new_cutting_pipes: "Neue Zuschneidungsrohr"
+      new_small_parts: "Neue Kleinteile"
   alerts:
     isometry_not_found: "Isometrie nicht gefunden"
     no_sector_assigned: "Kein Sektor für den Benutzer zugewiesen"

@@ -10,10 +10,43 @@
           
           <div class="list-group">
             <% @sectors.each do |sector| %>
-              <%= link_to select_sector_qr_code_path(@isometry, sector_id: sector.id),
-                    class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center" do %>
-                <%= sector.name %>
-                <i class="bi bi-chevron-right"></i>
+              <% if sector.key == "work_preparation" %>
+                <div class="list-group-item">
+                  <h5 class="mb-3"><%= sector.name %></h5>
+                  
+                  <% existing_items = WorkPreparation.where(isometry: @isometry) %>
+                  <% if existing_items.any? %>
+                    <div class="mb-3">
+                      <h6><%= t('.existing_items') %></h6>
+                      <% existing_items.each do |item| %>
+                        <%= link_to edit_project_work_preparation_path(@isometry.project, item),
+                              class: "btn btn-outline-primary btn-sm me-2 mb-2" do %>
+                          <%= item.work_package_number %> (<%= t("work_preparations.types.#{item.work_preparation_type}")  %>)
+                        <% end %>
+                      <% end %>
+                    </div>
+                  <% end %>
+
+                 <% existing_types = existing_items.pluck(:work_preparation_type) %>
+                  <% available_types = WorkPreparation::WORK_PREPARATION_TYPES - existing_types %>
+                  
+                  <% if available_types.any? %>
+                    <div class="mb-3">
+                      <h6><%= t('.create_new') %></h6>
+                      <% available_types.each do |type| %>
+                        <%= link_to new_project_work_preparation_path(@isometry.project, work_preparation_type: type, isometry_id: @isometry.id),
+                              class: "btn btn-primary btn-sm me-2" do %>
+                          <%= t(".new_#{type}") %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  <% end %>
+              <% else %>
+                <%= link_to select_sector_qr_code_path(@isometry, sector_id: sector.id),
+                      class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center" do %>
+                  <%= sector.name %>
+                  <i class="bi bi-chevron-right"></i>
+                <% end %>
               <% end %>
             <% end %>
           </div>

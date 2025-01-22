@@ -575,6 +575,10 @@ en:
     select_sector:
       select_sector: "Select Sector"
       please_select_sector: "Please select which sector you would like to view this isometry in:"
+      existing_items: "Existing Items"
+      create_new: "Create New"
+      new_cutting_pipes: "New Cutting Pipes"
+      new_small_parts: "New Small Parts"
   alerts:
     isometry_not_found: "Isometry not found"
     no_sector_assigned: "No sector assigned to user"
