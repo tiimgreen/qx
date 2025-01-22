@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
 
   def isometries
     @isometries = @project.isometries.includes(
-      :work_preparation,
+      :work_preparations,
       :prefabrication,
       :pre_welding,
       :final_inspection,

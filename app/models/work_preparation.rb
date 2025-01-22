@@ -54,6 +54,17 @@ class WorkPreparation < ApplicationRecord
   # Validate image format and size
   validate :validate_image_format
 
+  # Class method to check if all work preparation types are completed for an isometry
+  def self.all_types_completed?(isometry)
+    completed_types = where(isometry: isometry).where(completed: true).pluck(:work_preparation_type)
+    (WORK_PREPARATION_TYPES - completed_types).empty?
+  end
+
+  # Instance method to get all work preparations for the same isometry
+  def sibling_preparations
+    WorkPreparation.where(isometry: isometry).where.not(id: id)
+  end
+
   private
 
   def validate_image_format

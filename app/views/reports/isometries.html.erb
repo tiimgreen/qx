@@ -64,26 +64,28 @@
   # Calculate sector completions
   sector_completions = {}
   @sector_models.each do |sector|
-    completed_isos = @isometries.select { |iso| iso.send(sector)&.completed? }
+    if sector == 'work_preparations'
+      # Special handling for work preparation where both types must be completed
+      completed_isos = @isometries.select { |iso| WorkPreparation.all_types_completed?(iso) }
+      in_progress_isos = @isometries.select { |iso| 
+        iso.work_preparations.exists?(completed: true) && !WorkPreparation.all_types_completed?(iso)
+      }
+    else
+      completed_isos = @isometries.select { |iso| iso.send(sector)&.completed? }
+      in_progress_isos = @isometries.select { |iso| iso.send(sector) && !iso.send(sector).completed? }
+    end
+
     sector_completions[sector] = {
       completed_count: completed_isos.count,
+      in_progress_count: in_progress_isos.count,
       completed_meters: completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 },
       count_percentage: (completed_isos.count * 100.0 / total_isometries).round(),
       meters_percentage: total_pipe_length.zero? ? 0 : (completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 } * 100.0 / total_pipe_length).round()
     }
   end
 
-  # Total progress calculations
-  total_possible = total_isometries * @sector_models.size
-  total_completed = @sector_models.sum { |sector| sector_completions[sector][:completed_count] }
-  total_percentage = (total_completed * 100.0 / total_possible).round()
-
-  # Calculate prefab and site assembly specific values
-  prefab_stats = sector_completions['prefabrication']
-  site_assembly_stats = sector_completions['site_assembly']
-
-  # Calculate average progress
-  average_pipe_length = ((prefab_stats[:completed_meters] + site_assembly_stats[:completed_meters]) / 2.0).round()
+  # Calculate average percentage based on completed pipe lengths from prefabrication and site assembly
+  average_pipe_length = ((sector_completions['prefabrication'][:completed_meters] + sector_completions['site_assembly'][:completed_meters]) / 2.0).round()
   average_percentage = total_pipe_length.zero? ? 0 : (average_pipe_length * 100.0 / total_pipe_length).round()
   %>
 
@@ -93,11 +95,11 @@
       <h5>Total Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
-             style="width: <%= total_percentage %>%; background-color: lawngreen;">
+             style="width: <%= total_isometries == 0 ? 0 : (sector_completions.values.sum { |sc| sc[:completed_count] } * 100.0 / (total_isometries * @sector_models.size)).round() %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= total_completed %>/<%= total_possible %> (<%= total_percentage %>%) pcs | <%= average_percentage %>%
+            <%= sector_completions.values.sum { |sc| sc[:completed_count] } %>/<%= total_isometries * @sector_models.size %> (<%= total_isometries == 0 ? 0 : (sector_completions.values.sum { |sc| sc[:completed_count] } * 100.0 / (total_isometries * @sector_models.size)).round() %>%) pcs | <%= average_percentage %>%
           </span>
         </div>
       </div>
@@ -110,11 +112,11 @@
       <h5><%= t('activerecord.models.prefabrication') %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
-             style="width: <%= prefab_stats[:meters_percentage] %>%; background-color: lawngreen;">
+             style="width: <%= sector_completions['prefabrication'][:meters_percentage] %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= prefab_stats[:completed_count] %>/<%= total_isometries %> pcs (<%= prefab_stats[:count_percentage] %>%) | <%= prefab_stats[:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= prefab_stats[:meters_percentage] %>%)
+            <%= sector_completions['prefabrication'][:completed_count] %>/<%= total_isometries %> pcs (<%= sector_completions['prefabrication'][:count_percentage] %>%) | <%= sector_completions['prefabrication'][:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= sector_completions['prefabrication'][:meters_percentage] %>%)
           </span>
         </div>
       </div>
@@ -127,11 +129,11 @@
       <h5><%= t('activerecord.models.site_assembly') %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
-             style="width: <%= site_assembly_stats[:meters_percentage] %>%; background-color: lawngreen;">
+             style="width: <%= sector_completions['site_assembly'][:meters_percentage] %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= site_assembly_stats[:completed_count] %>/<%= total_isometries %> pcs (<%= site_assembly_stats[:count_percentage] %>%) | <%= site_assembly_stats[:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= site_assembly_stats[:meters_percentage] %>%)
+            <%= sector_completions['site_assembly'][:completed_count] %>/<%= total_isometries %> pcs (<%= sector_completions['site_assembly'][:count_percentage] %>%) | <%= sector_completions['site_assembly'][:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= sector_completions['site_assembly'][:meters_percentage] %>%)
           </span>
         </div>
       </div>
@@ -194,19 +196,49 @@
             <td><%= isometry.medium %></td>
             <% @sector_models.each do |sector| %>
               <td>
-                <% if sector_record = isometry.send(sector) %>
-                  <% if sector_record.completed? %>
+                <% if sector == 'work_preparations' %>
+                  <% if WorkPreparation.all_types_completed?(isometry) %>
                     <span class="badge bg-success">Completed</span>
-                  <% else %>
+                  <% elsif isometry.work_preparations.exists?(completed: true) %>
                     <span class="badge bg-warning">In Progress</span>
+                    <div class="small mt-1">
+                      <% WorkPreparation::WORK_PREPARATION_TYPES.each do |type| %>
+                        <% wp = isometry.work_preparations.find_by(work_preparation_type: type) %>
+                        <%= t("work_preparations.types.#{type}") %>: 
+                        <% if wp&.completed? %>
+                          <span class="text-success">✓</span>
+                        <% elsif wp %>
+                          <span class="text-warning">○</span>
+                        <% else %>
+                          <span class="text-secondary">-</span>
+                        <% end %>
+                        <br>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <span class="badge bg-secondary">Not Started</span>
                   <% end %>
                 <% else %>
-                  <span class="badge bg-secondary">Not Started</span>
+                  <% if sector_record = isometry.send(sector) %>
+                    <% if sector_record.completed? %>
+                      <span class="badge bg-success">Completed</span>
+                    <% else %>
+                      <span class="badge bg-warning">In Progress</span>
+                    <% end %>
+                  <% else %>
+                    <span class="badge bg-secondary">Not Started</span>
+                  <% end %>
                 <% end %>
               </td>
             <% end %>
             <td>
-              <% completed_sectors = @sector_models.count { |sector| isometry.send(sector)&.completed? } %>
+              <% completed_sectors = @sector_models.count do |sector| 
+                if sector == 'work_preparations'
+                  WorkPreparation.all_types_completed?(isometry)
+                else
+                  isometry.send(sector)&.completed?
+                end
+              end %>
               <% total_sectors = @sector_models.size %>
               <% progress = (completed_sectors * 100.0 / total_sectors).round() %>
               <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
