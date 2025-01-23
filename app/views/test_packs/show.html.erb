@@ -21,14 +21,14 @@
             <dd class="col-sm-6"><%= @test_pack.isometry.page_number %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.revision_number') %></dt>
-            <dd class="col-sm-6"><%= @test_pack.isometry.revision_number %></dd>
+            <dd class="col-sm-6"><%= revision_status_label(@test_pack.isometry) %></dd>
 
           </dl>
         </div>
 
         <div class="col-md-6">
           <dl class="row">
-            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.pid_number') %></dt>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.pid_number') %>
             <dd class="col-sm-6"><%= @test_pack.isometry.pid_number %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.material') %></dt>

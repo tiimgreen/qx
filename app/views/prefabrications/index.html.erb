@@ -60,7 +60,7 @@
           <tr>
             <td><%= link_to prefabrication.isometry&.line_id, project_isometry_path(@project, prefabrication.isometry) %></td>
             <td><%= prefabrication.isometry.page_number %></td>
-            <td><%= prefabrication.isometry.revision_number %></td>
+            <td><%= revision_status_label(prefabrication.isometry) %></td>
             <td><%= t("work_locations.types.#{prefabrication.work_location.location_type}") if prefabrication.work_location %></td>
             <td><%= prefabrication.work_package_number %></td>
             <td><%= status_label(prefabrication.on_hold_status) %></td>

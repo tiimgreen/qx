@@ -108,7 +108,7 @@
             <td><%= isometry.work_package_number %></td>
             <td><%= isometry.system %></td>
             <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>
-            <td><span class="<%= isometry.revision_last ? 'badge bg-success text-white' : 'badge bg-danger text-white' %>"><%= isometry.revision_number %></span></td>
+            <td><%= revision_status_label(isometry) %></td>
             <td><%= isometry.material %></td>
             <td><%= l(isometry.received_date, format: :short) if isometry.received_date %></td>
             <td>

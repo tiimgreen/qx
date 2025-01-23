@@ -45,6 +45,15 @@ module ApplicationHelper
     params[:direction] == "asc" ? "\u2191" : "\u2193"
   end
 
+  def revision_status_label(isometry)
+    return unless isometry.revision_number.present?
+
+    css_class = isometry.revision_last? ? "bg-success" : "bg-danger"
+
+    content_tag(:span, isometry.revision_number,
+      class: "badge #{css_class} text-white")
+  end
+
   def status_label(status)
     return if status.blank?
 

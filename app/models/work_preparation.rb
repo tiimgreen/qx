@@ -54,15 +54,41 @@ class WorkPreparation < ApplicationRecord
   # Validate image format and size
   validate :validate_image_format
 
-  # Class method to check if all work preparation types are completed for an isometry
-  def self.all_types_completed?(isometry)
-    completed_types = where(isometry: isometry).where(completed: true).pluck(:work_preparation_type)
-    (WORK_PREPARATION_TYPES - completed_types).empty?
+  def self.completed_for?(isometry)
+    completed_count = isometry.work_preparations.count { |wp| wp.completed.present? }
+    completed_count == WORK_PREPARATION_TYPES.size
   end
 
-  # Instance method to get all work preparations for the same isometry
-  def sibling_preparations
-    WorkPreparation.where(isometry: isometry).where.not(id: id)
+  def self.in_progress_for?(isometry)
+    isometry.work_preparations.any? { |wp| wp.completed.nil? }
+  end
+
+  def self.status_for(isometry)
+    work_preparations = isometry.work_preparations
+    return :not_started if work_preparations.empty?
+
+    completed_count = work_preparations.count { |wp| wp.completed.present? }
+
+    if completed_count == WORK_PREPARATION_TYPES.size
+      :completed
+    elsif completed_count > 0 || work_preparations.any?
+      :in_progress
+    else
+      :not_started
+    end
+  end
+
+  def self.status_details_for(isometry)
+    WORK_PREPARATION_TYPES.each_with_object({}) do |type, hash|
+      tp = isometry.work_preparations.find_by(work_preparation_type: type)
+      hash[type] = if tp&.completed.present?
+                    :completed
+      elsif tp
+                    :in_progress
+      else
+                    :not_started
+      end
+    end
   end
 
   private

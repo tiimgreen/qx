@@ -64,11 +64,15 @@
   # Calculate sector completions
   sector_completions = {}
   @sector_models.each do |sector|
-    if sector == 'work_preparations'
-      # Special handling for work preparation where both types must be completed
-      completed_isos = @isometries.select { |iso| WorkPreparation.all_types_completed?(iso) }
+    if sector == 'work_preparation'
+      completed_isos = @isometries.select { |iso| WorkPreparation.completed_for?(iso) }
       in_progress_isos = @isometries.select { |iso| 
-        iso.work_preparations.exists?(completed: true) && !WorkPreparation.all_types_completed?(iso)
+        WorkPreparation.in_progress_for?(iso) && !WorkPreparation.completed_for?(iso)
+      }
+    elsif sector == 'test_pack'
+      completed_isos = @isometries.select { |iso| TestPack.completed_for?(iso) }
+      in_progress_isos = @isometries.select { |iso| 
+        TestPack.in_progress_for?(iso) && !TestPack.completed_for?(iso)
       }
     else
       completed_isos = @isometries.select { |iso| iso.send(sector)&.completed? }
@@ -95,11 +99,11 @@
       <h5>Total Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
-             style="width: <%= total_isometries == 0 ? 0 : (sector_completions.values.sum { |sc| sc[:completed_count] } * 100.0 / (total_isometries * @sector_models.size)).round() %>%; background-color: lawngreen;">
+             style="width: <%= average_percentage %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= sector_completions.values.sum { |sc| sc[:completed_count] } %>/<%= total_isometries * @sector_models.size %> (<%= total_isometries == 0 ? 0 : (sector_completions.values.sum { |sc| sc[:completed_count] } * 100.0 / (total_isometries * @sector_models.size)).round() %>%) pcs | <%= average_percentage %>%
+             <%= average_percentage %>%
           </span>
         </div>
       </div>
@@ -196,25 +200,23 @@
             <td><%= isometry.medium %></td>
             <% @sector_models.each do |sector| %>
               <td>
-                <% if sector == 'work_preparations' %>
-                  <% if WorkPreparation.all_types_completed?(isometry) %>
+                <% if sector == 'work_preparation' %>
+                  <% status = WorkPreparation.status_for(isometry) %>
+                  <% case status %>
+                  <% when :completed %>
                     <span class="badge bg-success">Completed</span>
-                  <% elsif isometry.work_preparations.exists?(completed: true) %>
+                  <% when :in_progress %>
                     <span class="badge bg-warning">In Progress</span>
-                    <div class="small mt-1">
-                      <% WorkPreparation::WORK_PREPARATION_TYPES.each do |type| %>
-                        <% wp = isometry.work_preparations.find_by(work_preparation_type: type) %>
-                        <%= t("work_preparations.types.#{type}") %>: 
-                        <% if wp&.completed? %>
-                          <span class="text-success">✓</span>
-                        <% elsif wp %>
-                          <span class="text-warning">○</span>
-                        <% else %>
-                          <span class="text-secondary">-</span>
-                        <% end %>
-                        <br>
-                      <% end %>
-                    </div>
+                  <% else %>
+                    <span class="badge bg-secondary">Not Started</span>
+                  <% end %>
+                <% elsif sector == 'test_pack' %>
+                  <% status = TestPack.status_for(isometry) %>
+                  <% case status %>
+                  <% when :completed %>
+                    <span class="badge bg-success">Completed</span>
+                  <% when :in_progress %>
+                    <span class="badge bg-warning">In Progress</span>
                   <% else %>
                     <span class="badge bg-secondary">Not Started</span>
                   <% end %>
@@ -233,8 +235,10 @@
             <% end %>
             <td>
               <% completed_sectors = @sector_models.count do |sector| 
-                if sector == 'work_preparations'
-                  WorkPreparation.all_types_completed?(isometry)
+                if sector == 'work_preparation'
+                  WorkPreparation.completed_for?(isometry)
+                elsif sector == 'test_pack'
+                  TestPack.completed_for?(isometry)
                 else
                   isometry.send(sector)&.completed?
                 end

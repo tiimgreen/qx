@@ -55,7 +55,7 @@
           <tr>
             <td><%= link_to site_assembly.isometry&.line_id, project_isometry_path(@project, site_assembly.isometry) %></td>
             <td><%= site_assembly.isometry.page_number %></td>
-            <td><%= site_assembly.isometry.revision_number %></td>
+            <td><%= revision_status_label(site_assembly.isometry) %></td>
             <td><%= site_assembly.work_package_number %></td>
             <td><%= status_label(site_assembly.on_hold_status) %></td>
             <td><%= l(site_assembly.completed, format: :short) if site_assembly.completed %></td>

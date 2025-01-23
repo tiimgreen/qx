@@ -21,7 +21,7 @@
             <dd class="col-sm-6"><%= @transport.isometry.page_number %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.revision_number') %></dt>
-            <dd class="col-sm-6"><%= @transport.isometry.revision_number %></dd>
+            <dd class="col-sm-6"><%= revision_status_label(@transport.isometry) %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.total_spools') %></dt>
             <dd class="col-sm-6"><%= @transport.isometry.total_spools %></dd>

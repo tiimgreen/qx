@@ -55,7 +55,7 @@
           <tr>
             <td><%= link_to transport.isometry&.line_id, project_isometry_path(@project, transport.isometry) %></td>
             <td><%= transport.isometry.page_number %></td>
-            <td><%= transport.isometry.revision_number %></td>
+            <td><%= revision_status_label(transport.isometry) %></td>
             <td><%= transport.work_package_number %></td>
             <td><%= status_label(transport.check_spools_status) %></td>
             <td><%= l(transport.completed, format: :short) if transport.completed %></td>

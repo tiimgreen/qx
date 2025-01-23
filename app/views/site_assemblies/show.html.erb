@@ -21,7 +21,7 @@
             <dd class="col-sm-6"><%= @site_assembly.isometry.page_number %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.isometry.revision_number') %></dt>
-            <dd class="col-sm-6"><%= @site_assembly.isometry.revision_number %></dd>
+            <dd class="col-sm-6"><%= revision_status_label(@site_assembly.isometry) %></dd>
           </dl>
         </div>
 

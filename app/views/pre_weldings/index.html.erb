@@ -60,7 +60,7 @@
           <tr>
             <td><%= link_to pre_welding.isometry&.line_id, project_isometry_path(@project, pre_welding.isometry) %></td>
             <td><%= pre_welding.isometry.page_number %></td>
-            <td><%= pre_welding.isometry.revision_number %></td>
+            <td><%= revision_status_label(pre_welding.isometry) %></td>
             <td><%= t("work_locations.types.#{pre_welding.work_location.location_type}") if pre_welding.work_location %></td>
             <td><%= pre_welding.work_package_number %></td>
             <td><%= status_label(pre_welding.on_hold_status) %></td>

@@ -53,15 +53,43 @@ class TestPack < ApplicationRecord
   validate :validate_image_format
 
 
-  # Class method to check if all work preparation types are completed for an isometry
-  def self.all_types_completed?(isometry)
-    completed_types = where(isometry: isometry).where(completed: true).pluck(:test_pack_type)
-    (TEST_PACK_TYPES - completed_types).empty?
+
+  def self.completed_for?(isometry)
+    completed_count = isometry.test_packs.count { |tp| tp.completed.present? }
+    completed_count == TEST_PACK_TYPES.size
   end
 
-  # Instance method to get all work preparations for the same isometry
-  def sibling_test_packs
-    TestPack.where(isometry: isometry).where.not(id: id)
+  def self.in_progress_for?(isometry)
+    isometry.test_packs.any? { |tp| tp.completed.nil? }
+  end
+
+
+  def self.status_for(isometry)
+    test_packs = isometry.test_packs
+    return :not_started if test_packs.empty?
+
+    completed_count = test_packs.count { |tp| tp.completed.present? }
+
+    if completed_count == TEST_PACK_TYPES.size
+      :completed
+    elsif completed_count > 0 || test_packs.any?
+      :in_progress
+    else
+      :not_started
+    end
+  end
+
+  def self.status_details_for(isometry)
+    TEST_PACK_TYPES.each_with_object({}) do |type, hash|
+      tp = isometry.test_packs.find_by(test_pack_type: type)
+      hash[type] = if tp&.completed.present?
+                    :completed
+      elsif tp
+                    :in_progress
+      else
+                    :not_started
+      end
+    end
   end
 
   private

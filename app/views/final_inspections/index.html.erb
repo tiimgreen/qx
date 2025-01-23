@@ -80,7 +80,7 @@
           <tr>
             <td><%= link_to final_inspection.isometry&.line_id, project_isometry_path(@project, final_inspection.isometry) %></td>
             <td><%= final_inspection.isometry.page_number %></td>
-            <td><%= final_inspection.isometry.revision_number %></td>
+            <td><%= revision_status_label(final_inspection.isometry)%></td>
             <td><%= t("work_locations.types.#{final_inspection.work_location.location_type}") if final_inspection.work_location %></td>
             <td><%= final_inspection.work_package_number %></td>
             <td><%= status_label(final_inspection.visual_check_status) %></td>
