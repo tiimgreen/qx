@@ -57,6 +57,17 @@ class QrCodesController < ApplicationController
       return
     end
 
+    if sector.key == "test_pack"
+      items = TestPack.where(isometry: @isometry)
+      if items.count == 1
+        redirect_to edit_project_test_pack_path(@isometry.project, items.first)
+      else
+        @sectors = [ sector ]
+        render :select_sector
+      end
+      return
+    end
+
     model_class = sector.key.classify.constantize rescue nil
     return redirect_to root_path, alert: t("alerts.invalid_sector_model") unless model_class
 

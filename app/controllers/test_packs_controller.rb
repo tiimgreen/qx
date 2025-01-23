@@ -121,9 +121,12 @@ class TestPacksController < ApplicationController
   end
 
   def set_isometry
-    if params[:test_pack].present? && params[:test_pack][:isometry_id].present?
-      @isometry = @project.isometries.find(params[:test_pack][:isometry_id])
+    isometry_id = if params[:test_pack].present?
+      params[:test_pack][:isometry_id]
+    else
+      params[:isometry_id]
     end
+    @isometry = @project.isometries.find(isometry_id) if isometry_id.present?
   end
 
   def test_pack_params
