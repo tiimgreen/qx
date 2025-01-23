@@ -130,6 +130,15 @@
 
  /* end pagy */
 
+/* Dashboard background */
+.dashboard-background {
+  background-image: url('/assets/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
 /* modal */
 .modal-body img {
   max-height: 80vh;
@@ -157,4 +166,10 @@
   display: inline-block;
   margin-left: 5px; /* Adjust the space between the input and the % sign as needed */
   vertical-align: middle; /* Aligns vertically with the input */
+}
+
+/* Table styling */
+table {
+  border-radius: 0.375rem;
+  overflow: hidden;
 }
