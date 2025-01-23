@@ -60,6 +60,13 @@ module ApplicationHelper
     content_tag(:span, status, class: "badge #{css_class} text-white")
   end
 
+  def work_preparation_type_label(work_preparation)
+    type = t("work_preparations.types.#{work_preparation.work_preparation_type}")
+    css_class = work_preparation.completed ? "bg-success" : "bg-warning"
+
+    content_tag(:span, type, class: "badge #{css_class} text-white")
+  end
+
   private
 
   def infer_field_type(object, field)
