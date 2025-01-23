@@ -126,6 +126,7 @@ en:
         pipe_length: "Pipe Length"
         workshop_sn: "Workshop SN"
         assembly_sn: "As Built SN"
+        on_site_sn: "On Site SN"
         total_sn: "Total SN"
         total_supports: "Total Supp."
         total_spools: "Total Spools"

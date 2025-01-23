@@ -89,6 +89,11 @@ module ApplicationHelper
     content_tag(:span, type, class: "badge #{css_class} text-white")
   end
 
+  def safe_percentage(numerator, denominator)
+    return 0 if denominator.zero? || numerator.nil? || denominator.nil?
+    (numerator.to_f * 100.0 / denominator.to_f).round
+  end
+
   private
 
   def infer_field_type(object, field)

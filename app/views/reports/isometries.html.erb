@@ -83,8 +83,11 @@
       completed_count: completed_isos.count,
       in_progress_count: in_progress_isos.count,
       completed_meters: completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 },
-      count_percentage: (completed_isos.count * 100.0 / total_isometries).round(),
-      meters_percentage: total_pipe_length.zero? ? 0 : (completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 } * 100.0 / total_pipe_length).round()
+      count_percentage: safe_percentage(completed_isos.count,total_isometries),
+      meters_percentage: safe_percentage(
+        completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 },
+        total_pipe_length
+      )
     }
   end
 

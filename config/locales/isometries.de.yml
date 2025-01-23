@@ -127,6 +127,7 @@ de:
         pipe_length: "Rohr"
         workshop_sn: "Werkstatt SN"
         assembly_sn: "As Built SN"
+        on_site_sn: "On Site SN"
         total_sn: "TOTAL SN"
         total_supports: "TOTAL Halt."
         total_spools: "TOTAL Spools"
