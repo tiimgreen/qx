@@ -86,8 +86,8 @@ de:
       user:
         signed_out: "Erfolgreich abgemeldet."
   dashboard:
-    title: "Ihre Arbeit, unsere Mission, eine Vision"
-    subtitle: "Produktionsmanagementsystem"
+    title: "Ihr Auftrag, unsere Mission – gemeinsam für Qualität, Innovation und eine klare Vision"
+    subtitle: "QXD - Produktionsmanagementsystem"
     welcome_message: "Ihr täglicher Arbeitsbereich für Zeitpläne, Berichte und Sicherheitsinformationen"
   helpers:
     submit:

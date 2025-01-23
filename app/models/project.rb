@@ -18,6 +18,9 @@ class Project < ApplicationRecord
 
   validates :project_number, presence: true, uniqueness: true
   validates :name, presence: true
+  validates :project_manager_client, presence: true
+  validates :project_manager_qualinox, presence: true
+  validates :project_end, presence: true
 
   scope :search_by_term, ->(search_term) {
     return all unless search_term.present?

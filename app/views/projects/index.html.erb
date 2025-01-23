@@ -24,31 +24,36 @@
             <%= sort_indicator('project_number') %>
           </th>
           <th>
-            <%= link_to t('activerecord.attributes.project.name'),
-                request.params.merge(sort: 'name', direction: (params[:sort] == 'name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('name') %>
-          </th>
-          <th>
-            <%= link_to t('activerecord.attributes.project.description'),
-                request.params.merge(sort: 'description', direction: (params[:sort] == 'description' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('description') %>
-          </th>
-          <th>
-            <%= link_to t('activerecord.attributes.project.project_manager'),
-                request.params.merge(sort: 'project_manager', direction: (params[:sort] == 'project_manager' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('project_manager') %>
-          </th>
-          <th>
             <%= link_to t('activerecord.attributes.project.client_name'),
                 request.params.merge(sort: 'client_name', direction: (params[:sort] == 'client_name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('client_name') %>
           </th>
           <th>
+            <%= link_to t('activerecord.attributes.project.name'),
+                request.params.merge(sort: 'name', direction: (params[:sort] == 'name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('name') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.project_manager_client'),
+                request.params.merge(sort: 'project_manager_client', direction: (params[:sort] == 'project_manager_client' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('project_manager_client') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.project_manager_qualinox'),
+                request.params.merge(sort: 'project_manager_qualinox', direction: (params[:sort] == 'project_manager_qualinox' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('project_manager_qualinox') %>
+          </th>
+          <th>
+            <%= link_to t('activerecord.attributes.project.project_end'),
+                request.params.merge(sort: 'project_end', direction: (params[:sort] == 'project_end' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('project_end') %>
+          </th>
+          <th><%= t('activerecord.attributes.project.created_by') %></th>
+          <th>
             <%= link_to t('activerecord.attributes.project.created_at'),
                 request.params.merge(sort: 'created_at', direction: (params[:sort] == 'created_at' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('created_at') %>
           </th>
-          <th><%= t('activerecord.attributes.project.created_by') %></th>
           <th class="text-end"><%= t('common.labels.actions') %></th>
         </tr>
       </thead>
@@ -56,12 +61,13 @@
         <% @projects.each do |project| %>
           <tr>
             <td><%= project.project_number %></td>
-            <td><%= link_to project.name, project %></td>
-            <td><%= project.description %></td>
-            <td><%= project.project_manager %></td>
             <td><%= project.client_name %></td>
-            <td><%= project.created_at.strftime("%Y-%m-%d") %></td>
+            <td><%= link_to project.name, project %></td>
+            <td><%= project.project_manager_client %></td>
+            <td><%= project.project_manager_qualinox %></td>
+            <td><%= project.project_end.strftime("%Y-%m-%d") if project.project_end %></td>
             <td><%= project.user&.name %></td>
+            <td><%= project.created_at.strftime("%Y-%m-%d") %></td>
             <td class="text-end">
               <div class="btn-group btn-group-sm">
                 <% if current_user.can_view?("Project") %>

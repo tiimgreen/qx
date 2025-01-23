@@ -54,6 +54,12 @@ module ApplicationHelper
       class: "badge #{css_class} text-white")
   end
 
+  def pressure_status_label(db_pressure, operating_pressure)
+    return db_pressure if db_pressure.to_f > operating_pressure.to_f
+
+    content_tag(:span, db_pressure, class: "badge bg-danger text-white")
+  end
+
   def status_label(status)
     return if status.blank?
 

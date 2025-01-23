@@ -49,11 +49,14 @@ de:
         active: "Aktiv"
       project:
         project_number: "Projektnummer"
-        name: "Name"
+        name: "Projektname"
         description: "Beschreibung"
         created_at: "Erstellt am"
-        project_manager: "Projektmanager"
+        project_manager_client: "Projektmanager Customer"
+        project_manager_qualinox: "Projektmanager Qualinox"
         client_name: "Kunde"
+        created_by: "Erstellt von"
+        project_end: "Projektende"
       incoming_delivery:
         project_id: "Projekt"
         delivery_date: "Lieferdatum"

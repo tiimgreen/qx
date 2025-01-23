@@ -65,17 +65,13 @@
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dp_pressure') %></dt>
             <dd class="col-sm-6">
-              <% if @test_pack.dp_pressure == @test_pack.operating_pressure %>
-                <%= @test_pack.dp_pressure %>
-              <% else %>
-                <span class="badge bg-danger text-white"><%= @test_pack.dp_pressure %></span>
-              <% end %>
+              <%= pressure_status_label(@test_pack.dp_pressure, @test_pack.operating_pressure) %>
             </dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dip_team') %></dt>
             <dd class="col-sm-6"><%= @test_pack.dip_team %></dd>
 
-            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dip_pressure') %></dt>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.dip_pressure') %>
             <dd class="col-sm-6"><%= @test_pack.dip_pressure %></dd>
 
             <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>

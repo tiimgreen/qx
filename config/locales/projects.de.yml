@@ -7,7 +7,7 @@ de:
     show:
       title: "Projektdetails"
       project_number: "Projektnummer"
-      name: "Name"
+      name: "Projektname"
       description: "Beschreibung"
       project_manager: "Projektmanager"
       client_name: "Kunde"
@@ -16,12 +16,13 @@ de:
     index:
       title: "Projekte"
       new: "Neues Projekt"
+      created_by: "Erstellt von"
     buttons:
       edit: "Bearbeiten"
       back: "Zurück"
       new: "Neues Projekt"
     attributes:
       project_number: "Projektnummer"
-      name: "Name"
+      name: "Projektname"
       description: "Beschreibung"
       created_at: "Erstellt am"

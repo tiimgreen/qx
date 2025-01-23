@@ -14,17 +14,20 @@
           <dt class="col-sm-3"><%= t('.project_number') %></dt>
           <dd class="col-sm-9"><%= @project.project_number %></dd>
 
+          <dt class="col-sm-3"><%= t('.client_name') %></dt>
+          <dd class="col-sm-9"><%= @project.client_name %></dd>
+
           <dt class="col-sm-3"><%= t('.name') %></dt>
           <dd class="col-sm-9"><%= @project.name %></dd>
 
-          <dt class="col-sm-3"><%= t('.description') %></dt>
-          <dd class="col-sm-9"><%= @project.description %></dd>
+          <dt class="col-sm-3"><%= t('.project_manager_client') %></dt>
+          <dd class="col-sm-9"><%= @project.project_manager_client%></dd>
 
-          <dt class="col-sm-3"><%= t('.project_manager') %></dt>
-          <dd class="col-sm-9"><%= @project.project_manager %></dd>
-
-          <dt class="col-sm-3"><%= t('.client_name') %></dt>
-          <dd class="col-sm-9"><%= @project.client_name %></dd>
+          <dt class="col-sm-3"><%= t('.project_manager_qualinox') %>
+          <dd class="col-sm-9"><%= @project.project_manager_qualinox %></dd>
+                    
+          <dt class="col-sm-3"><%= t('.project_end') %></dt>
+          <dd class="col-sm-9"><%= @project.project_end.strftime("%Y-%m-%d") if @project.project_end%></dd>
 
           <dt class="col-sm-3"><%= t('.created_by') %></dt>
           <dd class="col-sm-9"><%= @project.user&.name %></dd>
