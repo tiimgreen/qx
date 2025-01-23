@@ -52,6 +52,18 @@ class TestPack < ApplicationRecord
   # Validate image format and size
   validate :validate_image_format
 
+
+  # Class method to check if all work preparation types are completed for an isometry
+  def self.all_types_completed?(isometry)
+    completed_types = where(isometry: isometry).where(completed: true).pluck(:test_pack_type)
+    (TEST_PACK_TYPES - completed_types).empty?
+  end
+
+  # Instance method to get all work preparations for the same isometry
+  def sibling_test_packs
+    TestPack.where(isometry: isometry).where.not(id: id)
+  end
+
   private
 
   def validate_image_format

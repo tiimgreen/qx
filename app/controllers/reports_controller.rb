@@ -11,7 +11,7 @@ class ReportsController < ApplicationController
       :site_delivery,
       :site_assembly,
       :on_site,
-      :test_pack,
+      :test_packs,
       :sector
     ).where(deleted: false, revision_last: true)
 

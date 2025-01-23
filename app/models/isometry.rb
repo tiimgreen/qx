@@ -29,10 +29,15 @@ class Isometry < ApplicationRecord
   has_many_attached :pt_images
 
   has_many :work_preparations, dependent: :destroy
+  has_many :test_packs, dependent: :destroy
 
   # Backward compatibility method for the old has_one association
   def work_preparation
     work_preparations.first
+  end
+
+  def test_pack
+    test_packs.first
   end
 
   has_one :prefabrication, dependent: :destroy
