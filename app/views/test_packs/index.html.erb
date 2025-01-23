@@ -99,7 +99,7 @@
             <td><%= test_pack.isometry.revision_number %></td>
             <td><%= t("work_locations.types.#{test_pack.work_location.location_type}") if test_pack.work_location %></td>
             <td><%= test_pack.work_package_number %></td>
-            <td><%= t("test_packs.types.#{test_pack.test_pack_type}") if test_pack.test_pack_type %></td>
+            <td><%= test_pack_type_label(test_pack) %></td>
             <td><%= test_pack.dp_team %></td>
             <td><%= test_pack.operating_pressure %></td>
             <td>              

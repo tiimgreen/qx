@@ -67,6 +67,13 @@ module ApplicationHelper
     content_tag(:span, type, class: "badge #{css_class} text-white")
   end
 
+  def test_pack_type_label(test_pack)
+    type = t("test_packs.types.#{test_pack.test_pack_type}")
+    css_class = test_pack.completed ? "bg-success" : "bg-warning"
+
+    content_tag(:span, type, class: "badge #{css_class} text-white")
+  end
+
   private
 
   def infer_field_type(object, field)
