@@ -15,7 +15,7 @@ de:
     new:
       title: "Neue Isometrie"
     edit:
-      title: "Isometrie bearbeiten"
+      title: "Isometrie bearbeiten: %{line_id}"
     show:
       title: "Isometrie Details"
       technical_specs: "Technische Spezifikationen"
