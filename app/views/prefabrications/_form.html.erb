@@ -73,7 +73,7 @@
   <div class="row mt-3">
     <div class="col-12">
       <div class="d-flex justify-content-between">
-        <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-primary' %>
           <% if @prefabrication.persisted? && @prefabrication.completed.nil? && !@prefabrication.on_hold? %>
             <%= link_to complete_project_prefabrication_path(@project, @prefabrication),
                       method: :patch,

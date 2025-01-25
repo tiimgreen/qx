@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><%= t('.title') %></h1>
+    <h1 class="text-white"><%= t('.title') %></h1>
     <%= link_to t('.new_certificate'),
         new_material_certificate_path,
         class: 'btn btn-primary' %>
@@ -12,7 +12,7 @@
                         class: 'form-control',
                         placeholder: t('common.labels.search_placeholder') %>
       <div class="input-group-append">
-        <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+        <%= submit_tag t('common.labels.search_button'), class: 'btn btn-primary m-1' %>
       </div>
     </div>
   <% end %>
@@ -75,7 +75,7 @@
               <% end %>
               
               <% if current_user.can_edit?("MaterialCertificate") %>
-                <%= link_to edit_material_certificate_path(certificate), class: "btn btn-sm btn-outline-secondary me-1" do %>
+                <%= link_to edit_material_certificate_path(certificate), class: "btn btn-sm btn-primary me-1" do %>
                   <i class="bi bi-pencil"></i>
                 <% end %>
               <% end %>

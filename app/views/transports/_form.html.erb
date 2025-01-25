@@ -87,7 +87,7 @@
   <div class="row mt-3">
     <div class="col-12">
       <div class="d-flex justify-content-between">
-        <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-primary' %>
           <% if @transport.persisted? && @transport.completed.nil? && !@transport.failed? %>
             <%= link_to complete_project_transport_path(@project, @transport),
                       method: :patch,

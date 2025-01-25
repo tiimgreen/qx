@@ -73,7 +73,7 @@
   <div class="row mt-3">
     <div class="col-12">
       <div class="d-flex justify-content-between">
-        <%= link_to t('common.labels.back'), project_pre_weldings_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back'), project_pre_weldings_path(@project), class: 'btn btn-primary' %>
           <% if @pre_welding.persisted? && @pre_welding.completed.nil? && !@pre_welding.on_hold? %>
             <%= link_to complete_project_pre_welding_path(@project, @pre_welding),
                       method: :patch,

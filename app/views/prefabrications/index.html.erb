@@ -6,7 +6,7 @@
 
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><%= t('.title_for_project', project: @project.name) %></h1>
+    <h1 class="text-white"><%= t('.title_for_project', project: @project.name) %></h1>
   </div>
 
   <div class="row mb-4">
@@ -17,7 +17,7 @@
                             class: 'form-control',
                             placeholder: t('common.labels.search_placeholder') %>
           <div class="input-group-append">
-            <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+            <%= submit_tag t('common.labels.search_button'), class: 'btn btn-primary m-1' %>
           </div>
         </div>
       <% end %>
@@ -73,7 +73,7 @@
                 <% end %>
               <% end %>
               <% if current_user.can_edit?("Prefabrication") %>
-                <%= link_to edit_project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-outline-secondary' do %>
+                <%= link_to edit_project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-primary' do %>
                   <i class="bi bi-pencil"></i>
                 <% end %>
               <% end %>

@@ -119,7 +119,7 @@
   <div class="row mt-3">
     <div class="col-12">
       <div class="d-flex justify-content-between">
-        <%= link_to t('common.labels.back'), project_test_packs_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back'), project_test_packs_path(@project), class: 'btn btn-primary' %>
           <% if @test_pack.persisted? && @test_pack.completed.nil? && !@test_pack.on_hold? %>
             <%= link_to complete_project_test_pack_path(@project, @test_pack),
                       method: :patch,

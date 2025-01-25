@@ -139,6 +139,19 @@
   min-height: 100vh;
 }
 
+.radius-7 {
+  border-radius: var(--bs-border-radius);
+}
+.navbar-transparent {
+  background-color: rgba(var(--bs-primary-rgb), 0.5) !important;
+  color: white;
+}
+.nav-link {
+  color: white !important;
+}
+.nav-link:hover {
+  color: white;
+}
 /* modal */
 .modal-body img {
   max-height: 80vh;

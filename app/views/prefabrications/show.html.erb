@@ -117,8 +117,8 @@
 
     <div class="card-footer">
       <div class="d-flex justify-content-between">
-        <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-outline-secondary' %>
-        <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @prefabrication.isometry), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back'), project_prefabrications_path(@project), class: 'btn btn-primary' %>
+        <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @prefabrication.isometry), class: 'btn btn-primary' %>
 
         <% if current_user.can_edit?("Prefabrication") %>
           <%= link_to edit_project_prefabrication_path(@project, @prefabrication), class: 'btn btn-outline-primary' do %>

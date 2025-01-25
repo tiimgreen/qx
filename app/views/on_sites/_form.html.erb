@@ -64,7 +64,7 @@
   <div class="row mt-3">
     <div class="col-12">
       <div class="d-flex justify-content-between">
-        <%= link_to t('common.labels.back'), project_on_sites_path(@project), class: 'btn btn-outline-secondary' %>
+        <%= link_to t('common.labels.back'), project_on_sites_path(@project), class: 'btn btn-primary' %>
           <% if @on_site.persisted? && @on_site.completed.nil? && !@on_site.on_hold? %>
             <%= link_to complete_project_on_site_path(@project, @on_site),
                       method: :patch,

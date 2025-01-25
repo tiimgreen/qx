@@ -29,7 +29,7 @@
       <% end %>
     <% end %>
     <% if current_user.can_edit?("Isometry") %>
-      <%= link_to edit_project_isometry_path(@project, @isometry), class: "btn btn-sm btn-outline-secondary me-2" do %>
+      <%= link_to edit_project_isometry_path(@project, @isometry), class: "btn btn-sm btn-primary me-2" do %>
         <i class="bi bi-pencil"></i> <%= t('common.actions.edit') %>
       <% end %>
     <% end %>

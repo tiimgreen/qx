@@ -5,7 +5,7 @@
 
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><%= t('.title_for_project', project: @project.name) %></h1>
+    <h1 class="text-white"><%= t('.title_for_project', project: @project.name) %></h1>
   </div>
 
   <div class="row mb-4">
@@ -18,7 +18,7 @@
                               placeholder: t('common.labels.search_placeholder') %>
             <%= hidden_field_tag :revision_filter, params[:revision_filter] %>
             <div class="input-group-append">
-              <%= submit_tag t('common.labels.search_button'), class: 'btn btn-outline-secondary m-1' %>
+              <%= submit_tag t('common.labels.search_button'), class: 'btn btn-primary m-1' %>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@
               <% %>
               <% if current_user.can_view?("Isometry") %>
                 <%= link_to project_isometry_path(@project, isometry), 
-                  class: "btn btn-sm btn-outline-secondary #{ isometry.page_number == 1 && isometry.revision_last? ? 'btn bg-success text-white' : ''}" do %>
+                  class: "btn btn-sm btn-primary #{ isometry.page_number == 1 && isometry.revision_last? ? 'btn bg-success text-white' : ''}" do %>
                   <i class="bi bi-eye"></i>
                 <% end %>
               <% end %>

@@ -8,7 +8,7 @@
     <h1 class="h2"><%= @material_certificate.certificate_number %></h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <% if current_user.can_edit?("MaterialCertificate") %>
-        <%= link_to edit_material_certificate_path(@material_certificate), class: "btn btn-sm btn-outline-secondary me-2" do %>
+        <%= link_to edit_material_certificate_path(@material_certificate), class: "btn btn-sm btn-primary me-2" do %>
           <i class="bi bi-pencil"></i>
         <% end %>
       <% end %>

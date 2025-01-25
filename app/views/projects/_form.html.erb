@@ -47,7 +47,7 @@
         <%= form.label :project_end, class: 'form-label' %>
         <div class="input-group">
           <%= form.date_field :project_end, class: 'form-control', required: true, value: Date.current %>
-          <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('project_project_end').value = new Date().toISOString().split('T')[0]">
+          <button type="button" class="btn btn-primary" onclick="document.getElementById('project_project_end').value = new Date().toISOString().split('T')[0]">
             Today
           </button>
         </div>
