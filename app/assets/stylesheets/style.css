@@ -142,6 +142,12 @@
 .radius-7 {
   border-radius: var(--bs-border-radius);
 }
+.white-bg {
+  background-color: white;
+}
+.radius-7 {
+  border-radius: var(--bs-border-radius);
+}
 .navbar-transparent {
   background-color: rgba(var(--bs-primary-rgb), 0.5) !important;
   color: white;

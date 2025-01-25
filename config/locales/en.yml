@@ -103,6 +103,8 @@ en:
       download: "Download"
       close: "Close"
       delivery_notes: "Delivery Notes"
+    edit:
+      title: "Incoming Delivery Edit: %{order_number}"  
   sectors:
     project: "Project"
     project_description: "Project-related activities"
