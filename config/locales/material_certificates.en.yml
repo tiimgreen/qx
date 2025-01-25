@@ -31,7 +31,7 @@ en:
     new:
       title: "New Material Certificate"
     edit:
-      title: "Edit Material Certificate"
+      title: "Material Certificate Edit: %{certificate_number}"
     create:
       success: "Material certificate was successfully created"
     update:

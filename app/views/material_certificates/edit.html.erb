@@ -1,9 +1,15 @@
-<!-- app/views/material_certificates/edit.html.erb -->
+<%= render 'breadcrumb', breadcrumbs: [
+  { text: t('navigation.menu.material_certificates.title')},
+  { text: @material_certificate.certificate_number},
+  { text: t('common.labels.edit') }
+] %>
+
 <div class="container mt-4">
   <div class="card">
     <div class="card-header">
-      <h2>Edit Material Certificate</h2>
+      <h2 class="mb-0"><%= t('.title', certificate_number: @material_certificate.certificate_number) %></h2>
     </div>
+
     <div class="card-body">
       <%= render 'form' %>
     </div>

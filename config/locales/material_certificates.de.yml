@@ -10,7 +10,7 @@ de:
     new:
       title: "Neues Werkzeugnis"
     edit:
-      title: "Werkzeugnis bearbeiten"
+      title: "Materialzertifikate bearbeiten: %{certificate_number}"
     index:
       title: "Materialzertifikate"
       new_certificate: "Neues Zertifikat"
