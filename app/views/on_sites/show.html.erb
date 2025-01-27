@@ -60,6 +60,7 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.completed') %></dt>
             <dd class="col-sm-6"><%= l(@on_site.completed, format: :long) if @on_site.completed %></dd>
           </dl>
+            <%= render partial: 'application/image_gallery', locals: { images: @on_site.images } %>
         </div>
 
         <div class="col-md-6">

@@ -55,6 +55,8 @@ class ImagesController < ApplicationController
         case image_type
         when "on_hold"
           model.on_hold_images
+        when "images"
+          model.images
         end
       when "FinalInspection"
         case image_type

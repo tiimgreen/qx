@@ -89,9 +89,10 @@ Rails.application.routes.draw do
       end
       resources :on_sites do
         member do
-          patch :complete
-          delete "delete_image/:image_id", action: :delete_image, as: :delete_image
+          delete :delete_image
+          post :complete
         end
+        delete "images/:id", to: "images#destroy", as: :image
       end
       resources :test_packs do
         member do

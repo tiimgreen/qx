@@ -55,6 +55,7 @@ de:
       download: "Herunterladen" 
       "yes": "Ja"
       "no": "Nein"
+      images: "Bilder"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"

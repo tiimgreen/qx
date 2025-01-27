@@ -57,6 +57,7 @@ en:
       download: "Download"
       yes: "Yes"
       no: "No"
+      images: "Images"
     buttons:
       cancel: "Cancel"
       delete: "Delete"

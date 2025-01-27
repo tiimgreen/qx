@@ -39,7 +39,23 @@
           <div class="dropdown-menu w-100" data-work-package-search-target="results"></div>
         </div>
       </div>
-        <div class="mb-3">
+
+      <% if Rails.env.development? %>
+      <div class="mb-3">
+        <%= f.label t('common.labels.images'), class: 'form-label' %>
+        <%= f.file_field :images, multiple: true, class: 'form-control', accept: 'image/*' %>
+
+        <% if f.object.respond_to?(:images) && f.object.images.attached? %>
+          <%= render partial: 'images', locals: { 
+            images: f.object.images, 
+            image_type: 'images',
+            edit_mode: true,
+            model_type: f.object
+          } %>
+        <% end %>
+      </div>
+<% end %>
+      <div class="mb-3">
       <% if @on_site.persisted? && @on_site.completed? %>
 
           <%= f.label :completed, class: 'form-label' %>

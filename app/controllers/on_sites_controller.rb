@@ -41,6 +41,7 @@ class OnSitesController < ApplicationController
 
       # Handle image attachments separately
       attach_on_hold_images if params.dig(:on_site, :on_hold_images).present?
+      attach_images if params.dig(:on_site, :images).present?
 
       if @on_site.save
         redirect_to project_on_site_path(@project, @on_site),
@@ -62,6 +63,7 @@ class OnSitesController < ApplicationController
     def update
       on_hold_params(params)
       attach_on_hold_images if params.dig(:on_site, :on_hold_images).present?
+      attach_images if params.dig(:on_site, :images).present?
 
       if @on_site.update(on_site_params_without_images)
         redirect_to project_on_site_path(@project, @on_site),
@@ -128,19 +130,31 @@ class OnSitesController < ApplicationController
         :completed,
         :isometry_id,
         :total_time,
-        on_hold_images: []
+        on_hold_images: [],
+        images: []
       )
     end
 
     def on_site_params_without_images
-      on_site_params.except(:on_hold_images)
+      params.require(:on_site).permit(
+        :work_package_number,
+        :on_hold_status,
+        :on_hold_comment,
+        :on_hold_date,
+        :isometry_id,
+        :project_id
+      )
     end
 
     def attach_on_hold_images
-      return unless params.dig(:on_site, :on_hold_images).present?
-
-      params[:on_site][:on_hold_images].each do |image|
+      Array(params[:on_site][:on_hold_images]).each do |image|
         @on_site.on_hold_images.attach(image)
+      end
+    end
+
+    def attach_images
+      Array(params[:on_site][:images]).each do |image|
+        @on_site.images.attach(image)
       end
     end
 
