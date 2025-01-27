@@ -198,6 +198,20 @@ table {
   border-radius: 4px;
 }
 
+.table-responsive .table.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f0f7ff !important;
+}
+
+.table-responsive .table.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-accent-bg: transparent !important;
+  background-color: rgb(254 254 255 / 0%) !important;
+}
+
+.table-responsive .table.table-hover > tbody > tr:hover {
+  background-color: lightskyblue !important;
+}
+
+
 .pagy {
   display: flex;
   font-family: sans-serif;
