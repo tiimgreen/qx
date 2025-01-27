@@ -150,6 +150,7 @@ class TestPacksController < ApplicationController
       :isometry_id,
       :total_time,
       :project_id,
+      :one_test,
       on_hold_images: []
     )
   end

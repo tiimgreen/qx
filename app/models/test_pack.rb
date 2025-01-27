@@ -49,12 +49,21 @@ class TestPack < ApplicationRecord
     on_hold_status == "On Hold"
   end
 
+  def one_test?
+    one_test
+  end
+
+  def completed?
+    completed.present?
+  end
+
   # Validate image format and size
   validate :validate_image_format
 
 
 
   def self.completed_for?(isometry)
+    return true if isometry.test_packs.any? { |tp| tp.one_test? && tp.completed? }
     completed_count = isometry.test_packs.count { |tp| tp.completed.present? }
     completed_count == TEST_PACK_TYPES.size
   end
@@ -68,11 +77,15 @@ class TestPack < ApplicationRecord
     test_packs = isometry.test_packs
     return :not_started if test_packs.empty?
 
-    completed_count = test_packs.count { |tp| tp.completed.present? }
-
-    if completed_count == TEST_PACK_TYPES.size
+    if test_packs.any? { |tp| tp.one_test? && tp.completed? }
       :completed
-    elsif completed_count > 0 || test_packs.any?
+    elsif completed_count = test_packs.count { |tp| tp.completed.present? }
+      if completed_count == TEST_PACK_TYPES.size
+        :completed
+      else
+        :in_progress
+      end
+    elsif test_packs.any?
       :in_progress
     else
       :not_started

@@ -54,6 +54,9 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.work_package_number') %></dt>
             <dd class="col-sm-6"><%= @test_pack.work_package_number %></dd>
 
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.one_test') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.one_test ? t('common.labels.yes') : t('common.labels.no') %></dd>
+
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.test_pack_type') %></dt>
             <dd class="col-sm-6"><%= t("test_packs.types.#{@test_pack.test_pack_type}") if @test_pack.test_pack_type %></dd>
 

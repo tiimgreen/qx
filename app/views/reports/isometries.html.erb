@@ -72,7 +72,7 @@
     elsif sector == 'test_pack'
       completed_isos = @isometries.select { |iso| TestPack.completed_for?(iso) }
       in_progress_isos = @isometries.select { |iso| 
-        TestPack.in_progress_for?(iso) && !TestPack.completed_for?(iso)
+        !TestPack.completed_for?(iso) && TestPack.in_progress_for?(iso)
       }
     else
       completed_isos = @isometries.select { |iso| iso.send(sector)&.completed? }

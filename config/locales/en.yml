@@ -231,7 +231,8 @@ en:
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Comment"
         on_hold_date: "On Hold Date"
-        on_hold_images: "On Hold Images"        
+        on_hold_images: "On Hold Images"
+        one_test: "One Test Only"
       prefabrication:
         work_location: "Work Location"
         work_package_number: "Work Package Number"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_23_091152) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_27_030719) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -393,6 +393,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_23_091152) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "isometry_id"
+    t.boolean "one_test", default: false
     t.index ["isometry_id"], name: "index_test_packs_on_isometry_id"
   end
 

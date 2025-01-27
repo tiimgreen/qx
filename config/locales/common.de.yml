@@ -53,6 +53,8 @@ de:
       permissions_info: "Jeder Benutzer muss in der Tabelle 'benutzerresourcen' hinzugefügt werden! Auch der Benutzer muss die richtigen Zugriffsrechte pro Sektor/Model haben."
       back_isometry: "Zur Isometrie zurück"
       download: "Herunterladen" 
+      "yes": "Ja"
+      "no": "Nein"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"
