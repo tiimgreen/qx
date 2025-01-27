@@ -17,10 +17,12 @@ class IncomingDeliveriesController < ApplicationController
     sort_column = sort_params || "delivery_date"
     sort_direction = params[:direction] || "desc"
 
-    @incoming_deliveries = base_scope
-      .includes(:project, :work_location)
-      .search_by_term(params[:search])
-      .order(sort_column => sort_direction)
+    @pagy, @incoming_deliveries = pagy(
+      base_scope
+        .includes(:project, :work_location)
+        .search_by_term(params[:search])
+        .order(sort_column => sort_direction)
+    )
   end
 
   def show

@@ -33,7 +33,7 @@ class IsometriesController < ApplicationController
     sort_column = sort_params || "received_date"
     sort_direction = params[:direction] || "desc"
 
-    @isometries = @isometries.order(sort_column => sort_direction)
+    @pagy, @isometries = pagy(@isometries.order(sort_column => sort_direction))
   end
 
   def show
