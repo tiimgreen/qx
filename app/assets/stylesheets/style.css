@@ -204,7 +204,7 @@ table {
 
 .table-responsive .table.table-striped > tbody > tr:nth-of-type(odd) > * {
   --bs-table-accent-bg: transparent !important;
-  background-color: rgb(254 254 255 / 0%) !important;
+  background-color: rgba(254 254 255 / 0%) !important;
 }
 
 .table-responsive .table.table-hover > tbody > tr:hover {
