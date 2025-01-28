@@ -8,13 +8,26 @@ class SiteAssembliesController < ApplicationController
   before_action :authorize_action!
 
   def index
-    sort_column = sort_params || "created_at"
-    sort_direction = params[:direction] || "desc"
+    base_scope = @project.site_assemblies.includes(isometry: [ :project, :sector ])
 
-    @pagy, @site_assemblies = pagy(
-      @project.site_assemblies.search_by_term(params[:search])
-            .order(sort_column => sort_direction)
-    )
+    if params[:search].present?
+      base_scope = base_scope.search_by_term(params[:search])
+    end
+
+    sort_column = sort_params || "line_id"  # Default sort by line_id
+    sort_direction = params[:direction] || "asc"
+
+    # If using default sort (line_id), add secondary sorts for page_number and id
+    @site_assemblies = if sort_column == "line_id"
+      base_scope.joins(:isometry)
+               .reorder("isometries.line_id #{sort_direction}")
+               .order("isometries.page_number #{sort_direction}")
+               .order("isometries.id ASC")  # Always show older isometries first within same line/page
+    else
+      base_scope.reorder(sort_column => sort_direction)
+    end
+
+    @pagy, @site_assemblies = pagy(@site_assemblies)
   end
 
   def show
@@ -97,9 +110,8 @@ class SiteAssembliesController < ApplicationController
   private
   def sort_params
     allowed_columns = %w[
-      work_package_number
-      on_hold_status
-      completed
+      line_id work_package_number page_number
+      created_at completed on_hold_status
     ]
     params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
   end

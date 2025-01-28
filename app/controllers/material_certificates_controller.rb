@@ -6,7 +6,7 @@ class MaterialCertificatesController < ApplicationController
 
   def index
     sort_column = sort_params || "created_at"
-    sort_direction = params[:direction] || "desc"
+    sort_direction = params[:direction] || "asc"
 
     @pagy, @material_certificates = pagy(
       MaterialCertificate.search_by_term(params[:search])
@@ -17,7 +17,7 @@ class MaterialCertificatesController < ApplicationController
   def search
     query = (params[:q] || params[:query])&.strip&.downcase
     @certificates = if query.present?
-      MaterialCertificate.where("LOWER(batch_number) LIKE ? OR LOWER(certificate_number) LIKE ?", 
+      MaterialCertificate.where("LOWER(batch_number) LIKE ? OR LOWER(certificate_number) LIKE ?",
                                "%#{query}%", "%#{query}%")
                         .limit(10)
     else
@@ -25,7 +25,7 @@ class MaterialCertificatesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render json: @certificates.as_json(only: [:id, :batch_number, :certificate_number]) }
+      format.json { render json: @certificates.as_json(only: [ :id, :batch_number, :certificate_number ]) }
     end
   end
 
