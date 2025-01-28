@@ -32,6 +32,7 @@ class DeliveryItemsController < ApplicationController
     @delivery_item.on_hold_date = Time.current if @delivery_item.on_hold_status == "On Hold"
 
     if @delivery_item.save
+      @incoming_delivery.update_completion_status
       redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                   notice: t("common.messages.created", model: DeliveryItem.model_name.human)
     else
@@ -75,6 +76,7 @@ class DeliveryItemsController < ApplicationController
       project_incoming_delivery_delivery_item_path(@project, @incoming_delivery, @delivery_item),
       delivery_item_params
     )
+    @incoming_delivery.update_completion_status
   end
 
   def delete_image

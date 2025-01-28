@@ -89,6 +89,8 @@ class IncomingDelivery < ApplicationRecord
       return false if check_statuses.any? { |status| status == "Failed" }
     end
 
+    return false if delivery_items.map(&:completed).any?(false)
+
     true
   end
 end
