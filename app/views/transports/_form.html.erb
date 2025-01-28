@@ -55,32 +55,35 @@
     <div class="col-md-8">
       <%= render "isometry_details", isometry: @isometry %>
       
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <%= f.label :check_spools_status, t('activerecord.attributes.transport.check_spools_status'), class: 'form-label' %>
-                <%= f.select :check_spools_status, Transport::CHECK_SPOOLS_STATUSES, { include_blank: false }, class: 'form-control' %>
+      
+      <% if f.object.persisted? %>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.label :check_spools_status, t('activerecord.attributes.transport.check_spools_status'), class: 'form-label' %>
+                  <%= f.select :check_spools_status, Transport::CHECK_SPOOLS_STATUSES, { include_blank: false }, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <%= f.label :check_spools_images, t('activerecord.attributes.transport.check_spools_images'), class: 'form-label' %>
+                <%= f.file_field :check_spools_images, multiple: true, class: 'form-control' %>
               </div>
             </div>
-            <div class="col-md-6">
-              <%= f.label :check_spools_images, t('activerecord.attributes.transport.check_spools_images'), class: 'form-label' %>
-              <%= f.file_field :check_spools_images, multiple: true, class: 'form-control' %>
-            </div>
-          </div>
-          
-          <%= render partial: 'images', locals: { 
-            images: f.object.check_spools_images, 
-            image_type: 'check_spools',
-            edit_mode: true,
-            model_type: f.object
-          } %>
+            
+            <%= render partial: 'images', locals: { 
+              images: f.object.check_spools_images, 
+              image_type: 'check_spools',
+              edit_mode: true,
+              model_type: f.object
+            } %>
 
-          <%= f.text_area :check_spools_comment, class: 'form-control mt-2', rows: 2,
-                          placeholder: t('activerecord.attributes.transport.check_spools_comment') %>
+            <%= f.text_area :check_spools_comment, class: 'form-control mt-2', rows: 2,
+                            placeholder: t('activerecord.attributes.transport.check_spools_comment') %>
+          </div>
         </div>
-      </div>
+      <% end %>
 
   </div>
 
@@ -88,13 +91,17 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-primary' %>
+
           <% if @transport.persisted? && @transport.completed.nil? && !@transport.failed? %>
-            <%= link_to complete_project_transport_path(@project, @transport),
+            <%= button_to complete_project_transport_path(@project, @transport),
                       method: :patch,
                       class: 'btn btn-success',
+                      disabled: true,
+                      form_class: 'd-inline-block',
                       data: { 
                         turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete_warning') 
+                        turbo_confirm: t('common.messages.confirm_complete_warning'),
+                        spool_confirmation_target: "completeButton"
                       } do %>
               <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
             <% end %>
@@ -105,7 +112,7 @@
                       spool_confirmation_target: "submitButton",
                       disable_with: t('common.actions.saving')
                     },
-                    disabled: true %>
+                    disabled: !@transport.persisted? && action_name == 'edit' %> 
       </div>
     </div>
   </div>

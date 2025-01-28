@@ -12,7 +12,7 @@ class Transport < ApplicationRecord
   end
 
   validates :work_package_number, presence: true, uniqueness: { scope: [ :project_id, :isometry_id ] }
-  validates :check_spools_status, inclusion: { in: CHECK_SPOOLS_STATUSES }
+  validates :check_spools_status, inclusion: { in: CHECK_SPOOLS_STATUSES }, on: :update
   validates :check_spools_comment, length: { maximum: 2000 }
 
   scope :search_by_term, ->(search_term) {
