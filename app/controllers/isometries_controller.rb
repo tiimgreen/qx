@@ -30,10 +30,19 @@ class IsometriesController < ApplicationController
       @isometries = @isometries.search_by_term(params[:search])
     end
 
-    sort_column = sort_params || "received_date"
-    sort_direction = params[:direction] || "desc"
+    sort_column = sort_params || "line_id"  # Change default sort to line_id
+    sort_direction = params[:direction] || "asc"
 
-    @pagy, @isometries = pagy(@isometries.order(sort_column => sort_direction))
+    # If using default sort (line_id), add secondary sorts for page_number and id
+    if sort_column == "line_id"
+      @isometries = @isometries.reorder(line_id: sort_direction)
+                              .order(page_number: sort_direction)
+                              .order(id: :asc)  # Always show older isometries first within same line/page
+    else
+      @isometries = @isometries.reorder(sort_column => sort_direction)
+    end
+
+    @pagy, @isometries = pagy(@isometries)
   end
 
   def show
@@ -293,11 +302,9 @@ class IsometriesController < ApplicationController
 
   def sort_params
     allowed_columns = %w[
-      received_date
-      line_id
-      pid_number
-      system
-      revision_number
+      line_id work_package_number system pid_number
+      material medium pipe_class revision_number
+      page_number page_total
       on_hold_status
     ]
     params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
