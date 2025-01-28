@@ -130,6 +130,11 @@
 
  /* end pagy */
 
+.l-4 {
+  top: 1rem;
+  bottom: 1rem;
+}
+
 /* Dashboard background */
 .dashboard-background {
   background-image: url('/saturation.jpg');
@@ -196,6 +201,9 @@ table {
 .logo {
   background-color: #fff;
   border-radius: 4px;
+}
+.mt-10 {
+  margin-top: 10rem;
 }
 
 .table-responsive .table.table-striped > tbody > tr:nth-of-type(odd) {

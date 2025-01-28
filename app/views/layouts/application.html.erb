@@ -19,11 +19,42 @@
   </head>
 
   <body>
-    <%= render "navbar" %>
-    <div class="container">
-      <%= render "flash_messages" %>
+    <style>
+      .dashboard-video-background {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+        object-fit: cover;
+      }
 
-      <%= yield %>
+      .dashboard-content {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+      }
+    </style>
+
+    <video autoplay muted loop playsinline class="dashboard-video-background">
+      <source src="/video.mov" type="video/mp4">
+      <source src="/video.mov" type="video/quicktime">
+      <source src="/video.mov" type="video/x-quicktime">
+      Your browser does not support the video tag.
+    </video>
+    <div class="dashboard-content">
+      <div class="container mb-4">
+        <%= render "navbar" %>
+      </div>
+      <div class="container">
+        <%= render "flash_messages" %>
+        <%= yield %>
+      </div>
     </div>
   </body>
 </html>
