@@ -58,8 +58,10 @@
       </div>
       <!-- Main Content -->
       <div class="container">
+        <% if user_signed_in? %>
         <div class="text-x-small text-white text-center"><%= t('common.labels.permissions_info') %></div>
-
+        <% end %>
+        
         <%= render "flash_messages" %>
 
         <%= yield %>

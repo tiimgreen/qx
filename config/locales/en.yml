@@ -8,6 +8,8 @@ en:
     contact: "Contact"
     admin: "Admin"
     profile: "Profile"
+    sign_in: "Sign In"
+    guest_sign_in: "Guest Sign In"
     sign_out: "Sign Out"
     menu:
       projects:

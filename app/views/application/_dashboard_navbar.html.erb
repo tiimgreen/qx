@@ -88,6 +88,15 @@
                   <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
                 </div>
               </li>
+            <% elsif guest_signed_in? %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                  <%= current_guest.full_name %>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <%= button_to 'Sign Out', destroy_guest_session_path, method: :delete, class: 'dropdown-item' %>
+                </div>
+              </li>
             <% else %>
               <li class="nav-item">
                 <%= link_to 'Sign In', new_user_session_path, class: 'nav-link' %>

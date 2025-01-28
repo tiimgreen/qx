@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
     get "/qr/:isometry_id", to: "qr_codes#redirect", as: :qr_redirect
 
-    devise_for :guests
+    devise_for :guests, controllers: {
+      sessions: "guests/sessions"
+    }
     devise_for :users
     devise_for :admins
     authenticate :admin do

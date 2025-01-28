@@ -7,6 +7,10 @@ class HomeController < ApplicationController
   private
 
   def dashboard_redirect
-    redirect_to dashboard_path if user_signed_in?
+    if user_signed_in?
+      redirect_to dashboard_path
+    elsif guest_signed_in?
+      redirect_to project_isometries_report_path(current_guest.project)
+    end
   end
 end

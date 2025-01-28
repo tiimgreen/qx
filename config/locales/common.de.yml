@@ -25,6 +25,7 @@ de:
         complete: "Fehler beim Abschließen von %{model}"
       pending_deliveries: "Bitte beenden Sie Ihre aktuelle Lieferung, bevor Sie eine neue erstellen"
       errors:
+      not_authorized: "Sie sind nicht berechtigt, diese Aktion auszuführen"
     labels:
       created_by: "Erstellt von"
       actions: "Aktionen"

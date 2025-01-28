@@ -27,6 +27,7 @@ en:
       errors:
         one: "1 error prohibited this record from being saved"
         other: "%{count} errors prohibited this record from being saved"
+      not_authorized: "You are not authorized to perform this action"
     labels:
       created_by: "Created By"
       actions: "Actions"

@@ -1,5 +1,8 @@
 class ReportsController < ApplicationController
+  layout "dashboard_layout"
+  before_action :authenticate_user_or_guest!
   before_action :set_project, only: [ :isometries ]
+  before_action :authorize_view!
 
   def isometries
     @isometries = @project.isometries.includes(
@@ -33,19 +36,39 @@ class ReportsController < ApplicationController
     # Filter by medium
     @isometries = @isometries.where(medium: params[:medium]) if params[:medium].present?
 
-    # Get unique values for dropdowns
-    @line_ids = @project.isometries.distinct.pluck(:line_id).compact.sort
-    @systems = @project.isometries.distinct.pluck(:system).compact.sort
-    @work_package_numbers = @project.isometries.distinct.pluck(:work_package_number).compact.sort
-    @pipe_classes = @project.isometries.distinct.pluck(:pipe_class).compact.sort
-    @materials = @project.isometries.distinct.pluck(:material).compact.sort
-    @mediums = @project.isometries.distinct.pluck(:medium).compact.sort
+    # Get unique values for filters
+    @line_ids = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:line_id).compact.sort
+    @systems = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:system).compact.sort
+    @work_package_numbers = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:work_package_number).compact.sort
+    @pipe_classes = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:pipe_class).compact.sort
+    @materials = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:material).compact.sort
+    @mediums = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:medium).compact.sort
 
     # Get the sector models for the view
     @sector_models = Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }
   end
 
   private
+
+  def authenticate_user_or_guest!
+    unless user_signed_in? || guest_signed_in?
+      redirect_to root_path, alert: t("common.messages.not_authorized")
+    end
+  end
+
+  def authorize_view!
+    unless can_view_project?
+      redirect_to root_path, alert: t("common.messages.not_authorized")
+    end
+  end
+
+  def can_view_project?
+    return true if user_signed_in? # Regular users can view all projects
+    return false unless guest_signed_in? # Not signed in at all
+
+    # For guests, check if they have access to this project
+    current_guest.project_id == @project.id
+  end
 
   def set_project
     @project = Project.find(params[:project_id])
