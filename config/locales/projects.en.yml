@@ -6,7 +6,7 @@ en:
         edit: "Edit Project"
     show:
       title: "Project Details"
-      project_number: "Project Number"
+      project_number: "Project No."
       name: "Name"
       description: "Description"
       project_manager: "Project Manager"

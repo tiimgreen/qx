@@ -216,7 +216,7 @@ de:
         on_hold_images: "Halt Bilder"
       test_pack:
         work_location: "Arbeitsort"
-        work_package_number: "Arbeitspaket Nummer"
+        work_package_number: "TP Nr."
         test_pack_type: "Druck Prüfung / Testpack Typ"
         dp_team: "DP Team"
         operating_pressure: "Betriebsdruck"

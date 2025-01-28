@@ -27,14 +27,14 @@ en:
         name: "Name"
         active: "Active"
       project:
-        project_number: "Project Number"
+        project_number: "Project No."
         name: "Name"
         description: "Description"
         created_at: "Created At"
         project_manager: "Project Manager"
         client_name: "Client"
-        project_manager_client: "Project Manager Client"
-        project_manager_qualinox: "Project Manager Qualinox"
+        project_manager_client: "PM Client"
+        project_manager_qualinox: "PM Qualinox"
         project_end: "Project End"
       incoming_delivery:
         project_id: "Project"
