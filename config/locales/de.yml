@@ -100,7 +100,7 @@ de:
       close: "Schließen"
       delivery_notes: "Lieferscheine"
     edit:
-      title: "Wareneingang bearbeiten: %{order_number}"  
+      title: "Wareneingang bearbeiten: %{order_number}"   
   sectors:
     project: "Projekt"
     project_description: "Projektbezogene Aktivitäten"

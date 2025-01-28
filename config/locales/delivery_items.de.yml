@@ -3,7 +3,7 @@ de:
     new:
       title: "Neue Lieferposition"
     edit:
-      title: "Lieferposition bearbeiten"
+      title: "Lieferposition bearbeiten: %{delivery_note_position}"
     show:
       title: "Positionsdetails"
       specifications: "Spezifikationen"

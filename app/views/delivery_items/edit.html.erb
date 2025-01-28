@@ -2,7 +2,17 @@
   { text: @project.name, path: project_path(@project) },
   { text: t('navigation.menu.incoming_deliveries.deliveries'),
     path: project_incoming_deliveries_path(@project) },
-  { text: t('common.edit_title', model: DeliveryItem.model_name.human) }
+  { text: t('common.labels.edit') }
 ] %>
 
-<%= render "form" %>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0"><%= t('.title', delivery_note_position: @delivery_item.delivery_note_position) %></h2>
+    </div>
+
+    <div class="card-body">
+      <%= render "form" %>
+    </div>
+  </div>
+</div>
