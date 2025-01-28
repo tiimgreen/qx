@@ -56,16 +56,6 @@ class IncomingDelivery < ApplicationRecord
     update(completed: all_checks_passed?)
   end
 
-  private
-
-  def purge_attached_files
-    delivery_notes.purge
-  end
-
-  def cleanup_delivery_items
-    delivery_items.each(&:destroy)
-  end
-
   def all_checks_passed?
     # First check if incoming delivery is on hold
     return false if on_hold_status == "On Hold"
@@ -92,5 +82,15 @@ class IncomingDelivery < ApplicationRecord
     return false if delivery_items.map(&:completed).any?(false)
 
     true
+  end
+
+  private
+
+  def purge_attached_files
+    delivery_notes.purge
+  end
+
+  def cleanup_delivery_items
+    delivery_items.each(&:destroy)
   end
 end
