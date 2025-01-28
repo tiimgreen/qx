@@ -319,6 +319,13 @@ en:
         first_name: "First Name"
         last_name: "Last Name"
         role: "Role"
+      reports:
+        line_id: "Line ID"
+        work_package_number: "Work Package No."
+        pipe_class: "Pipe Class"
+        material: "Material"
+        medium: "Medium"
+        filters: "Filters"
   isometries:
     actions:
       add_page: "Add Page"

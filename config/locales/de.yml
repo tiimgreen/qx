@@ -294,6 +294,13 @@ de:
         rt_check_status: "RT Status"
         rt_check_comment: "RT Kommentar"
         rt_check_images: "RT Bilder"
+      reports:
+        line_id: "Leitungs-ID"
+        work_package_number: "Arbeitspaket Nr."
+        pipe_class: "Rohrklasse"
+        material: "Material"
+        medium: "Medium"
+        filters: "Filter"
   transports:
     form:
       complete_button: "Als abgeschlossen markieren"

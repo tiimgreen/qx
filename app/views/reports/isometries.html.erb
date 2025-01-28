@@ -1,21 +1,21 @@
 <div class="container mt-4">
-  <h2>Isometries Report for <%= @project.name %></h2>
+  <h2 class="text-white"><%= t('reports.isometries.title') %>:  <%= @project.name %></h2>
 
   <!-- Filters -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5>Filters</h5>
+      <h5><%=t('activerecord.attributes.reports.filters')%></h5>
       <%= form_tag project_isometries_report_path(@project), method: :get, class: 'row g-3', data: { controller: 'form-submission' } do %>
         <div class="col-md-2">
-          <label class="form-label">Line ID</label>
-          <%= select_tag :line_id, 
+          <label class="form-label"><%=t('activerecord.attributes.reports.line_id')%></label>
+          <%= select_tag :line_id,
               options_for_select([['All', '']] + @line_ids.map { |id| [id, id] }, params[:line_id]),
               class: 'form-select',
               data: { action: 'change->form-submission#submit' } %>
         </div>
 
         <div class="col-md-2">
-          <label class="form-label">System</label>
+          <label class="form-label"><%=t('activerecord.attributes.reports.system')%></label>
           <%= select_tag :system,
               options_for_select([['All', '']] + @systems.map { |s| [s, s] }, params[:system]),
               class: 'form-select',
@@ -23,14 +23,14 @@
         </div>
 
         <div class="col-md-2">
-          <label class="form-label">Work Package</label>
+          <label class="form-label"><%=t('activerecord.attributes.reports.work_package_number')%></label>
           <%= select_tag :work_package_number,
               options_for_select([['All', '']] + @work_package_numbers.map { |wp| [wp, wp] }, params[:work_package_number]),
               class: 'form-select',
               data: { action: 'change->form-submission#submit' } %>
         </div>
         <div class="col-md-2">
-          <label class="form-label">Pipe Class</label>
+          <label class="form-label"><%=t('activerecord.attributes.reports.pipe_class')%></label>
           <%= select_tag :pipe_class,
               options_for_select([['All', '']] + @pipe_classes.map { |pc| [pc, pc] }, params[:pipe_class]),
               class: 'form-select',
@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-md-2">
-          <label class="form-label">Material</label>
+          <label class="form-label"><%=t('activerecord.attributes.reports.material')%></label>
           <%= select_tag :material,
               options_for_select([['All', '']] + @materials.map { |m| [m, m] }, params[:material]),
               class: 'form-select',
@@ -46,7 +46,7 @@
         </div>
 
         <div class="col-md-2">
-          <label class="form-label">Medium</label>
+          <label class="form-label"><%=t('activerecord.attributes.reports.medium')%></label>
           <%= select_tag :medium,
               options_for_select([['All', '']] + @mediums.map { |m| [m, m] }, params[:medium]),
               class: 'form-select',
