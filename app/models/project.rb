@@ -30,7 +30,8 @@ class Project < ApplicationRecord
       "projects.project_number LIKE :search OR
        projects.name LIKE :search OR
        projects.description LIKE :search OR
-       projects.project_manager LIKE :search OR
+       projects.project_manager_client LIKE :search OR
+       projects.project_manager_qualinox LIKE :search OR
        projects.client_name LIKE :search",
       search: term
     )
