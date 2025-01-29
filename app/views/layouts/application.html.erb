@@ -18,7 +18,7 @@
     <%= javascript_importmap_tags %>
 
     <% content_for :head do %>
-      <link rel="preload" as="video" href="/video.mp4" type="video/mp4">
+      <link rel="preload" as="video" href="/home-video.mp4" type="video/mp4">
     <% end %>
   </head>
 
@@ -49,12 +49,12 @@
       autoplay muted loop playsinline 
       class="dashboard-video-background"
       preload="auto">
-      <source src="/video.mp4" type="video/mp4">
+      <source src="/home-video.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <div class="dashboard-content">
       <div class="container mb-4">
-        <%= render "navbar" %>
+        <%= render "dashboard_navbar" %>
       </div>
       <div class="container">
         <%= render "flash_messages" %>
