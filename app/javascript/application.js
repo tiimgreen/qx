@@ -11,3 +11,6 @@ import "controllers/modal_controller"
 
 window.jQuery = jQuery
 window.$ = jQuery
+
+// Configure Bootstrap modals globally
+bootstrap.Modal.Default.backdrop = false;
