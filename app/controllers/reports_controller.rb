@@ -44,6 +44,9 @@ class ReportsController < ApplicationController
     @materials = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:material).compact.sort
     @mediums = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:medium).compact.sort
 
+    # Add pagination
+    @pagy, @isometries = pagy(@isometries, items: params[:per_page] || 25)
+
     # Get the sector models for the view
     @sector_models = Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }
   end
