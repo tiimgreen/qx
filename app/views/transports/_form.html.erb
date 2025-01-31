@@ -55,7 +55,6 @@
     <div class="col-md-8">
       <%= render "isometry_details", isometry: @isometry %>
       
-      
       <% if f.object.persisted? %>
         <div class="card">
           <div class="card-body">
@@ -93,18 +92,16 @@
         <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-primary' %>
 
           <% if @transport.persisted? && @transport.completed.nil? && !@transport.failed? %>
-            <%= button_to complete_project_transport_path(@project, @transport),
-                      method: :patch,
-                      class: 'btn btn-success',
-                      disabled: true,
-                      form_class: 'd-inline-block',
-                      data: { 
-                        turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete_warning'),
-                        spool_confirmation_target: "completeButton"
-                      } do %>
-              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
-            <% end %>
+           <div class="d-none" data-spool-confirmation-target="completeButton">
+              <%= link_to complete_project_transport_path(@project, @transport),
+                        class: 'btn btn-success',
+                        data: { 
+                          turbo_method: :patch,
+                          turbo_confirm: t('common.messages.confirm_complete_warning')
+                        } do %>
+                <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+              <% end %>
+            </div>
           <% end %>
         <%= f.submit t("common.actions.save"), 
                     class: "btn btn-primary", 

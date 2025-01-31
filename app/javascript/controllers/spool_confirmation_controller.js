@@ -18,7 +18,8 @@ export default class extends Controller {
       }
       
       if (this.hasCompleteButtonTarget) {
-        this.completeButtonTarget.disabled = !isChecked
+        this.completeButtonTarget.classList.toggle('d-none', !isChecked)
+
       }
     }
   }

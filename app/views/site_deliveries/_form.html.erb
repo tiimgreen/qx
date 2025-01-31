@@ -90,17 +90,16 @@
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_site_deliveries_path(@project), class: 'btn btn-primary' %>
           <% if @site_delivery.persisted? && @site_delivery.completed.nil? && !@site_delivery.failed? %>
-            <%= button_to complete_project_site_delivery_path(@project, @site_delivery),
-                      method: :patch,
-                      class: 'btn btn-success',
-                      disabled: true,
-                      data: { 
-                        turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete'),
-                        spool_confirmation_target: "completeButton" 
-                      } do %>
-              <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
-            <% end %>
+            <div class="d-none" data-spool-confirmation-target="completeButton">
+              <%= link_to complete_project_site_delivery_path(@project, @site_delivery),
+                        class: 'btn btn-success',
+                        data: { 
+                          turbo_method: :patch,
+                          turbo_confirm: t('common.messages.confirm_complete_warning')
+                        } do %>
+                <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
+              <% end %>
+            </div>
           <% end %>
         <%= f.submit t("common.actions.save"), 
             class: "btn btn-primary", 
