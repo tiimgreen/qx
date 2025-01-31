@@ -19,6 +19,16 @@ de:
         title: "Eingehende Lieferungen"
         deliveries: "Lieferungen"
         new_delivery: "Neue Lieferung"
+      prefabrications:
+        title: "Vorfertigungen"
+      pre_weldings: 
+        title: "Schweissen"
+      work_preparations:
+        title: "AVOR"    
+      final_inspections:
+        title: "EndKontrolle"
+      site_deliveries:
+        title: "Baustellen Lieferung"  
   common:
     save: "Speichern"
     cancel: "Abbrechen"

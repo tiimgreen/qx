@@ -20,8 +20,16 @@ en:
         title: "Incoming Deliveries"
         deliveries: "Deliveries"
         new_delivery: "New Delivery"
-      prefabrications: "Prefabrications"
-      pre_weldings: "Weldings"
+      prefabrications: 
+        title: "Prefabrications"
+      pre_weldings: 
+        title: "Weldings"
+      work_preparations:
+        title: "Work Preparations"  
+      final_inspections:
+        title: "Final Inspections"  
+      site_deliveries:
+        title: "Site Deliveries"           
   common:
     save: "Save"
     cancel: "Cancel"
