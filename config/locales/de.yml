@@ -28,7 +28,13 @@ de:
       final_inspections:
         title: "EndKontrolle"
       site_deliveries:
-        title: "Baustellen Lieferung"  
+        title: "Baustellen Lieferung"
+      site_assemblies:
+        title: "Montage"
+      on_sites:
+        title: "As Built" 
+      test_packs: 
+        title: "DP / Testpack"       
   common:
     save: "Speichern"
     cancel: "Abbrechen"

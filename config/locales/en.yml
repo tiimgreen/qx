@@ -29,7 +29,13 @@ en:
       final_inspections:
         title: "Final Inspections"  
       site_deliveries:
-        title: "Site Deliveries"           
+        title: "Site Deliveries"
+      site_assemblies:
+        title: "Site Assemblies"
+      on_sites:
+        title: "As Built"       
+      test_packs:
+        title: "Test Pack"            
   common:
     save: "Save"
     cancel: "Cancel"

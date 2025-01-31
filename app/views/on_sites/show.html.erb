@@ -1,6 +1,6 @@
 <%= render 'application/breadcrumb', breadcrumbs: [
   { text: @project.name, path: project_path(@project) },
-  { text: t('navigation.menu.on_sites'),
+  { text: t('navigation.menu.on_sites.title'),
     path: project_on_sites_path(@project) },
   { text: @on_site.work_package_number }
 ] %>
