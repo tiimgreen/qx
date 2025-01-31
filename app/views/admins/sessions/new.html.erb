@@ -1,40 +1,48 @@
 <div class="container">
-  <div class="row justify-content-center mt-5">
-    <div class="col-md-6 col-lg-4">
-      <div class="card shadow">
-        <div class="card-body p-4">
-          <h2 class="text-center mb-4">Log in</h2>
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-md-6 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-5">
+          <div class="text-center mb-4">
+            <%= image_tag "logo.svg", class: "mb-4", height: "72", alt: "Logo" rescue nil %>
+            <h1 class="h3 mb-3 fw-normal"><%= t('devise.sessions.new.admin_title', default: 'Admin Sign In') %></h1>
+          </div>
 
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            <div class="mb-3">
-              <%= f.label :email, class: "form-label" %>
+            <div class="form-floating mb-3">
               <%= f.email_field :email, autofocus: true, autocomplete: "email",
-                  class: "form-control" %>
+                  class: "form-control", placeholder: t('devise.sessions.new.email') %>
+              <%= f.label :email, t('devise.sessions.new.email') %>
             </div>
 
-            <div class="mb-3">
-              <%= f.label :password, class: "form-label" %>
+            <div class="form-floating mb-3">
               <%= f.password_field :password, autocomplete: "current-password",
-                  class: "form-control" %>
+                  class: "form-control", placeholder: t('devise.sessions.new.password') %>
+              <%= f.label :password, t('devise.sessions.new.password') %>
             </div>
 
             <% if devise_mapping.rememberable? %>
-              <div class="mb-3 form-check">
+              <div class="form-check mb-3">
                 <%= f.check_box :remember_me, class: "form-check-input" %>
-                <%= f.label :remember_me, class: "form-check-label" %>
+                <%= f.label :remember_me, t('devise.sessions.new.remember_me'), class: "form-check-label" %>
               </div>
             <% end %>
 
-            <div class="d-grid gap-2">
-              <%= f.submit "Log in", class: "btn base-color-bg-dark text-white" %>
-            </div>
+            <%= f.submit t('devise.sessions.new.sign_in'), class: "w-100 btn btn-lg btn-primary mb-3" %>
           <% end %>
-
-          <div class="mt-3 text-center">
-            <%= render "admins/shared/links" %>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+.form-floating > label {
+  z-index: 3;
+}
+
+.card {
+  border-radius: 1rem;
+  border: none;
+}
+</style>

@@ -5,7 +5,7 @@
         <div class="card-body p-5">
           <div class="text-center mb-4">
             <%= image_tag "logo.svg", class: "mb-4", height: "72", alt: "Logo" rescue nil %>
-            <h1 class="h3 mb-3 fw-normal"><%= t('devise.sessions.new.title') %></h1>
+            <h1 class="h3 mb-3 fw-normal"><%= t('devise.sessions.new.user_title', default: 'User Sign In') %></h1>
           </div>
 
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
