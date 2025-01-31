@@ -51,6 +51,9 @@ en:
       already_signed_out: "Signed out successfully."
       new:
         title: "Sign in"
+        user_title: "UserSign in"
+        admin_title: "Admin Sign In"
+        guest_title: "Guest Sign In"
         email: "Email"
         password: "Password"
         remember_me: "Remember me"

@@ -266,3 +266,12 @@ table {
   border-style: none;
   background-color: #f3f4f6;
 }
+
+@media (max-width: 768px) {
+  .progress {
+    font-size: 0.5rem;
+  }
+  h5 {
+    font-size: 1rem;
+  }
+}

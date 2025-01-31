@@ -42,13 +42,16 @@ de:
       signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte folgen Sie dem Link, um Ihr Konto zu aktivieren."
       update_needs_confirmation: "Ihr Konto wurde erfolgreich aktualisiert, aber wir müssen Ihre neue E-Mail-Adresse überprüfen. Bitte prüfen Sie Ihre E-Mails und folgen Sie dem Bestätigungslink."
       updated: "Ihr Konto wurde erfolgreich aktualisiert."
-      updated_but_not_signed_in: "Ihr Konto wurde erfolgreich aktualisiert. Da Ihr Passwort geändert wurde, müssen Sie sich erneut anmelden."
+      updated_but_not_signed_in: "Ihr Konto wurde erfolgreich aktualisiert. Da Ihr Passwort geändert wurde, muss Sie sich erneut anmelden."
     sessions:
       signed_in: "Erfolgreich angemeldet."
       signed_out: "Erfolgreich abgemeldet."
       already_signed_out: "Erfolgreich abgemeldet."
       new:
         title: "Anmelden"
+        user_title: "User Anmelden"
+        admin_title: "Admin Anmelden"
+        guest_title: "Gast Anmelden"
         email: "E-Mail"
         password: "Passwort"
         remember_me: "Angemeldet bleiben"
