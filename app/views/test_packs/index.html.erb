@@ -103,7 +103,7 @@
             <td><%= test_pack.dp_team %></td>
             <td><%= test_pack.operating_pressure %></td>
             <td>              
-              <% if test_pack.dp_pressure == test_pack.operating_pressure %>
+              <% if test_pack.dp_pressure&.to_f > test_pack.operating_pressure&.to_f %>
                 <%= test_pack.dp_pressure %>
               <% else %>
                 <span class="badge bg-danger text-white"><%= test_pack.dp_pressure %></span>
