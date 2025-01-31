@@ -27,7 +27,9 @@ class IncomingDeliveriesController < ApplicationController
 
   def show
     if @project && @incoming_delivery
-      @delivery_items = @incoming_delivery.delivery_items.order(created_at: :desc)
+      @delivery_items = @incoming_delivery.delivery_items
+                                        .includes(:user, :project)
+                                        .sorted_by(params[:sort], params[:direction])
     else
       flash[:alert] = "Delivery not found"
       redirect_to project_incoming_deliveries_path(@project)

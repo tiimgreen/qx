@@ -44,6 +44,25 @@ class DeliveryItem < ApplicationRecord
     )
   }
 
+  ALLOWED_SORT_COLUMNS = %w[
+    delivery_note_position tag_number batch_number
+    item_description completed on_hold_status
+    quantity_check_status dimension_check_status visual_check_status
+    vt2_check_status ra_check_status
+  ].freeze
+
+  scope :sorted_by, ->(sort_column, direction) {
+    if sort_column.present? && ALLOWED_SORT_COLUMNS.include?(sort_column.to_s)
+      reorder(sort_column => validated_direction(direction))
+    else
+      order(created_at: :asc)
+    end
+  }
+
+  def self.validated_direction(direction)
+    %w[asc desc].include?(direction.to_s) ? direction : "asc"
+  end
+
   def on_hold?
     on_hold_status == "On Hold"
   end

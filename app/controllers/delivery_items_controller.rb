@@ -10,7 +10,9 @@ class DeliveryItemsController < ApplicationController
 
   def index
     @delivery_items = @incoming_delivery.delivery_items
+                                      .includes(:user, :project)
                                       .search_by_term(params[:search])
+                                      .sorted_by(params[:sort], params[:direction])
   end
 
   def show

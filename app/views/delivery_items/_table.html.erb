@@ -2,17 +2,61 @@
   <table class="table table-striped table-hover table-sm">
     <thead>
       <tr>
-        <th><%= t('activerecord.attributes.delivery_item.delivery_note_position') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.tag_number') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.batch_number') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.description') %></th>
-        <th><%= t('common.completed') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.on_hold_status') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.quantity_check') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.dimension_check') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.visual_check') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.vt2_check') %></th>
-        <th><%= t('activerecord.attributes.delivery_item.ra_check') %></th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.delivery_note_position'),
+              request.params.merge(sort: 'delivery_note_position', direction: (params[:sort] == 'delivery_note_position' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('delivery_note_position') if params[:sort] == 'delivery_note_position' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.tag_number'),
+              request.params.merge(sort: 'tag_number', direction: (params[:sort] == 'tag_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('tag_number') if params[:sort] == 'tag_number' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.batch_number'),
+              request.params.merge(sort: 'batch_number', direction: (params[:sort] == 'batch_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('batch_number') if params[:sort] == 'batch_number' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.description'),
+              request.params.merge(sort: 'item_description', direction: (params[:sort] == 'item_description' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('item_description') if params[:sort] == 'item_description' %>
+        </th>
+        <th>
+          <%= link_to t('common.completed'),
+              request.params.merge(sort: 'completed', direction: (params[:sort] == 'completed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('completed') if params[:sort] == 'completed' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.on_hold_status'),
+              request.params.merge(sort: 'on_hold_status', direction: (params[:sort] == 'on_hold_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('on_hold_status') if params[:sort] == 'on_hold_status' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.quantity_check'),
+              request.params.merge(sort: 'quantity_check_status', direction: (params[:sort] == 'quantity_check_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('quantity_check_status') if params[:sort] == 'quantity_check_status' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.dimension_check'),
+              request.params.merge(sort: 'dimension_check_status', direction: (params[:sort] == 'dimension_check_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('dimension_check_status') if params[:sort] == 'dimension_check_status' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.visual_check'),
+              request.params.merge(sort: 'visual_check_status', direction: (params[:sort] == 'visual_check_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('visual_check_status') if params[:sort] == 'visual_check_status' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.vt2_check'),
+              request.params.merge(sort: 'vt2_check_status', direction: (params[:sort] == 'vt2_check_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('vt2_check_status') if params[:sort] == 'vt2_check_status' %>
+        </th>
+        <th>
+          <%= link_to t('activerecord.attributes.delivery_item.ra_check'),
+              request.params.merge(sort: 'ra_check_status', direction: (params[:sort] == 'ra_check_status' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+          <%= sort_indicator('ra_check_status') if params[:sort] == 'ra_check_status' %>
+        </th>
         <th class="text-end"><%= t('common.labels.actions') %></th>
       </tr>
     </thead>
