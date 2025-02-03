@@ -66,11 +66,10 @@ class ReportsController < ApplicationController
   end
 
   def can_view_project?
-    return true if user_signed_in? # Regular users can view all projects
-    return false unless guest_signed_in? # Not signed in at all
+    return false unless user_signed_in? || guest_signed_in?
 
     # For guests, check if they have access to this project
-    current_guest.project_id == @project.id
+    current_guest&.project_id == @project.id || current_user&.projects.exists?(@project.id)
   end
 
   def set_project

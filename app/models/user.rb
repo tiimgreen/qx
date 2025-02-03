@@ -16,7 +16,8 @@ class User < ApplicationRecord
   has_many :user_resource_permissions, dependent: :destroy
   has_many :permissions, through: :user_resource_permissions
 
-
+  has_many :project_users
+  has_many :projects, through: :project_users
 
   def name
     "#{first_name} #{last_name}"

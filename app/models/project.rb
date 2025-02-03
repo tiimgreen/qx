@@ -16,6 +16,9 @@ class Project < ApplicationRecord
 
   belongs_to :user, optional: true
 
+  has_many :project_users
+  has_many :users, through: :project_users
+
   validates :project_number, presence: true, uniqueness: true
   validates :name, presence: true
   validates :project_manager_client, presence: true
