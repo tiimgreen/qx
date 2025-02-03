@@ -187,6 +187,8 @@ en:
       sector: "Sector"
       isometry_document: "Isometry Document"
       isometry_material_certificate: "Isometry Material Certificate"
+      project_user: "Project User"
+      guest: "Guest"
     errors:
       models:
         delivery_item:

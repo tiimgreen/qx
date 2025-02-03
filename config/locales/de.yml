@@ -183,6 +183,8 @@ de:
       sector: "Bereich"
       isometry_document: "Isometriedokument"
       isometry_material_certificate: "Isometriezertifikat"
+      project_user: "Projektbenutzer"
+      guest: "Gast"
     errors:
       models:
         delivery_item:
