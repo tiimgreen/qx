@@ -71,10 +71,8 @@ de:
     success: "Vorgang erfolgreich abgeschlossen"
     error: "Ein Fehler ist aufgetreten"
   home:
-    title: "Willkommen bei Qualinox!"
-    industries: "Chemie-, Pharma-, Lebensmittel- und Getränkeindustrie"
-    construction: "Rohrleitungs- und Anlagenbau"
-    description: "Ihr kompetenter Ansprechpartner rund um die Realisierung und Inbetriebnahme von Anlagen - mit dem Ziel, Ihre Wünsche und Ansprüche zu erfüllen"
+    title: "QXD - Produktionsmanagementsystem"
+    description: "Productionsplanung & Steuerung (PPS) - Qualitätskontrolle - Tracking & Reporting"
     sign_in: "Anmelden"
     users: "Benutzer"
     admins: "Administratoren"

@@ -73,10 +73,8 @@ en:
     success: "Operation completed successfully"
     error: "An error occurred"
   home:
-    title: "Welcome to Qualinox!"
-    industries: "Chemical, Pharmaceutical, Food and Beverage Industry"
-    construction: "Pipeline and Plant Construction"
-    description: "Your competent partner for the realization and commissioning of plants - with the goal of fulfilling your wishes and requirements"
+    title: "QXD - Production Management System"
+    description: "Production Planning & Control (PPC) - Quality Control - Tracking & Reporting"
     sign_in: "Sign In"
     users: "Users"
     admins: "Administrators"
