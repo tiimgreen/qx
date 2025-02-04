@@ -1,9 +1,29 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary radius-7 navbar-transparent l-4">
   <div class="container">
     <%= link_to root_path, class: "navbar-brand" do %>
-      <%= image_tag "logo.svg", height: 40, class: "logo",  alt: "Logo" %>
+      <%= image_tag "logo.svg", height: 40, class: "logo", alt: "Logo" %>
     <% end %>
-    <div class="ms-auto">
+
+    <div class="ms-auto d-flex align-items-center">
+      <div class="dropdown me-3" data-controller="language">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= image_tag "flags/4x3/#{I18n.locale == :en ? 'gb' : 'de'}.svg", width: 20, height: 15, alt: I18n.locale.to_s.upcase %>
+          <%= I18n.locale.to_s.upcase %>
+        </button>
+        <ul class="dropdown-menu">
+          <% { en: 'gb', de: 'de' }.each do |locale, flag| %>
+            <li>
+              <%= link_to switch_locale_path(new_locale: locale),
+                    class: "dropdown-item #{I18n.locale == locale ? 'active' : ''}",
+                    data: { "turbo-method": :post } do %>
+                <%= image_tag "flags/4x3/#{flag}.svg", width: 20, height: 15, alt: locale.to_s.upcase %>
+                <%= locale.to_s.upcase %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
       <% if user_signed_in? || admin_signed_in? || guest_signed_in? %>
         <div class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -24,9 +44,9 @@
           </div>
         </div>
       <% else %>
-        <div class="ms-auto">
-          <%= link_to "#{t('home.sign_in')} #{t('home.users')}", new_user_session_path, class: "btn base-color-bg-dark text-white" %>
-          <%= link_to "#{t('home.sign_in')} #{t('home.admins')}", new_admin_session_path, class: "btn base-color-bg-dark text-white" %>
+        <div class="d-flex">
+          <%= link_to "#{t('home.sign_in')} #{t('home.users')}", new_user_session_path, class: "btn base-color-bg-dark text-white me-2" %>
+          <%= link_to "#{t('home.sign_in')} #{t('home.admins')}", new_admin_session_path, class: "btn base-color-bg-dark text-white me-2" %>
           <%= link_to "#{t('home.sign_in')} #{t('home.guests', default: 'Guests')}", new_guest_session_path, class: "btn base-color-bg-dark text-white" %>
         </div>
       <% end %>
