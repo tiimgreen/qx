@@ -72,7 +72,7 @@ de:
     error: "Ein Fehler ist aufgetreten"
   home:
     title: "QXD - Produktionsmanagementsystem"
-    description: "Productionsplanung & Steuerung (PPS) - Qualitätskontrolle - Tracking & Reporting"
+    description: "Produktionsplanung & Steuerung (PPS) - Qualitätskontrolle - Tracking & Reporting"
     sign_in: "Anmelden"
     users: "Benutzer"
     admins: "Administratoren"
