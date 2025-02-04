@@ -34,7 +34,9 @@ de:
       on_sites:
         title: "As Built" 
       test_packs: 
-        title: "DP / Testpack"       
+        title: "DP / Testpack"
+      transports:
+        title: "Transport"         
   common:
     save: "Speichern"
     cancel: "Abbrechen"

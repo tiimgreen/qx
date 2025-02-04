@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
   before_action :authorize_view!
 
   def isometries
-    @isometries = @project.isometries.includes(
+    @all_isometries = @project.isometries.includes(
       :work_preparations,
       :prefabrication,
       :pre_welding,
@@ -19,22 +19,25 @@ class ReportsController < ApplicationController
     ).where(deleted: false, revision_last: true)
 
     # Filter by line_id
-    @isometries = @isometries.where(line_id: params[:line_id]) if params[:line_id].present?
+    @all_isometries = @all_isometries.where(line_id: params[:line_id]) if params[:line_id].present?
 
     # Filter by system
-    @isometries = @isometries.where(system: params[:system]) if params[:system].present?
+    @all_isometries = @all_isometries.where(system: params[:system]) if params[:system].present?
 
     # Filter by work_package_number
-    @isometries = @isometries.where(work_package_number: params[:work_package_number]) if params[:work_package_number].present?
+    @all_isometries = @all_isometries.where(work_package_number: params[:work_package_number]) if params[:work_package_number].present?
 
     # Filter by pipe_class
-    @isometries = @isometries.where(pipe_class: params[:pipe_class]) if params[:pipe_class].present?
+    @all_isometries = @all_isometries.where(pipe_class: params[:pipe_class]) if params[:pipe_class].present?
 
     # Filter by material
-    @isometries = @isometries.where(material: params[:material]) if params[:material].present?
+    @all_isometries = @all_isometries.where(material: params[:material]) if params[:material].present?
 
     # Filter by medium
-    @isometries = @isometries.where(medium: params[:medium]) if params[:medium].present?
+    @all_isometries = @all_isometries.where(medium: params[:medium]) if params[:medium].present?
+
+    # Store the filtered query for pagination
+    @isometries = @all_isometries
 
     # Get unique values for filters
     @line_ids = @project.isometries.where(deleted: false, revision_last: true).distinct.pluck(:line_id).compact.sort

@@ -35,7 +35,9 @@ en:
       on_sites:
         title: "As Built"       
       test_packs:
-        title: "Test Pack"            
+        title: "Test Pack" 
+      transports: 
+        title: "Transports"             
   common:
     save: "Save"
     cancel: "Cancel"

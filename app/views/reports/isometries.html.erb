@@ -57,33 +57,33 @@
   </div>
 
   <% 
-  # Common calculations for all sections
-  total_isometries = @isometries.count
-  total_pipe_length = @isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
+  # Common calculations for all sections using total filtered isometries
+  total_isometries = @all_isometries.count
+  total_pipe_length = @all_isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
 
   # Calculate sector completions
   sector_completions = {}
   @sector_models.each do |sector|
     if sector == 'work_preparation'
-      completed_isos = @isometries.select { |iso| WorkPreparation.completed_for?(iso) }
-      in_progress_isos = @isometries.select { |iso| 
+      completed_isos = @all_isometries.select { |iso| WorkPreparation.completed_for?(iso) }
+      in_progress_isos = @all_isometries.select { |iso| 
         WorkPreparation.in_progress_for?(iso) && !WorkPreparation.completed_for?(iso)
       }
     elsif sector == 'test_pack'
-      completed_isos = @isometries.select { |iso| TestPack.completed_for?(iso) }
-      in_progress_isos = @isometries.select { |iso| 
+      completed_isos = @all_isometries.select { |iso| TestPack.completed_for?(iso) }
+      in_progress_isos = @all_isometries.select { |iso| 
         !TestPack.completed_for?(iso) && TestPack.in_progress_for?(iso)
       }
     else
-      completed_isos = @isometries.select { |iso| iso.send(sector)&.completed? }
-      in_progress_isos = @isometries.select { |iso| iso.send(sector) && !iso.send(sector).completed? }
+      completed_isos = @all_isometries.select { |iso| iso.send(sector)&.completed? }
+      in_progress_isos = @all_isometries.select { |iso| iso.send(sector) && !iso.send(sector).completed? }
     end
 
     sector_completions[sector] = {
       completed_count: completed_isos.count,
       in_progress_count: in_progress_isos.count,
       completed_meters: completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 },
-      count_percentage: safe_percentage(completed_isos.count,total_isometries),
+      count_percentage: safe_percentage(completed_isos.count, total_isometries),
       meters_percentage: safe_percentage(
         completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 },
         total_pipe_length
