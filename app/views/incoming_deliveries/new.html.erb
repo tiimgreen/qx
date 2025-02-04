@@ -1,6 +1,6 @@
 <%= render 'breadcrumb', breadcrumbs: [
   { text: @project.name, path: project_path(@project) },
-  { text: t('navigation.menu.incoming_deliveries.deliveries.title'),
+  { text: t('navigation.menu.incoming_deliveries.title'),
     path: project_incoming_deliveries_path(@project) },
   { text: t('common.new_title', model: IncomingDelivery.model_name.human) }
 ] %>
