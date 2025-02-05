@@ -5,7 +5,9 @@
       id: 'pre_welding_form',
       data: { 
         turbo: true,
-        controller: "validation"
+        controller: "validation form-changes",
+        form_changes_target: "form",
+        action: "change->form-changes#checkFormChanges input->form-changes#checkFormChanges"
       }
     ) do |f| %>
   <% if @pre_welding.errors.any? %>
@@ -80,7 +82,8 @@
                       class: 'btn btn-success',
                       data: { 
                         turbo_method: :patch,
-                        turbo_confirm: t('common.messages.confirm_complete') 
+                        turbo_confirm: t('common.messages.confirm_complete'),
+                        form_changes_target: "completeButton"
                       } do %>
               <i class="bi bi-check-circle"></i> <%= t('common.actions.complete') %>
             <% end %>
