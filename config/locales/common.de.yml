@@ -27,6 +27,7 @@ de:
       errors:
       not_authorized: "Sie sind nicht berechtigt, diese Aktion auszuführen"
     labels:
+      isometry_details: "Isometrie Details"
       created_by: "Erstellt von"
       actions: "Aktionen"
       search: "Suche"
@@ -43,7 +44,7 @@ de:
       bottom_right: "Nordboden"
       page_number: "Seite"
       done_by: "Erledigt von"
-      on_hold_images: "Haltbilder"
+      on_hold_images: "On Hold Bilder"
       on_hold_comment: "Haltkommentar"
       on_hold_date: "On Hold seit"
       on_hold_status: "On Hold"
@@ -70,8 +71,8 @@ de:
       dimension1: "Abmessung1"
       material: "Werkstoff"
       material1: "Werkstoff1"
-      batch_number: "Charge"
-      batch_number1: "Charge1"
+      batch_number: "Charge1"
+      batch_number1: "Charge2"
       material_certificate: "Zeugnis"
       material_certificate1: "Zeugnis1"
       type_code: "Typ"
@@ -101,6 +102,7 @@ de:
       first_set: "Erster Satz"
       second_set: "Zweiter Satz"
       view_welding_report: "Weldlog Report anzeigen"
+      welding_number: "Schweissnähte Nr."
   activerecord:
     attributes:
       isometry:

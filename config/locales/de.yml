@@ -237,7 +237,7 @@ de:
       test_pack:
         work_location: "Arbeitsort"
         work_package_number: "TP Nr."
-        test_pack_type: "Druck Prüfung / Testpack Typ"
+        test_pack_type: "DP / Testpack Typ"
         dp_team: "DP Team"
         operating_pressure: "Betriebsdruck"
         dp_pressure: "DP Druck"
@@ -305,9 +305,9 @@ de:
         visual_check_status: "Visuelle Prüfung Status"
         visual_check_comment: "Visuelle Prüfung Kommentar"
         visual_check_images: "Visuelle Prüfung Bilder"
-        vt2_check_status: "VT2 Endoskop Status"
-        vt2_check_comment: "VT2 Endoskop Kommentar"
-        vt2_check_images: "VT2 Endoskop Bilder"
+        vt2_check_status: "VT2 Status"
+        vt2_check_comment: "VT2 Kommentar"
+        vt2_check_images: "VT2 Bilder"
         pt2_check_status: "PT2 Status"
         pt2_check_comment: "PT2 Kommentar"
         pt2_check_images: "PT2 Bilder"
@@ -569,8 +569,8 @@ de:
     edit:
       title: "Druckprobe bearbeiten: %{work_package}"  
     types:
-      pressure_test: "Druckpruefung"
-      leak_test: "Leckspruefung"
+      pressure_test: "Pressure Test"
+      leak_test: "Leak Test"
   isometries:
     actions:
       add_page: "Seite hinzufügen"

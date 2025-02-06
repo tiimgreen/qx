@@ -230,7 +230,7 @@ en:
     attributes:
       work_preparation:
         work_location: "Work Location"
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         work_preparation_type: "Work Preparation Type"
         batch_number: "Batch Number"
         completed: "Completed Date"
@@ -256,7 +256,7 @@ en:
         one_test: "One Test Only"
       prefabrication:
         work_location: "Work Location"
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         completed: "Completed Date"
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Comment"
@@ -265,33 +265,33 @@ en:
         active: "Active"
       pre_welding:
         work_location: "Work Location"
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         completed: "Completed Date"
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Comment"
         on_hold_date: "On Hold Date"
         on_hold_images: "On Hold Images"
       transport:
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         completed: "Completed Date"
         check_spools_status: "Check Spool Status"
         check_spools_comment: "Check Spool Comment"
         check_spools_images: "Check Spool Images"
       site_delivery:
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         completed: "Completed Date"
         check_spools_status: "Check Spool Status"
         check_spools_comment: "Check Spool Comment"
         check_spools_images: "Check Spool Images"  
       site_assembly:
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         completed: "Completed Date"
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Comment"
         on_hold_date: "On Hold Date"
         on_hold_images: "On Hold Images"      
       on_site:
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         completed: "Completed Date"
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Comment"
@@ -300,7 +300,7 @@ en:
         site_images: "Site Images"
       final_inspection:
         work_location: "Work Location"
-        work_package_number: "Work Package Number"
+        work_package_number: "Work Package No."
         completed: "Completed Date"
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Comment"
@@ -398,15 +398,15 @@ en:
     destroy:
       success: "Welding was successfully deleted"
     index:
-      title_for_project: "Pre-weldings for %{project}"
+      title_for_project: "Weldings for %{project}"
     buttons:
-      new_prefabrication: "New Pre-welding"
+      new_prefabrication: "New Welding"
     show:
-      title: "Pre-welding Details"
+      title: "Welding Details"
     new:
-      title: "New Pre-welding"
+      title: "New Welding"
     edit:
-      title: "Edit Pre-welding: %{work_package}"
+      title: "Edit Welding: %{work_package}"
   transports:
     form:
       complete_button: "Mark as Completed"

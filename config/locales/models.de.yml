@@ -40,6 +40,7 @@ de:
       delivery_item: "Lieferposition"
       missing_delivery_item: "Fehlende Lieferposition"
       admin: "Administrator"
+      weldings: "Schweissnähte"
     attributes:
       admin:
         email: "E-Mail"
