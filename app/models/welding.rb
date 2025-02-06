@@ -9,11 +9,8 @@ class Welding < ApplicationRecord
   validates :component, presence: true
 
   # Define allowed values for process fields
-  PROCESS_TYPES = [ "Manuel", "Orbital" ].freeze
   RESULT_TYPES = [ "ne", "e" ].freeze
 
-  validates :process, inclusion: { in: PROCESS_TYPES }, allow_nil: true
-  validates :process1, inclusion: { in: PROCESS_TYPES }, allow_nil: true
   validates :result, inclusion: { in: RESULT_TYPES }, allow_nil: true
   validates :result1, inclusion: { in: RESULT_TYPES }, allow_nil: true
 end

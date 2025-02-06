@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_03_015439) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_06_105904) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -491,9 +491,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_015439) do
     t.string "wps"
     t.string "process"
     t.string "welder"
-    t.datetime "rt_date"
-    t.datetime "pt_date"
-    t.datetime "vt_date"
     t.string "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -506,7 +503,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_015439) do
     t.string "type_code1"
     t.string "wps1"
     t.string "process1"
-    t.string "welder1"
+    t.datetime "welder1"
     t.datetime "rt_date1"
     t.datetime "pt_date1"
     t.datetime "vt_date1"
@@ -514,9 +511,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_015439) do
     t.string "rt_done_by"
     t.string "pt_done_by"
     t.string "vt_done_by"
-    t.string "rt_done_by1"
-    t.string "pt_done_by1"
-    t.string "vt_done_by1"
+    t.boolean "is_orbital"
+    t.boolean "is_manuell"
     t.index ["batch_number"], name: "index_weldings_on_batch_number"
     t.index ["isometry_id"], name: "index_weldings_on_isometry_id"
     t.index ["material_certificate1_id"], name: "index_weldings_on_material_certificate1_id"

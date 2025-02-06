@@ -353,9 +353,9 @@ class IsometriesController < ApplicationController
         :material, :material1, :batch_number, :batch_number1,
         :material_certificate_id, :material_certificate1_id,
         :type_code, :type_code1, :wps, :wps1, :process, :process1,
-        :welder, :welder1, :rt_date, :rt_date1, :pt_date, :pt_date1,
-        :vt_date, :vt_date1, :result, :result1, :rt_done_by, :rt_done_by1,
-        :pt_done_by, :pt_done_by1, :vt_done_by, :vt_done_by1, :_destroy
+        :welder, :welder1, :rt_date1, :pt_date1, :vt_date1,
+        :result, :result1, :rt_done_by, :pt_done_by, :vt_done_by,
+        :is_orbital, :is_manuell, :_destroy
       ]
     )
   end

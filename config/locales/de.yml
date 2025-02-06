@@ -539,8 +539,8 @@ de:
     edit:
       title: "Arbeitsvorbereitung bearbeiten: %{work_package}"  
     types:
-      cutting_pipes: "Zuschnitt Rohr"
-      small_parts: "Rüstung Kleinteile" 
+      cutting_pipes: "Cutting Pipes"
+      small_parts: "Small Parts" 
   test_packs:
     form:
       complete_button: "Als abgeschlossen markieren"
