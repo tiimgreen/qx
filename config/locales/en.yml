@@ -59,7 +59,7 @@ en:
       removed_from_hold: "%{model} has been removed from hold"
       remove_hold_failed: "Failed to remove %{model} from hold"
       on_hold_status: "On Hold"
-      on_hold_comment: "Hold Comment"
+      on_hold_comment: "On Hold Comment"
       on_hold_at: "On Hold Since"
 
       file_deleted: "File was successfully deleted"

@@ -12,15 +12,15 @@ en:
       labels:
         project: "Project"
         delivery_date: "Delivery Date"
-        order_number: "Order Number"
-        supplier_name: "Supplier Name"
+        order_number: "Order No."
+        supplier_name: "Supplier"
         notes: "Notes"
         delivery_note: "Delivery Note"
         work_location: "Work Location"
-        delivery_note_number: "Delivery Note Number"
+        delivery_note_number: "Delivery Note No."
     show:
       title: "Delivery Details"
-      order_number: "Order Number"
+      order_number: "Order No."
       delivery_date: "Delivery Date"
       supplier: "Supplier"
       project: "Project"
@@ -30,7 +30,7 @@ en:
       add_item: "Add Item"
       missing_items: "Missing Items"
       work_location: "Work Location"
-      delivery_note_number: "Delivery Note Number"
+      delivery_note_number: "Delivery Note No."
       created_by: "Created By"
       completed: "Completed"
     index:
@@ -46,3 +46,4 @@ en:
       delete: "Delete"
       view: "View"
       complete: "Complete"
+      new_delivery: "New Delivery"

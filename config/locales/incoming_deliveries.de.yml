@@ -12,18 +12,18 @@ de:
       labels:
         project: "Projekt"
         delivery_date: "Lieferdatum"
-        order_number: "Bestellnummer"
-        supplier_name: "Lieferantenname"
+        order_number: "Bestell Nr."
+        supplier_name: "Lieferant"
         notes: "Anmerkungen"
         delivery_note: "Lieferschein"
         work_location: "Lieferort"
-        delivery_note_number: "Lieferscheinnummer"
+        delivery_note_number: "Lieferschein Nr."
     show:
       title: "Lieferungsdetails"
-      order_number: "Bestellnummer"
+      order_number: "Bestell Nr."
       delivery_date: "Lieferdatum"
       work_location: "Lieferort"
-      delivery_note_number: "Lieferscheinnummer"
+      delivery_note_number: "Lieferschein Nr."
       supplier: "Lieferant"
       project: "Projekt"
       delivery_note: "Lieferschein"
@@ -46,6 +46,7 @@ de:
       delete: "Löschen"
       view: "Anzeigen"
       complete: "Abschließen"
+      new_delivery: "Neue Lieferung"
     destroy:
       success: "Eingehende Lieferung wurde erfolgreich gelöscht"
   activerecord:

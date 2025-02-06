@@ -60,10 +60,10 @@ de:
       incoming_delivery:
         project_id: "Projekt"
         delivery_date: "Lieferdatum"
-        order_number: "Bestellnummer"
+        order_number: "Bestell Nr."
         work_location: "Lieferort"
-        delivery_note_number: "Lieferscheinnummer"
-        supplier_name: "Lieferantenname"
+        delivery_note_number: "Lieferschein Nr."
+        supplier_name: "Lieferant"
         notes: "Anmerkungen"
         delivery_note: "Lieferschein"
         created_by: "Erstellt von"
