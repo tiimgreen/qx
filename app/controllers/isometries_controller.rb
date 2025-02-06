@@ -36,8 +36,7 @@ class IsometriesController < ApplicationController
     # If using default sort (line_id), add secondary sorts for page_number and id
     if sort_column == "line_id"
       @isometries = @isometries.reorder(line_id: sort_direction)
-                              .order(page_number: sort_direction)
-                              .order(id: :asc)  # Always show older isometries first within same line/page
+                              .order(page_number: sort_direction, id: :asc)
     else
       @isometries = @isometries.reorder(sort_column => sort_direction)
     end
