@@ -29,7 +29,7 @@ de:
       date: "Datum"
       additional_specs: "Zusätzliche Spezifikationen"
       inspections: "Inspektionen"
-      isometry_documents: "Isometry"
+      isometry_documents: "Isometrie"
       qr_position: "QR Position"
       latest_revision: "Neueste Revision"
       received_date: "Eingangsdatum"
@@ -77,9 +77,10 @@ de:
       measurements: "Messungen"
       additional_specs: "Zusatzliche Daten"
       inspections: "Inspektionen"
+      inspection: "Inspektion"
       on_hold_status: "On Hold"
       notes: "Notizen"
-      isometry_documents: "Isometry"  
+      isometry_documents: "Isometrie"  
       upload_new_pdf: "PDF"
       qr_code_settings: "QR Code Einstellungen"
       qr_position: "QR Position"
@@ -95,6 +96,7 @@ de:
       isometry_rt: "RT"
       isometry_vt: "VT2"
       isometry_pt: "PT2"
+      isometry: "Isometrie"
       slope: "Gefälle"
     _form:
       technical_specs: Technische Spezifikationen
