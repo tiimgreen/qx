@@ -100,9 +100,9 @@ class WeldingPdfGenerator
           weld.material_certificate&.certificate_number,
           weld.process,
           weld.welder,
-          { content: "#{weld.rt_done_by}\n#{weld.rt_date&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
-          { content: "#{weld.pt_done_by}\n#{weld.pt_date&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
-          { content: "#{weld.vt_done_by}\n#{weld.vt_date&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.rt_done_by}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.pt_done_by}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.vt_done_by}", padding: [ 2, 2, 2, 2 ] },
           { content: weld.result, rowspan: 2 }
         ]
 
@@ -115,9 +115,9 @@ class WeldingPdfGenerator
           weld.material_certificate1&.certificate_number,
           weld.process1,
           weld.welder1,
-          { content: "#{weld.rt_done_by1}\n#{weld.rt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
-          { content: "#{weld.pt_done_by1}\n#{weld.pt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
-          { content: "#{weld.vt_done_by1}\n#{weld.vt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] }
+          { content: "#{weld.rt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.pt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] },
+          { content: "#{weld.vt_date1&.strftime("%d.%m.%Y")}", padding: [ 2, 2, 2, 2 ] }
         ]
       end
 

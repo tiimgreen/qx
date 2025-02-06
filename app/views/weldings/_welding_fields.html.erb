@@ -62,32 +62,6 @@
     </div>
 
     <div class="col-md-2">
-      <%= f.label :rt_date, t('activerecord.attributes.isometry.weldings_attributes.rt_date'), class: "form-label" %>
-      <%= f.date_field :rt_date, class: "form-control", value: f.object.rt_date || (f.object.new_record? ? Date.current : nil) %>
-    </div>
-
-    <div class="col-md-2">
-      <%= f.label :pt_date, t('activerecord.attributes.isometry.weldings_attributes.pt_date'), class: "form-label" %>
-      <%= f.date_field :pt_date, class: "form-control", value: f.object.pt_date || (f.object.new_record? ? Date.current : nil) %>
-    </div>
-
-    <div class="col-md-2">
-      <%= f.label :vt_date, t('activerecord.attributes.isometry.weldings_attributes.vt_date'), class: "form-label" %>
-      <%= f.date_field :vt_date, class: "form-control", value: f.object.vt_date || (f.object.new_record? ? Date.current : nil) %>
-    </div>
-
-
-  </div>
-  
-  <div class="row g-3 mt-2">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-2">
-    </div>
-     <div class="col-md-2">
-    </div>
-
-    <div class="col-md-2">
       <%= f.label :rt_done_by, "RT #{t("common.labels.done_by")}", class: "form-label" %>
       <%= f.text_field :rt_done_by, class: "form-control" %>
     </div>
@@ -100,8 +74,9 @@
       <%= f.label :vt_done_by, "VT #{t("common.labels.done_by")}", class: "form-label" %>
       <%= f.text_field :vt_done_by, class: "form-control" %>
     </div>
-  </div>
 
+  </div>
+  
   <%# Second Set of Controls %>
   <div class="row g-3 mt-4">
     <div class="col-12"><hr><h5><%= t('common.weldings.second_set') %></h5></div>
@@ -172,26 +147,6 @@
       <%= f.date_field :vt_date1, class: "form-control", value: f.object.vt_date1 || (f.object.new_record? ? Date.current : nil) %>
     </div>
 </div>
-  <div class="row g-3 mt-2 mb-5">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-2">
-      <%= f.label :rt_done_by1, "RT #{t('common.labels.done_by')}", class: "form-label" %>
-      <%= f.text_field :rt_done_by1, class: "form-control" %>
-    </div>
-    <div class="col-md-2">
-      <%= f.label :pt_done_by1, "PT #{t('common.labels.done_by')}", class: "form-label" %>
-      <%= f.text_field :pt_done_by1, class: "form-control" %>
-    </div>
-    <div class="col-md-2">
-      <%= f.label :vt_done_by1, "VT #{t('common.labels.done_by')}", class: "form-label" %>
-      <%= f.text_field :vt_done_by1, class: "form-control" %>
-    </div>
-  </div>
 
 <hr>
 
