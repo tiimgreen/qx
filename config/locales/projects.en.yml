@@ -16,6 +16,7 @@ en:
     index:
       title: "Projects"
       new: "New Project"
+      created_by: "Created By"
     buttons:
       edit: "Edit"
       back: "Back"
