@@ -66,21 +66,21 @@ class WeldingPdfGenerator
     header_rows = [
       [
         { content: "Naht Nr.\nWeld Nr.", rowspan: 2 },
-        { content: "Komponente\ncomponent", rowspan: 2 },
-        { content: "Materialdokumentation - material documentation", colspan: 4 },
-        { content: "Schweissnahtdoku - welding docu.", colspan: 2 },
-        { content: "Prüfung - dokumentation - test documentation", colspan: 4 }
+        { content: "Com...", rowspan: 2 },
+        { content: "Materialdokumentation - Mat... Doc...", colspan: 4 },
+        { content: "Schweissnahtdoku - Welding Doc...", colspan: 2 },
+        { content: "Prüfung - Dokumentation - Test Documentation", colspan: 4 }
       ],
       [
-        "Abmessung\ndimension",
-        "Werkstoff\nmaterial",
+        "Dim...",
+        "Mat...",
         "Charge\nHeat Nr.",
         "Zeugnis\nCertificate",
-        "Prozess\nprocess",
+        "Pro...",
         "Schweisser\nWelder",
-        "RT / date",
-        "PT / date",
-        "VT / date",
+        "RT / Date",
+        "PT / Date",
+        "VT / Date",
         "Erg\nres"
       ]
     ]
