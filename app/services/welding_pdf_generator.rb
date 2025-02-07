@@ -113,7 +113,7 @@ class WeldingPdfGenerator
           weld.material1,
           weld.batch_number1,
           weld.material_certificate1&.certificate_number,
-          { content: "#{weld.is_manuell ? '[X]' : ''} #{weld.process1}", inline_format: true },
+          { content: "[#{weld.is_manuell ? 'X' : ' '}] #{weld.process1}", inline_format: true },
           weld.welder1&.strftime("%d.%m.%Y"),
           weld.rt_date1&.strftime("%d.%m.%Y"),
           weld.pt_date1&.strftime("%d.%m.%Y"),
