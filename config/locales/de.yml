@@ -55,7 +55,7 @@ de:
       removed_from_hold: "%{model} wurde erfolgreich aus dem Halt entfernt"
       remove_hold_failed: "Fehler beim Entfernen von %{model} aus dem Halt"
       on_hold_status: "On Hold"
-      on_hold_comment: "Haltkommentar"
+      on_hold_comment: "On Hold Kommentar"
       on_hold_at: "On Hold seit"
 
       file_deleted: "Datei wurde erfolgreich gelöscht"

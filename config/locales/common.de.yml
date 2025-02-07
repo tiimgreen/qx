@@ -45,7 +45,7 @@ de:
       page_number: "Seite"
       done_by: "Erledigt von"
       on_hold_images: "On Hold Bilder"
-      on_hold_comment: "Haltkommentar"
+      on_hold_comment: "On Hold Kommentar"
       on_hold_date: "On Hold seit"
       on_hold_status: "On Hold"
       active: "Aktiv"
@@ -102,7 +102,7 @@ de:
       first_set: "Erster Satz"
       second_set: "Zweiter Satz"
       view_welding_report: "Weldlog Report anzeigen"
-      welding_number: "Schweissnähte Nr."
+      welding_number: "Schweissnäht Nr."
   activerecord:
     attributes:
       isometry:

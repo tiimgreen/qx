@@ -40,7 +40,7 @@ de:
       delivery_item: "Lieferposition"
       missing_delivery_item: "Fehlende Lieferposition"
       admin: "Administrator"
-      weldings: "Schweissnähte"
+      weldings: "Schweissnäht"
     attributes:
       admin:
         email: "E-Mail"
@@ -70,7 +70,7 @@ de:
         created_by: "Erstellt von"
         completed: "Abgeschlossen"
         on_hold_status: "On Hold"
-        on_hold_comment: "Haltkommentar"
+        on_hold_comment: "On Hold Kommentar"
         on_hold_date: "Haltdatum"
       material_certificate:
         project: "Projekt"
@@ -106,7 +106,7 @@ de:
         ra_parameters: "Parameter"
         ra_value: "Messwert"
         on_hold_status: "On Hold"
-        on_hold_comment: "Haltkommentar"
+        on_hold_comment: "On Hold Kommentar"
         description: "Beschreibung"
     material_certificates:
       index:
