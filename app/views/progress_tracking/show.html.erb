@@ -77,7 +77,9 @@
             Rails.logger.debug "DEBUG: IST meters for week #{week_key}: #{ist_meters}"
             ist_total += ist_meters
             Rails.logger.debug "DEBUG: IST total after week #{week_key}: #{ist_total}"
-            ist_percentage = total_target_meters > 0 ? (ist_total / total_target_meters * 100).round : 0
+            # Calculate IST % using Excel formula: =IF($W$9=0,0,IST_m_TOTAL/$W$9)
+            # where $W$9 is total_target_meters
+            ist_percentage = total_target_meters > 0 ? ((ist_total / total_target_meters) * 100).round : 0
             
             weekly_data[week_key] = {
               soll_meters: soll_meters,
