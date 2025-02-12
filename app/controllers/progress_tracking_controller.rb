@@ -29,9 +29,9 @@ class ProgressTrackingController < ApplicationController
   end
 
   def update
-    if params[:weekly_progress_entry].present?
+    if params[:weekly_entry].present?
       update_weekly_entry
-    elsif @progress_plan.update(progress_plan_params)
+    elsif params[:project_progress_plan].present? && @progress_plan.update(progress_plan_params)
       redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), notice: t(".success")
     else
       respond_to do |format|
@@ -67,11 +67,14 @@ class ProgressTrackingController < ApplicationController
   end
 
   def weekly_entry_params
-    params.require(:weekly_progress_entry).permit(:expected_value, :actual_value)
+    params.require(:weekly_entry).permit(:expected_value, :actual_value)
   end
 
   def update_weekly_entry
-    @entry = @progress_plan.weekly_progress_entries.find(params[:weekly_entry_id])
+    @entry = @progress_plan.weekly_progress_entries.find_or_initialize_by(
+      week_number: params[:weekly_entry][:week_number],
+      year: params[:weekly_entry][:year]
+    )
 
     if @entry.update(weekly_entry_params)
       respond_to do |format|

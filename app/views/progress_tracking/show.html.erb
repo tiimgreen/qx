@@ -11,22 +11,80 @@
   <div class="card-body">
     <div class="row mb-4">
       <div class="col-md-12">
+        <% 
+          # Get total pipe length for the project
+          total_pipe_length = @project.isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
+          
+          # Calculate total target meters (W9 in Excel)
+          total_target_meters = @project.isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
+          
+          # Initialize weekly data structure
+          weekly_data = {}
+          
+          # Get all isometries with completed prefabrications
+          completed_isos = @project.isometries
+            .joins(:prefabrication)
+            .where.not(prefabrications: { completed: nil })
+            .includes(:prefabrication)
+            .group_by { |iso| iso.prefabrication.completed.strftime('%V/%Y') }
+          
+          # Get expected progress from weekly_progress_entries
+          expected_progress = @progress_plan.weekly_progress_entries
+            .order(:year, :week_number)
+            .each_with_object({}) do |entry, hash|
+              week_key = "%02d/#{entry.year}" % entry.week_number
+              hash[week_key] = entry.expected_value.to_f
+            end
+            
+          # Calculate cumulative totals and percentages
+          soll_total = 0  # SOLL m TOTAL
+          ist_total = 0   # IST m TOTAL
+          
+          # Get start and end weeks
+          start_week = @progress_plan.start_date.strftime('%V').to_i
+          end_week = @progress_plan.end_date.strftime('%V').to_i
+          
+          (start_week..end_week).each do |week|
+            week_key = "%02d/#{@progress_plan.start_date.year}" % week
+            
+            # Calculate SOLL (Expected) values
+            soll_meters = expected_progress[week_key] || 0
+            soll_total += soll_meters
+            soll_percentage = total_target_meters > 0 ? (soll_total / total_target_meters * 100).round(1) : 0
+            
+            # Calculate IST (Actual) values
+            ist_meters = completed_isos[week_key]&.sum { |iso| iso.pipe_length&.to_f || 0 } || 0
+            ist_total += ist_meters
+            ist_percentage = total_target_meters > 0 ? (ist_total / total_target_meters * 100).round(1) : 0
+            
+            weekly_data[week_key] = {
+              soll_meters: soll_meters,
+              soll_total: soll_total,
+              soll_percentage: soll_percentage,
+              ist_meters: ist_meters,
+              ist_total: ist_total,
+              ist_percentage: ist_percentage
+            }
+          end
+        %>
+        
         <%= line_chart [
           {
-            name: t('progress_tracking.expected'),
-            data: @progress_plan.weekly_progress_entries.map { |entry| ["W#{entry.week_number}/#{entry.year}", entry.expected_value] }
+            name: "SOLL %",
+            data: weekly_data.transform_keys { |k| "W#{k}" }.transform_values { |v| v[:soll_percentage] },
+            color: "#000000"
           },
           {
-            name: t('progress_tracking.actual'),
-            data: @progress_plan.weekly_progress_entries.map { |entry| ["W#{entry.week_number}/#{entry.year}", entry.actual_value] }
+            name: "IST %",
+            data: weekly_data.transform_keys { |k| "W#{k}" }.transform_values { |v| v[:ist_percentage] },
+            color: "#28a745"
           }
         ], 
         height: "300px",
-        colors: ["#ffc107", "#28a745"],
         legend: true,
         title: t('progress_tracking.title'),
-        ytitle: t('progress_tracking.progress'),
-        xtitle: t('progress_tracking.weeks') %>
+        ytitle: "Fortschritt %",
+        xtitle: "Wochen" %>
       </div>
     </div>
 
@@ -34,41 +92,49 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th><%= t('progress_tracking.week') %></th>
-            <th><%= t('progress_tracking.expected') %></th>
-            <th><%= t('progress_tracking.actual') %></th>
-            <th><%= t('progress_tracking.difference') %></th>
+            <th>Week</th>
+            <th>SOLL m</th>
+            <th>IST m</th>
+            <th>SOLL m TOTAL</th>
+            <th>IST m TOTAL</th>
+            <th>SOLL %</th>
+            <th>IST %</th>
           </tr>
         </thead>
         <tbody>
-          <% @weekly_entries.each do |entry| %>
+          <% weekly_data.each do |week, data| %>
             <tr>
-              <td>W<%= entry.week_number %>/<%= entry.year %></td>
+              <td>W<%= week %></td>
               <td>
-                <%= form_with(model: entry, url: project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), method: :patch, local: true, class: 'edit-expected') do |f| %>
-                  <%= hidden_field_tag 'weekly_entry_id', entry.id %>
+                <%= form_with(url: project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale),
+                    method: :patch,
+                    local: true,
+                    class: 'edit-expected') do |f| %>
+                  <%= hidden_field_tag 'weekly_entry[week_number]', week %>
+                  <%= hidden_field_tag 'weekly_entry[year]', @progress_plan.start_date.year %>
                   <div class="input-group input-group-sm">
-                    <%= f.number_field :expected_value, step: '0.01', class: 'form-control form-control-sm', 
-                        onchange: 'this.form.requestSubmit()', 
-                        value: entry.expected_value,
-                        name: 'weekly_progress_entry[expected_value]' %>
-                    <span class="input-group-text"><%= @progress_plan.isometry? ? t('units.pieces') : t('units.meters') %></span>
+                    <%= number_field_tag 'weekly_entry[expected_value]',
+                        data[:soll_meters],
+                        step: '0.1',
+                        class: 'form-control form-control-sm',
+                        onchange: 'this.form.requestSubmit()' %>
+                    <span class="input-group-text">m</span>
                   </div>
                 <% end %>
               </td>
-              <td><%= entry.actual_value || '-' %></td>
-              <td>
-                <% if entry.expected_value && entry.actual_value %>
-                  <% difference = entry.actual_value - entry.expected_value %>
-                  <span class="<%= difference >= 0 ? 'text-success' : 'text-danger' %>">
-                    <%= difference >= 0 ? '+' : '' %><%= difference %>
-                  </span>
-                <% else %>
-                  -
-                <% end %>
-              </td>
+              <td><%= number_with_precision(data[:ist_meters], precision: 1) %> m</td>
+              <td><%= number_with_precision(data[:soll_total], precision: 1) %> m</td>
+              <td><%= number_with_precision(data[:ist_total], precision: 1) %> m</td>
+              <td><%= number_with_precision(data[:soll_percentage], precision: 1) %>%</td>
+              <td><%= number_with_precision(data[:ist_percentage], precision: 1) %>%</td>
             </tr>
           <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
         </tbody>
       </table>
     </div>
