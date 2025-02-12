@@ -67,7 +67,7 @@ class ProgressTrackingController < ApplicationController
   end
 
   def weekly_entry_params
-    params.require(:weekly_entry).permit(:expected_value, :actual_value)
+    params.require(:weekly_entry).permit(:week_number, :year, :expected_value, :actual_value)
   end
 
   def update_weekly_entry

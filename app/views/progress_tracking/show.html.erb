@@ -12,27 +12,38 @@
     <div class="row mb-4">
       <div class="col-md-12">
         <% 
-          # Get total pipe length for the project
-          total_pipe_length = @project.isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
-          
           # Calculate total target meters (W9 in Excel)
-          total_target_meters = @project.isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
+          # This is the total of all SOLL m values, handling nil values
+          total_target_meters = @progress_plan.weekly_progress_entries.sum { |entry| entry.expected_value.to_f }
           
           # Initialize weekly data structure
           weekly_data = {}
           
           # Get all isometries with completed prefabrications
-          completed_isos = @project.isometries
+          # We'll track all completions regardless of year
+          all_completed_isos = @project.isometries
             .joins(:prefabrication)
             .where.not(prefabrications: { completed: nil })
             .includes(:prefabrication)
-            .group_by { |iso| iso.prefabrication.completed.strftime('%V/%Y') }
+
+          # Group by week number only, combining completions from all years
+          completed_isos = all_completed_isos.group_by { |iso| 
+            completed_date = iso.prefabrication.completed
+            week_key = "W%02d/%d" % [completed_date.strftime('%V').to_i, @progress_plan.start_date.year]
+            Rails.logger.debug "DEBUG: Grouping isometry #{iso.id} with pipe_length #{iso.pipe_length} into week #{week_key}"
+            week_key
+          }
+          
+          Rails.logger.debug "DEBUG: Completed ISOs hash:"
+          completed_isos.each do |week, isos|
+            Rails.logger.debug "DEBUG: Week #{week}: #{isos.map { |iso| iso.pipe_length }.inspect}"
+          end
           
           # Get expected progress from weekly_progress_entries
           expected_progress = @progress_plan.weekly_progress_entries
             .order(:year, :week_number)
             .each_with_object({}) do |entry, hash|
-              week_key = "%02d/#{entry.year}" % entry.week_number
+              week_key = "W%02d/%d" % [entry.week_number, entry.year]
               hash[week_key] = entry.expected_value.to_f
             end
             
@@ -40,22 +51,33 @@
           soll_total = 0  # SOLL m TOTAL
           ist_total = 0   # IST m TOTAL
           
-          # Get start and end weeks
-          start_week = @progress_plan.start_date.strftime('%V').to_i
-          end_week = @progress_plan.end_date.strftime('%V').to_i
+          # Get start and end dates as Date objects for proper week calculations
+          start_date = @progress_plan.start_date.to_date
+          end_date = @progress_plan.end_date.to_date
           
-          (start_week..end_week).each do |week|
-            week_key = "%02d/#{@progress_plan.start_date.year}" % week
+          # Iterate through each week between start and end dates
+          current_date = start_date
+          while current_date <= end_date
+            week_key = "W%02d/%d" % [current_date.strftime('%V').to_i, current_date.year]
             
             # Calculate SOLL (Expected) values
             soll_meters = expected_progress[week_key] || 0
             soll_total += soll_meters
-            soll_percentage = total_target_meters > 0 ? (soll_total / total_target_meters * 100).round(1) : 0
+            # Calculate SOLL % using the Excel formula: =IF($W$9=0,0,SOLL_m_TOTAL/$W$9)
+            # where $W$9 is total_target_meters
+            soll_percentage = total_target_meters > 0 ? ((soll_total / total_target_meters) * 100).round : 0
             
             # Calculate IST (Actual) values
-            ist_meters = completed_isos[week_key]&.sum { |iso| iso.pipe_length&.to_f || 0 } || 0
+            Rails.logger.debug "DEBUG: Looking for completions in week #{week_key}"
+            ist_meters = completed_isos[week_key]&.sum { |iso| 
+              val = iso.pipe_length&.to_f || 0
+              Rails.logger.debug "DEBUG: Adding pipe_length #{val} from isometry #{iso.id}"
+              val
+            } || 0
+            Rails.logger.debug "DEBUG: IST meters for week #{week_key}: #{ist_meters}"
             ist_total += ist_meters
-            ist_percentage = total_target_meters > 0 ? (ist_total / total_target_meters * 100).round(1) : 0
+            Rails.logger.debug "DEBUG: IST total after week #{week_key}: #{ist_total}"
+            ist_percentage = total_target_meters > 0 ? (ist_total / total_target_meters * 100).round : 0
             
             weekly_data[week_key] = {
               soll_meters: soll_meters,
@@ -65,6 +87,9 @@
               ist_total: ist_total,
               ist_percentage: ist_percentage
             }
+            
+            # Move to next week
+            current_date = current_date + 7.days
           end
         %>
         
@@ -104,14 +129,16 @@
         <tbody>
           <% weekly_data.each do |week, data| %>
             <tr>
-              <td>W<%= week %></td>
+              <td><%= week %></td>
               <td>
                 <%= form_with(url: project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale),
                     method: :patch,
                     local: true,
                     class: 'edit-expected') do |f| %>
-                  <%= hidden_field_tag 'weekly_entry[week_number]', week %>
-                  <%= hidden_field_tag 'weekly_entry[year]', @progress_plan.start_date.year %>
+                  <% week_num = week.match(/W(\d+)\/\d+/)[1].to_i %>
+                  <% year = week.match(/W\d+\/(\d+)/)[1].to_i %>
+                  <%= hidden_field_tag 'weekly_entry[week_number]', week_num %>
+                  <%= hidden_field_tag 'weekly_entry[year]', year %>
                   <div class="input-group input-group-sm">
                     <%= number_field_tag 'weekly_entry[expected_value]',
                         data[:soll_meters],
