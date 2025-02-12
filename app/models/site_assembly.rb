@@ -3,6 +3,7 @@ class SiteAssembly < ApplicationRecord
 
   belongs_to :project
   belongs_to :user
+  belongs_to :isometry, optional: true
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
 

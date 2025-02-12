@@ -24,24 +24,15 @@
           # Initialize weekly data structure
           weekly_data = {}
           
-          # Get all isometries with completed prefabrications
-          # We'll track all completions regardless of year
-          all_completed_isos = @project.isometries
-            .joins(:prefabrication)
-            .where.not(prefabrications: { completed: nil })
-            .includes(:prefabrication)
+          # Get all completed items based on work type
+          all_completed_items = get_completed_items(@project, @progress_plan.work_type, @progress_plan.start_date)
 
-          # Group by week number only, combining completions from all years
-          completed_isos = all_completed_isos.group_by { |iso| 
-            completed_date = iso.prefabrication.completed
-            week_key = "W%02d/%d" % [completed_date.strftime('%V').to_i, @progress_plan.start_date.year]
-            Rails.logger.debug "DEBUG: Grouping isometry #{iso.id} with pipe_length #{iso.pipe_length} into week #{week_key}"
-            week_key
-          }
+          # Group by week number
+          completed_items = group_completed_items(all_completed_items, @progress_plan.work_type, @progress_plan.start_date)
           
-          Rails.logger.debug "DEBUG: Completed ISOs hash:"
-          completed_isos.each do |week, isos|
-            Rails.logger.debug "DEBUG: Week #{week}: #{isos.map { |iso| iso.pipe_length }.inspect}"
+          Rails.logger.debug "DEBUG: Completed items hash:"
+          completed_items.each do |week, items|
+            Rails.logger.debug "DEBUG: Week #{week}: #{items.map { |item| calculate_ist_value(item, @progress_plan.work_type) }.inspect}"
           end
           
           # Get expected progress from weekly_progress_entries
@@ -74,10 +65,8 @@
             
             # Calculate IST (Actual) values
             Rails.logger.debug "DEBUG: Looking for completions in week #{week_key}"
-            ist_meters = completed_isos[week_key]&.sum { |iso| 
-              val = iso.pipe_length&.to_f || 0
-              Rails.logger.debug "DEBUG: Adding pipe_length #{val} from isometry #{iso.id}"
-              val
+            ist_meters = completed_items[week_key]&.sum { |item| 
+              calculate_ist_value(item, @progress_plan.work_type)
             } || 0
             Rails.logger.debug "DEBUG: IST meters for week #{week_key}: #{ist_meters}"
             ist_total += ist_meters
@@ -153,13 +142,13 @@
                         class: 'form-control form-control-sm',
                         style: 'width: 50px; min-width: 50px; padding-left: 2px; padding-right: 2px;',
                         onchange: 'this.form.requestSubmit()' %>
-                    <span class="input-group-text" style="padding: 0 4px;">m</span>
+                    <span class="input-group-text" style="padding: 0 4px;"><%= progress_unit(@progress_plan.work_type) %></span>
                   </div>
                 <% end %>
               </td>
-              <td><%= number_with_precision(data[:ist_meters], precision: 1) %> m</td>
-              <td><%= number_with_precision(data[:soll_total], precision: 1) %> m</td>
-              <td><%= number_with_precision(data[:ist_total], precision: 1) %> m</td>
+              <td><%= number_with_precision(data[:ist_meters], precision: 1) %> <%= progress_unit(@progress_plan.work_type) %></td>
+              <td><%= number_with_precision(data[:soll_total], precision: 1) %> <%= progress_unit(@progress_plan.work_type) %></td>
+              <td><%= number_with_precision(data[:ist_total], precision: 1) %> <%= progress_unit(@progress_plan.work_type) %></td>
               <td><%= number_with_precision(data[:soll_percentage], precision: 1) %>%</td>
               <td><%= number_with_precision(data[:ist_percentage], precision: 1) %>%</td>
             </tr>
