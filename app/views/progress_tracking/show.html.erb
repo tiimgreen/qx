@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="card-body" data-pdf-export-target="content">
+  <div class="card-body px-5" data-pdf-export-target="content">
     <div class="row mb-4">
       <div class="col-md-12">
         <% 
@@ -103,12 +103,12 @@
         <%= line_chart [
           {
             name: "SOLL %",
-            data: weekly_data.transform_keys { |k| "W#{k}" }.transform_values { |v| v[:soll_percentage] },
+            data: weekly_data.transform_values { |v| v[:soll_percentage] },
             color: "#000000"
           },
           {
             name: "IST %",
-            data: weekly_data.transform_keys { |k| "W#{k}" }.transform_values { |v| v[:ist_percentage] },
+            data: weekly_data.transform_values { |v| v[:ist_percentage] },
             color: "#28a745"
           }
         ], 
@@ -146,13 +146,14 @@
                   <% year = week.match(/W\d+\/(\d+)/)[1].to_i %>
                   <%= hidden_field_tag 'weekly_entry[week_number]', week_num %>
                   <%= hidden_field_tag 'weekly_entry[year]', year %>
-                  <div class="input-group input-group-sm">
+                  <div class="input-group input-group-sm" style="max-width: 120px;">
                     <%= number_field_tag 'weekly_entry[expected_value]',
                         data[:soll_meters],
                         step: '0.1',
                         class: 'form-control form-control-sm',
+                        style: 'width: 50px; min-width: 50px; padding-left: 2px; padding-right: 2px;',
                         onchange: 'this.form.requestSubmit()' %>
-                    <span class="input-group-text">m</span>
+                    <span class="input-group-text" style="padding: 0 4px;">m</span>
                   </div>
                 <% end %>
               </td>

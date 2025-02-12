@@ -12,16 +12,16 @@ export default class extends Controller {
 
       const element = this.contentTarget
       const canvas = await html2canvas(element, {
-        scale: 2,
+        scale: 1.5,
         useCORS: true,
         logging: true
       })
 
       const imgData = canvas.toDataURL('image/jpeg', 0.98)
 
-      // Create PDF in landscape A4
+      // Create PDF in portrait A4
       const pdf = new jsPDF({
-        orientation: 'landscape',
+        orientation: 'portrait',
         unit: 'mm',
         format: 'a4'
       })
