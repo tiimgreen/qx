@@ -9,3 +9,9 @@ pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.7.1/dist/jquery.js"
 pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.8/dist/esm/index.js"
 pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.3.2/dist/js/bootstrap.esm.js"
 pin "flag-icons", to: "flag-icons.js"
+
+# Charting
+pin "chartkick", to: "chartkick.js"
+pin "Chart.bundle", to: "Chart.bundle.js"
+pin "@hotwired/turbo", to: "turbo.min.js"
+pin "@rails/actioncable", to: "actioncable.esm.js"

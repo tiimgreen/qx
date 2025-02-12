@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_06_105904) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_12_024410) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -321,6 +321,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_105904) do
     t.index ["work_location_id"], name: "index_prefabrications_on_work_location_id"
   end
 
+  create_table "project_progress_plans", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "work_type"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_progress_plans_on_project_id"
+  end
+
   create_table "project_users", force: :cascade do |t|
     t.integer "project_id", null: false
     t.integer "user_id", null: false
@@ -464,6 +474,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_105904) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "weekly_progress_entries", force: :cascade do |t|
+    t.integer "project_progress_plan_id", null: false
+    t.integer "week_number", null: false
+    t.integer "year", null: false
+    t.decimal "expected_value", precision: 10, scale: 2
+    t.decimal "actual_value", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_progress_plan_id", "week_number", "year"], name: "idx_weekly_progress_unique_week", unique: true
+    t.index ["project_progress_plan_id"], name: "index_weekly_progress_entries_on_project_progress_plan_id"
+  end
+
   create_table "welding_batch_assignments", force: :cascade do |t|
     t.integer "work_preparation_id", null: false
     t.integer "welding_id", null: false
@@ -573,6 +595,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_105904) do
   add_foreign_key "prefabrications", "projects"
   add_foreign_key "prefabrications", "users"
   add_foreign_key "prefabrications", "work_locations"
+  add_foreign_key "project_progress_plans", "projects"
   add_foreign_key "project_users", "projects"
   add_foreign_key "project_users", "users"
   add_foreign_key "projects", "users"
@@ -596,6 +619,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_105904) do
   add_foreign_key "user_resource_permissions", "users"
   add_foreign_key "user_sectors", "sectors"
   add_foreign_key "user_sectors", "users"
+  add_foreign_key "weekly_progress_entries", "project_progress_plans"
   add_foreign_key "welding_batch_assignments", "material_certificates"
   add_foreign_key "welding_batch_assignments", "material_certificates", column: "material_certificate1_id"
   add_foreign_key "welding_batch_assignments", "weldings"

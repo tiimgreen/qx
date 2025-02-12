@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: one
+  work_type: 1
+  start_date: 2025-02-12 10:43:55
+  end_date: 2025-02-12 10:43:55
+
+two:
+  project: two
+  work_type: 1
+  start_date: 2025-02-12 10:43:55
+  end_date: 2025-02-12 10:43:55

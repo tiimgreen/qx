@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">
+      <%= t('progress_tracking.progress_for', type: t("progress_tracking.work_types.#{@progress_plan.work_type}")) %>
+    </h5>
+    <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-secondary btn-sm' do %>
+      <i class="bi bi-arrow-left"></i> <%= t('common.back') %>
+    <% end %>
+  </div>
+
+  <div class="card-body">
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <%= line_chart [
+          {
+            name: t('progress_tracking.expected'),
+            data: @progress_plan.weekly_progress_entries.map { |entry| ["W#{entry.week_number}/#{entry.year}", entry.expected_value] }
+          },
+          {
+            name: t('progress_tracking.actual'),
+            data: @progress_plan.weekly_progress_entries.map { |entry| ["W#{entry.week_number}/#{entry.year}", entry.actual_value] }
+          }
+        ], 
+        height: "300px",
+        colors: ["#ffc107", "#28a745"],
+        legend: true,
+        title: t('progress_tracking.title'),
+        ytitle: t('progress_tracking.progress'),
+        xtitle: t('progress_tracking.weeks') %>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><%= t('progress_tracking.week') %></th>
+            <th><%= t('progress_tracking.expected') %></th>
+            <th><%= t('progress_tracking.actual') %></th>
+            <th><%= t('progress_tracking.difference') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @weekly_entries.each do |entry| %>
+            <tr>
+              <td>W<%= entry.week_number %>/<%= entry.year %></td>
+              <td>
+                <%= form_with(model: entry, url: project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), method: :patch, local: true, class: 'edit-expected') do |f| %>
+                  <%= hidden_field_tag 'weekly_entry_id', entry.id %>
+                  <div class="input-group input-group-sm">
+                    <%= f.number_field :expected_value, step: '0.01', class: 'form-control form-control-sm', 
+                        onchange: 'this.form.requestSubmit()', 
+                        value: entry.expected_value,
+                        name: 'weekly_progress_entry[expected_value]' %>
+                    <span class="input-group-text"><%= @progress_plan.isometry? ? t('units.pieces') : t('units.meters') %></span>
+                  </div>
+                <% end %>
+              </td>
+              <td><%= entry.actual_value || '-' %></td>
+              <td>
+                <% if entry.expected_value && entry.actual_value %>
+                  <% difference = entry.actual_value - entry.expected_value %>
+                  <span class="<%= difference >= 0 ? 'text-success' : 'text-danger' %>">
+                    <%= difference >= 0 ? '+' : '' %><%= difference %>
+                  </span>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

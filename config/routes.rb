@@ -1,7 +1,5 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  # QR Code handling route
-
   # Add specific route for locale switching outside the locale scope
   post "/switch_locale/:new_locale", to: "application#switch_locale", as: :switch_locale
 
@@ -106,6 +104,12 @@ Rails.application.routes.draw do
         member do
           patch :complete
           delete "delete_image/:image_id", action: :delete_image, as: :delete_image
+        end
+      end
+
+      resources :progress_tracking, only: [ :index, :show, :create, :update ] do
+        collection do
+          get :chart_data
         end
       end
     end

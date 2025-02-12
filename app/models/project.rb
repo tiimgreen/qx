@@ -18,6 +18,7 @@ class Project < ApplicationRecord
 
   has_many :project_users
   has_many :users, through: :project_users
+  has_many :project_progress_plans, dependent: :destroy
 
   validates :project_number, presence: true, uniqueness: true
   validates :name, presence: true

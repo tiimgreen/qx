@@ -1,0 +1,31 @@
+en:
+  progress_tracking:
+    title: "Progress Tracking"
+    new_plan: "New Progress Plan"
+    work_type: "Work Type"
+    start_date: "Start Date"
+    end_date: "End Date"
+    weeks: "Weeks"
+    view: "View Progress"
+    no_plans: "No progress plans yet. Click the button above to create one."
+    progress_for: "%{type} Progress"
+    week: "Week"
+    expected: "Expected"
+    actual: "Actual"
+    difference: "Difference"
+    work_types:
+      isometry: "Isometry"
+      prefabrication: "Prefabrication"
+      site_assembly: "Site Assembly"
+    create:
+      success: "Progress plan was successfully created."
+    update:
+      success: "Progress plan was successfully updated."
+      entry_updated: "Progress entry was successfully updated."
+  units:
+    pieces: "pcs"
+    meters: "m"
+  common:
+    back: "Back"
+    cancel: "Cancel"
+    create: "Create"

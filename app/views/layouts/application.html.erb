@@ -16,6 +16,7 @@
 
     <%= stylesheet_link_tag "application"%>
     <%= javascript_importmap_tags %>
+    <%= yield :charts %>
 
     <% content_for :head do %>
       <link rel="preload" as="video" href="/home-video.mp4" type="video/mp4">

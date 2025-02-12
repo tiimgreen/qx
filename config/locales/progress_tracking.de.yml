@@ -1,0 +1,31 @@
+de:
+  progress_tracking:
+    title: "Fortschrittsverfolgung"
+    new_plan: "Neuer Fortschrittsplan"
+    work_type: "Arbeitstyp"
+    start_date: "Startdatum"
+    end_date: "Enddatum"
+    weeks: "Wochen"
+    view: "Fortschritt anzeigen"
+    no_plans: "Noch keine Fortschrittspläne. Klicken Sie oben auf die Schaltfläche, um einen zu erstellen."
+    progress_for: "%{type} Fortschritt"
+    week: "Woche"
+    expected: "Erwartet"
+    actual: "Tatsächlich"
+    difference: "Differenz"
+    work_types:
+      isometry: "Isometrie"
+      prefabrication: "Vorfertigung"
+      site_assembly: "Baustellenmontage"
+    create:
+      success: "Fortschrittsplan wurde erfolgreich erstellt."
+    update:
+      success: "Fortschrittsplan wurde erfolgreich aktualisiert."
+      entry_updated: "Fortschrittseintrag wurde erfolgreich aktualisiert."
+  units:
+    pieces: "Stk"
+    meters: "m"
+  common:
+    back: "Zurück"
+    cancel: "Abbrechen"
+    create: "Erstellen"
