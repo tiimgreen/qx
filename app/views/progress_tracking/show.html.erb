@@ -147,10 +147,10 @@
                 <% end %>
               </td>
               <td><%= number_with_precision(data[:ist_meters], precision: 1) %> <%= progress_unit(@progress_plan.work_type) %></td>
-              <td><%= number_with_precision(data[:soll_total], precision: 1) %> <%= progress_unit(@progress_plan.work_type) %></td>
-              <td><%= number_with_precision(data[:ist_total], precision: 1) %> <%= progress_unit(@progress_plan.work_type) %></td>
-              <td><%= number_with_precision(data[:soll_percentage], precision: 1) %>%</td>
-              <td><%= number_with_precision(data[:ist_percentage], precision: 1) %>%</td>
+              <td><%= number_with_precision(data[:soll_total], precision: 0) %> <%= progress_unit(@progress_plan.work_type) %></td>
+              <td><%= number_with_precision(data[:ist_total], precision: 0) %> <%= progress_unit(@progress_plan.work_type) %></td>
+              <td><%= number_with_precision(data[:soll_percentage], precision: 0) %>%</td>
+              <td><%= number_with_precision(data[:ist_percentage], precision: 0) %>%</td>
             </tr>
           <% end %>
         </tbody>
