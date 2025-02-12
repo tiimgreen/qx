@@ -15,3 +15,7 @@ pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
 pin "@hotwired/turbo", to: "turbo.min.js"
 pin "@rails/actioncable", to: "actioncable.esm.js"
+
+# PDF Export
+pin "jspdf", to: "https://cdn.skypack.dev/jspdf"
+pin "html2canvas", to: "https://cdn.skypack.dev/html2canvas"

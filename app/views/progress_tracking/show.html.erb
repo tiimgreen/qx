@@ -1,14 +1,19 @@
-<div class="card">
+<div class="card" data-controller="pdf-export">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">
       <%= t('progress_tracking.progress_for', type: t("progress_tracking.work_types.#{@progress_plan.work_type}")) %>
     </h5>
-    <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-secondary btn-sm' do %>
-      <i class="bi bi-arrow-left"></i> <%= t('common.back') %>
-    <% end %>
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary btn-sm" data-action="pdf-export#export">
+        <i class="bi bi-file-pdf"></i> Export PDF
+      </button>
+      <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-secondary btn-sm' do %>
+        <i class="bi bi-arrow-left"></i> <%= t('common.back') %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="card-body">
+  <div class="card-body" data-pdf-export-target="content">
     <div class="row mb-4">
       <div class="col-md-12">
         <% 
