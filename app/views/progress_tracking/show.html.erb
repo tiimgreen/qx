@@ -88,23 +88,23 @@
             <%= t('common.generated_at') %>: <%= l(Time.current, format: :long) %>
           </p>
         </div>
-        <%= line_chart [
-          {
-            name: "SOLL %",
-            data: weekly_data.transform_values { |v| v[:soll_percentage] },
-            color: "#000000"
-          },
-          {
-            name: "IST %",
-            data: weekly_data.transform_values { |v| v[:ist_percentage] },
-            color: "#28a745"
-          }
-        ], 
-        height: "300px",
-        legend: true,
-        title: t('progress_tracking.title'),
-        ytitle: "Fortschritt %",
-        xtitle: "Wochen" %>
+            
+    <%
+      @chart = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title(:text => "Progress Tracking")
+        f.xAxis(:categories => weekly_data.keys)
+        f.series(:name => "SOLL %", :data => weekly_data.values.map { |v| v[:soll_percentage] })
+        f.series(:name => "IST %", :data => weekly_data.values.map { |v| v[:ist_percentage] })
+        f.yAxis(
+          :title => {:text => "Fortschritt %"},
+          :min => 0,
+          :max => 100,
+          :tickInterval => 10,
+          :labels => {:format => "{value}%"}
+        )
+      end
+    %>
+    <%= high_chart("container", @chart) %>
       </div>
     </div>
 
@@ -155,7 +155,6 @@
         </tbody>
       </table>
     </div>
+
   </div>
 </div>
-
-

@@ -15,6 +15,7 @@ pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
 pin "@hotwired/turbo", to: "turbo.min.js"
 pin "@rails/actioncable", to: "actioncable.esm.js"
+pin "highcharts", to: "https://code.highcharts.com/highcharts.js"
 
 # PDF Export
 pin "jspdf", to: "https://cdn.skypack.dev/jspdf"

@@ -140,6 +140,7 @@ GEM
       activesupport (>= 6.1)
     groupdate (6.5.1)
       activesupport (>= 7)
+    hash-deep-merge (0.1.1)
     hashery (2.1.2)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
@@ -171,6 +172,8 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
+    lazy_high_charts (1.6.1)
+      hash-deep-merge
     logger (1.6.5)
     loofah (2.24.0)
       crass (~> 1.0.2)
@@ -434,6 +437,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  lazy_high_charts
   mini_magick
   pagy (~> 9.3)
   pdf-reader
