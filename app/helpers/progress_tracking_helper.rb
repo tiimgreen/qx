@@ -11,8 +11,8 @@ module ProgressTrackingHelper
         .where.not(completed: nil)
     when :isometry
       project.isometries
-        .where.not(approved_at: nil)
-        .where('approved_at >= ?', start_date)
+        .where.not(received_date: nil)
+        .where("received_date >= ?", start_date)
     end
   end
 
@@ -24,9 +24,9 @@ module ProgressTrackingHelper
       when :site_assembly
         item.completed
       when :isometry
-        item.approved_at
+        item.received_date
       end
-      "W%02d/%d" % [completed_date.strftime('%V').to_i, start_date.year]
+      "W%02d/%d" % [ completed_date.strftime("%V").to_i, start_date.year ]
     end
   end
 
@@ -44,9 +44,9 @@ module ProgressTrackingHelper
   def progress_unit(work_type)
     case work_type.to_sym
     when :prefabrication, :site_assembly
-      'm'
+      "m"
     when :isometry
-      'pcs'
+      "pcs"
     end
   end
 end
