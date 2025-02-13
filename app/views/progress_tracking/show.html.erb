@@ -16,7 +16,8 @@
 
   <div class="card-body p-5" data-pdf-export-target="content">
     <div class="row mb-4">
-      <div class="col-md-12">
+      <div class="col-md-12 position-relative">
+        <%= image_tag "logo.png", class: "position-absolute top-0 end-0", style: "height: 50px; width: auto;" %>
         <% 
           # Calculate total target meters (W9 in Excel)
           # This is the total of all SOLL m values, handling nil values
