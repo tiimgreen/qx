@@ -2,6 +2,13 @@ de:
   progress_tracking:
     create_revision: "Revision erstellen"
     confirm_revision: "Sind Sie sicher, dass Sie eine neue Revision erstellen wollen? Die aktuelle Version wird gesperrt."
+    confirm_lock: "Sind Sie sicher, dass Sie diesen Plan sperren möchten? Nach dem Sperren können keine Änderungen mehr vorgenommen werden."
+    confirm_unlock: "Sind Sie sicher, dass Sie diesen Plan entsperren möchten?"
+    lock: "Plan sperren"
+    unlock: "Plan entsperren"
+    locked: "Plan wurde gesperrt"
+    unlocked: "Plan wurde entsperrt"
+    locked_error: "Dieser Plan ist gesperrt und kann nicht geändert werden"
     title: "Fortschrittsverfolgung"
     new_plan: "Neuer Fortschrittsplan"
     work_type: "Arbeitstyp"

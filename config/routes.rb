@@ -110,6 +110,7 @@ Rails.application.routes.draw do
       resources :progress_tracking, only: [ :index, :show, :create, :update ] do
         member do
           post :create_revision
+          post :toggle_lock
         end
         collection do
           get :chart_data

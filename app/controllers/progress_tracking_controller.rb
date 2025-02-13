@@ -2,8 +2,9 @@ class ProgressTrackingController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user_or_guest!
   before_action :set_project
-  before_action :set_progress_plan, only: [ :show, :update, :create_revision ]
+  before_action :set_progress_plan, only: [ :show, :update, :create_revision, :toggle_lock ]
   before_action :authorize_view!
+  before_action :check_locked, only: [ :update ]
 
   def index
     @progress_plans = @project.project_progress_plans.order(created_at: :desc)
@@ -49,6 +50,12 @@ class ProgressTrackingController < ApplicationController
     redirect_to project_progress_tracking_path(@project, @new_plan, locale: I18n.locale), notice: t('.success')
   rescue => e
     redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), alert: e.message
+  end
+
+  def toggle_lock
+    @progress_plan.update(locked: !@progress_plan.locked)
+    redirect_to project_progress_tracking_index_path(@project, locale: I18n.locale), 
+                notice: t(".#{@progress_plan.locked? ? 'locked' : 'unlocked'}")
   end
 
   def chart_data

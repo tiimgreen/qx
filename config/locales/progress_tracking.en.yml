@@ -2,6 +2,13 @@ en:
   progress_tracking:
     create_revision: "Create Revision"
     confirm_revision: "Are you sure you want to create a new revision? The current version will be locked."
+    confirm_lock: "Are you sure you want to lock this plan? You won't be able to make changes after locking."
+    confirm_unlock: "Are you sure you want to unlock this plan?"
+    lock: "Lock Plan"
+    unlock: "Unlock Plan"
+    locked: "Plan has been locked"
+    unlocked: "Plan has been unlocked"
+    locked_error: "This plan is locked and cannot be modified"
     title: "Progress Tracking"
     new_plan: "New Progress Plan"
     work_type: "Work Type"
