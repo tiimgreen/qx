@@ -621,6 +621,7 @@ en:
   reports:
     isometries:
       title: Isometries Report
+      diagram_title: Isometries Handover
       overall_progress: Overall Progress
       completed: Completed
       in_progress: In Progress

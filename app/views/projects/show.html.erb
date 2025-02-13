@@ -4,9 +4,6 @@
     <div>
       <%= link_to t('projects.buttons.edit'), edit_project_path(@project), class: 'btn btn-primary btn-sm'%>
       <%= link_to t('projects.buttons.back'), projects_path, class: 'btn btn-secondary btn-sm' %>
-      <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-info btn-sm ms-2' do %>
-        <i class="bi bi-graph-up"></i> <%= t('progress_tracking.title') %>
-      <% end %>
     </div>
   </div>
 
@@ -39,10 +36,16 @@
           <dd class="col-sm-9"><%= @project.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
         </dl>
       </div>
-      <div class="col-md-4 text-center">
+      <div class="col-md-2 text-center">
+        <h5><%= t('reports.isometries.diagram_title') %></h5>
+        <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-info btn-sm ms-2' do %>
+          <%= image_tag 'diagram.png', alt: t('reports.isometries.diagram_title'), class: 'img-fluid mb-3'%>
+        <% end %>
+      </div>
+      <div class="col-md-2 text-center">
         <h5><%= t('reports.isometries.title') %></h5>
         <%= link_to project_isometries_report_path(@project), class: 'text-decoration-none' do %>
-          <%= image_tag 'report.png', alt: t('reports.isometries.title'), class: 'img-fluid mb-3', style: 'max-width: 150px;' %>
+          <%= image_tag 'report.png', alt: t('reports.isometries.title'), class: 'img-fluid mb-3'%>
         <% end %>
       </div>
     </div>
