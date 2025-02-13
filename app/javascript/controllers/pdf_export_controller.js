@@ -37,7 +37,7 @@ export default class extends Controller {
       const scaledWidth = imgWidth * ratio
       const scaledHeight = imgHeight * ratio
       const x = (pdfWidth - scaledWidth) / 2
-      const y = (pdfHeight - scaledHeight) / 2
+      const y = 10  // Fixed top margin of 10mm instead of centering vertically
 
       pdf.addImage(imgData, 'JPEG', x, y, scaledWidth, scaledHeight)
       // Create Blob and open in new tab
