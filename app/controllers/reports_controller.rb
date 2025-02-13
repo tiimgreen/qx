@@ -72,7 +72,7 @@ class ReportsController < ApplicationController
     return false unless user_signed_in? || guest_signed_in?
 
     # For guests, check if they have access to this project
-    current_guest&.project_id == @project.id || current_user&.projects.exists?(@project.id)
+    current_guest&.project_id == @project.id || current_user&.projects&.exists?(@project.id)
   end
 
   def set_project
