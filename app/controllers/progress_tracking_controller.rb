@@ -2,7 +2,7 @@ class ProgressTrackingController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user_or_guest!
   before_action :set_project
-  before_action :set_progress_plan, only: [ :show, :update ]
+  before_action :set_progress_plan, only: [ :show, :update, :create_revision ]
   before_action :authorize_view!
 
   def index
@@ -42,6 +42,13 @@ class ProgressTrackingController < ApplicationController
         format.json { render json: @progress_plan.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def create_revision
+    @new_plan = @progress_plan.create_revision
+    redirect_to project_progress_tracking_path(@project, @new_plan, locale: I18n.locale), notice: t('.success')
+  rescue => e
+    redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), alert: e.message
   end
 
   def chart_data

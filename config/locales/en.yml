@@ -39,6 +39,8 @@ en:
       transports: 
         title: "Transports"             
   common:
+    latest_revision: "Latest Revision"
+    old_revision: "Previous Revision"
     save: "Save"
     cancel: "Cancel"
     completed: "Completed"
@@ -347,6 +349,7 @@ en:
   isometries:
     actions:
       add_page: "Add Page"
+      create_revision: "New Revision"
     notices:
       page_created: "New page was successfully created"
     errors:

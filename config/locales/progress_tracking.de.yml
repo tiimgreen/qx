@@ -1,12 +1,16 @@
 de:
   progress_tracking:
+    create_revision: "Revision erstellen"
+    confirm_revision: "Sind Sie sicher, dass Sie eine neue Revision erstellen wollen? Die aktuelle Version wird gesperrt."
     title: "Fortschrittsverfolgung"
     new_plan: "Neuer Fortschrittsplan"
     work_type: "Arbeitstyp"
     start_date: "Startdatum"
     end_date: "Enddatum"
     weeks: "Wochen"
-    view: "Fortschritt anzeigen"
+    revision_number: "Revision"
+    revision_last: "Letzte Revision"
+    view: "Anzeigen"
     no_plans: "Noch keine Fortschrittspläne. Klicken Sie oben auf die Schaltfläche, um einen zu erstellen."
     progress_for: "%{type} Fortschritt"
     week: "Woche"

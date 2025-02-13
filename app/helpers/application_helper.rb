@@ -45,13 +45,14 @@ module ApplicationHelper
     params[:direction] == "asc" ? "\u2191" : "\u2193"
   end
 
-  def revision_status_label(isometry)
-    return unless isometry.revision_number.present?
+  def revision_status_label(record)
+    return unless record.revision_number.present?
 
-    css_class = isometry.revision_last? ? "bg-success" : "bg-danger"
+    css_class = record.revision_last? ? "bg-success" : "bg-danger"
 
-    content_tag(:span, isometry.revision_number,
-      class: "badge #{css_class} text-white")
+    content_tag(:span, record.revision_number,
+      class: "badge #{css_class} text-white",
+      title: record.revision_last? ? t("common.latest_revision") : t("common.old_revision"))
   end
 
   def pressure_status_label(db_pressure, operating_pressure)

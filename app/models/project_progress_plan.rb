@@ -11,7 +11,20 @@ class ProjectProgressPlan < ApplicationRecord
   validates :start_date, :end_date, :work_type, presence: true
   validate :end_date_after_start_date
 
+  before_create :set_initial_revision_values
+
+  scope :latest_revisions, -> { where(revision_last: true) }
+
+  def create_revision
+    ProjectProgressPlanRevisionCreator.new(self).create_revision
+  end
+
   private
+
+  def set_initial_revision_values
+    self.revision_number ||= 1
+    self.revision_last = true
+  end
 
   def end_date_after_start_date
     return if end_date.blank? || start_date.blank?
