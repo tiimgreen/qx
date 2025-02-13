@@ -91,7 +91,7 @@
             
     <%
       @chart = LazyHighCharts::HighChart.new('graph') do |f|
-        f.title(:text => "Progress Tracking")
+        f.title(:text => t("progress_tracking.title"))
         f.xAxis(:categories => weekly_data.keys)
         f.series(:name => "SOLL %", :data => weekly_data.values.map { |v| v[:soll_percentage] })
         f.series(:name => "IST %", :data => weekly_data.values.map { |v| v[:ist_percentage] })
