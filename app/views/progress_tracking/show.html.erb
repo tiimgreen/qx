@@ -1,11 +1,11 @@
-<div class="card" data-controller="pdf-export">
+<div class="card mb-4" data-controller="pdf-export">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0">
       <%= t('progress_tracking.progress_for', type: t("progress_tracking.work_types.#{@progress_plan.work_type}")) %>
     </h5>
     <div class="d-flex gap-2">
       <button class="btn btn-primary btn-sm" data-action="pdf-export#export">
-        <i class="bi bi-file-pdf"></i> Export PDF
+        <i class="bi bi-file-pdf"></i> <%= t('common.actions.export_to_pdf') %>
       </button>
       <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-secondary btn-sm' do %>
         <i class="bi bi-arrow-left"></i> <%= t('common.back') %>
@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="card-body px-5" data-pdf-export-target="content">
+  <div class="card-body p-5" data-pdf-export-target="content">
     <div class="row mb-4">
       <div class="col-md-12">
         <% 
@@ -29,11 +29,6 @@
 
           # Group by week number
           completed_items = group_completed_items(all_completed_items, @progress_plan.work_type, @progress_plan.start_date)
-          
-          Rails.logger.debug "DEBUG: Completed items hash:"
-          completed_items.each do |week, items|
-            Rails.logger.debug "DEBUG: Week #{week}: #{items.map { |item| calculate_ist_value(item, @progress_plan.work_type) }.inspect}"
-          end
           
           # Get expected progress from weekly_progress_entries
           expected_progress = @progress_plan.weekly_progress_entries
@@ -64,13 +59,10 @@
             soll_percentage = total_target_meters > 0 ? ((soll_total / total_target_meters) * 100).round : 0
             
             # Calculate IST (Actual) values
-            Rails.logger.debug "DEBUG: Looking for completions in week #{week_key}"
             ist_meters = completed_items[week_key]&.sum { |item| 
               calculate_ist_value(item, @progress_plan.work_type)
             } || 0
-            Rails.logger.debug "DEBUG: IST meters for week #{week_key}: #{ist_meters}"
             ist_total += ist_meters
-            Rails.logger.debug "DEBUG: IST total after week #{week_key}: #{ist_total}"
             # Calculate IST % using Excel formula: =IF($W$9=0,0,IST_m_TOTAL/$W$9)
             # where $W$9 is total_target_meters
             ist_percentage = total_target_meters > 0 ? ((ist_total / total_target_meters) * 100).round : 0
@@ -153,12 +145,6 @@
               <td><%= number_with_precision(data[:ist_percentage], precision: 0) %>%</td>
             </tr>
           <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
         </tbody>
       </table>
     </div>
