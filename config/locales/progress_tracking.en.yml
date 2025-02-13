@@ -9,6 +9,7 @@ en:
     locked: "Plan has been locked"
     unlocked: "Plan has been unlocked"
     locked_error: "This plan is locked and cannot be modified"
+    admin_only_error: "Only administrators can modify progress values"
     title: "Progress Tracking"
     new_plan: "New Progress Plan"
     work_type: "Work Type"

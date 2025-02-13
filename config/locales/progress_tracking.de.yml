@@ -9,6 +9,7 @@ de:
     locked: "Plan wurde gesperrt"
     unlocked: "Plan wurde entsperrt"
     locked_error: "Dieser Plan ist gesperrt und kann nicht geändert werden"
+    admin_only_error: "Nur Administratoren können Fortschrittswerte ändern"
     title: "Fortschrittsverfolgung"
     new_plan: "Neuer Fortschrittsplan"
     work_type: "Arbeitstyp"

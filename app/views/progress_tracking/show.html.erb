@@ -7,7 +7,7 @@
       <button class="btn btn-primary btn-sm" data-action="pdf-export#export">
         <i class="bi bi-file-pdf"></i> <%= t('common.actions.export_to_pdf') %>
       </button>
-      <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-secondary btn-sm' do %>
+      <%= link_to project_progress_tracking_index_path(@project, locale: I18n.locale), class: 'btn btn-primary btn-sm' do %>
         <i class="bi bi-arrow-left"></i> <%= t('common.back') %>
       <% end %>
     </div>
@@ -143,8 +143,8 @@
                         class: 'form-control form-control-sm',
                         style: 'width: 50px; min-width: 50px; padding-left: 2px; padding-right: 2px;',
                         onchange: 'this.form.requestSubmit()',
-                        disabled: @progress_plan.locked?,
-                        title: @progress_plan.locked? ? t('progress_tracking.locked_error') : nil %>
+                        disabled: @progress_plan.locked? || !current_user.admin?,
+                        title: @progress_plan.locked? ? t('progress_tracking.locked_error') : (!current_user.admin? ? t('progress_tracking.admin_only_error') : nil) %>
                     <span class="input-group-text" style="padding: 0 4px;"><%= progress_unit(@progress_plan.work_type) %></span>
                   </div>
                 <% end %>

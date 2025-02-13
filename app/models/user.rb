@@ -33,6 +33,8 @@ class User < ApplicationRecord
   end
 
   def has_permission?(action, model_name)
+    return true if admin?
+
     permission = Permission.find_by(code: action)
     return false unless permission
 
@@ -43,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def has_any_permission?(model_name)
-    user_resource_permissions.exists?(resource_name: model_name)
+    admin? || user_resource_permissions.exists?(resource_name: model_name)
   end
 
   # Convenience methods

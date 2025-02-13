@@ -5,6 +5,7 @@ class ProgressTrackingController < ApplicationController
   before_action :set_progress_plan, only: [ :show, :update, :create_revision, :toggle_lock ]
   before_action :authorize_view!
   before_action :check_locked, only: [ :update ]
+  before_action :require_admin, only: [ :create_revision, :toggle_lock ]
 
   def index
     @progress_plans = @project.project_progress_plans.order(created_at: :desc)
@@ -47,14 +48,14 @@ class ProgressTrackingController < ApplicationController
 
   def create_revision
     @new_plan = @progress_plan.create_revision
-    redirect_to project_progress_tracking_path(@project, @new_plan, locale: I18n.locale), notice: t('.success')
+    redirect_to project_progress_tracking_path(@project, @new_plan, locale: I18n.locale), notice: t(".success")
   rescue => e
     redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), alert: e.message
   end
 
   def toggle_lock
     @progress_plan.update(locked: !@progress_plan.locked)
-    redirect_to project_progress_tracking_index_path(@project, locale: I18n.locale), 
+    redirect_to project_progress_tracking_index_path(@project, locale: I18n.locale),
                 notice: t(".#{@progress_plan.locked? ? 'locked' : 'unlocked'}")
   end
 
@@ -96,6 +97,13 @@ class ProgressTrackingController < ApplicationController
 
   def set_progress_plan
     @progress_plan = @project.project_progress_plans.find(params[:id])
+  end
+
+  def require_admin
+    unless current_user.admin?
+      redirect_to project_progress_tracking_index_path(@project, locale: I18n.locale),
+                  alert: t("progress_tracking.admin_only_error")
+    end
   end
 
   def progress_plan_params

@@ -36,13 +36,15 @@
                   <%= link_to project_progress_tracking_path(@project, plan, locale: I18n.locale), class: 'btn btn-sm btn-primary me-1 mb-1' do %>
                     <i class="bi bi-graph-up"></i> <%= t('progress_tracking.view') %>
                   <% end %>
-                  <% if plan.revision_last? %>
-                    <%= button_to create_revision_project_progress_tracking_path(@project, plan, locale: I18n.locale), class: 'btn btn-sm btn-outline-primary me-2 mb-1', method: :post, data: { turbo_confirm: t('progress_tracking.confirm_revision') } do %>
-                      <i class="bi bi-plus-circle"></i> <%= t('progress_tracking.create_revision') %>
+                  <% if current_user.admin? %>
+                    <% if plan.revision_last? %>
+                      <%= button_to create_revision_project_progress_tracking_path(@project, plan, locale: I18n.locale), class: 'btn btn-sm btn-outline-primary me-2 mb-1', method: :post, data: { turbo_confirm: t('progress_tracking.confirm_revision') } do %>
+                        <i class="bi bi-plus-circle"></i> <%= t('progress_tracking.create_revision') %>
+                      <% end %>
                     <% end %>
-                  <% end %>
-                  <%= button_to toggle_lock_project_progress_tracking_path(@project, plan, locale: I18n.locale), class: "btn btn-sm #{plan.locked? ? 'btn-danger' : 'btn-outline-danger'} me-2", method: :post, data: { turbo_confirm: t("progress_tracking.confirm_#{plan.locked? ? 'unlock' : 'lock'}") } do %>
-                    <i class="bi bi-#{plan.locked? ? 'unlock' : 'lock'}"></i> <%= t("progress_tracking.#{plan.locked? ? 'unlock' : 'lock'}") %>
+                    <%= button_to toggle_lock_project_progress_tracking_path(@project, plan, locale: I18n.locale), class: "btn btn-sm #{plan.locked? ? 'btn-danger' : 'btn-outline-danger'} me-2", method: :post, data: { turbo_confirm: t("progress_tracking.confirm_#{plan.locked? ? 'unlock' : 'lock'}") } do %>
+                      <i class="bi bi-#{plan.locked? ? 'unlock' : 'lock'}"></i> <%= t("progress_tracking.#{plan.locked? ? 'unlock' : 'lock'}") %>
+                    <% end %>
                   <% end %>
                 </td>
               </tr>
