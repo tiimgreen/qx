@@ -48,7 +48,7 @@ class ProgressTrackingController < ApplicationController
 
   def create_revision
     @new_plan = @progress_plan.create_revision
-    redirect_to project_progress_tracking_path(@project, @new_plan, locale: I18n.locale), notice: t(".success")
+    redirect_to project_progress_tracking_path(@project, @new_plan, locale: I18n.locale), notice: t("progress_tracking.revision_created")
   rescue => e
     redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), alert: e.message
   end

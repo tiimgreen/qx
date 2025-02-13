@@ -1,6 +1,7 @@
 en:
   progress_tracking:
     create_revision: "Create Revision"
+    revision_created: "New revision was successfully created"
     confirm_revision: "Are you sure you want to create a new revision? The current version will be locked."
     confirm_lock: "Are you sure you want to lock this plan? You won't be able to make changes after locking."
     confirm_unlock: "Are you sure you want to unlock this plan?"
