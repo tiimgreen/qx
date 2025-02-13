@@ -90,21 +90,23 @@
         </div>
             
     <%
-      @chart = LazyHighCharts::HighChart.new('graph') do |f|
-        f.title(:text => t("progress_tracking.title"))
-        f.xAxis(:categories => weekly_data.keys)
-        f.series(:name => "SOLL %", :data => weekly_data.values.map { |v| v[:soll_percentage] })
-        f.series(:name => "IST %", :data => weekly_data.values.map { |v| v[:ist_percentage] })
-        f.yAxis(
-          :title => {:text => "Fortschritt %"},
-          :min => 0,
-          :max => 100,
-          :tickInterval => 10,
-          :labels => {:format => "{value}%"}
-        )
-      end
+      chart_data = {
+        title: { text: t("progress_tracking.title") },
+        xAxis: { categories: weekly_data.keys },
+        series: [
+          { name: "SOLL %", data: weekly_data.values.map { |v| v[:soll_percentage] } },
+          { name: "IST %", data: weekly_data.values.map { |v| v[:ist_percentage] } }
+        ],
+        yAxis: {
+          title: { text: "Fortschritt %" },
+          min: 0,
+          max: 100,
+          tickInterval: 10,
+          labels: { format: "{value}%" }
+        }
+      }
     %>
-    <%= high_chart("container", @chart) %>
+    <div data-controller="chart" data-chart="<%= chart_data.to_json %>" id="container"></div>
       </div>
     </div>
 
