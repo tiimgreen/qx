@@ -1,6 +1,9 @@
 class ProgressTrackingController < ApplicationController
+  layout "dashboard_layout"
+  before_action :authenticate_user_or_guest!
   before_action :set_project
   before_action :set_progress_plan, only: [ :show, :update ]
+  before_action :authorize_view!
 
   def index
     @progress_plans = @project.project_progress_plans.order(created_at: :desc)
@@ -53,6 +56,25 @@ class ProgressTrackingController < ApplicationController
   end
 
   private
+
+  def authenticate_user_or_guest!
+    unless user_signed_in? || guest_signed_in?
+      redirect_to root_path, alert: t("common.messages.not_authorized")
+    end
+  end
+
+  def authorize_view!
+    unless can_view_project?
+      redirect_to root_path, alert: t("common.messages.not_authorized")
+    end
+  end
+
+  def can_view_project?
+    return false unless user_signed_in? || guest_signed_in?
+
+    # For guests, check if they have access to this project
+    current_guest&.project_id == @project.id || current_user&.projects.exists?(@project.id)
+  end
 
   def set_project
     @project = Project.find(params[:project_id])
