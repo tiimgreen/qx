@@ -598,6 +598,7 @@ de:
   reports:
     isometries:
       title: Isometrien-Bericht
+      diagram_title: Isometrien-Handover
       overall_progress: Gesamtfortschritt
       completed: Abgeschlossen
       in_progress: In Arbeit
