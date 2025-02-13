@@ -34,8 +34,6 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Charts
-gem "chartkick"
-gem "groupdate"
 gem "lazy_high_charts"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]

@@ -11,8 +11,7 @@ pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.3.2/dist/js/bootstrap.e
 pin "flag-icons", to: "flag-icons.js"
 
 # Charting
-pin "chartkick", to: "chartkick.js"
-pin "Chart.bundle", to: "Chart.bundle.js"
+
 pin "@hotwired/turbo", to: "turbo.min.js"
 pin "@rails/actioncable", to: "actioncable.esm.js"
 pin "highcharts", to: "https://code.highcharts.com/highcharts.js"

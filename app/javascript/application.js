@@ -4,8 +4,6 @@ import "controllers"
 import jQuery from "jquery"
 import "@popperjs/core"
 import * as bootstrap from "bootstrap"
-import "chartkick"
-import "Chart.bundle"
 import "highcharts"
 import "controllers/language_controller"
 import "controllers/nested_form_controller"
@@ -33,7 +31,6 @@ document.addEventListener("turbo:load", () => {
   })
 })
 
-window.Chart = Chart
 window.jQuery = jQuery
 window.$ = jQuery
 
