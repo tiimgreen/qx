@@ -97,12 +97,15 @@
         soll = v[:soll_percentage]
         ist = v[:ist_percentage]
         diff = ist - soll
-        # For negative differences, we want to start from IST and go up to SOLL
-        if diff < 0
-          # The bar should start at IST and go up to SOLL
-          [ist, -diff]  # Store both the starting point and the height
-        else
-          nil
+        if diff != 0
+          {
+            y: diff.abs,  # Height of the bar
+            low: diff > 0 ? soll : ist,  # Starting point
+            color: diff > 0 ? '#90EE90' : '#FFB6C1',  # Green for positive, red for negative
+            dataLabels: {
+              y: diff > 0 ? -5 : 5  # Adjust label position based on bar direction
+            }
+          }
         end
       end
 
@@ -113,14 +116,23 @@
           {
             name: "Difference",
             type: 'column',
-            data: differences.map { |d| d ? { y: d[1], low: d[0] } : nil },
-            color: '#FFB6C1',  # Light red color
+            data: differences,
             zIndex: 0,
             showInLegend: false,
-            pointPadding: 0,
-            groupPadding: 0,
+            pointPadding: 0.2,  # Increase padding to make bars thinner
+            groupPadding: 0.2,  # Increase padding to make bars thinner
             borderWidth: 0,
-            pointPlacement: 0
+            pointPlacement: 0,
+            dataLabels: {
+              enabled: true,
+              inside: true,
+              format: '{point.y}%',  # Show the difference percentage
+              style: {
+                fontSize: '14px',
+                textOutline: 'none',
+                fontWeight: 'normal'
+              }
+            }
           },
           {
             name: "SOLL %",

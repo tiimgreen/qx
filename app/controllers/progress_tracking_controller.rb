@@ -7,6 +7,12 @@ class ProgressTrackingController < ApplicationController
   before_action :check_locked, only: [ :update ]
   before_action :require_admin, only: [ :create_revision, :toggle_lock ]
 
+  def check_locked
+    if @progress_plan.locked?
+      redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), alert: t('progress_tracking.locked_error')
+    end
+  end
+
   def index
     @progress_plans = @project.project_progress_plans.order(created_at: :desc)
   end
