@@ -92,12 +92,48 @@
         </div>
             
     <%
+      # Calculate differences for column chart
+      differences = weekly_data.values.map do |v|
+        soll = v[:soll_percentage]
+        ist = v[:ist_percentage]
+        diff = ist - soll
+        # For negative differences, we want to start from IST and go up to SOLL
+        if diff < 0
+          # The bar should start at IST and go up to SOLL
+          [ist, -diff]  # Store both the starting point and the height
+        else
+          nil
+        end
+      end
+
       chart_data = {
         title: { text: t("progress_tracking.title") },
         xAxis: { categories: weekly_data.keys },
         series: [
-          { name: "SOLL %", data: weekly_data.values.map { |v| v[:soll_percentage] } },
-          { name: "IST %", data: weekly_data.values.map { |v| v[:ist_percentage] } }
+          {
+            name: "Difference",
+            type: 'column',
+            data: differences.map { |d| d ? { y: d[1], low: d[0] } : nil },
+            color: '#FFB6C1',  # Light red color
+            zIndex: 0,
+            showInLegend: false,
+            pointPadding: 0,
+            groupPadding: 0,
+            borderWidth: 0,
+            pointPlacement: 0
+          },
+          {
+            name: "SOLL %",
+            type: 'line',
+            data: weekly_data.values.map { |v| v[:soll_percentage] },
+            zIndex: 1
+          },
+          {
+            name: "IST %",
+            type: 'line',
+            data: weekly_data.values.map { |v| v[:ist_percentage] },
+            zIndex: 1
+          }
         ],
         yAxis: {
           title: { text: "Fortschritt %" },
@@ -105,6 +141,13 @@
           max: 100,
           tickInterval: 10,
           labels: { format: "{value}%" }
+        },
+        plotOptions: {
+          column: {
+            grouping: false,
+            shadow: false,
+            borderWidth: 0
+          }
         }
       }
     %>
