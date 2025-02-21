@@ -8,8 +8,21 @@
     <% end %>
   </div>
 
-  <div class="card-body">
+  <div class="card-body" data-controller="plan-filter">
     <% if @progress_plans.any? %>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <div class="input-group">
+            <label class="input-group-text" for="workTypeFilter"><i class="bi bi-funnel"></i></label>
+            <select class="form-select" id="workTypeFilter" data-plan-filter-target="filter" data-action="change->plan-filter#filter">
+              <option value="all"><%= t('common.all') %></option>
+              <% ProjectProgressPlan.work_types.keys.each do |type| %>
+                <option value="<%= type %>"><%= t("progress_tracking.work_types.#{type}") %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
@@ -25,7 +38,7 @@
           </thead>
           <tbody>
             <% @progress_plans.each do |plan| %>
-              <tr>
+              <tr data-work-type="<%= plan.work_type %>" data-plan-filter-target="row">
                 <td><%= plan.project.name %></td>
                 <td><%= t("progress_tracking.work_types.#{plan.work_type}") %></td>
                 <td><%= l plan.start_date.to_date %></td>
