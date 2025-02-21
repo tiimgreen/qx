@@ -34,11 +34,6 @@
             <div class="row g-3">
               <div class="row">
                 <div class="col-md-2 mb-3">
-                  <%= f.label :received_date, class: "form-label" %>
-                  <%= f.datetime_field :received_date, class: "form-control", value: Date.current %>
-                </div>
-
-                <div class="col-md-2 mb-3">
                   <%= f.label :pid_number, class: "form-label" %>
                   <%= f.text_field :pid_number, class: "form-control" %>
                 </div>
@@ -61,6 +56,11 @@
                 <div class="col-md-2 mb-3">
                   <%= f.label :revision_number, class: "form-label" %>
                   <%= f.number_field :revision_number, class: "form-control", min: 0, max: 10 %>
+                </div>
+
+                <div class="col-md-2 mt-3">
+                  <%= f.check_box :revision_last, class: "form-check-input" %>
+                  <%= f.label :revision_last, class: "form-check-label" %>
                 </div>
               </div>
 
@@ -100,10 +100,6 @@
                 <div class="col-md-2 mb-3">
                   <%= f.label :work_package_number, class: "form-label" %>
                   <%= f.number_field :work_package_number, class: "form-control" %>
-                </div>
-                <div class="col-md-2 mb-3">
-                  <%= f.check_box :revision_last, class: "form-check-input" %>
-                  <%= f.label :revision_last, class: "form-check-label" %>
                 </div>
               </div>
 

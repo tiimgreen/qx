@@ -57,6 +57,7 @@ class IsometriesController < ApplicationController
   def create
     @isometry = @project.isometries.new(isometry_params)
     @isometry.user = current_user
+    @isometry.received_date = Time.now
 
     respond_to do |format|
       format.html do
