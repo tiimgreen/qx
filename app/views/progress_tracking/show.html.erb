@@ -171,10 +171,12 @@
     </div>
 
     <%
-      # Split table data into chunks of 30 rows
-      rows_per_page = 30
+      # Configure row distribution
+      first_page_rows = 20
+      rows_per_extra_page = 32
       all_rows = weekly_data.to_a
-      total_pages = (all_rows.length.to_f / rows_per_page).ceil
+      remaining_rows = all_rows.length - first_page_rows
+      extra_pages_needed = (remaining_rows.to_f / rows_per_extra_page).ceil
     %>
 
     <!-- Original table for normal viewing -->
@@ -228,9 +230,39 @@
       </table>
     </div>
 
-    <!-- Split tables for PDF export -->
-    <% total_pages.times do |page| %>
-      <div class="table-responsive d-none pdf-table-section" data-page="<%= page %>">
+    <!-- First page table section for PDF (includes first 20 rows) -->
+    <div class="table-responsive d-none pdf-first-page-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><%= t('progress_tracking.table.week') %></th>
+            <th><%= t('progress_tracking.table.soll') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.ist') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.soll_total') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.ist_total') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.soll') %> %</th>
+            <th><%= t('progress_tracking.table.ist') %> %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% all_rows[0...first_page_rows].each do |week, data| %>
+            <tr>
+              <td><%= format_week_display(week) %></td>
+              <td><%= number_with_precision(data[:soll_meters], precision: 1) %></td>
+              <td><%= number_with_precision(data[:ist_meters], precision: 1) %></td>
+              <td><%= number_with_precision(data[:soll_total], precision: 1) %></td>
+              <td><%= number_with_precision(data[:ist_total], precision: 1) %></td>
+              <td><%= data[:soll_percentage] %>%</td>
+              <td><%= data[:ist_percentage] %>%</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Remaining pages table sections for PDF -->
+    <% extra_pages_needed.times do |page| %>
+      <div class="table-responsive d-none pdf-extra-page-table" data-page="<%= page %>">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -245,8 +277,8 @@
           </thead>
           <tbody>
             <% 
-              start_idx = page * rows_per_page
-              end_idx = [start_idx + rows_per_page, all_rows.length].min
+              start_idx = first_page_rows + (page * rows_per_extra_page)
+              end_idx = [start_idx + rows_per_extra_page, all_rows.length].min
               page_rows = all_rows[start_idx...end_idx]
             %>
             <% page_rows.each do |week, data| %>

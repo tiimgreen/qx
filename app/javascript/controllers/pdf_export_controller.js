@@ -32,10 +32,11 @@ export default class extends Controller {
       const pageHeight = pdf.internal.pageSize.height
       const margin = 40
       
-      // Find chart section
+      // Find chart section and first page table
       const chartSection = this.contentTarget.querySelector('#container').parentElement.parentElement
+      const firstPageTable = this.contentTarget.querySelector('.pdf-first-page-table')
       
-      // First page - Chart and header
+      // First page - Chart and first 20 rows
       const chartScale = (pageWidth - 2 * margin) / chartSection.offsetWidth
       const chartCanvas = await html2canvas(chartSection, {
         scale: chartScale * 1.5,
@@ -56,16 +57,38 @@ export default class extends Controller {
         (chartCanvas.height * (pageWidth - 2 * margin)) / chartCanvas.width
       )
       
+      // Add first page table
+      firstPageTable.classList.remove('d-none')
+      const firstTableScale = (pageWidth - 2 * margin) / firstPageTable.offsetWidth
+      const firstTableCanvas = await html2canvas(firstPageTable, {
+        scale: firstTableScale * 1.5,
+        useCORS: true,
+        logging: false,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
+      })
+      firstPageTable.classList.add('d-none')
+      
+      const firstTableImgData = firstTableCanvas.toDataURL('image/jpeg', 1.0)
+      pdf.addImage(
+        firstTableImgData,
+        'JPEG',
+        margin,
+        margin + (chartCanvas.height * (pageWidth - 2 * margin)) / chartCanvas.width + 40,
+        pageWidth - 2 * margin,
+        (firstTableCanvas.height * (pageWidth - 2 * margin)) / firstTableCanvas.width
+      )
+      
+      // Get remaining table sections
+      const extraPages = this.contentTarget.querySelectorAll('.pdf-extra-page-table')
+      const totalPages = extraPages.length + 1
+      
       // Add page number to first page
-      const totalPages = this.contentTarget.querySelectorAll('.pdf-table-section').length + 1
       this.addPageNumber(pdf, 1, totalPages)
       
-      // Get all pre-split table sections
-      const tableSections = this.contentTarget.querySelectorAll('.pdf-table-section')
-      
-      // Process each table section
-      for (const section of tableSections) {
-        // Add new page for table
+      // Process remaining pages
+      for (const section of extraPages) {
+        // Add new page
         pdf.addPage()
         
         // Make section visible temporarily for capture
@@ -95,8 +118,7 @@ export default class extends Controller {
         )
         
         // Add page number
-        const totalPages = tableSections.length + 1
-        const currentPage = Array.from(tableSections).indexOf(section) + 2 // +2 because first page is chart
+        const currentPage = Array.from(extraPages).indexOf(section) + 2
         this.addPageNumber(pdf, currentPage, totalPages)
       }
 
