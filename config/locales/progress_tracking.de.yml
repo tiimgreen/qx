@@ -31,8 +31,8 @@ de:
     difference: "Differenz"
     work_types:
       isometry: "SOLL – IST Isometrie Übergabe"
-      prefabrication: "SOLL – IST Vorfertigung Übergabe"
-      site_assembly: "SOLL – IST Montage Übergabe"
+      prefabrication: "SOLL – IST Vorfertigung"
+      site_assembly: "SOLL – IST Montage"
     create:
       success: "Fortschrittsplan wurde erfolgreich erstellt."
     update:
