@@ -122,8 +122,9 @@ export default class extends Controller {
         this.addPageNumber(pdf, currentPage, totalPages)
       }
 
-      // Save the PDF with a clean date format
-      pdf.save(`progress_tracking_${new Date().toISOString().split('T')[0]}.pdf`)
+      // Open PDF in new tab
+      const pdfOutput = pdf.output('bloburl')
+      window.open(pdfOutput, '_blank')
       
       // Hide loading state
       this.element.classList.remove('loading')
