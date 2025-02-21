@@ -1,5 +1,7 @@
 en:
   progress_tracking:
+    project_name: "Project Name"
+    project_number: "Project No."
     progress_percentage: "Progress %"
     create_revision: "Create Revision"
     revision_created: "New revision was successfully created"

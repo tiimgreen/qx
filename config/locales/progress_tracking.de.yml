@@ -1,11 +1,13 @@
 de:
   progress_tracking:
+    project_name: "Projektname"
+    project_number: "Projekt Nr."
     progress_percentage: "Fortschritt %"
     create_revision: "Revision erstellen"
     revision_created: "Neue Revision wurde erfolgreich erstellt"
     confirm_revision: "Sind Sie sicher, dass Sie eine neue Revision erstellen wollen? Die aktuelle Version wird gesperrt."
-    confirm_lock: "Sind Sie sicher, dass Sie diesen Plan sperren möchten? Nach dem Sperren können keine Änderungen mehr vorgenommen werden."
-    confirm_unlock: "Sind Sie sicher, dass Sie diesen Plan entsperren möchten?"
+    confirm_lock: "Sind Sie sicher, dass Sie diesen Plan sperren wollen? Nach dem Sperren können keine Änderungen mehr vorgenommen werden."
+    confirm_unlock: "Sind Sie sicher, dass Sie diesen Plan entsperren wollen?"
     lock: "Plan sperren"
     unlock: "Plan entsperren"
     locked: "Plan wurde gesperrt"

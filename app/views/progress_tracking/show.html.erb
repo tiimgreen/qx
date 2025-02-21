@@ -18,6 +18,10 @@
     <div class="row mb-4">
       <div class="col-md-12 position-relative">
         <%= image_tag "logo.png", class: "position-absolute top-0 end-0", style: "height: 50px; width: auto;" %>
+        <div class="mb-3">
+          <strong><%=t('progress_tracking.project_number')%></strong> <%= @project.project_number %><br>
+          <strong><%=t('progress_tracking.project_name')%>:</strong> <%= @project.name %>
+        </div>
         <% 
           # Calculate total target meters (W9 in Excel)
           # This is the total of all SOLL m values, handling nil values
