@@ -1,5 +1,6 @@
 en:
   progress_tracking:
+    progress_percentage: "Progress %"
     create_revision: "Create Revision"
     revision_created: "New revision was successfully created"
     confirm_revision: "Are you sure you want to create a new revision? The current version will be locked."
@@ -27,7 +28,7 @@ en:
     actual: "Actual"
     difference: "Difference"
     work_types:
-      isometry: "Isometry"
+      isometry: "SOLL – IST Isometric Hand Over"
       prefabrication: "Prefabrication"
       site_assembly: "Site Assembly"
     create:

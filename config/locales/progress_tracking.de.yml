@@ -1,5 +1,6 @@
 de:
   progress_tracking:
+    progress_percentage: "Fortschritt %"
     create_revision: "Revision erstellen"
     revision_created: "Neue Revision wurde erfolgreich erstellt"
     confirm_revision: "Sind Sie sicher, dass Sie eine neue Revision erstellen wollen? Die aktuelle Version wird gesperrt."
@@ -27,7 +28,7 @@ de:
     actual: "Tatsächlich"
     difference: "Differenz"
     work_types:
-      isometry: "Isometrie"
+      isometry: "SOLL – IST Isometrie Übergabe"
       prefabrication: "Vorfertigung"
       site_assembly: "Baustellenmontage"
     create:
