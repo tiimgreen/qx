@@ -626,8 +626,8 @@ en:
     no_valid_sector: "No valid sector found for this isometry"
   reports:
     isometries:
-      title: Isometries Report
-      diagram_title: "Reporting Isometry, Prefabrication, Site Assembly"
+      title: Current Progress
+      diagram_title: "SOLL - IST Isometric, Prefabrication, Site Assembly"
       overall_progress: Overall Progress
       completed: Completed
       in_progress: In Progress

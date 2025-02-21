@@ -610,8 +610,8 @@ de:
     no_valid_sector: "Kein gültiger Sektor für diese Isometrie gefunden"
   reports:
     isometries:
-      title: Isometrien-Bericht
-      diagram_title: "Reporting Isometrie, Vorfertigungen, Montage"
+      title: Aktueller Fortschritt
+      diagram_title: "SOLL - IST Isometrie, Vorfertigungen, Montage"
       overall_progress: Gesamtfortschritt
       completed: Abgeschlossen
       in_progress: In Arbeit
