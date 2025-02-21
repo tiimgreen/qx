@@ -4,7 +4,6 @@ class IncomingDelivery < ApplicationRecord
   belongs_to :user, optional: true
   has_many_attached :delivery_notes
   has_many :delivery_items
-  has_many :material_certificates, through: :delivery_items
 
   before_destroy :purge_attached_files
   before_destroy :cleanup_delivery_items
