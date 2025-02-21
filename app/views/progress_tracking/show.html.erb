@@ -170,7 +170,15 @@
       </div>
     </div>
 
-    <div class="table-responsive">
+    <%
+      # Split table data into chunks of 30 rows
+      rows_per_page = 30
+      all_rows = weekly_data.to_a
+      total_pages = (all_rows.length.to_f / rows_per_page).ceil
+    %>
+
+    <!-- Original table for normal viewing -->
+    <div class="table-responsive d-print-none">
       <table class="table table-hover">
         <thead>
           <tr>
@@ -219,6 +227,43 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Split tables for PDF export -->
+    <% total_pages.times do |page| %>
+      <div class="table-responsive d-none pdf-table-section" data-page="<%= page %>">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th><%= t('progress_tracking.table.week') %></th>
+              <th><%= t('progress_tracking.table.soll') %> <%= progress_unit(@progress_plan.work_type) %></th>
+              <th><%= t('progress_tracking.table.ist') %> <%= progress_unit(@progress_plan.work_type) %></th>
+              <th><%= t('progress_tracking.table.soll_total') %> <%= progress_unit(@progress_plan.work_type) %></th>
+              <th><%= t('progress_tracking.table.ist_total') %> <%= progress_unit(@progress_plan.work_type) %></th>
+              <th><%= t('progress_tracking.table.soll') %> %</th>
+              <th><%= t('progress_tracking.table.ist') %> %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% 
+              start_idx = page * rows_per_page
+              end_idx = [start_idx + rows_per_page, all_rows.length].min
+              page_rows = all_rows[start_idx...end_idx]
+            %>
+            <% page_rows.each do |week, data| %>
+              <tr>
+                <td><%= format_week_display(week) %></td>
+                <td><%= number_with_precision(data[:soll_meters], precision: 1) %></td>
+                <td><%= number_with_precision(data[:ist_meters], precision: 1) %></td>
+                <td><%= number_with_precision(data[:soll_total], precision: 1) %></td>
+                <td><%= number_with_precision(data[:ist_total], precision: 1) %></td>
+                <td><%= data[:soll_percentage] %>%</td>
+                <td><%= data[:ist_percentage] %>%</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
 
   </div>
 </div>

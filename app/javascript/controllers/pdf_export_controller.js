@@ -16,9 +16,8 @@ export default class extends Controller {
       const pageHeight = pdf.internal.pageSize.height
       const margin = 40
       
-      // Find chart and table elements
+      // Find chart section
       const chartSection = this.contentTarget.querySelector('#container').parentElement.parentElement
-      const tableSection = this.contentTarget.querySelector('.table-responsive')
       
       // First page - Chart and header
       const chartScale = (pageWidth - 2 * margin) / chartSection.offsetWidth
@@ -41,50 +40,29 @@ export default class extends Controller {
         (chartCanvas.height * (pageWidth - 2 * margin)) / chartCanvas.width
       )
       
-      // Get all table rows
-      const rows = tableSection.querySelectorAll('tr')
-      const rowsPerPage = 30
-      const totalPages = Math.ceil((rows.length - 1) / rowsPerPage) // -1 for header
+      // Get all pre-split table sections
+      const tableSections = this.contentTarget.querySelectorAll('.pdf-table-section')
       
-      // Create temporary container for table sections
-      const tempContainer = document.createElement('div')
-      tempContainer.style.position = 'absolute'
-      tempContainer.style.left = '-9999px'
-      document.body.appendChild(tempContainer)
-      
-      // For each page of the table
-      for (let page = 0; page < totalPages; page++) {
-        // Create a new table for this page
-        const tableClone = tableSection.cloneNode(true)
-        const allRows = [...tableClone.querySelectorAll('tr')]
-        
-        // Keep header and current page rows
-        const startRow = page * rowsPerPage + 1 // +1 to skip header
-        const endRow = Math.min(startRow + rowsPerPage, rows.length)
-        
-        // Remove rows we don't want on this page
-        allRows.forEach((row, index) => {
-          if (index !== 0 && (index < startRow || index >= endRow)) {
-            row.remove()
-          }
-        })
-        
-        // Add to temp container and render
-        tempContainer.innerHTML = ''
-        tempContainer.appendChild(tableClone)
-        
+      // Process each table section
+      for (const section of tableSections) {
         // Add new page for table
         pdf.addPage()
         
+        // Make section visible temporarily for capture
+        section.classList.remove('d-none')
+        
         // Capture this section of the table
-        const tableScale = (pageWidth - 2 * margin) / tableClone.offsetWidth
-        const tableCanvas = await html2canvas(tableClone, {
+        const tableScale = (pageWidth - 2 * margin) / section.offsetWidth
+        const tableCanvas = await html2canvas(section, {
           scale: tableScale * 1.5,
           useCORS: true,
           logging: false,
           allowTaint: true,
           backgroundColor: '#ffffff'
         })
+        
+        // Hide section again
+        section.classList.add('d-none')
         
         const tableImgData = tableCanvas.toDataURL('image/jpeg', 1.0)
         pdf.addImage(
@@ -96,10 +74,7 @@ export default class extends Controller {
           (tableCanvas.height * (pageWidth - 2 * margin)) / tableCanvas.width
         )
       }
-      
-      // Clean up temporary container
-      document.body.removeChild(tempContainer)
-      
+
       // Save the PDF with a clean date format
       pdf.save(`progress_tracking_${new Date().toISOString().split('T')[0]}.pdf`)
       
