@@ -28,6 +28,15 @@ de:
     week: "Woche"
     expected: "Erwartet"
     actual: "Tatsächlich"
+    units:
+      pieces: "Stk"
+      meters: "m"
+    table:
+      week: "Woche"
+      soll: "SOLL"
+      ist: "IST"
+      soll_total: "SOLL TOTAL"
+      ist_total: "IST TOTAL"
     difference: "Differenz"
     work_types:
       isometry: "SOLL – IST Isometrie Übergabe"

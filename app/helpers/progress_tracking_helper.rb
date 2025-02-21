@@ -42,12 +42,13 @@ module ProgressTrackingHelper
   end
 
   def progress_unit(work_type)
-    case work_type.to_sym
+    unit_key = case work_type.to_sym
     when :prefabrication, :site_assembly
-      "m"
+      "meters"
     when :isometry
-      "pcs"
+      "pieces"
     end
+    t("progress_tracking.units.#{unit_key}")
   end
 
   def format_week_display(week)

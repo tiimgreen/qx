@@ -174,13 +174,13 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Week</th>
-            <th>SOLL m</th>
-            <th>IST m</th>
-            <th>SOLL m TOTAL</th>
-            <th>IST m TOTAL</th>
-            <th>SOLL %</th>
-            <th>IST %</th>
+            <th><%= t('progress_tracking.table.week') %></th>
+            <th><%= t('progress_tracking.table.soll') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.ist') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.soll_total') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.ist_total') %> <%= progress_unit(@progress_plan.work_type) %></th>
+            <th><%= t('progress_tracking.table.soll') %> %</th>
+            <th><%= t('progress_tracking.table.ist') %> %</th>
           </tr>
         </thead>
         <tbody>

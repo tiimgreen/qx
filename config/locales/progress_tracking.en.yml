@@ -28,6 +28,15 @@ en:
     week: "Week"
     expected: "Expected"
     actual: "Actual"
+    units:
+      pieces: "Pcs"
+      meters: "m"
+    table:
+      week: "Week"
+      soll: "SOLL"
+      ist: "IST"
+      soll_total: "SOLL TOTAL"
+      ist_total: "IST TOTAL"
     difference: "Difference"
     work_types:
       isometry: "SOLL – IST Isometric Hand Over"
