@@ -5,6 +5,22 @@ import html2canvas from "html2canvas"
 export default class extends Controller {
   static targets = ["content"]
 
+  addPageNumber(pdf, pageNumber, totalPages) {
+    const pageWidth = pdf.internal.pageSize.width
+    const pageHeight = pdf.internal.pageSize.height
+    const margin = 40
+    const text = `${pageNumber} / ${totalPages}`
+    
+    pdf.setFontSize(10)
+    const textWidth = pdf.getTextWidth(text)
+    
+    pdf.text(
+      text,
+      pageWidth - margin - textWidth,
+      pageHeight - margin
+    )
+  }
+
   async export() {
     try {
       // Show loading state
@@ -40,6 +56,10 @@ export default class extends Controller {
         (chartCanvas.height * (pageWidth - 2 * margin)) / chartCanvas.width
       )
       
+      // Add page number to first page
+      const totalPages = this.contentTarget.querySelectorAll('.pdf-table-section').length + 1
+      this.addPageNumber(pdf, 1, totalPages)
+      
       // Get all pre-split table sections
       const tableSections = this.contentTarget.querySelectorAll('.pdf-table-section')
       
@@ -73,6 +93,11 @@ export default class extends Controller {
           pageWidth - 2 * margin,
           (tableCanvas.height * (pageWidth - 2 * margin)) / tableCanvas.width
         )
+        
+        // Add page number
+        const totalPages = tableSections.length + 1
+        const currentPage = Array.from(tableSections).indexOf(section) + 2 // +2 because first page is chart
+        this.addPageNumber(pdf, currentPage, totalPages)
       }
 
       // Save the PDF with a clean date format
