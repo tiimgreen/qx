@@ -31,8 +31,8 @@ en:
     difference: "Difference"
     work_types:
       isometry: "SOLL – IST Isometric Hand Over"
-      prefabrication: "Prefabrication"
-      site_assembly: "Site Assembly"
+      prefabrication: "SOLL – IST Prefabrication Hand Over"
+      site_assembly: "SOLL – IST Site Assembly Hand Over"
     create:
       success: "Progress plan was successfully created."
     update:
