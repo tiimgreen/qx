@@ -7,6 +7,11 @@ export default class extends Controller {
 
   initializeChart() {
     const chartData = JSON.parse(this.element.dataset.chart)
-    const chart = Highcharts.chart(this.element, chartData)
+    const defaultConfig = {
+      title: {
+        text: ''
+      }
+    }
+    const chart = Highcharts.chart(this.element, { ...defaultConfig, ...chartData })
   }
 }
