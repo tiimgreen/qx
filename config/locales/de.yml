@@ -5,6 +5,7 @@ de:
       x_days: "%{count} Tage her"
       about_x_months: "etwa %{count} Monate her"
       x_minutes: "%{count} Minuten her"
+      about_x_hours: "etwa %{count} Stunden her"
   site_title: "Qualinox AG | DE"
   language: "Sprache"
   navigation:
