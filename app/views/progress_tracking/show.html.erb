@@ -114,7 +114,7 @@
       end
 
       chart_data = {
-        xAxis: { categories: weekly_data.keys },
+        xAxis: { categories: weekly_data.keys.map { |week| format_week_display(week) } },
         series: [
           {
             name: "Difference",
@@ -186,7 +186,7 @@
         <tbody>
           <% weekly_data.each do |week, data| %>
             <tr>
-              <td><%= week %></td>
+              <td><%= format_week_display(week) %></td>
               <td>
                 <%= form_with(url: project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale),
                     method: :patch,

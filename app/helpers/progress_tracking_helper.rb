@@ -49,4 +49,8 @@ module ProgressTrackingHelper
       "pcs"
     end
   end
+
+  def format_week_display(week)
+    week.split("/").first # This will take 'W01' from 'W01/2025'
+  end
 end
