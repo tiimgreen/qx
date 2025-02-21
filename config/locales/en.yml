@@ -192,6 +192,9 @@ en:
       isometry_document: "Isometry Document"
       isometry_material_certificate: "Isometry Material Certificate"
       project_user: "Project User"
+      project_progress_plan: "Project Progress Plan"
+      weekly_progress_entry: "Weekly Progress Entry"
+      welding_batch_assignment: "Welding Batch Assignment"
       guest: "Guest"
     errors:
       models:
