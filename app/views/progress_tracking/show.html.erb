@@ -103,11 +103,13 @@
         diff = ist - soll
         if diff != 0
           {
-            y: diff.abs,  # Height of the bar
-            low: diff > 0 ? soll : ist,  # Starting point
+            y: [soll, ist].max,       # End point of the bar
+            low: [soll, ist].min,     # Start point of the bar
+            difference: diff.abs,      # Store the absolute difference
             color: diff > 0 ? '#90EE90' : '#FFB6C1',  # Green for positive, red for negative
             dataLabels: {
-              y: diff > 0 ? -5 : 5  # Adjust label position based on bar direction
+              y: diff > 0 ? -5 : 5,  # Position labels inside the bar
+              format: '{point.difference}%'  # Show the stored difference
             }
           }
         end
@@ -115,6 +117,13 @@
 
       chart_data = {
         xAxis: { categories: weekly_data.keys.map { |week| format_week_display(week) } },
+        yAxis: {
+          min: 0,
+          max: 100,
+          title: {
+            text: 'Percentage'
+          }
+        },
         series: [
           {
             name: "Difference",
@@ -129,7 +138,7 @@
             dataLabels: {
               enabled: true,
               inside: true,
-              format: '{point.y}%',  # Show the difference percentage
+              format: '{point.y}%',
               style: {
                 fontSize: '14px',
                 textOutline: 'none',
@@ -161,7 +170,16 @@
           column: {
             grouping: false,
             shadow: false,
-            borderWidth: 0
+            borderWidth: 0,
+            maxPointWidth: 30  # Limit maximum width of bars
+          },
+          series: {
+            states: {
+              hover: {
+                enabled: true,
+                brightness: 0.1
+              }
+            }
           }
         }
       }
