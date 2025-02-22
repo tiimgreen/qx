@@ -10,6 +10,7 @@ class ProjectProgressPlan < ApplicationRecord
 
   validates :start_date, :end_date, :work_type, presence: true
   validate :end_date_after_start_date
+  validate :unique_work_type_per_project, on: :create
 
   before_create :set_initial_revision_values
 
@@ -24,6 +25,14 @@ class ProjectProgressPlan < ApplicationRecord
   def set_initial_revision_values
     self.revision_number ||= 1
     self.revision_last = true
+  end
+
+  def unique_work_type_per_project
+    return unless project && work_type
+
+    if project.project_progress_plans.latest_revisions.where(work_type: work_type).exists?
+      errors.add(:work_type, "already exists for this project")
+    end
   end
 
   def end_date_after_start_date
