@@ -76,32 +76,21 @@
 
                   <% if @on_site.on_hold_images.attached? %>
                   <div class="row row-cols-1 row-cols-md-3 g-3">
-                    <% @on_site.on_hold_images.each do |image| %>
+                    <% @on_site.on_hold_images.each do |attachment| %>
                       <div class="col">
                         <div class="card h-100">
-                          <%= link_to image_tag(image.variant(:thumb), 
-                                              class: "card-img-top", 
-                                              style: "object-fit: cover; height: 100px;",
-                                              data: { 
-                                                bs_toggle: "modal",
-                                                bs_target: "#imageModal#{image.id}"
-                                              }),
-                                    "#" %>
-
-                          <!-- Modal for this image -->
-                          <div class="modal fade" id="imageModal<%= image.id %>" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title"><%= t('common.labels.image_preview') %></h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                  <%= image_tag image.variant(:medium), class: "img-fluid" %>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          <% if attachment.content_type.start_with?('image/') %>
+                            <%= link_to rails_blob_path(attachment, disposition: "inline"), target: "_blank" do %>
+                              <%= image_tag(attachment.variant(:thumb), 
+                                          class: "card-img-top", 
+                                          style: "object-fit: cover; height: 100px;") %>
+                            <% end %>
+                          <% else %>
+                            <%= link_to rails_blob_path(attachment, disposition: "inline"), target: "_blank", class: "text-center p-3" do %>
+                              <i class="bi bi-file-pdf fs-1 text-danger"></i>
+                              <p class="small text-muted mt-2 mb-0"><%= attachment.filename %></p>
+                            <% end %>
+                          <% end %>
                         </div>
                       </div>
                     <% end %>
