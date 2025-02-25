@@ -12,7 +12,7 @@ class OnSite < ApplicationRecord
   end
 
   has_many_attached :images do |attachable|
-    attachable.variant :thumb, resize_to_fill: [ 200, 200 ], gravity: 'center'
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
     attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
   end
 
