@@ -20,24 +20,24 @@ en:
         title: "Incoming Deliveries"
         deliveries: "Deliveries"
         new_delivery: "New Delivery"
-      prefabrications: 
+      prefabrications:
         title: "Prefabrications"
-      pre_weldings: 
+      pre_weldings:
         title: "Weldings"
       work_preparations:
-        title: "Work Preparations"  
+        title: "Work Preparations"
       final_inspections:
-        title: "Final Inspections"  
+        title: "Final Inspections"
       site_deliveries:
         title: "Site Deliveries"
       site_assemblies:
         title: "Site Assemblies"
       on_sites:
-        title: "As Built"       
+        title: "As Built"
       test_packs:
-        title: "Test Pack" 
-      transports: 
-        title: "Transports"             
+        title: "Test Pack"
+      transports:
+        title: "Transports"
   common:
     latest_revision: "Latest Revision"
     old_revision: "Previous Revision"
@@ -69,8 +69,8 @@ en:
       confirm_delete: "Are you sure you want to delete this image?"
     image_upload_note: "Upload document if needed"
     comment: "Comment"
-    'yes': "Yes"
-    'no': "No"
+    "yes": "Yes"
+    "no": "No"
     new_title: "New %{model}"
     edit_title: "Edit %{model}"
   flash:
@@ -96,8 +96,24 @@ en:
       short: "%b %d"
     day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
     abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    month_names:
+      [
+        ~,
+        January,
+        February,
+        March,
+        April,
+        May,
+        June,
+        July,
+        August,
+        September,
+        October,
+        November,
+        December,
+      ]
+    abbr_month_names:
+      [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
     order:
       - :year
       - :month
@@ -122,10 +138,10 @@ en:
       close: "Close"
       delivery_notes: "Delivery Notes"
     edit:
-      title: "Incoming Delivery Edit: %{order_number}"  
+      title: "Incoming Delivery Edit: %{order_number}"
   delivery_items:
     edit:
-      title: "Delivery Item Edit: %{delivery_note_position}"  
+      title: "Delivery Item Edit: %{delivery_note_position}"
   sectors:
     project: "Project"
     project_description: "Project-related activities"
@@ -198,6 +214,10 @@ en:
       guest: "Guest"
     errors:
       models:
+        isometry_document:
+          attributes:
+            qr_position:
+              inclusion: "must be one of: top left, top right, bottom left, or bottom right"
         delivery_item:
           attributes:
             name:
@@ -223,15 +243,15 @@ en:
       work_preparation:
         attributes:
           work_location:
-            required: "Work location can't be blank"  
+            required: "Work location can't be blank"
       test_pack:
         attributes:
           work_location:
-            required: "Work location can't be blank"       
+            required: "Work location can't be blank"
       incoming_delivery:
         attributes:
           work_location:
-            required: "Work location can't be blank"           
+            required: "Work location can't be blank"
     attributes:
       work_preparation:
         work_location: "Work Location"
@@ -287,14 +307,14 @@ en:
         completed: "Completed Date"
         check_spools_status: "Check Spool Status"
         check_spools_comment: "Check Spool Comment"
-        check_spools_images: "Check Spool Images"  
+        check_spools_images: "Check Spool Images"
       site_assembly:
         work_package_number: "Work Package No."
         completed: "Completed Date"
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Comment"
         on_hold_date: "On Hold Date"
-        on_hold_images: "On Hold Images"      
+        on_hold_images: "On Hold Images"
       on_site:
         work_package_number: "Work Package No."
         completed: "Completed Date"
@@ -316,7 +336,7 @@ en:
         visual_check_images: "Visual Check Images"
         vt2_check_status: "VT2 Check Status"
         vt2_check_comment: "VT2 Check Comment"
-        vt2_check_images: "VT2 Check Images"  
+        vt2_check_images: "VT2 Check Images"
         pt2_check_status: "PT2 Check Status"
         pt2_check_comment: "PT2 Check Comment"
         pt2_check_images: "PT2 Check Images"
@@ -467,7 +487,7 @@ en:
     new:
       title: "New Final Inspection"
     edit:
-      title: "Final Inspection Edit: %{work_package}"  
+      title: "Final Inspection Edit: %{work_package}"
   work_preparations:
     form:
       complete_button: "Mark as Completed"
@@ -494,7 +514,7 @@ en:
     new:
       title: "New Work Preparation"
     edit:
-      title: "Work Preparation Edit: %{work_package}"  
+      title: "Work Preparation Edit: %{work_package}"
     types:
       cutting_pipes: "Cutting Pipes"
       small_parts: "Small Parts"
@@ -524,10 +544,10 @@ en:
     new:
       title: "New Test Pack"
     edit:
-      title: "Test Pack Edit: %{work_package}"  
+      title: "Test Pack Edit: %{work_package}"
     types:
       pressure_test: "Pressure Test"
-      leak_test: "Leak Test"    
+      leak_test: "Leak Test"
   site_deliveries:
     form:
       complete_button: "Mark as Completed"

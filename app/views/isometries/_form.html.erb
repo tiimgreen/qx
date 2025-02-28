@@ -1,9 +1,9 @@
 <%# Form with navigation warning and autosave %>
 <div data-controller="form-navigation">
-  <%= form_with(model: [@project, @isometry], 
-                local: true, 
+  <%= form_with(model: [@project, @isometry],
+                local: true,
                 class: "needs-validation",
-                data: { 
+                data: {
                   controller: "autosave",
                   autosave_interval_value: 300000,
                   form_navigation_target: "form"
@@ -47,12 +47,12 @@
                   <%= f.label :line_id, class: "form-label" %>
                   <%= f.text_field :line_id, class: "form-control" %>
                 </div>
-                
+
                 <div class="col-md-2 mb-3">
                   <%= f.label :dn, class: "form-label" %>
                   <%= f.text_field :dn, class: "form-control" %>
                 </div>
-                
+
                 <div class="col-md-2 mb-3">
                   <%= f.label :revision_number, class: "form-label" %>
                   <%= f.number_field :revision_number, class: "form-control", min: 0, max: 10 %>
@@ -89,7 +89,7 @@
                   <%= f.label :system, class: "form-label" %>
                   <%= f.text_field :system, class: "form-control" %>
                 </div>
-                
+
                 <div class="col-md-2 mb-3">
                   <%= f.label :medium, class: "form-label" %>
                   <%= f.text_field :medium, class: "form-control" %>
@@ -106,7 +106,7 @@
             </div>
           </div>
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -124,7 +124,7 @@
           <div class="card-body">
             <div class="row g-3">
               <div class="container p-4">
-               
+
                 <div class="row mb-3">
                   <div class="col-md-2 mb-3">
                     <%= f.label :ped_category, class: "form-label mb-0" %>
@@ -189,7 +189,7 @@
                     <%= f.label :gdp, class: "form-label mb-0" %>
                     <%= f.check_box :gdp, class: "form-check-input mt-0" %>
                   </div>
-                  
+
                   <div class="col-md-2 mb-3">
                     <%= f.label :isolation_required, class: "form-label mb-0" %>
                     <%= f.check_box :isolation_required, class: "form-check-input mt-0" %>
@@ -221,8 +221,8 @@
                 <dt><%= f.label :rt_percentage %></dt>
                 <%= f.file_field :rt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
                 <% if @isometry.rt_images.attached? %>
-                  <%= render partial: 'images', locals: { 
-                    images: @isometry.rt_images, 
+                  <%= render partial: 'images', locals: {
+                    images: @isometry.rt_images,
                     image_type: 'rt',
                     edit_mode: true,
                     model_type: @isometry
@@ -234,8 +234,8 @@
                 <dt><%= f.label :vt2_percentage %></dt>
                 <%= f.file_field :vt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
                 <% if @isometry.vt_images.attached? %>
-                  <%= render partial: 'images', locals: { 
-                    images: @isometry.vt_images, 
+                  <%= render partial: 'images', locals: {
+                    images: @isometry.vt_images,
                     image_type: 'vt',
                     edit_mode: true,
                     model_type: @isometry
@@ -247,8 +247,8 @@
                 <dt><%= f.label :pt2_percentage %></dt>
                 <%= f.file_field :pt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
                 <% if @isometry.pt_images.attached? %>
-                  <%= render partial: 'images', locals: { 
-                    images: @isometry.pt_images, 
+                  <%= render partial: 'images', locals: {
+                    images: @isometry.pt_images,
                     image_type: 'pt',
                     edit_mode: true,
                     model_type: @isometry
@@ -321,7 +321,7 @@
                     </div>
                   </div>
                 </div>
-              </div>      
+              </div>
             </div>
           </div>
 
@@ -339,9 +339,9 @@
     <div id="section5" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
         <div class="row g-3">
-            
-          <%= render 'hold_fields', f: f, delete_path: ->(image) { 
-            delete_image_project_isometry_path(@project, @isometry, image_id: image) 
+
+          <%= render 'hold_fields', f: f, delete_path: ->(image) {
+            delete_image_project_isometry_path(@project, @isometry, image_id: image)
           } %>
         </div>
       </div>
@@ -392,8 +392,8 @@
     </h2>
     <div id="section7" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
-        <div class="card mb-4" data-controller="material-certificate-search" 
-            data-project-id="<%= @project.id %>" 
+        <div class="card mb-4" data-controller="material-certificate-search"
+            data-project-id="<%= @project.id %>"
             data-isometry-id="<%= @isometry.id %>">
           <div class="card-body">
             <div class="row g-3">
@@ -411,7 +411,7 @@
                     autocomplete: "off"
                   %>
                 </div>
-                <div id="certificate-results" 
+                <div id="certificate-results"
                     class="list-group mb-3"
                     data-material-certificate-search-target="results"></div>
                 <div class="row g-3" data-material-certificate-search-target="selected">
@@ -420,8 +420,8 @@
                       <div class="selected-certificate" data-certificate-id="<%= cert.id %>">
                         <input type="hidden" name="isometry[material_certificate_ids][]" value="<%= cert.id %>">
                         <div class="d-flex flex-column position-relative border rounded p-2">
-                          <button type="button" 
-                                  class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1" 
+                          <button type="button"
+                                  class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1"
                                   data-action="click->material-certificate-search#removeCertificate">×</button>
                           <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
                             <div class="text-center mb-2">
@@ -460,16 +460,16 @@
             <!-- Image Upload -->
             <div class="row g-3">
               <!-- Initial PDF Upload -->
-              <div class="col-md-8 mb-3">   
+              <div class="col-md-8 mb-3">
                 <div class="row">
                   <div class="col-md-8">
                     <%= f.label :new_pdf, t('.upload_new_pdf'), class: "form-label" %>
                     <%= f.file_field :new_pdf, class: "form-control" %>
                   </div>
-                  
+
                   <div class="col-md-4">
                     <%= f.label :new_pdf_qr_position, t('.qr_position'), class: "form-label" %>
-                    <%= f.select :new_pdf_qr_position, 
+                    <%= f.select :new_pdf_qr_position,
                               [
                                 [t('common.labels.top_left'), "top_left"],
                                 [t('common.labels.top_right'), "top_right"],
@@ -486,7 +486,7 @@
               <% if @isometry.persisted? && @isometry.isometry_documents.any? %>
                 <div class="col-12">
                   <h6 class="mb-3"><%= t('.existing_documents') %></h6>
-                  
+
                   <%= f.fields_for :isometry_documents do |doc_form| %>
                     <div class="card mb-3">
                       <div class="card-body">
@@ -498,20 +498,21 @@
                             <h6 class="mb-1"><%= doc_form.object.pdf.filename %></h6>
                             <small class="text-muted">
                               <%= number_to_human_size(doc_form.object.pdf.byte_size) %> •
-                              <%= l(doc_form.object.pdf.created_at, format: :short) %>
+                              <%= l(doc_form.object.pdf.created_at, format: :short) if doc_form.object.pdf.created_at.present? %>
                             </small>
                           </div>
                           <div class="col-md-3 text-end">
-                            <%= link_to url_for(doc_form.object.pdf), 
-                                      target: "_blank", 
-                                      class: "btn btn-outline-primary btn-sm me-2" do %>
-                              <i class="bi bi-eye"></i> <%= t('.view') %>
+                            <% if doc_form.object.pdf.persisted? %>
+                              <%= link_to url_for(doc_form.object.pdf),
+                                            target: "_blank",
+                                            class: "btn btn-outline-primary btn-sm me-2" do %>
+                                <i class="bi bi-eye"></i> <%= t('.view') %>
+                              <% end %>
                             <% end %>
-                            
-                            <%= doc_form.check_box :_destroy, 
+                            <%= doc_form.check_box :_destroy,
                                                 class: "btn-check",
                                                 id: "delete_doc_#{doc_form.object.id}" %>
-                            <%= doc_form.label :_destroy, 
+                            <%= doc_form.label :_destroy,
                                             class: "btn btn-outline-danger btn-sm",
                                             for: "delete_doc_#{doc_form.object.id}" do %>
                               <i class="bi bi-trash"></i> <%= t('.delete') %>
@@ -554,7 +555,7 @@
       </div>
     </div>
   </div>
-      
+
   <!-- Submit Buttons -->
   <div class="form-group my-5">
     <%= f.submit t("common.actions.save"), class: "btn btn-primary" %>

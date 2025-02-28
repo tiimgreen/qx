@@ -160,16 +160,10 @@ class Isometry < ApplicationRecord
   private
 
   def process_isometry_documents
-    # Skip processing for drafts or when no documents
     return if draft? || !isometry_documents.any?
 
     isometry_documents.each do |document|
       next unless document.pdf.attached?
-
-      Rails.logger.info "Processing isometry document: #{document.pdf.filename} (#{document.pdf.content_type})"
-
-      # The actual processing is now handled by the IsometryDocument model
-      # through its after_commit callback
     end
   end
 
@@ -178,12 +172,10 @@ class Isometry < ApplicationRecord
     y = send("qr_#{qr_position}_y")
 
     if x.negative?
-      # Convert negative x (from right edge) to positive x based on page width
       x = page_width + x
     end
 
     if y.negative?
-      # Convert negative y (from bottom edge) to positive y based on page height
       y = page_height + y
     end
 
@@ -199,21 +191,10 @@ class Isometry < ApplicationRecord
   end
 
   def log_qr_position_change
-    return if draft?
-
-    Rails.logger.info "========== QR Position Debug =========="
-    Rails.logger.info "Current QR Position: #{qr_position.inspect}"
-    Rails.logger.info "QR Position in database: #{qr_position_was.inspect}"
-    Rails.logger.info "QR Position changed?: #{qr_position_changed?}"
-    Rails.logger.info "All changes: #{changes.inspect}"
-    Rails.logger.info "Valid positions: #{VALID_QR_POSITIONS.inspect}"
-    Rails.logger.info "====================================="
+    nil if draft?
   end
 
   def set_default_qr_position
-    Rails.logger.info "Setting default QR position"
-    Rails.logger.info "Current position before default: #{qr_position.inspect}"
     self.qr_position = "top_right" if qr_position.blank?
-    Rails.logger.info "Position after default: #{qr_position.inspect}"
   end
 end

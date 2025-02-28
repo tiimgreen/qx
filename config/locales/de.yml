@@ -28,10 +28,10 @@ de:
         new_delivery: "Neue Lieferung"
       prefabrications:
         title: "Vorfertigungen"
-      pre_weldings: 
+      pre_weldings:
         title: "Schweissen"
       work_preparations:
-        title: "AVOR"    
+        title: "AVOR"
       final_inspections:
         title: "EndKontrolle"
       site_deliveries:
@@ -39,11 +39,11 @@ de:
       site_assemblies:
         title: "Montage"
       on_sites:
-        title: "As Built" 
-      test_packs: 
+        title: "As Built"
+      test_packs:
         title: "DP / Testpack"
       transports:
-        title: "Transport"         
+        title: "Transport"
   common:
     latest_revision: "Aktuelle Revision"
     old_revision: "Vorherige Revision"
@@ -74,8 +74,8 @@ de:
     image_upload_note: "Dokument hochladen, wenn nötig"
 
     comment: "Kommentar"
-    'yes': "Ja"
-    'no': "Nein"
+    "yes": "Ja"
+    "no": "Nein"
     new_title: "Neu %{model}"
     edit_title: "Bearbeiten %{model}"
   flash:
@@ -99,10 +99,27 @@ de:
       default: "%d.%m.%Y"
       long: "%d. %B %Y"
       short: "%d. %b"
-    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    day_names:
+      [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
     abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
-    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
-    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    month_names:
+      [
+        ~,
+        Januar,
+        Februar,
+        März,
+        April,
+        Mai,
+        Juni,
+        Juli,
+        August,
+        September,
+        Oktober,
+        November,
+        Dezember,
+      ]
+    abbr_month_names:
+      [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
     order:
       - :day
       - :month
@@ -127,7 +144,7 @@ de:
       close: "Schließen"
       delivery_notes: "Lieferscheine"
     edit:
-      title: "Wareneingang bearbeiten: %{order_number}"   
+      title: "Wareneingang bearbeiten: %{order_number}"
   sectors:
     project: "Projekt"
     project_description: "Projektbezogene Aktivitäten"
@@ -201,6 +218,10 @@ de:
       guest: "Gast"
     errors:
       models:
+        isometry_document:
+          attributes:
+            qr_position:
+              inclusion: "muss einer der folgenden sein: oben links, oben rechts, unten links oder unten rechts"
         delivery_item:
           attributes:
             name:
@@ -226,7 +247,7 @@ de:
         test_pack:
           attributes:
             work_location:
-              required: "Arbeitsort darf nicht leer sein"      
+              required: "Arbeitsort darf nicht leer sein"
         final_inspection:
           attributes:
             work_location:
@@ -234,7 +255,7 @@ de:
         incoming_delivery:
           attributes:
             work_location:
-              required: "Arbeitsort darf nicht leer sein"                         
+              required: "Arbeitsort darf nicht leer sein"
     attributes:
       work_preparation:
         work_location: "Arbeitsort"
@@ -259,7 +280,7 @@ de:
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Kommentar"
         on_hold_date: "On Hold Datum"
-        on_hold_images: "Halt Bilder"  
+        on_hold_images: "Halt Bilder"
         one_test: "Einen Test durchführen"
         yes: "Ja"
       prefabrication:
@@ -270,7 +291,7 @@ de:
         on_hold_comment: "On Hold Kommentar"
         on_hold_date: "On Hold Datum"
         on_hold_images: "Halt Bilder"
-        active: "Aktiv"        
+        active: "Aktiv"
       pre_welding:
         work_location: "Arbeitsort"
         work_package_number: "Arbeitspaket Nr."
@@ -305,7 +326,7 @@ de:
         on_hold_status: "On Hold Status"
         on_hold_comment: "On Hold Kommentar"
         on_hold_date: "On Hold Datum"
-        on_hold_images: "Halt Bilder"          
+        on_hold_images: "Halt Bilder"
       final_inspection:
         work_location: "Arbeitsort"
         work_package_number: "Arbeitspaket Nr."
@@ -387,7 +408,7 @@ de:
     new:
       title: "Neue Baustellenlieferung erstellen"
     edit:
-      title: "Baustellenlieferung bearbeiten: %{work_package}"     
+      title: "Baustellenlieferung bearbeiten: %{work_package}"
   on_sites:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -414,7 +435,7 @@ de:
     new:
       title: "Neue As-Built erstellen"
     edit:
-      title: "As-Built bearbeiten: %{work_package}"     
+      title: "As-Built bearbeiten: %{work_package}"
   site_assemblies:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -441,7 +462,7 @@ de:
     new:
       title: "Neue Baustellenmontage erstellen"
     edit:
-      title: "Baustellenmontage bearbeiten: %{work_package}"     
+      title: "Baustellenmontage bearbeiten: %{work_package}"
   prefabrications:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -468,7 +489,7 @@ de:
     new:
       title: "Neue Vorfertigung"
     edit:
-      title: "Vorfertigung bearbeiten: %{work_package}"    
+      title: "Vorfertigung bearbeiten: %{work_package}"
   pre_weldings:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -495,7 +516,7 @@ de:
     new:
       title: "Neue Schweissen"
     edit:
-      title: "Schweissen bearbeiten: %{work_package}"    
+      title: "Schweissen bearbeiten: %{work_package}"
   final_inspections:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -522,7 +543,7 @@ de:
     new:
       title: "Neue Endkontrolle"
     edit:
-      title: "Endkontrolle bearbeiten: %{work_package}"  
+      title: "Endkontrolle bearbeiten: %{work_package}"
   work_preparations:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -549,10 +570,10 @@ de:
     new:
       title: "Neue Arbeitsvorbereitung"
     edit:
-      title: "Arbeitsvorbereitung bearbeiten: %{work_package}"  
+      title: "Arbeitsvorbereitung bearbeiten: %{work_package}"
     types:
       cutting_pipes: "Rohre schneiden"
-      small_parts: "Kleinteile" 
+      small_parts: "Kleinteile"
   test_packs:
     form:
       complete_button: "Als abgeschlossen markieren"
@@ -579,7 +600,7 @@ de:
     new:
       title: "Neue Druckprobe"
     edit:
-      title: "Druckprobe bearbeiten: %{work_package}"  
+      title: "Druckprobe bearbeiten: %{work_package}"
     types:
       pressure_test: "Pressure Test"
       leak_test: "Leak Test"
