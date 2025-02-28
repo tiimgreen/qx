@@ -11,6 +11,12 @@ module QrCodeable
     Rails.logger.info "Starting PDF processing for attachment: #{pdf_attachment.filename}"
     Rails.logger.info "Current QR position setting: #{qr_position}"
 
+    # Skip QR processing if no position is set
+    unless qr_position.present?
+      Rails.logger.info "No QR position set, skipping QR code processing"
+      return download_and_copy_pdf(pdf_attachment)
+    end
+
     # Create temporary files
     qr_temp_file = Tempfile.new([ "qr", ".png" ])
     pdf_temp_file = Tempfile.new([ "processed", ".pdf" ])
@@ -220,5 +226,22 @@ module QrCodeable
 
   def page_height
     @page_height
+  end
+
+  def download_and_copy_pdf(pdf_attachment)
+    temp_file = Tempfile.new([ "output", ".pdf" ])
+    begin
+      # Download the PDF to a temp file
+      pdf_attachment.download do |chunk|
+        temp_file.write(chunk)
+      end
+      temp_file.close
+      temp_file
+    rescue => e
+      Rails.logger.error "Error copying PDF: #{e.message}"
+      temp_file.close
+      temp_file.unlink
+      raise e
+    end
   end
 end

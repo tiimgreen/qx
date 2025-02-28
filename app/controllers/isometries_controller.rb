@@ -329,9 +329,11 @@ class IsometriesController < ApplicationController
 
   def handle_new_pdf_upload(isometry)
     if params.dig(:isometry, :new_pdf).present?
+      # Only set QR position if it was selected
+      qr_position = params.dig(:isometry, :new_pdf_qr_position).presence
       isometry.isometry_documents.build(
         pdf: params[:isometry][:new_pdf],
-        qr_position: params[:isometry][:new_pdf_qr_position]
+        qr_position: qr_position
       )
     end
   end

@@ -57,8 +57,7 @@ class Isometry < ApplicationRecord
 
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
   VALID_QR_POSITIONS = %w[top_left top_right bottom_left bottom_right].freeze
-  validates :qr_position, inclusion: { in: VALID_QR_POSITIONS }
-  after_initialize :set_default_qr_position, if: :new_record?
+  validates :qr_position, inclusion: { in: VALID_QR_POSITIONS, allow_nil: true }
 
   before_save :log_qr_position_change
 
@@ -195,6 +194,6 @@ class Isometry < ApplicationRecord
   end
 
   def set_default_qr_position
-    self.qr_position = "top_right" if qr_position.blank?
+    # No longer setting default QR position
   end
 end
