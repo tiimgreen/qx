@@ -148,28 +148,21 @@ class WeldingPdfGenerator
 
     # Calculate available width
     available_width = pdf.bounds.width
-    column_width = available_width / 3  # Split into three equal columns
+    column_width = available_width / 2  # Split into three equal columns
 
     legend_data = [
       [
         make_legend_table(pdf, [
           [ "SW", "Vorfertigunsnaht / Shop weld" ],
           [ "FW", "Montagenaht / Field weld" ],
-          [ "SWR IN/OUT", "Blindnaht: Endnähte (Probenschweißcoupons rein/raus) / Blind and closure welds (Sample weld coupons IN/OUT)" ],
-          [ "RW", "Reparatur / Repaired weld seam" ],
-          [ "CW", "Schnitt / Cutted weld seam" ]
+          [ "RW", "Reparaturnaht/ Repaired weld" ],
+          [ "VT", "Sichtprüfung innen&außen / Visual Testing inside&outside" ]
         ], column_width - 10),
         make_legend_table(pdf, [
-          [ "HW", "Handnaht / Hand weld" ],
-          [ "OW", "Bei Orbitalschweißungen sind die Seriennummern der Schweißmaschine und der Zange einzutragen / For orbital welding the serial numbers of the welding machine and of the welding head has to be filed" ],
-          [ "VT", "Sichtprüfung innen&außen / Visual Testing inside&outside" ],
-          [ "VTE", "Indirekte Sichtprüfung mittels Endoskop / Indirect Visual Testing by Boroscope" ]
-        ], column_width - 10),
-        make_legend_table(pdf, [
-          [ "O²", "Restsauerstoffmessung / Residual Oxygen Measurement" ],
           [ "RT", "Durchstrahlungsprüfung / Radiographic Testing" ],
-          [ "WC", "Neu Schweiss Start Produktion Referenznaht / NewWelding at (Re)Start or Production WeldCoupon" ],
-          [ "n.e.", "nicht erforderlich / not applicable" ]
+          [ "N/A", "Nicht anwendbar / Not applicable" ],
+          [ "e", "Erfüllt / Applicable" ],
+          [ "ne", "Nicht Erfüllt / Not Applicable" ]
         ], column_width - 10)
       ]
     ]
