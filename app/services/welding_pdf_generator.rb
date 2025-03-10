@@ -43,18 +43,47 @@ class WeldingPdfGenerator
           at: [ 0, pdf.bounds.top - 65 ], width: pdf.bounds.width
       end
 
-      # Start the content below the header
+      # Content area (larger to fit more content)
       pdf.bounding_box([ 0, pdf.bounds.top - 110 ], width: pdf.bounds.width, height: pdf.bounds.height - 110) do
         generate_table(pdf)
-        generate_footer(pdf)
       end
 
-      # Add page numbers
-      total = pdf.page_count
-      pdf.number_pages "Seite <page> von #{total}",
-        at: [ pdf.bounds.right - 150, pdf.bounds.top - (-15) ],
-        align: :right,
-        size: 10
+      # Set up footer for all pages at the absolute bottom
+      pdf.repeat(:all) do
+        # Position footer at the bottom margin
+        pdf.bounding_box([ 0, pdf.margin_box.bottom + 45 ], width: pdf.bounds.width, height: 45) do
+          # Draw a line above footer
+          # pdf.stroke_horizontal_rule
+          pdf.move_down 3
+
+          # Calculate column widths for 4 columns
+          column_width = pdf.bounds.width / 4
+
+          # Create legend data in 4 columns with German/English text
+          legend_data = [
+            [
+              make_legend_table(pdf, [ [ "SW", "Vorfertigunsnaht / Shop weld" ], [ "FW", "Montagenaht / Field weld" ] ], column_width - 5, 6),
+              make_legend_table(pdf, [ [ "RW", "Reparaturnaht / Repaired weld" ], [ "VT", "Sichtprüfung / Visual Testing" ] ], column_width - 5, 6),
+              make_legend_table(pdf, [ [ "RT", "Durchstrahlungsprüfung / Radiographic Testing" ], [ "N/A", "Nicht anwendbar / Not applicable" ] ], column_width - 5, 6),
+              make_legend_table(pdf, [ [ "e", "Erfüllt / Applicable" ], [ "ne", "Nicht erfüllt / Not Applicable" ] ], column_width - 5, 6)
+            ]
+          ]
+
+          # Create the table
+          pdf.table(legend_data, width: pdf.bounds.width) do |t|
+            t.cells.padding = [ 0, 2, 0, 2 ]
+            t.cells.borders = []
+            t.column_widths = [ column_width ] * 4
+          end
+
+          # Add page numbers below the legend
+          pdf.text_box "Seite #{pdf.page_number} von #{pdf.page_count}",
+            at: [ pdf.bounds.right - 150, 10 ],
+            width: 150,
+            align: :right,
+            size: 8
+        end
+      end
     end
   end
 
@@ -83,8 +112,8 @@ class WeldingPdfGenerator
       ]
     ]
 
-    # Split welds into chunks of 5 (since each weld takes 2 rows)
-    @welds.each_slice(10) do |weld_chunk|
+    # Split welds into chunks (each weld takes 2 rows)
+    @welds.each_slice(20) do |weld_chunk|
       data = header_rows.dup
 
       weld_chunk.each do |weld|
@@ -136,57 +165,27 @@ class WeldingPdfGenerator
 
       pdf.move_down 20
 
-      # Add a new page if there are more welds to show
-      if weld_chunk != @welds.each_slice(5).to_a.last
+      # Add a new page if there are more welds to show and not the last chunk
+      if weld_chunk != @welds.each_slice(20).to_a.last
         pdf.start_new_page
       end
     end
   end
 
-  def generate_footer(pdf)
-    pdf.move_down 15
-
-    # Calculate available width
-    available_width = pdf.bounds.width
-    column_width = available_width / 2  # Split into three equal columns
-
-    legend_data = [
-      [
-        make_legend_table(pdf, [
-          [ "SW", "Vorfertigunsnaht / Shop weld" ],
-          [ "FW", "Montagenaht / Field weld" ],
-          [ "RW", "Reparaturnaht/ Repaired weld" ],
-          [ "VT", "Sichtprüfung innen&außen / Visual Testing inside&outside" ]
-        ], column_width - 10),
-        make_legend_table(pdf, [
-          [ "RT", "Durchstrahlungsprüfung / Radiographic Testing" ],
-          [ "N/A", "Nicht anwendbar / Not applicable" ],
-          [ "e", "Erfüllt / Applicable" ],
-          [ "ne", "Nicht Erfüllt / Not Applicable" ]
-        ], column_width - 10)
-      ]
-    ]
-
-    pdf.table(legend_data, width: available_width) do |t|
-      t.cells.padding = [ 0, 5, 0, 5 ]
-      t.cells.borders = []
-      t.column_widths = [ column_width, column_width, column_width ]
-    end
-  end
 
   private
 
-  def make_legend_table(pdf, data, width)
+  def make_legend_table(pdf, data, width, font_size = 8)
     # Calculate widths for the two columns
-    code_width = width * 0.15  # 15% for the code
-    desc_width = width * 0.85  # 85% for the description
+    code_width = width * 0.2  # 20% for the code
+    desc_width = width * 0.8  # 80% for the description
 
     pdf.make_table(data,
       width: width,
       cell_style: {
         borders: [],
-        padding: [ 2, 2, 2, 2 ],
-        size: 8,
+        padding: [ 1, 1, 1, 1 ],
+        size: font_size,
         inline_format: true
       }
     ) do |t|
