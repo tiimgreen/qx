@@ -17,46 +17,47 @@ class WeldingPdfGenerator
     Prawn::Document.new(page_size: "A4", page_layout: :landscape, margin: [ 30, 30, 30, 30 ]) do |pdf|
       # Set up repeating header for all pages
       pdf.repeat(:all) do
-        pdf.bounding_box([ 0, pdf.bounds.top ], width: pdf.bounds.width, height: 80) do
-          # Company logo on the left
-          pdf.image "#{Rails.root}/app/assets/images/logo.png", width: 120, position: :left, vposition: :top
+        # Company logo on the left
+        pdf.image "#{Rails.root}/app/assets/images/logo.png", width: 120, at: [ 0, pdf.bounds.top ]
 
-          # Add QR code to the top right
-          qr_temp_file = Tempfile.new([ "qr", ".png" ])
-          begin
-            qr_data = "#{Rails.application.routes.url_helpers.project_isometry_url(project_id: @isometry.project_id, id: @isometry.id, host: Rails.application.routes.default_url_options[:host])}"
-            generate_qr_code_image(qr_data, qr_temp_file.path)
+        # Add QR code to the top right
+        qr_temp_file = Tempfile.new([ "qr", ".png" ])
+        begin
+          qr_data = "#{Rails.application.routes.url_helpers.project_isometry_url(project_id: @isometry.project_id, id: @isometry.id, host: Rails.application.routes.default_url_options[:host])}"
+          generate_qr_code_image(qr_data, qr_temp_file.path)
+          pdf.image qr_temp_file.path, at: [ pdf.bounds.width - 50, pdf.bounds.top ], width: 50
+        ensure
+          qr_temp_file.close
+          qr_temp_file.unlink
+        end
 
-            # Use fixed position for landscape A4
-            x = pdf.bounds.width - 50  # Position from right margin
-            y = pdf.bounds.top - 20    # Position from top margin
-
-            pdf.image qr_temp_file.path, at: [ x, y ], width: 50
-          ensure
-            qr_temp_file.close
-            qr_temp_file.unlink
-          end
-
-
+        # Header text content
+        pdf.bounding_box([ 0, pdf.bounds.top - 40 ], width: pdf.bounds.width, height: 40) do
           pdf.text "<b>Isometrie / Isometric:</b> #{@isometry.line_id}", size: 11, inline_format: true
           pdf.text "<b>Projekt Nr. / Project No.:</b> #{@isometry.project.project_number}", size: 11, inline_format: true
-          pdf.move_down 5
-          pdf.text "Protokoll Schweissnaht / Weldlog", size: 14, style: :bold, align: :center
+          pdf.text "<b>QXD Dok. Nr. / QXD Doc. No.:</b> 3.40_PP_006V01", size: 11, inline_format: true
         end
+
+        # Title
+        pdf.text_box "Protokoll Schweissnaht / Weldlog", size: 14, style: :bold, align: :center,
+          at: [ 0, pdf.bounds.top - 65 ], width: pdf.bounds.width
       end
 
       # Start the content below the header
-      pdf.bounding_box([ 0, pdf.bounds.top - 85 ], width: pdf.bounds.width, height: pdf.bounds.height - 85) do
+      pdf.bounding_box([ 0, pdf.bounds.top - 110 ], width: pdf.bounds.width, height: pdf.bounds.height - 110) do
         generate_table(pdf)
         generate_footer(pdf)
       end
 
-      # Add page numbers - OUTSIDE of any repeat block
-      pdf.number_pages "<page> von <total>",
-                      at: [ pdf.bounds.right - 70, pdf.bounds.top ],
-                      align: :right,
-                      size: 12,
-                      page_filter: :all
+      # Add page numbers
+      pdf.repeat(:all) do
+        pdf.text_box "<page> von <total>",
+          at: [ pdf.bounds.right - 150, 0 ],
+          width: 150,
+          align: :right,
+          size: 10,
+          inline_format: true
+      end
     end
   end
 
