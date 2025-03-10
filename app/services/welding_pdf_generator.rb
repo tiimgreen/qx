@@ -14,7 +14,7 @@ class WeldingPdfGenerator
   end
 
   def generate
-    Prawn::Document.new(page_size: "A4", page_layout: :landscape, margin: [ 30, 30, 30, 30 ]) do |pdf|
+    Prawn::Document.new(page_size: "A4", page_layout: :landscape, margin: [ 40, 30, 40, 30 ]) do |pdf|
       # Set up repeating header for all pages
       pdf.repeat(:all) do
         # Company logo on the left
@@ -50,14 +50,11 @@ class WeldingPdfGenerator
       end
 
       # Add page numbers
-      pdf.repeat(:all) do
-        pdf.text_box "<page> von <total>",
-          at: [ pdf.bounds.right - 150, 0 ],
-          width: 150,
-          align: :right,
-          size: 10,
-          inline_format: true
-      end
+      total = pdf.page_count
+      pdf.number_pages "Seite <page> von #{total}",
+        at: [ pdf.bounds.right - 150, pdf.bounds.top - (-15) ],
+        align: :right,
+        size: 10
     end
   end
 
