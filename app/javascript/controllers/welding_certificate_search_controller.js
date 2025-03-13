@@ -99,16 +99,16 @@ export default class extends Controller {
   selectFromList(event) {
     event.preventDefault()
     const certificate = JSON.parse(event.target.dataset.certificate)
-    this.selectCertificate(certificate)
+    const field = event.target.closest('[data-controller="welding-certificate-search"]').querySelector('[data-welding-certificate-search-target="batchNumber"]').dataset.field
+    this.selectCertificate(certificate, field)
   }
 
-  selectCertificate(certificate) {
-    const field = this.fieldValue || 'batch_number'
-    const row = this.element.closest('.nested-welding-fields')
+  selectCertificate(certificate, field = 'batch_number') {
+    const row = this.element
     if (!row) return
 
-    const batchNumberField = row.querySelector(`[data-welding-certificate-search-target="batchNumber"][data-field="${field}"]`)
-    const certificateIdField = row.querySelector(`[data-welding-certificate-search-target="certificateId"][data-field="${field}"]`)
+    const batchNumberField = row.querySelector('[data-welding-certificate-search-target="batchNumber"]')
+    const certificateIdField = row.querySelector('[data-welding-certificate-search-target="certificateId"]')
 
     if (batchNumberField) batchNumberField.value = certificate.batch_number
     if (certificateIdField) certificateIdField.value = certificate.id
