@@ -16,7 +16,7 @@ class Project < ApplicationRecord
 
   belongs_to :user, optional: true
 
-  has_many :project_users
+  has_many :project_users, dependent: :destroy
   has_many :users, through: :project_users
   has_many :project_progress_plans, dependent: :destroy
 
