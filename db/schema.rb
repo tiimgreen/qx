@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_13_095154) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_19_073608) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -337,6 +337,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_095154) do
     t.index ["revision_number"], name: "index_project_progress_plans_on_revision_number"
   end
 
+  create_table "project_sectors", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.string "sector"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_sectors_on_project_id"
+  end
+
   create_table "project_users", force: :cascade do |t|
     t.integer "project_id", null: false
     t.integer "user_id", null: false
@@ -357,6 +365,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_095154) do
     t.integer "user_id"
     t.string "project_manager_qualinox"
     t.datetime "project_end"
+    t.boolean "workshop"
     t.index ["project_number"], name: "index_projects_on_project_number", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -604,6 +613,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_095154) do
   add_foreign_key "prefabrications", "users"
   add_foreign_key "prefabrications", "work_locations"
   add_foreign_key "project_progress_plans", "projects"
+  add_foreign_key "project_sectors", "projects"
   add_foreign_key "project_users", "projects"
   add_foreign_key "project_users", "users"
   add_foreign_key "projects", "users"

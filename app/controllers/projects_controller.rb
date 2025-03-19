@@ -30,6 +30,7 @@ class ProjectsController < ApplicationController
     @project.user = current_user
 
     if @project.save
+      handle_sector_associations
       redirect_to @project, notice: "Project was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -38,6 +39,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
+      handle_sector_associations
       redirect_to @project, notice: "Project was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -50,6 +52,20 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def handle_sector_associations
+    return unless @project.workshop?
+
+    # Clear existing sectors first
+    @project.project_sectors.destroy_all
+
+    # Create new sector associations
+    if params[:project][:sector_ids].present?
+      params[:project][:sector_ids].each do |sector_key|
+        @project.project_sectors.create(sector: sector_key) unless sector_key.blank?
+      end
+    end
+  end
 
   def sort_params
     allowed_columns = %w[
@@ -68,7 +84,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:project_number, :name, :description, :client_name, :id, :locale, :project_manager_client, :project_manager_qualinox, :project_end)
+    params.require(:project).permit(:project_number, :name, :description, :client_name, :id, :locale, :project_manager_client, :project_manager_qualinox, :project_end, :workshop, sector_ids: [])
   end
 
   def authorize_action!

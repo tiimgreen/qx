@@ -1,4 +1,9 @@
-<% sectors.each do |sector| %>
+<% sectors_to_display = if project.workshop?
+     project.project_sectors.map(&:sector).map { |key| Sector.find_by_key(key) }
+   else
+     sectors
+   end %>
+<% sectors_to_display.each do |sector| %>
   <div class="col-md-6 col-lg-4">
     <div class="card h-100">
       <div class="card-body">
@@ -34,6 +39,7 @@
           <div class="h3 mb-2"><%= t('sectors.' + sector.key) %></div>
           <%= t('sectors.' + sector.key + '_description') %>
         </p>
+
         <div class="mt-3">
           <% case sector.key %>
           <% when 'incoming_delivery' %>
@@ -95,6 +101,7 @@
             <% end %>
           <% end %>
         </div>
+
       </div>
     </div>
   </div>

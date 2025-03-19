@@ -13,6 +13,10 @@ class Project < ApplicationRecord
   has_many :on_sites, dependent: :destroy
   has_many :test_packs, dependent: :destroy
   has_many :pre_weldings, dependent: :destroy
+  has_many :project_sectors, dependent: :destroy
+
+  # Virtual attribute for sector_ids
+  attr_accessor :sector_ids
 
   belongs_to :user, optional: true
 
