@@ -51,7 +51,40 @@ class ReportsController < ApplicationController
     @pagy, @isometries = pagy(@isometries, items: params[:per_page] || 25)
 
     # Get the sector models for the view
-    @sector_models = Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }
+    base_sector_models = Sector::QR_SECTOR_MODELS.reject { |s| s == "isometry" }
+
+    @sector_models = if @project.workshop?
+      # For workshop projects, only show sectors from project_sectors
+      project_sector_keys = @project.project_sectors.pluck(:sector)
+      base_sector_models.select { |s| project_sector_keys.include?(s) }
+    else
+      base_sector_models
+    end
+
+    # Calculate total pipe length and other metrics
+    @total_pipe_length = @all_isometries.sum(:pipe_length)
+    @total_isometries = @all_isometries.count
+
+    # Calculate sector completions with workshop project handling
+    @sector_completions = {}
+    @sector_models.each do |sector|
+      completed_isometries = if sector == "work_preparation"
+        @all_isometries.select { |iso| WorkPreparation.completed_for?(iso) }
+      elsif sector == "test_pack"
+        @all_isometries.select { |iso| TestPack.completed_for?(iso) }
+      else
+        @all_isometries.select { |iso| iso.send(sector)&.completed? }
+      end
+
+      completed_pipe_length = completed_isometries.sum(&:pipe_length)
+
+      @sector_completions[sector] = {
+        completed_count: completed_isometries.size,
+        count_percentage: (@all_isometries.size > 0 ? (completed_isometries.size * 100.0 / @all_isometries.size).round : 0),
+        completed_meters: completed_pipe_length,
+        meters_percentage: (@total_pipe_length > 0 ? (completed_pipe_length * 100.0 / @total_pipe_length).round : 0)
+      }
+    end
   end
 
   private

@@ -79,21 +79,40 @@
       in_progress_isos = @all_isometries.select { |iso| iso.send(sector) && !iso.send(sector).completed? }
     end
 
+    completed_pipe_length = completed_isos.sum { |iso| iso.pipe_length.to_f }
+    
     sector_completions[sector] = {
       completed_count: completed_isos.count,
       in_progress_count: in_progress_isos.count,
-      completed_meters: completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 },
-      count_percentage: safe_percentage(completed_isos.count, total_isometries),
-      meters_percentage: safe_percentage(
-        completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 },
-        total_pipe_length
-      )
+      completed_meters: completed_pipe_length,
+      count_percentage: total_isometries.zero? ? 0 : (completed_isos.count * 100.0 / total_isometries).round,
+      meters_percentage: total_pipe_length.zero? ? 0 : ((completed_pipe_length || 0) * 100.0 / total_pipe_length).round
     }
   end
 
-  # Calculate average percentage based on completed pipe lengths from prefabrication and site assembly
-  average_pipe_length = ((sector_completions['prefabrication'][:completed_meters] + sector_completions['site_assembly'][:completed_meters]) / 2.0).round()
-  average_percentage = total_pipe_length.zero? ? 0 : (average_pipe_length * 100.0 / total_pipe_length).round()
+  # Calculate average percentage based on completed pipe lengths
+  if @project.workshop?
+    # For workshop projects, use prefabrication and the last sector
+    last_sector = @project.project_sectors.last&.sector
+    if last_sector && sector_completions['prefabrication'] && sector_completions[last_sector]
+      total_completed_meters = sector_completions['prefabrication'][:completed_meters].to_f + sector_completions[last_sector][:completed_meters].to_f
+      average_pipe_length = (total_completed_meters / 2.0).round(2)
+      average_percentage = total_pipe_length.zero? ? 0 : ((average_pipe_length || 0) * 100.0 / total_pipe_length).round
+    else
+      average_pipe_length = 0
+      average_percentage = 0
+    end
+  else
+    # For regular projects, use prefabrication and site assembly
+    if sector_completions['prefabrication'] && sector_completions['site_assembly']
+      total_completed_meters = sector_completions['prefabrication'][:completed_meters].to_f + sector_completions['site_assembly'][:completed_meters].to_f
+      average_pipe_length = (total_completed_meters / 2.0).round(2)
+      average_percentage = total_pipe_length.zero? ? 0 : ((average_pipe_length || 0) * 100.0 / total_pipe_length).round
+    else
+      average_pipe_length = 0
+      average_percentage = 0
+    end
+  end
   %>
 
   <!-- Total Progress Bar -->
@@ -130,20 +149,28 @@
     </div>
   </div>
 
-  <!-- Site Assembly Progress Bar -->
+  <!-- Site Assembly/Final Sector Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5><%= t('activerecord.models.site_assembly') %> Progress</h5>
-      <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-        <div class="progress-bar" role="progressbar" 
-             style="width: <%= sector_completions['site_assembly'][:meters_percentage] %>%; background-color: lawngreen;">
+      <% final_sector = if @project.workshop?
+           @project.project_sectors.last&.sector
+         else
+           'site_assembly'
+         end %>
+      
+      <% if final_sector %>
+        <h5><%= t("sectors.#{final_sector}") %> Progress</h5>
+        <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
+          <div class="progress-bar" role="progressbar" 
+               style="width: <%= sector_completions[final_sector][:meters_percentage] %>%; background-color: lawngreen;">
+          </div>
+          <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+            <span style="color: #000; font-weight: 500;">
+              <%= sector_completions[final_sector][:completed_count] %>/<%= total_isometries %> pcs (<%= sector_completions[final_sector][:count_percentage] %>%) | <%= sector_completions[final_sector][:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= sector_completions[final_sector][:meters_percentage] %>%)
+            </span>
+          </div>
         </div>
-        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
-          <span style="color: #000; font-weight: 500;">
-            <%= sector_completions['site_assembly'][:completed_count] %>/<%= total_isometries %> pcs (<%= sector_completions['site_assembly'][:count_percentage] %>%) | <%= sector_completions['site_assembly'][:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= sector_completions['site_assembly'][:meters_percentage] %>%)
-          </span>
-        </div>
-      </div>
+      <% end %>
     </div>
   </div>
 
