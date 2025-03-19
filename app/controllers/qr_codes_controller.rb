@@ -4,7 +4,14 @@ class QrCodesController < ApplicationController
   before_action :validate_user_sector
 
   def redirect
+    # Get sectors that are valid for QR codes
     sectors = current_user.sectors.select { |s| Sector::QR_SECTOR_MODELS.include?(s.key) }
+
+    # For workshop projects, filter to only show project-specific sectors
+    if @isometry.project.workshop?
+      project_sector_keys = @isometry.project.project_sectors.pluck(:sector)
+      sectors = sectors.select { |s| project_sector_keys.include?(s.key) }
+    end
 
     if sectors.empty?
       redirect_to root_path, alert: t("alerts.no_valid_sector")
@@ -40,6 +47,10 @@ class QrCodesController < ApplicationController
     end
   end
 
+  # Handle redirect to sector model sector redirections sector modal
+  # to see that modal we need to use qr and user who is set in few sectors
+  # user_sectors table. So if we go http://localhost:3000/en/qr/204
+  # we will see modal with sectors and option what user want to do.
   def handle_sector_redirect(sector)
     if sector.key == "isometry"
       redirect_to project_isometry_path(@isometry.project, @isometry)
