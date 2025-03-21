@@ -111,7 +111,12 @@
             <td><%= isometry.work_package_number %></td>
             <td><%= isometry.system %></td>
             <td><%= isometry.pid_number %> Rev.<%= isometry.pid_revision %></td>
-            <td><%= revision_status_label(isometry) %></td>
+            <td>
+              <%= revision_status_label(isometry) %>
+              <% if isometry.revision_letter.present? %>
+               - <%= isometry.revision_letter %>
+              <% end %>
+            </td>
             <td><%= isometry.material %></td>
             <td><%= l(isometry.received_date, format: :short) if isometry.received_date %></td>
             <td>
@@ -131,13 +136,13 @@
             <td class="text-end">
               <% %>
               <% if current_user.can_view?("Isometry") %>
-                <%= link_to project_isometry_path(@project, isometry), 
+                <%= link_to project_isometry_path(@project, isometry),
                   class: "btn btn-sm btn-outline-primary #{ isometry.page_number == 1 && isometry.revision_last? ? 'btn bg-success text-white' : ''}" do %>
                   <i class="bi bi-eye"></i>
                 <% end %>
               <% end %>
               <% if current_user.can_edit?("Isometry") %>
-                <%= link_to edit_project_isometry_path(@project, isometry), 
+                <%= link_to edit_project_isometry_path(@project, isometry),
                   class: 'btn btn-sm btn-outline-primary m-1',
                   title: t('common.actions.edit'),
                   data: { bs_toggle: 'tooltip' } do %>
@@ -173,11 +178,11 @@
   <% end %>
 </div>
 
-<%= render partial: 'delete_confirmation_modal', 
+<%= render partial: 'delete_confirmation_modal',
            locals: {
              modal_id: 'deleteIsometryModal',
              controller_name: 'delete-isometry',
              model_name: 'isometry'
            } %>
 
-<%= render 'pagy' %>               
+<%= render 'pagy' %>

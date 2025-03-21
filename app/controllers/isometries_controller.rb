@@ -341,7 +341,7 @@ class IsometriesController < ApplicationController
   def isometry_params
     params.require(:isometry).permit(
       :received_date, :pid_number, :pid_revision, :line_id, :dn,
-      :revision_number, :page_number, :page_total, :pipe_class,
+      :revision_number, :revision_letter, :page_number, :page_total, :pipe_class,
       :material, :system, :medium, :work_package_number, :revision_last,
       :dp, :dip, :isolation_required, :gmp, :gdp, :ped_category,
       :slope_if_needed, :rt, :vt2, :pt2, :pipe_length, :workshop_sn,

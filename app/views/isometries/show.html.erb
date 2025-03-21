@@ -12,10 +12,10 @@
   <div class="d-flex align-items-center">
     <%= render "qr_code"%>
   </div>
-  
+
   <div class="btn-toolbar mb-2 mb-md-0">
     <% if current_user.can_edit?("Isometry") && @isometry.can_add_page? %>
-      <%= link_to new_page_project_isometry_path(@project, @isometry), 
+      <%= link_to new_page_project_isometry_path(@project, @isometry),
             class: "btn btn-sm btn-outline-primary me-2",
             data: { turbo_method: :post } do %>
         <i class="bi bi-plus"></i> <%= t('isometries.actions.add_page') %>
@@ -110,6 +110,11 @@
 
       <dt class="col-sm-4"><%= t('.work_package') %></dt>
       <dd class="col-sm-8"><%= @isometry.work_package_number %></dd>
+
+      <% if @project.workshop? %>
+        <dt class="col-sm-4"><%= t('.revision_letter') %></dt>
+        <dd class="col-sm-8"><%= @isometry.revision_letter %></dd>
+      <% end %>
     </dl>
   </div>
 </div>
@@ -161,8 +166,8 @@
       <h5><%= t('.weldings') %></h5>
       <div>
         <% if @isometry.weldings.any? %>
-          <%= link_to download_welding_report_project_isometry_path(@project, @isometry), 
-                    class: "btn btn-primary", 
+          <%= link_to download_welding_report_project_isometry_path(@project, @isometry),
+                    class: "btn btn-primary",
                     target: "_blank",
                     data: { turbo: false } do %>
             <i class="fas fa-file-pdf me-1"></i>
@@ -190,7 +195,7 @@
       <dd class="col-sm-8">
         <%= @isometry.dp ? t('common.yes') : t('common.no') %>
       </dd>
-      
+
       <dt class="col-sm-4"><%= t('.dip') %></dt>
       <dd class="col-sm-8">
         <%= @isometry.dip ? t('common.yes') : t('common.no') %>
@@ -223,14 +228,14 @@
     <!-- Inspections -->
     <div class="col-12">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.inspections') %></h5>
-      
+
       <dl class="row mb-3">
         <dt class="col-sm-2"><%= t('.rt_percentage') %></dt>
         <dd class="col-sm-10"><%= @isometry.rt %> %</dd>
       </dl>
       <% if @isometry.rt_images.attached? %>
-        <%= render partial: 'images', locals: { 
-          images: @isometry.rt_images, 
+        <%= render partial: 'images', locals: {
+          images: @isometry.rt_images,
           image_type: 'rt',
           model_type: @isometry
         } %>
@@ -241,8 +246,8 @@
         <dd class="col-sm-10"><%= @isometry.vt2 %> %</dd>
       </dl>
       <% if @isometry.vt_images.attached? %>
-        <%= render partial: 'images', locals: { 
-          images: @isometry.vt_images, 
+        <%= render partial: 'images', locals: {
+          images: @isometry.vt_images,
           image_type: 'vt',
           model_type: @isometry
         } %>
@@ -253,8 +258,8 @@
         <dd class="col-sm-10"><%= @isometry.pt2%> %</dd>
       </dl>
       <% if @isometry.pt_images.attached? %>
-        <%= render partial: 'images', locals: { 
-          images: @isometry.pt_images, 
+        <%= render partial: 'images', locals: {
+          images: @isometry.pt_images,
           image_type: 'pt',
           model_type: @isometry
         } %>
@@ -272,7 +277,7 @@
     <dl class="row">
       <dt class="col-sm-4"><%= t('.total_pipe_length') %></dt>
       <dd class="col-sm-8"><%= number_with_precision(@isometry.pipe_length, precision: 2) %> m</dd>
-   
+
       <dt class="col-sm-4"><%= t('.workshop_sn') %></dt>
       <dd class="col-sm-8"><%= @isometry.workshop_sn %> pcs</dd>
 
@@ -307,10 +312,10 @@
           <% @isometry.on_hold_images.each do |image| %>
             <div class="col">
               <div class="card h-100">
-                <%= link_to image_tag(image.variant(:thumb), 
-                                    class: "card-img-top", 
+                <%= link_to image_tag(image.variant(:thumb),
+                                    class: "card-img-top",
                                     style: "object-fit: cover; height: 100px;",
-                                    data: { 
+                                    data: {
                                       bs_toggle: "modal",
                                       bs_target: "#imageModal#{image.id}"
                                     }),
@@ -335,7 +340,7 @@
           <% end %>
         </div>
       <% end %>
-      
+
     </dl>
   </div>
 </div>
@@ -344,7 +349,7 @@
 <% if @isometry.isometry_documents.any? %>
   <div class="row mb-4">
     <div class="col-12">
-      <%= render partial: 'documents', locals: { 
+      <%= render partial: 'documents', locals: {
         documents: @isometry.isometry_documents,
         title: t('.isometry_documents')
       } %>

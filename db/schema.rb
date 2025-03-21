@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_19_073608) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_21_072111) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -212,6 +212,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_19_073608) do
     t.integer "qr_y_coordinate", default: 20
     t.string "dn"
     t.boolean "draft"
+    t.string "revision_letter"
     t.index ["deleted"], name: "index_isometries_on_deleted"
     t.index ["line_id"], name: "index_isometries_on_line_id"
     t.index ["on_hold_status"], name: "index_isometries_on_on_hold_status"
