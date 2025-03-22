@@ -1,5 +1,6 @@
 de:
   common:
+    select_option: "Bitte auswählen"
     actions:
       show: "Anzeigen"
       edit: "Bearbeiten"

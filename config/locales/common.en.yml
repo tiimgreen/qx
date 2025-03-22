@@ -1,5 +1,6 @@
 en:
   common:
+    select_option: "Please select"
     actions:
       save: "Save"
       show: "Show"

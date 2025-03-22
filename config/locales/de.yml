@@ -176,6 +176,17 @@ de:
     documentation_description: "Projektdokumentation und Aufzeichnungen"
     material_certificate: "Materialzertifikat"
     material_certificate_description: "Zertifikate der Materialien"
+  sectors_progress:
+    isometry: "SOLL – IST Isometrie Übergabe"
+    work_preparation: "SOLL – IST AVOR"
+    prefabrication: "SOLL – IST Vorfertigung"
+    pre_welding: "SOLL – IST Schweissen"
+    final_inspection: "SOLL – IST Endkontrolle"
+    transport: "SOLL – IST Transport"
+    site_delivery: "SOLL – IST Baustellen Lieferung"
+    site_assembly: "SOLL – IST Montage"
+    on_site: "SOLL – IST As Built"
+    test_pack: "SOLL – IST Testpack"  
   work_locations:
     types:
       workshop: "Werkstatt"
