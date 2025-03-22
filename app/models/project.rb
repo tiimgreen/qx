@@ -30,11 +30,10 @@ class Project < ApplicationRecord
   validates :project_manager_qualinox, presence: true
   validates :project_end, presence: true
 
+  # Filter validations
   validates :sollist_filter1, presence: true
-  validates :sollist_filter2, presence: true
-  validates :sollist_filter3, presence: true
-  validates :progress_filter1, presence: true
-  validates :progress_filter2, presence: true
+  validates :sollist_filter2, :sollist_filter3, :progress_filter1, :progress_filter2,
+            presence: true, if: :requires_filters?
 
   scope :search_by_term, ->(search_term) {
     return all unless search_term.present?
@@ -50,4 +49,12 @@ class Project < ApplicationRecord
       search: term
     )
   }
+
+  private
+
+  def requires_filters?
+    # Only require filters if the project exists (not a new record)
+    # or if any of the filters are already set
+    persisted? || [ sollist_filter2, sollist_filter3, progress_filter1, progress_filter2 ].any?(&:present?)
+  end
 end

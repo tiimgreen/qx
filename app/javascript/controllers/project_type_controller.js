@@ -11,8 +11,9 @@ export default class extends Controller {
   ]
 
   connect() {
-    this.toggleSectors()
+    // Ensure filters are populated on initial load
     this.updateFilterOptions()
+    this.toggleSectors()
   }
 
   toggleSectors(event) {
@@ -22,18 +23,16 @@ export default class extends Controller {
     this.sectorSelectTarget.style.display = isWorkshop ? 'block' : 'none'
     
     if (event) {
-      // Update filter dropdowns
-      this.updateFilterOptions()
-      
       // Clear selections when switching types
       if (isWorkshop) {
         this.sollistFilter2Target.value = ''
         this.sollistFilter3Target.value = ''
         this.progressFilter1Target.value = ''
         this.progressFilter2Target.value = ''
-      } else {
-        this.sectorsTarget.selectedIndex = -1
       }
+      
+      // Update filter dropdowns
+      this.updateFilterOptions()
     }
   }
 
@@ -48,6 +47,13 @@ export default class extends Controller {
     
     filterTargets.forEach(select => {
       const currentValue = select.value
+      
+      // Store current options before clearing
+      const currentOptions = Array.from(select.options).map(opt => ({
+        value: opt.value,
+        text: opt.text
+      }))
+      
       select.innerHTML = ''
       
       // Add blank option
@@ -78,7 +84,7 @@ export default class extends Controller {
       }
       
       // Restore previous value if it exists in new options
-      if (Array.from(select.options).some(opt => opt.value === currentValue)) {
+      if (currentValue && Array.from(select.options).some(opt => opt.value === currentValue)) {
         select.value = currentValue
       }
     })
