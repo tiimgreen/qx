@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_22_074140) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_22_102825) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -340,10 +340,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_074140) do
 
   create_table "project_sectors", force: :cascade do |t|
     t.integer "project_id", null: false
-    t.string "sector"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sector_id", null: false
     t.index ["project_id"], name: "index_project_sectors_on_project_id"
+    t.index ["sector_id"], name: "index_project_sectors_on_sector_id"
   end
 
   create_table "project_users", force: :cascade do |t|
@@ -367,12 +368,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_074140) do
     t.string "project_manager_qualinox"
     t.datetime "project_end"
     t.boolean "workshop"
-    t.string "sollist_filter1", default: "isometry"
-    t.string "sollist_filter2"
-    t.string "sollist_filter3"
-    t.string "progress_filter1"
-    t.string "progress_filter2"
+    t.integer "sollist_filter1_sector_id"
+    t.integer "sollist_filter2_sector_id"
+    t.integer "sollist_filter3_sector_id"
+    t.integer "progress_filter1_sector_id"
+    t.integer "progress_filter2_sector_id"
+    t.index ["progress_filter1_sector_id"], name: "index_projects_on_progress_filter1_sector_id"
+    t.index ["progress_filter2_sector_id"], name: "index_projects_on_progress_filter2_sector_id"
     t.index ["project_number"], name: "index_projects_on_project_number", unique: true
+    t.index ["sollist_filter1_sector_id"], name: "index_projects_on_sollist_filter1_sector_id"
+    t.index ["sollist_filter2_sector_id"], name: "index_projects_on_sollist_filter2_sector_id"
+    t.index ["sollist_filter3_sector_id"], name: "index_projects_on_sollist_filter3_sector_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -620,8 +626,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_074140) do
   add_foreign_key "prefabrications", "work_locations"
   add_foreign_key "project_progress_plans", "projects"
   add_foreign_key "project_sectors", "projects"
+  add_foreign_key "project_sectors", "sectors"
   add_foreign_key "project_users", "projects"
   add_foreign_key "project_users", "users"
+  add_foreign_key "projects", "sectors", column: "progress_filter1_sector_id"
+  add_foreign_key "projects", "sectors", column: "progress_filter2_sector_id"
+  add_foreign_key "projects", "sectors", column: "sollist_filter1_sector_id"
+  add_foreign_key "projects", "sectors", column: "sollist_filter2_sector_id"
+  add_foreign_key "projects", "sectors", column: "sollist_filter3_sector_id"
   add_foreign_key "projects", "users"
   add_foreign_key "site_assemblies", "isometries"
   add_foreign_key "site_assemblies", "projects"

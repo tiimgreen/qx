@@ -1,5 +1,5 @@
 <% sectors_to_display = if project.workshop?
-     project.project_sectors.map(&:sector).map { |key| Sector.find_by_key(key) }
+     project.sectors  # Direct association now returns Sector objects
    else
      sectors
    end %>

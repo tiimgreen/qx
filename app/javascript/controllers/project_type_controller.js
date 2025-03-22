@@ -62,16 +62,16 @@ export default class extends Controller {
         const selectedSectors = Array.from(this.sectorsTarget.selectedOptions)
         selectedSectors.forEach(option => {
           const newOption = document.createElement('option')
-          newOption.value = option.value
+          newOption.value = option.value // Now using sector ID directly
           newOption.text = option.text
           select.appendChild(newOption)
         })
       } else {
         // For general projects, show all sectors except 'project'
         Array.from(this.sectorsTarget.options).forEach(option => {
-          if (option.value !== 'project') {
+          if (option.dataset.isProjectSector !== 'true') {
             const newOption = document.createElement('option')
-            newOption.value = option.value
+            newOption.value = option.value // Now using sector ID directly
             newOption.text = option.text
             select.appendChild(newOption)
           }

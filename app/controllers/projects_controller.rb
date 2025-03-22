@@ -20,11 +20,13 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    # Set default Isometry sector
+    @project.sollist_filter1_sector = Sector.find_by(key: :isometry)
   end
 
   def edit
-    # Load existing sector keys for preselection
-    @selected_sector_keys = @project.project_sectors.map(&:sector)
+    # Ensure workshop checkbox state matches project sectors
+    @project.workshop = @project.sectors.exists?
   end
 
   def create
@@ -44,7 +46,6 @@ class ProjectsController < ApplicationController
       handle_sector_associations
       redirect_to @project, notice: "Project was successfully updated."
     else
-      @selected_sector_keys = @project.project_sectors.map(&:sector)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -57,18 +58,13 @@ class ProjectsController < ApplicationController
   private
 
   def handle_sector_associations
-    return unless @project.workshop?
+    return unless params[:project][:sector_ids]
 
-    # Clear existing sectors first
+    # Clear existing associations and create new ones
     @project.project_sectors.destroy_all
-
-    # Create new sector associations
-    if params[:project][:sector_ids].present?
-      params[:project][:sector_ids].each do |sector_key|
-        next if sector_key.blank?
-        sector = Sector.find_by(key: sector_key)
-        @project.project_sectors.create(sector: sector) if sector
-      end
+    sector_ids = params[:project][:sector_ids].reject(&:blank?)
+    sector_ids.each do |sector_id|
+      @project.project_sectors.create(sector_id: sector_id)
     end
   end
 
@@ -90,10 +86,13 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(
-      :project_number, :name, :description, :client_name, :id, :locale,
-      :project_manager_client, :project_manager_qualinox, :project_end,
-      :workshop, :sollist_filter1, :sollist_filter2, :sollist_filter3,
-      :progress_filter1, :progress_filter2, sector_ids: []
+      :project_number, :name, :description,
+      :project_manager_client, :project_manager_qualinox,
+      :client_name, :project_start, :project_end,
+      :workshop,
+      :sollist_filter1_sector_id, :sollist_filter2_sector_id, :sollist_filter3_sector_id,
+      :progress_filter1_sector_id, :progress_filter2_sector_id,
+      sector_ids: []
     )
   end
 

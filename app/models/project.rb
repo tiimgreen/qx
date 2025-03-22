@@ -14,9 +14,13 @@ class Project < ApplicationRecord
   has_many :test_packs, dependent: :destroy
   has_many :pre_weldings, dependent: :destroy
   has_many :project_sectors, dependent: :destroy
+  has_many :sectors, through: :project_sectors
 
-  # Virtual attribute for sector_ids
-  attr_accessor :sector_ids
+  belongs_to :sollist_filter1_sector, class_name: "Sector"
+  belongs_to :sollist_filter2_sector, class_name: "Sector", optional: true
+  belongs_to :sollist_filter3_sector, class_name: "Sector", optional: true
+  belongs_to :progress_filter1_sector, class_name: "Sector", optional: true
+  belongs_to :progress_filter2_sector, class_name: "Sector", optional: true
 
   belongs_to :user, optional: true
 
@@ -29,10 +33,13 @@ class Project < ApplicationRecord
   validates :project_manager_client, presence: true
   validates :project_manager_qualinox, presence: true
   validates :project_end, presence: true
+  validates :client_name, presence: true
 
   # Filter validations
-  validates :sollist_filter1, presence: true
-  validates :sollist_filter2, :sollist_filter3, :progress_filter1, :progress_filter2,
+  validates :sollist_filter1_sector, presence: true
+  validates :sollist_filter2_sector, :sollist_filter3_sector,
+            presence: true, if: :requires_filters?
+  validates :progress_filter1_sector, :progress_filter2_sector,
             presence: true, if: :requires_filters?
 
   scope :search_by_term, ->(search_term) {
@@ -55,6 +62,6 @@ class Project < ApplicationRecord
   def requires_filters?
     # Only require filters if the project exists (not a new record)
     # or if any of the filters are already set
-    persisted? || [ sollist_filter2, sollist_filter3, progress_filter1, progress_filter2 ].any?(&:present?)
+    persisted? || [ sollist_filter2_sector, sollist_filter3_sector, progress_filter1_sector, progress_filter2_sector ].any?(&:present?)
   end
 end
