@@ -91,11 +91,12 @@
   end
 
   # Calculate average percentage based on completed pipe lengths
-  if @project.workshop?
-    # For workshop projects, use prefabrication and the last sector
-    last_sector = @project.project_sectors.last&.sector
-    if last_sector && sector_completions['prefabrication'] && sector_completions[last_sector]
-      total_completed_meters = sector_completions['prefabrication'][:completed_meters].to_f + sector_completions[last_sector][:completed_meters].to_f
+  if @project.progress_filter1_sector && @project.progress_filter2_sector
+    filter1_key = @project.progress_filter1_sector.key
+    filter2_key = @project.progress_filter2_sector.key
+    
+    if sector_completions[filter1_key] && sector_completions[filter2_key]
+      total_completed_meters = sector_completions[filter1_key][:completed_meters].to_f + sector_completions[filter2_key][:completed_meters].to_f
       average_pipe_length = (total_completed_meters / 2.0).round(2)
       average_percentage = total_pipe_length.zero? ? 0 : ((average_pipe_length || 0) * 100.0 / total_pipe_length).round
     else
@@ -103,15 +104,8 @@
       average_percentage = 0
     end
   else
-    # For regular projects, use prefabrication and site assembly
-    if sector_completions['prefabrication'] && sector_completions['site_assembly']
-      total_completed_meters = sector_completions['prefabrication'][:completed_meters].to_f + sector_completions['site_assembly'][:completed_meters].to_f
-      average_pipe_length = (total_completed_meters / 2.0).round(2)
-      average_percentage = total_pipe_length.zero? ? 0 : ((average_pipe_length || 0) * 100.0 / total_pipe_length).round
-    else
-      average_pipe_length = 0
-      average_percentage = 0
-    end
+    average_pipe_length = 0
+    average_percentage = 0
   end
   %>
 
@@ -132,47 +126,49 @@
     </div>
   </div>
 
-  <!-- Prefabrication Progress Bar -->
+  <% if @project.progress_filter1_sector %>
+  <!-- First Filter Sector Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5><%= t('activerecord.models.prefabrication') %> Progress</h5>
+      <h5><%= t("sectors_progress.#{@project.progress_filter1_sector.key}") %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
-             style="width: <%= sector_completions['prefabrication'][:meters_percentage] %>%; background-color: lawngreen;">
+             style="width: <%= sector_completions[@project.progress_filter1_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= sector_completions['prefabrication'][:completed_count] %>/<%= total_isometries %> pcs (<%= sector_completions['prefabrication'][:count_percentage] %>%) | <%= sector_completions['prefabrication'][:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= sector_completions['prefabrication'][:meters_percentage] %>%)
+            <%= sector_completions[@project.progress_filter1_sector.key][:completed_count] %>/<%= total_isometries %> pcs 
+            (<%= sector_completions[@project.progress_filter1_sector.key][:count_percentage] %>%) | 
+            <%= sector_completions[@project.progress_filter1_sector.key][:completed_meters].round() %>/<%= total_pipe_length.round() %>m 
+            (<%= sector_completions[@project.progress_filter1_sector.key][:meters_percentage] %>%)
           </span>
         </div>
       </div>
     </div>
   </div>
+  <% end %>
 
-  <!-- Site Assembly/Final Sector Progress Bar -->
+  <% if @project.progress_filter2_sector %>
+  <!-- Second Filter Sector Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <% final_sector = if @project.workshop?
-           @project.project_sectors.last&.sector
-         else
-           'site_assembly'
-         end %>
-      
-      <% if final_sector %>
-        <h5><%= t("sectors.#{final_sector}") %> Progress</h5>
-        <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-          <div class="progress-bar" role="progressbar" 
-               style="width: <%= sector_completions[final_sector][:meters_percentage] %>%; background-color: lawngreen;">
-          </div>
-          <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
-            <span style="color: #000; font-weight: 500;">
-              <%= sector_completions[final_sector][:completed_count] %>/<%= total_isometries %> pcs (<%= sector_completions[final_sector][:count_percentage] %>%) | <%= sector_completions[final_sector][:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= sector_completions[final_sector][:meters_percentage] %>%)
-            </span>
-          </div>
+      <h5><%= t("sectors_progress.#{@project.progress_filter2_sector.key}") %> Progress</h5>
+      <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
+        <div class="progress-bar" role="progressbar" 
+             style="width: <%= sector_completions[@project.progress_filter2_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
         </div>
-      <% end %>
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+          <span style="color: #000; font-weight: 500;">
+            <%= sector_completions[@project.progress_filter2_sector.key][:completed_count] %>/<%= total_isometries %> pcs 
+            (<%= sector_completions[@project.progress_filter2_sector.key][:count_percentage] %>%) | 
+            <%= sector_completions[@project.progress_filter2_sector.key][:completed_meters].round() %>/<%= total_pipe_length.round() %>m 
+            (<%= sector_completions[@project.progress_filter2_sector.key][:meters_percentage] %>%)
+          </span>
+        </div>
+      </div>
     </div>
   </div>
+  <% end %>
 
   <!-- Sector Progress -->
   <div class="card mb-4">

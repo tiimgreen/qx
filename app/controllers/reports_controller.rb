@@ -55,7 +55,7 @@ class ReportsController < ApplicationController
 
     @sector_models = if @project.workshop?
       # For workshop projects, only show sectors from project_sectors
-      project_sector_keys = @project.project_sectors.pluck(:sector)
+      project_sector_keys = @project.project_sectors.includes(:sector).map { |ps| ps.sector.key }
       base_sector_models.select { |s| project_sector_keys.include?(s) }
     else
       base_sector_models
