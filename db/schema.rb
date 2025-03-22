@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_21_072111) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_22_074140) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -367,6 +367,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_21_072111) do
     t.string "project_manager_qualinox"
     t.datetime "project_end"
     t.boolean "workshop"
+    t.string "sollist_filter1", default: "isometry"
+    t.string "sollist_filter2"
+    t.string "sollist_filter3"
+    t.string "progress_filter1"
+    t.string "progress_filter2"
     t.index ["project_number"], name: "index_projects_on_project_number", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
   end

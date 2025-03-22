@@ -59,14 +59,89 @@
           <%= form.label :workshop, class: 'form-check-label' %>
         </div>
 
+<%# Workshop Project Type Sectors Selection %>
         <div class="form-group" data-project-type-target="sectorSelect" style="display: none;">
           <%= form.label :sector_ids, "Select Sectors", class: 'form-label' %>
-          <select name="project[sector_ids][]" multiple class="form-select" data-project-type-target="sectors" style="height: auto; min-height: 200px;" size="10">
-            <% Sector.all.reject { |s| s.key == 'project' }.each do |sector| %>
+          <select name="project[sector_ids][]" multiple class="form-select" 
+                  data-project-type-target="sectors"
+                  data-action="change->project-type#sectorChange"
+                  style="height: auto; min-height: 200px;" 
+                  size="10">
+            <% Sector.clean_sectors.each do |sector| %>
               <option value="<%= sector.key %>"><%= t("sectors.#{sector.key}") %></option>
             <% end %>
           </select>
           <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple sectors</small>
+        </div>
+
+        <%# Progress Tracking Configuration - Common for both types %>
+        <div class="mt-4" data-project-type-target="filterConfig">
+          <div class="row">
+            <%# SOLL-IST Report Configuration %>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="mb-3">SOLL-IST Report Configuration</h6>
+                  
+                  <%# First Filter (Isometry is default and fixed) %>
+                  <div class="mb-3">
+                    <label class="form-label">First Filter (Isometry)</label>
+                    <input type="text" class="form-control" value="Isometry" disabled>
+                    <%= form.hidden_field :sollist_filter1, value: 'isometry' %>
+                  </div>
+
+                  <%# Second Filter %>
+                  <div class="mb-3">
+                    <%= form.label :sollist_filter2, "Second Filter", class: 'form-label' %>
+                    <%= form.select :sollist_filter2, 
+                        [],  
+                        { include_blank: 'Select Second Filter' },
+                        { class: 'form-select', data: { 'project-type-target': 'sollistFilter2' } }
+                    %>
+                  </div>
+
+                  <%# Third Filter %>
+                  <div class="mb-3">
+                    <%= form.label :sollist_filter3, "Third Filter", class: 'form-label' %>
+                    <%= form.select :sollist_filter3, 
+                        [],  
+                        { include_blank: 'Select Third Filter' },
+                        { class: 'form-select', data: { 'project-type-target': 'sollistFilter3' } }
+                    %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%# Current Progress Configuration %>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="mb-3">Current Progress Configuration</h6>
+                  
+                  <%# First Filter %>
+                  <div class="mb-3">
+                    <%= form.label :progress_filter1, "First Filter", class: 'form-label' %>
+                    <%= form.select :progress_filter1,
+                        [],  
+                        { include_blank: 'Select First Filter' },
+                        { class: 'form-select', data: { 'project-type-target': 'progressFilter1' } }
+                    %>
+                  </div>
+
+                  <%# Second Filter %>
+                  <div class="mb-3">
+                    <%= form.label :progress_filter2, "Second Filter", class: 'form-label' %>
+                    <%= form.select :progress_filter2,
+                        [],  
+                        { include_blank: 'Select Second Filter' },
+                        { class: 'form-select', data: { 'project-type-target': 'progressFilter2' } }
+                    %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -30,6 +30,12 @@ class Project < ApplicationRecord
   validates :project_manager_qualinox, presence: true
   validates :project_end, presence: true
 
+  validates :sollist_filter1, presence: true
+  validates :sollist_filter2, presence: true
+  validates :sollist_filter3, presence: true
+  validates :progress_filter1, presence: true
+  validates :progress_filter2, presence: true
+
   scope :search_by_term, ->(search_term) {
     return all unless search_term.present?
 

@@ -15,7 +15,15 @@ class Sector < ApplicationRecord
     "isometry"
   ].freeze
 
+  # Sectors that should not appear in progress tracking filters
+  ONLY_SECTORS = [ "project", "material_certificate" ].freeze
+
   validates :key, presence: true, uniqueness: true
+
+  # Class method to get sectors available for progress tracking
+  def self.clean_sectors
+    where.not(key: ONLY_SECTORS)
+  end
 
   def name
     I18n.t("sectors.#{key}")

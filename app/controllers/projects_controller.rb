@@ -84,7 +84,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:project_number, :name, :description, :client_name, :id, :locale, :project_manager_client, :project_manager_qualinox, :project_end, :workshop, sector_ids: [])
+    params.require(:project).permit(:project_number, :name, :description, :client_name, :id, :locale, :project_manager_client, :project_manager_qualinox, :project_end, :workshop, sector_ids: [], sollist_filter1: [], sollist_filter2: [], sollist_filter3: [], progress_filter1: [], progress_filter2: [])
   end
 
   def authorize_action!
