@@ -56,10 +56,12 @@ module ProgressTrackingHelper
 
   def calculate_ist_value(item, work_type_sector)
     case work_type_sector.key.to_sym
-    when :prefabrication, :site_assembly, :work_preparation, :pre_welding,
+    when :prefabrication
+      item.pipe_length.to_f
+    when :site_assembly, :work_preparation, :pre_welding,
          :transport, :site_delivery, :on_site
-      # For items that track length
-      item.respond_to?(:length) ? item.length : 0
+      # For items that track length through isometry
+      item.isometry&.pipe_length.to_f || 0
     when :isometry, :final_inspection, :test_pack
       # For items that are counted as units
       1
