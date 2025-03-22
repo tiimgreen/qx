@@ -9,7 +9,7 @@ class ProgressTrackingController < ApplicationController
 
   def check_locked
     if @progress_plan.locked?
-      redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), alert: t('progress_tracking.locked_error')
+      redirect_to project_progress_tracking_path(@project, @progress_plan, locale: I18n.locale), alert: t("progress_tracking.locked_error")
     end
   end
 
@@ -113,7 +113,7 @@ class ProgressTrackingController < ApplicationController
   end
 
   def progress_plan_params
-    params.require(:project_progress_plan).permit(:work_type, :start_date, :end_date)
+    params.require(:project_progress_plan).permit(:work_type_sector_id, :start_date, :end_date)
   end
 
   def weekly_entry_params

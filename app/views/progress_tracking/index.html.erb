@@ -16,8 +16,8 @@
             <label class="input-group-text" for="workTypeFilter"><i class="bi bi-funnel"></i></label>
             <select class="form-select" id="workTypeFilter" data-plan-filter-target="filter" data-action="change->plan-filter#filter">
               <option value="all"><%= t('common.all') %></option>
-              <% ProjectProgressPlan.work_types.keys.each do |type| %>
-                <option value="<%= type %>"><%= t("progress_tracking.work_types.#{type}") %></option>
+              <% [@project.sollist_filter1_sector, @project.sollist_filter2_sector, @project.sollist_filter3_sector].compact.each do |sector| %>
+                <option value="<%= sector.id %>"><%= t("sectors.#{sector.key}") %></option>
               <% end %>
             </select>
           </div>
@@ -38,9 +38,11 @@
           </thead>
           <tbody>
             <% @progress_plans.each do |plan| %>
-              <tr data-work-type="<%= plan.work_type %>" data-plan-filter-target="row">
+              <tr data-work-type="<%= plan.work_type_sector.id %>" data-plan-filter-target="row">
                 <td><%= plan.project.name %></td>
-                <td><%= t("progress_tracking.work_types.#{plan.work_type}") %></td>
+                <td><%= link_to project_progress_tracking_path(@project, plan, locale: I18n.locale) do %>
+                  <%= t("sectors.#{plan.work_type_sector.key}") %>
+                <% end %></td>
                 <td><%= l plan.start_date.to_date %></td>
                 <td><%= l plan.end_date.to_date %></td>
                 <td><%= ((plan.end_date.to_date - plan.start_date.to_date).to_i / 7.0).ceil %></td>
@@ -84,8 +86,13 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <%= f.label :work_type, t('progress_tracking.work_type'), class: 'form-label' %>
-            <%= f.select :work_type, ProjectProgressPlan.work_types.keys.map { |type| [t("progress_tracking.work_types.#{type}"), type] }, {}, class: 'form-select' %>
+            <%= f.label :work_type_sector_id, t('progress_tracking.work_type'), class: 'form-label' %>
+            <%= f.select :work_type_sector_id,
+                  [@project.sollist_filter1_sector, @project.sollist_filter2_sector, @project.sollist_filter3_sector].compact.map { |sector| 
+                    [t("sectors.#{sector.key}"), sector.id]
+                  },
+                  { include_blank: t('common.select_option') },
+                  { class: 'form-select', required: true } %>
           </div>
           <div class="mb-3">
             <%= f.label :start_date, t('progress_tracking.start_date'), class: 'form-label' %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_22_102825) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_22_115108) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -324,7 +324,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_102825) do
 
   create_table "project_progress_plans", force: :cascade do |t|
     t.integer "project_id", null: false
-    t.integer "work_type"
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at", null: false
@@ -332,10 +331,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_102825) do
     t.integer "revision_number"
     t.boolean "revision_last"
     t.boolean "locked", default: false
+    t.integer "work_type_sector_id"
     t.index ["locked"], name: "index_project_progress_plans_on_locked"
     t.index ["project_id"], name: "index_project_progress_plans_on_project_id"
     t.index ["revision_last"], name: "index_project_progress_plans_on_revision_last"
     t.index ["revision_number"], name: "index_project_progress_plans_on_revision_number"
+    t.index ["work_type_sector_id"], name: "index_project_progress_plans_on_work_type_sector_id"
   end
 
   create_table "project_sectors", force: :cascade do |t|
@@ -625,6 +626,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_102825) do
   add_foreign_key "prefabrications", "users"
   add_foreign_key "prefabrications", "work_locations"
   add_foreign_key "project_progress_plans", "projects"
+  add_foreign_key "project_progress_plans", "sectors", column: "work_type_sector_id"
   add_foreign_key "project_sectors", "projects"
   add_foreign_key "project_sectors", "sectors"
   add_foreign_key "project_users", "projects"

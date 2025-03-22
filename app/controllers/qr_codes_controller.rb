@@ -9,7 +9,7 @@ class QrCodesController < ApplicationController
 
     # For workshop projects, filter to only show project-specific sectors
     if @isometry.project.workshop?
-      project_sector_keys = @isometry.project.project_sectors.pluck(:sector)
+      project_sector_keys = @isometry.project.project_sectors.includes(:sector).map { |ps| ps.sector.key }
       sectors = sectors.select { |s| project_sector_keys.include?(s.key) }
     end
 
