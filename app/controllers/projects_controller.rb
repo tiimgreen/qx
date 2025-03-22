@@ -23,6 +23,8 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    # Load existing sector keys for preselection
+    @selected_sector_keys = @project.project_sectors.map(&:sector)
   end
 
   def create
@@ -42,6 +44,7 @@ class ProjectsController < ApplicationController
       handle_sector_associations
       redirect_to @project, notice: "Project was successfully updated."
     else
+      @selected_sector_keys = @project.project_sectors.map(&:sector)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -62,7 +65,9 @@ class ProjectsController < ApplicationController
     # Create new sector associations
     if params[:project][:sector_ids].present?
       params[:project][:sector_ids].each do |sector_key|
-        @project.project_sectors.create(sector: sector_key) unless sector_key.blank?
+        next if sector_key.blank?
+        sector = Sector.find_by(key: sector_key)
+        @project.project_sectors.create(sector: sector) if sector
       end
     end
   end
@@ -84,7 +89,12 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:project_number, :name, :description, :client_name, :id, :locale, :project_manager_client, :project_manager_qualinox, :project_end, :workshop, sector_ids: [], sollist_filter1: [], sollist_filter2: [], sollist_filter3: [], progress_filter1: [], progress_filter2: [])
+    params.require(:project).permit(
+      :project_number, :name, :description, :client_name, :id, :locale,
+      :project_manager_client, :project_manager_qualinox, :project_end,
+      :workshop, :sollist_filter1, :sollist_filter2, :sollist_filter3,
+      :progress_filter1, :progress_filter2, sector_ids: []
+    )
   end
 
   def authorize_action!

@@ -46,13 +46,8 @@ export default class extends Controller {
     ]
     
     filterTargets.forEach(select => {
-      const currentValue = select.value
-      
-      // Store current options before clearing
-      const currentOptions = Array.from(select.options).map(opt => ({
-        value: opt.value,
-        text: opt.text
-      }))
+      // Get preselected value from data attribute
+      const selectedValue = select.dataset.selectedValue
       
       select.innerHTML = ''
       
@@ -83,9 +78,9 @@ export default class extends Controller {
         })
       }
       
-      // Restore previous value if it exists in new options
-      if (currentValue && Array.from(select.options).some(opt => opt.value === currentValue)) {
-        select.value = currentValue
+      // Restore selected value if it exists in new options
+      if (selectedValue && Array.from(select.options).some(opt => opt.value === selectedValue)) {
+        select.value = selectedValue
       }
     })
   }
