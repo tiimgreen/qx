@@ -216,6 +216,7 @@ en:
       isometry: "Isometry"
       user_sector: "User Sector"
       sector: "Sector"
+      project_sector: "Project Sector"
       isometry_document: "Isometry Document"
       isometry_material_certificate: "Isometry Material Certificate"
       project_user: "Project User"

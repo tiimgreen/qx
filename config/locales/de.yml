@@ -223,6 +223,7 @@ de:
       isometry_document: "Isometriedokument"
       isometry_material_certificate: "Isometriezertifikat"
       project_user: "Projektbenutzer"
+      project_sector: "Projektbereich"
       project_progress_plan: "Projektentwurf"
       weekly_progress_entry: "Wochenentwurf"
       welding_batch_assignment: "Schweisszertifikat"
