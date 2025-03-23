@@ -8,7 +8,7 @@ class ProjectProgressPlanRevisionCreator
       # Mark old revisions as not latest
       ProjectProgressPlan.where(
         project_id: @project_progress_plan.project_id,
-        work_type: @project_progress_plan.work_type
+        work_type_sector_id: @project_progress_plan.work_type_sector_id
       ).update_all(revision_last: false)
 
       # Create new revision

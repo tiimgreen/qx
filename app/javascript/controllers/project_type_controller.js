@@ -54,24 +54,28 @@ export default class extends Controller {
       // Add blank option
       const blankOption = document.createElement('option')
       blankOption.value = ''
-      blankOption.text = 'Select Filter'
+      // blankOption.text = 'Select Filter'
       select.appendChild(blankOption)
       
       if (isWorkshop) {
-        // For workshop projects, only show selected sectors
+        // For workshop projects, only show selected sectors except Isometry and Incoming Delivery
         const selectedSectors = Array.from(this.sectorsTarget.selectedOptions)
         selectedSectors.forEach(option => {
-          const newOption = document.createElement('option')
-          newOption.value = option.value // Now using sector ID directly
-          newOption.text = option.text
-          select.appendChild(newOption)
+          // Skip Isometry and Incoming Delivery for dropdown filters
+          if (!['isometry', 'incoming_delivery'].includes(option.dataset.sectorKey)) {
+            const newOption = document.createElement('option')
+            newOption.value = option.value
+            newOption.text = option.text
+            select.appendChild(newOption)
+          }
         })
       } else {
-        // For general projects, show all sectors except 'project'
+        // For general projects, show all sectors except 'project', 'isometry', and 'incoming_delivery'
         Array.from(this.sectorsTarget.options).forEach(option => {
-          if (option.dataset.isProjectSector !== 'true') {
+          if (option.dataset.isProjectSector !== 'true' && 
+              !['isometry', 'incoming_delivery'].includes(option.dataset.sectorKey)) {
             const newOption = document.createElement('option')
-            newOption.value = option.value // Now using sector ID directly
+            newOption.value = option.value
             newOption.text = option.text
             select.appendChild(newOption)
           }

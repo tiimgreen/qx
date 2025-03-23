@@ -61,12 +61,12 @@
       <div class="form-group" data-controller="project-type">
         <div class="form-check my-5">
           <%= form.check_box :workshop, class: 'form-check-input', data: { action: "change->project-type#toggleSectors" } %>
-          <%= form.label :workshop, class: 'form-check-label' %>
+          <%= form.label :workshop, t("projects.attributes.workshop"), class: 'form-check-label' %>
         </div>
 
         <%# Workshop Project Type Sectors Selection %>
         <div class="form-group" data-project-type-target="sectorSelect" style="display: none;">
-          <%= form.label :sector_ids, "Select Sectors", class: 'form-label' %>
+          <%= form.label :sector_ids, t("projects.attributes.select_sectors"), class: 'form-label' %>
           <select name="project[sector_ids][]" multiple class="form-select" 
                   data-project-type-target="sectors"
                   data-action="change->project-type#sectorChange"
@@ -81,7 +81,7 @@
               </option>
             <% end %>
           </select>
-          <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple sectors</small>
+          <small class="form-text text-muted"><%= t("projects.attributes.select_many_sectors") %></small>
         </div>
 
         <%# Progress Tracking Configuration - Common for both types %>
@@ -91,11 +91,11 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <h6 class="mb-3">SOLL-IST Report Configuration</h6>
+                  <h6 class="mb-3"><%= t("projects.attributes.soll_ist_report_configuration") %></h6>
                   
                   <%# First Filter (Isometry is default and fixed) %>
                   <div class="mb-3">
-                    <%= form.label :sollist_filter1_sector_id, "First Filter (Isometry)", class: 'form-label' %>
+                    <%= form.label :sollist_filter1_sector_id, t("projects.attributes.first_filter_isometry"), class: 'form-label' %>
                     <%= form.collection_select :sollist_filter1_sector_id,
                         Sector.all,
                         :id,
@@ -109,12 +109,12 @@
 
                   <%# Second Filter %>
                   <div class="mb-3">
-                    <%= form.label :sollist_filter2_sector_id, "Second Filter", class: 'form-label' %>
+                    <%= form.label :sollist_filter2_sector_id, t("projects.attributes.second_filter"), class: 'form-label' %>
                     <%= form.collection_select :sollist_filter2_sector_id,
                         Sector.all,
                         :id,
                         ->(sector) { t("sectors.#{sector.key}") },
-                        { include_blank: 'Select Second Filter' },
+                        { include_blank: 'Select' },
                         { class: 'form-select', 
                           data: { 
                             'project-type-target': 'sollistFilter2',
@@ -126,12 +126,12 @@
 
                   <%# Third Filter %>
                   <div class="mb-3">
-                    <%= form.label :sollist_filter3_sector_id, "Third Filter", class: 'form-label' %>
+                    <%= form.label :sollist_filter3_sector_id, t("projects.attributes.third_filter"), class: 'form-label' %>
                     <%= form.collection_select :sollist_filter3_sector_id,
                         Sector.all,
                         :id,
                         ->(sector) { t("sectors.#{sector.key}") },
-                        { include_blank: 'Select Third Filter' },
+                        { include_blank: 'Select' },
                         { class: 'form-select', 
                           data: { 
                             'project-type-target': 'sollistFilter3',
@@ -148,16 +148,16 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <h6 class="mb-3">Current Progress Configuration</h6>
+                  <h6 class="mb-3"><%= t("projects.attributes.current_progress_configuration") %></h6>
                   
                   <%# First Filter %>
                   <div class="mb-3">
-                    <%= form.label :progress_filter1_sector_id, "First Filter", class: 'form-label' %>
+                    <%= form.label :progress_filter1_sector_id, t("projects.attributes.first_filter"), class: 'form-label' %>
                     <%= form.collection_select :progress_filter1_sector_id,
                         Sector.all,
                         :id,
                         ->(sector) { t("sectors.#{sector.key}") },
-                        { include_blank: 'Select First Filter' },
+                        { include_blank: 'Select' },
                         { class: 'form-select', 
                           data: { 
                             'project-type-target': 'progressFilter1',
@@ -169,12 +169,12 @@
 
                   <%# Second Filter %>
                   <div class="mb-3">
-                    <%= form.label :progress_filter2_sector_id, "Second Filter", class: 'form-label' %>
+                    <%= form.label :progress_filter2_sector_id, t("projects.attributes.second_filter"), class: 'form-label' %>
                     <%= form.collection_select :progress_filter2_sector_id,
                         Sector.all,
                         :id,
                         ->(sector) { t("sectors.#{sector.key}") },
-                        { include_blank: 'Select Second Filter' },
+                        { include_blank: 'Select' },
                         { class: 'form-select', 
                           data: { 
                             'project-type-target': 'progressFilter2',
