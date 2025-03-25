@@ -52,10 +52,11 @@ export default class extends Controller {
       select.innerHTML = ''
       
       // Add blank option
-      const blankOption = document.createElement('option')
-      blankOption.value = ''
-      // blankOption.text = 'Select Filter'
-      select.appendChild(blankOption)
+      // const blankOption = document.createElement('option')
+      // blankOption.value = ''
+      // const preferredLanguage = localStorage.getItem('preferredLanguage')
+      // blankOption.text = preferredLanguage === 'de' ? 'Select Filter' : 'Filter auswählen' 
+      // select.appendChild(blankOption)
       
       if (isWorkshop) {
         // For workshop projects, only show selected sectors except Isometry and Incoming Delivery
