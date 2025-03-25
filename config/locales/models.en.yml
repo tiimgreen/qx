@@ -37,6 +37,7 @@ en:
         project_manager_qualinox: "PM Qualinox"
         project_end: "Project End"
         created_by: "Created By"
+        workshop: "Workshop"
       incoming_delivery:
         project_id: "Project"
         delivery_date: "Delivery Date"

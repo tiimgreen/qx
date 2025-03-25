@@ -48,6 +48,7 @@
                 request.params.merge(sort: 'project_end', direction: (params[:sort] == 'project_end' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
             <%= sort_indicator('project_end') %>
           </th>
+          <th><%= t('activerecord.attributes.project.workshop') %></th>
           <th><%= t('activerecord.attributes.project.created_by') %></th>
           <th>
             <%= link_to t('activerecord.attributes.project.created_at'),
@@ -66,6 +67,7 @@
             <td><%= project.project_manager_client %></td>
             <td><%= project.project_manager_qualinox %></td>
             <td><%= project.project_end.strftime("%Y-%m-%d") if project.project_end %></td>
+            <td><%= project.workshop ? t('common.labels.yes') : t('common.labels.no') %></td>
             <td><%= project.user&.name %></td>
             <td><%= project.created_at.strftime("%Y-%m-%d") %></td>
             <td class="text-end">

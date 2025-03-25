@@ -58,6 +58,7 @@ de:
         client_name: "Kunde"
         created_by: "Erstellt von"
         project_end: "Projektende"
+        workshop: "Werkstatt"
       incoming_delivery:
         project_id: "Projekt"
         delivery_date: "Lieferdatum"
