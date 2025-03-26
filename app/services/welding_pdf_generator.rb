@@ -160,21 +160,24 @@ class WeldingPdfGenerator
           size: 8,
           align: :center,
           valign: :center,
-          padding: [ 2, 1, 4, 1 ],
+          padding: [ 2, 1, 2, 1 ],  # Consistent padding top/bottom
           inline_format: true
         )
 
         # Style header rows (first two rows)
         t.row(0..1).style(
-          font_style: :bold
+          font_style: :bold,
+          background_color: "FFFFFF"
         )
-      end
 
-      pdf.move_down 10  # Reduced from 20 to give more space for legend
+        # Ensure consistent row heights
+        t.row(2..-1).height = 15 if t.row(2)  # Set fixed height for data rows
+      end
 
       # Add a new page if there are more welds to show
       if welds_array.any?
         pdf.start_new_page
+        pdf.move_down 0  # Match the initial top margin on new pages
       end
     end
   end
