@@ -53,7 +53,6 @@ class WeldingPdfGenerator
         # Position footer at the bottom margin
         pdf.bounding_box([ 0, pdf.margin_box.bottom + 45 ], width: pdf.bounds.width, height: 45) do
           # Draw a line above footer
-          # pdf.stroke_horizontal_rule
           pdf.move_down 3
 
           # Calculate column widths for 4 columns
@@ -75,15 +74,18 @@ class WeldingPdfGenerator
             t.cells.borders = []
             t.column_widths = [ column_width ] * 4
           end
-
-          # Add page numbers below the legend
-          pdf.text_box "Seite #{pdf.page_number} von #{pdf.page_count}",
-            at: [ pdf.bounds.right - 150, 10 ],
-            width: 150,
-            align: :right,
-            size: 8
         end
       end
+
+      # Calculate total pages needed (exactly 10 welds per page)
+      total_pages = (@welds.length.to_f / 10).ceil
+
+      # Add page numbers
+      pdf.number_pages "Seite <page> von #{total_pages}",
+        at: [ pdf.bounds.right - 150, pdf.margin_box.bottom + 10 ],
+        width: 150,
+        align: :right,
+        size: 8
     end
   end
 
@@ -112,8 +114,13 @@ class WeldingPdfGenerator
       ]
     ]
 
-    # Split welds into chunks (each weld takes 2 rows, 10 welds per page)
-    @welds.each_slice(10) do |weld_chunk|
+    # Split welds into chunks of exactly 10
+    welds_array = @welds.to_a
+    current_page = 1
+
+    while welds_array.any?
+      # Take exactly 10 welds or all remaining welds if less than 10
+      weld_chunk = welds_array.shift(10)
       data = header_rows.dup
 
       weld_chunk.each do |weld|
@@ -165,15 +172,12 @@ class WeldingPdfGenerator
 
       pdf.move_down 10  # Reduced from 20 to give more space for legend
 
-      # Add a new page if there are more welds to show and not the last chunk
-      remaining_chunks = @welds.each_slice(10).to_a
-      current_chunk_index = remaining_chunks.index(weld_chunk)
-      if current_chunk_index && current_chunk_index < remaining_chunks.length - 1
+      # Add a new page if there are more welds to show
+      if welds_array.any?
         pdf.start_new_page
       end
     end
   end
-
 
   private
 
