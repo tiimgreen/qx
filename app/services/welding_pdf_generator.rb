@@ -43,8 +43,8 @@ class WeldingPdfGenerator
           at: [ 0, pdf.bounds.top - 65 ], width: pdf.bounds.width
       end
 
-      # Content area (larger to fit more content)
-      pdf.bounding_box([ 0, pdf.bounds.top - 110 ], width: pdf.bounds.width, height: pdf.bounds.height - 110) do
+      # Content area (adjust height to leave space for legend)
+      pdf.bounding_box([ 0, pdf.bounds.top - 110 ], width: pdf.bounds.width, height: pdf.bounds.height - 160) do
         generate_table(pdf)
       end
 
@@ -53,7 +53,6 @@ class WeldingPdfGenerator
         # Position footer at the bottom margin
         pdf.bounding_box([ 0, pdf.margin_box.bottom + 45 ], width: pdf.bounds.width, height: 45) do
           # Draw a line above footer
-          # pdf.stroke_horizontal_rule
           pdf.move_down 3
 
           # Calculate column widths for 4 columns
@@ -75,15 +74,18 @@ class WeldingPdfGenerator
             t.cells.borders = []
             t.column_widths = [ column_width ] * 4
           end
-
-          # Add page numbers below the legend
-          pdf.text_box "Seite #{pdf.page_number} von #{pdf.page_count}",
-            at: [ pdf.bounds.right - 150, 10 ],
-            width: 150,
-            align: :right,
-            size: 8
         end
       end
+
+      # Calculate total pages needed (exactly 10 welds per page)
+      total_pages = (@welds.length.to_f / 10).ceil
+
+      # Add page numbers
+      pdf.number_pages "Seite <page> von #{total_pages}",
+        at: [ pdf.bounds.right - 150, pdf.margin_box.bottom + 10 ],
+        width: 150,
+        align: :right,
+        size: 8
     end
   end
 
@@ -112,8 +114,13 @@ class WeldingPdfGenerator
       ]
     ]
 
-    # Split welds into chunks (each weld takes 2 rows)
-    @welds.each_slice(20) do |weld_chunk|
+    # Split welds into chunks of exactly 10
+    welds_array = @welds.to_a
+    current_page = 1
+
+    while welds_array.any?
+      # Take exactly 10 welds or all remaining welds if less than 10
+      weld_chunk = welds_array.shift(10)
       data = header_rows.dup
 
       weld_chunk.each do |weld|
@@ -153,25 +160,27 @@ class WeldingPdfGenerator
           size: 8,
           align: :center,
           valign: :center,
-          padding: [ 2, 1, 4, 1 ],
+          padding: [ 2, 1, 2, 1 ],  # Consistent padding top/bottom
           inline_format: true
         )
 
         # Style header rows (first two rows)
         t.row(0..1).style(
-          font_style: :bold
+          font_style: :bold,
+          background_color: "FFFFFF"
         )
+
+        # Ensure consistent row heights
+        t.row(2..-1).height = 15 if t.row(2)  # Set fixed height for data rows
       end
 
-      pdf.move_down 20
-
-      # Add a new page if there are more welds to show and not the last chunk
-      if weld_chunk != @welds.each_slice(20).to_a.last
+      # Add a new page if there are more welds to show
+      if welds_array.any?
         pdf.start_new_page
+        pdf.move_down 0  # Match the initial top margin on new pages
       end
     end
   end
-
 
   private
 
