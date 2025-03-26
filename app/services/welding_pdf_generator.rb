@@ -43,8 +43,8 @@ class WeldingPdfGenerator
           at: [ 0, pdf.bounds.top - 65 ], width: pdf.bounds.width
       end
 
-      # Content area (larger to fit more content)
-      pdf.bounding_box([ 0, pdf.bounds.top - 110 ], width: pdf.bounds.width, height: pdf.bounds.height - 110) do
+      # Content area (adjust height to leave space for legend)
+      pdf.bounding_box([ 0, pdf.bounds.top - 110 ], width: pdf.bounds.width, height: pdf.bounds.height - 160) do
         generate_table(pdf)
       end
 
@@ -112,8 +112,8 @@ class WeldingPdfGenerator
       ]
     ]
 
-    # Split welds into chunks (each weld takes 2 rows)
-    @welds.each_slice(20) do |weld_chunk|
+    # Split welds into chunks (each weld takes 2 rows, 10 welds per page)
+    @welds.each_slice(10) do |weld_chunk|
       data = header_rows.dup
 
       weld_chunk.each do |weld|
@@ -163,10 +163,12 @@ class WeldingPdfGenerator
         )
       end
 
-      pdf.move_down 20
+      pdf.move_down 10  # Reduced from 20 to give more space for legend
 
       # Add a new page if there are more welds to show and not the last chunk
-      if weld_chunk != @welds.each_slice(20).to_a.last
+      remaining_chunks = @welds.each_slice(10).to_a
+      current_chunk_index = remaining_chunks.index(weld_chunk)
+      if current_chunk_index && current_chunk_index < remaining_chunks.length - 1
         pdf.start_new_page
       end
     end
