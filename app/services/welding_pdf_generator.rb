@@ -64,7 +64,7 @@ class WeldingPdfGenerator
               make_legend_table(pdf, [ [ "SW", "Vorfertigunsnaht / Shop weld" ], [ "FW", "Montagenaht / Field weld" ] ], column_width - 5, 6),
               make_legend_table(pdf, [ [ "RW", "Reparaturnaht / Repaired weld" ], [ "VT", "Sichtprüfung / Visual Testing" ] ], column_width - 5, 6),
               make_legend_table(pdf, [ [ "RT", "Durchstrahlungsprüfung / Radiographic Testing" ], [ "N/A", "Nicht anwendbar / Not applicable" ] ], column_width - 5, 6),
-              make_legend_table(pdf, [ [ "e", "Erfüllt / Applicable" ], [ "ne", "Nicht erfüllt / Not Applicable" ] ], column_width - 5, 6)
+              make_legend_table(pdf, [ [ "e", "Erfüllt / Accepted" ], [ "ne", "Nicht erfüllt / Not Accepted" ] ], column_width - 5, 6)
             ]
           ]
 
