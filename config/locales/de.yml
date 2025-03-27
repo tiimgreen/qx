@@ -186,7 +186,7 @@ de:
     site_delivery: "SOLL – IST Baustellen Lieferung"
     site_assembly: "SOLL – IST Montage"
     on_site: "SOLL – IST As Built"
-    test_pack: "SOLL – IST Testpack"  
+    test_pack: "SOLL – IST Testpack"
   work_locations:
     types:
       workshop: "Werkstatt"
@@ -644,7 +644,7 @@ de:
   reports:
     isometries:
       title: Aktueller Fortschritt
-      diagram_title: "SOLL - IST Isometrie, Vorfertigungen, Montage"
+      diagram_title: "SOLL - IST Bericht"
       overall_progress: Gesamtfortschritt
       completed: Abgeschlossen
       in_progress: In Arbeit

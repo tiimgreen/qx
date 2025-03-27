@@ -25,7 +25,7 @@
 
           <dt class="col-sm-3"><%= t('activerecord.attributes.project.project_manager_qualinox') %></dt>
           <dd class="col-sm-9"><%= @project.project_manager_qualinox %></dd>
-                    
+
           <dt class="col-sm-3"><%= t('.project_end') %></dt>
           <dd class="col-sm-9"><%= @project.project_end.strftime("%Y-%m-%d") if @project.project_end%></dd>
 
@@ -34,6 +34,9 @@
 
           <dt class="col-sm-3"><%= t('.created') %></dt>
           <dd class="col-sm-9"><%= @project.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
+
+          <dt class="col-sm-3"><%= t('.workshop') %></dt>
+          <dd class="col-sm-9"><%= @project.workshop ? t('common.labels.yes') : t('common.labels.no') %></dd>
         </dl>
       </div>
       <div class="col-md-2 text-center">

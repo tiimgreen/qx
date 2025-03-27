@@ -13,6 +13,7 @@ en:
       client_name: "Client"
       created_by: "Created By"
       created: "Created"
+      workshop: "Workshop"
     index:
       title: "Projects"
       new: "New Project"

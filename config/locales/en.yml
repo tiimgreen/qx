@@ -659,7 +659,7 @@ en:
   reports:
     isometries:
       title: Current Progress
-      diagram_title: "SOLL - IST Isometric, Prefabrication, Site Assembly"
+      diagram_title: "SOLL - IST Report"
       overall_progress: Overall Progress
       completed: Completed
       in_progress: In Progress
