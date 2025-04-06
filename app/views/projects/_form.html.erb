@@ -93,14 +93,14 @@
                 <div class="card-body">
                   <h6 class="mb-3"><%= t("projects.attributes.soll_ist_report_configuration") %></h6>
                   
-                  <%# First Filter (Isometry is default and fixed) %>
+                  <%# First Filter (Isometry is fixed) %>
                   <div class="mb-3">
                     <%= form.label :sollist_filter1_sector_id, t("projects.attributes.first_filter_isometry"), class: 'form-label' %>
                     <%= form.collection_select :sollist_filter1_sector_id,
-                        Sector.all,
+                        Sector.where(key: :isometry),
                         :id,
                         ->(sector) { t("sectors.#{sector.key}") },
-                        { selected: @project.sollist_filter1_sector_id || Sector.find_by(key: :isometry)&.id },
+                        { selected: Sector.find_by(key: :isometry)&.id },
                         { class: 'form-select',
                           readonly: true,
                           style: 'background-color: #e9ecef;' }
