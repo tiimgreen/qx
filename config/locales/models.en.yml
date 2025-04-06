@@ -35,7 +35,7 @@ en:
         client_name: "Client"
         project_manager_client: "PM Client"
         project_manager_qualinox: "PM Qualinox"
-        project_end: "Project End"
+        project_end: "Projektende"
         created_by: "Created By"
         workshop: "Workshop"
       incoming_delivery:

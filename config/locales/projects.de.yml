@@ -9,6 +9,7 @@ de:
       project_number: "Projekt Nr."
       name: "Projektname"
       description: "Beschreibung"
+      project_end: "Projektende"
       project_manager: "Projektmanager"
       client_name: "Kunde"
       created_by: "Erstellt von"
