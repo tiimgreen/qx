@@ -116,7 +116,6 @@ class WeldingPdfGenerator
 
     # Split welds into chunks of exactly 10
     welds_array = @welds.to_a
-    current_page = 1
 
     while welds_array.any?
       # Take exactly 10 welds or all remaining welds if less than 10
