@@ -60,8 +60,8 @@ en:
       permissions_info: "Every User should be added into 'user_resource_permission' table! Also, User needs to have correct permissions per Sector/model."
       back_isometry: "Back to Isometry"
       download: "Download"
-      yes: "Yes"
-      no: "No"
+      "yes": "Yes"
+      "no": "No"
       images: "Images"
     buttons:
       cancel: "Cancel"
