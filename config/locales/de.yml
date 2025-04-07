@@ -222,7 +222,7 @@ de:
       sector: "Bereich"
       isometry_document: "Isometriedokument"
       isometry_material_certificate: "Isometriezertifikat"
-      project_user: "Projektbenutzer"
+      project_user: "Berichtszugriff"
       project_sector: "Projektbereich"
       project_progress_plan: "Projektentwurf"
       weekly_progress_entry: "Wochenentwurf"
