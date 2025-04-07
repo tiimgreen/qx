@@ -62,7 +62,7 @@ class ReportsController < ApplicationController
     end
 
     # Calculate total pipe length and other metrics
-    @total_pipe_length = @all_isometries.sum(:pipe_length)
+    @total_pipe_length = @all_isometries.sum("COALESCE(pipe_length, 0)")
     @total_isometries = @all_isometries.count
 
     # Calculate sector completions with workshop project handling
@@ -76,7 +76,7 @@ class ReportsController < ApplicationController
         @all_isometries.select { |iso| iso.send(sector)&.completed? }
       end
 
-      completed_pipe_length = completed_isometries.sum(&:pipe_length)
+      completed_pipe_length = completed_isometries.sum { |iso| iso.pipe_length || 0 }
 
       @sector_completions[sector] = {
         completed_count: completed_isometries.size,
