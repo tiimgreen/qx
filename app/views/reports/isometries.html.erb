@@ -79,7 +79,7 @@
       in_progress_isos = @all_isometries.select { |iso| iso.send(sector) && !iso.send(sector).completed? }
     end
 
-    completed_pipe_length = completed_isos.sum { |iso| iso.pipe_length.to_f }
+    completed_pipe_length = completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 }
     
     sector_completions[sector] = {
       completed_count: completed_isos.count,
@@ -90,13 +90,15 @@
     }
   end
 
-  # Calculate average percentage based on completed pipe lengths
+  # Calculate total progress based on selected filter sectors
   if @project.progress_filter1_sector && @project.progress_filter2_sector
     filter1_key = @project.progress_filter1_sector.key
     filter2_key = @project.progress_filter2_sector.key
     
     if sector_completions[filter1_key] && sector_completions[filter2_key]
-      total_completed_meters = sector_completions[filter1_key][:completed_meters].to_f + sector_completions[filter2_key][:completed_meters].to_f
+      # Calculate total completed meters
+      total_completed_meters = sector_completions[filter1_key][:completed_meters].to_f + 
+                             sector_completions[filter2_key][:completed_meters].to_f
       average_pipe_length = (total_completed_meters / 2.0).round(2)
       average_percentage = total_pipe_length.zero? ? 0 : ((average_pipe_length || 0) * 100.0 / total_pipe_length).round
     else
@@ -130,7 +132,7 @@
   <!-- First Filter Sector Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5><%= t("sectors_progress.#{@project.progress_filter1_sector.key}") %> Progress</h5>
+      <h5><%= t("sectors.#{@project.progress_filter1_sector.key}") %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
              style="width: <%= sector_completions[@project.progress_filter1_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
@@ -152,7 +154,7 @@
   <!-- Second Filter Sector Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5><%= t("sectors_progress.#{@project.progress_filter2_sector.key}") %> Progress</h5>
+      <h5><%= t("sectors.#{@project.progress_filter2_sector.key}") %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
              style="width: <%= sector_completions[@project.progress_filter2_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
