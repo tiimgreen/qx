@@ -132,7 +132,7 @@
   <!-- First Filter Sector Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5><%= t("sectors.#{@project.progress_filter1_sector.key}") %> Progress</h5>
+      <h5><%= t("sectors_progress.#{@project.progress_filter1_sector.key}") %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
              style="width: <%= sector_completions[@project.progress_filter1_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
@@ -154,7 +154,7 @@
   <!-- Second Filter Sector Progress Bar -->
   <div class="card mb-4">
     <div class="card-body">
-      <h5><%= t("sectors.#{@project.progress_filter2_sector.key}") %> Progress</h5>
+      <h5><%= t("sectors_progress.#{@project.progress_filter2_sector.key}") %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
         <div class="progress-bar" role="progressbar" 
              style="width: <%= sector_completions[@project.progress_filter2_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
