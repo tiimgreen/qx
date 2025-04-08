@@ -4,11 +4,16 @@ export default class extends Controller {
   static targets = ["filter", "row"]
 
   connect() {
-    // Initial filter state
-    this.filter()
+    // Only initialize filter if we have rows
+    if (this.hasRowTarget) {
+      this.filter()
+    }
   }
 
   filter() {
+    // Only filter if we have both filter and rows
+    if (!this.hasFilterTarget || !this.hasRowTarget) return
+
     const selectedType = this.filterTarget.value
     
     this.rowTargets.forEach(row => {
