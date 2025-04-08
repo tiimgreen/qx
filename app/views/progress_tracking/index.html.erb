@@ -93,7 +93,7 @@
             <%= f.label :work_type_sector_id, t('progress_tracking.work_type'), class: 'form-label' %>
             <%= f.select :work_type_sector_id,
                   [@project.sollist_filter1_sector, @project.sollist_filter2_sector, @project.sollist_filter3_sector].compact.map { |sector|
-                    [t("sectors_progress.#{sector.key}"), sector.id]
+                    ["SOLL – IST #{t("sectors_progress.#{sector.key}")}", sector.id]
                   },
                   { include_blank: t('common.select_option') },
                   { class: 'form-select', required: true } %>
