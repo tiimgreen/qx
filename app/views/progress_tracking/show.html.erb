@@ -36,14 +36,8 @@
           # Get all completed items based on work type
           all_completed_items = get_completed_items(@project, @progress_plan.work_type_sector, @progress_plan.start_date)
           completed_items = if @progress_plan.work_type_sector.key == 'isometry'
-            # For isometries, group by the week they were created in
-            Isometry.where(project_id: @project.id)
-                   .where("created_at >= ?", @progress_plan.start_date)
-                   .group_by { |iso| 
-                      week_num = iso.created_at.strftime('%V').to_i
-                      year = iso.created_at.year
-                      "W%02d/%d" % [week_num, year]
-                   }
+            # For isometries, use the helper method that now correctly uses created_at
+            group_completed_items(all_completed_items.where(deleted: false), @progress_plan.work_type_sector, @progress_plan.start_date)
           else
             group_completed_items(all_completed_items, @progress_plan.work_type_sector, @progress_plan.start_date)
           end
