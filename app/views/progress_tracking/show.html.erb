@@ -22,7 +22,7 @@
           <strong><%=t('progress_tracking.project_number')%></strong> <%= @project.project_number %><br>
           <strong><%=t('progress_tracking.project_name')%>:</strong> <%= @project.name %>
         </div>
-        <% 
+        <%
           # Calculate total target value
           total_target = if @progress_plan.work_type_sector.key == 'isometry'
             # For isometry, get the final total from weekly_progress_entries
@@ -32,16 +32,16 @@
             all_completed_items = get_completed_items(@project, @progress_plan.work_type_sector, @progress_plan.start_date)
             all_completed_items.sum { |item| calculate_ist_value(item, @progress_plan.work_type_sector) }
           end
-          
+
           # Get all completed items based on work type
           all_completed_items = get_completed_items(@project, @progress_plan.work_type_sector, @progress_plan.start_date)
           completed_items = if @progress_plan.work_type_sector.key == 'isometry'
             # For isometries, use the helper method that now correctly uses created_at
-            group_completed_items(all_completed_items.where(deleted: false), @progress_plan.work_type_sector, @progress_plan.start_date)
+            group_completed_items(all_completed_items.active, @progress_plan.work_type_sector, @progress_plan.start_date)
           else
             group_completed_items(all_completed_items, @progress_plan.work_type_sector, @progress_plan.start_date)
           end
-          
+
           # Get expected progress from weekly_progress_entries
           expected_progress = @progress_plan.weekly_progress_entries
             .order(:year, :week_number)
@@ -49,7 +49,7 @@
               week_key = "W%02d/%d" % [entry.week_number, entry.year]
               hash[week_key] = entry.expected_value.to_f
             end
-            
+
           # First pass - calculate final total that will be used for all percentage calculations
           final_total = 0
           date = @progress_plan.start_date.to_date
@@ -64,18 +64,18 @@
           soll_total = 0
           ist_total = 0
           weekly_data = {}
-          
+
           date = @progress_plan.start_date.to_date
           last_date = @progress_plan.end_date.to_date
-          
+
           while date <= last_date
             week_key = "W%02d/%d" % [date.strftime('%V').to_i, date.year]
             is_last_week = (date + 7.days > last_date)
-            
+
             # Calculate SOLL values
             soll_value = expected_progress[week_key] || 0
             soll_total += soll_value
-            
+
             # Calculate IST values
             ist_value = if @progress_plan.work_type_sector.key == 'isometry'
               (completed_items[week_key] || []).count
@@ -83,7 +83,7 @@
               completed_items[week_key]&.sum { |item| calculate_ist_value(item, @progress_plan.work_type_sector) } || 0
             end
             ist_total += ist_value
-            
+
             # Calculate percentages
             if @progress_plan.work_type_sector.key == 'isometry'
               if is_last_week
@@ -100,7 +100,7 @@
               soll_percentage = total_target > 0 ? ((soll_total / total_target) * 100).round : 0
               ist_percentage = total_target > 0 ? ((ist_total / total_target) * 100).round : 0
             end
-            
+
             weekly_data[week_key] = {
               soll_meters: soll_value,
               soll_total: soll_total,
@@ -109,11 +109,11 @@
               ist_total: ist_total,
               ist_percentage: ist_percentage
             }
-            
+
             date = date + 7.days
           end
         %>
-        
+
         <div class="mb-4 text-center">
           <h4> SOLL – IST <%= t("sectors_progress.#{@progress_plan.work_type_sector.key}") %></h4>
           <p class="text-muted">
@@ -121,7 +121,7 @@
             <%= t('common.generated_at') %>: <%= @progress_plan.created_at.strftime("%d/%m/%Y %H:%M") %>
           </p>
         </div>
-            
+
     <%
       # Calculate differences for column chart
       differences = weekly_data.values.map do |v|
@@ -325,7 +325,7 @@
             </tr>
           </thead>
           <tbody>
-            <% 
+            <%
               start_idx = first_page_rows + (page * rows_per_extra_page)
               end_idx = [start_idx + rows_per_extra_page, all_rows.length].min
               page_rows = all_rows[start_idx...end_idx]
