@@ -76,6 +76,7 @@ class ProjectsController < ApplicationController
       project_manager
       client_name
       created_at
+      project_end
     ]
     params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
   end
