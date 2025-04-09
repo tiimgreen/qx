@@ -58,7 +58,7 @@
             <dd class="col-sm-6"><%= @on_site.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@on_site.completed, format: :long) if @on_site.completed %></dd>
+            <dd class="col-sm-6"><%= @on_site.completed.strftime("%d/%m/%Y %H:%M") if @on_site.completed %></dd>
           </dl>
             <%= render partial: 'application/image_gallery', locals: { images: @on_site.images } %>
         </div>
@@ -69,7 +69,7 @@
             <dd class="col-sm-6"><%= @on_site.on_hold_status %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@on_site.on_hold_date, format: :long) if @on_site.on_hold_date %></dd>
+            <dd class="col-sm-6"><%= @on_site.on_hold_date.strftime("%d/%m/%Y %H:%M") if @on_site.on_hold_date %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @on_site.on_hold_comment %></dd>

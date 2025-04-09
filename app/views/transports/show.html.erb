@@ -60,7 +60,7 @@
             <dd class="col-sm-6"><%= @transport.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.transport.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@transport.completed, format: :long) if @transport.completed %></dd>
+            <dd class="col-sm-6"><%= @transport.completed.strftime("%d/%m/%Y %H:%M") if @transport.completed %></dd>
           </dl>
         </div>
 

@@ -58,7 +58,7 @@
             <td><%= revision_status_label(site_assembly.isometry) %></td>
             <td><%= site_assembly.work_package_number %></td>
             <td><%= status_label(site_assembly.on_hold_status) %></td>
-            <td><%= l(site_assembly.completed, format: :short) if site_assembly.completed %></td>
+            <td><%= site_assembly.completed.strftime("%d/%m/%Y %H:%M") if site_assembly.completed %></td>
             <td><%= site_assembly.user.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("SiteAssembly") %>

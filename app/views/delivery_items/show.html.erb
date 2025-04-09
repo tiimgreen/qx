@@ -112,7 +112,7 @@
                   <small><b><%= t('common.messages.on_hold_comment') %></b>: <%= check[:comment] %></small><br>
               <% end %>
               <% if check[:date].present? %>
-                  <small><b><%= t('common.messages.on_hold_at') %></b>: <%= l(check[:date], format: :long) %></small>
+                  <small><b><%= t('common.messages.on_hold_at') %></b>: <%= check[:date].strftime("%d/%m/%Y %H:%M") %></small>
               <% end %>
             </p>
 

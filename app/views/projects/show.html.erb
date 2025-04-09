@@ -27,13 +27,13 @@
           <dd class="col-sm-9"><%= @project.project_manager_qualinox %></dd>
 
           <dt class="col-sm-3"><%= t('.project_end') %></dt>
-          <dd class="col-sm-9"><%= @project.project_end.strftime("%Y-%m-%d") if @project.project_end%></dd>
+          <dd class="col-sm-9"><%= @project.project_end.strftime("%d/%m/%Y") if @project.project_end%></dd>
 
           <dt class="col-sm-3"><%= t('.created_by') %></dt>
           <dd class="col-sm-9"><%= @project.user&.name %></dd>
 
           <dt class="col-sm-3"><%= t('.created') %></dt>
-          <dd class="col-sm-9"><%= @project.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
+          <dd class="col-sm-9"><%= @project.created_at.strftime("%d/%m/%Y %H:%M") %></dd>
 
           <dt class="col-sm-3"><%= t('.workshop') %></dt>
           <dd class="col-sm-9"><%= @project.workshop ? t('common.labels.yes') : t('common.labels.no') %></dd>

@@ -58,7 +58,7 @@
             <td><%= revision_status_label(on_site.isometry) %></td>
             <td><%= on_site.work_package_number %></td>
             <td><%= status_label(on_site.on_hold_status) %></td>
-            <td><%= l(on_site.completed, format: :short) if on_site.completed %></td>
+            <td><%= on_site.completed.strftime("%d/%m/%Y %H:%M") if on_site.completed %></td>
             <td><%= on_site.user.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("OnSite") %>

@@ -44,7 +44,7 @@
 
           <%= f.label :completed, class: 'form-label' %>
           <%= f.text_field :completed, 
-                          value: (@site_delivery.completed ? l(@site_delivery.completed, format: :long) : nil),
+                          value: (@site_delivery.completed ? @site_delivery.completed.strftime("%d/%m/%Y %H:%M") : nil),
                           class: 'form-control', 
                           disabled: true %>
         <% end %>

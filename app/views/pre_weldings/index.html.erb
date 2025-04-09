@@ -64,7 +64,7 @@
             <td><%= t("work_locations.types.#{pre_welding.work_location.location_type}") if pre_welding.work_location %></td>
             <td><%= pre_welding.work_package_number %></td>
             <td><%= status_label(pre_welding.on_hold_status) %></td>
-            <td><%= l(pre_welding.completed, format: :short) if pre_welding.completed %></td>
+            <td><%= pre_welding.completed.strftime("%d/%m/%Y %H:%M") if pre_welding.completed %></td>
             <td><%= pre_welding.user.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("PreWelding") %>

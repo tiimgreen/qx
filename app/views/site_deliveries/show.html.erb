@@ -60,7 +60,7 @@
             <dd class="col-sm-6"><%= @site_delivery.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.site_delivery.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@site_delivery.completed, format: :long) if @site_delivery.completed %></dd>
+            <dd class="col-sm-6"><%= @site_delivery.completed.strftime("%d/%m/%Y %H:%M") if @site_delivery.completed %></dd>
           </dl>
         </div>
 

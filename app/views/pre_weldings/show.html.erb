@@ -58,7 +58,7 @@
             <dd class="col-sm-6"><%= @pre_welding.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.pre_welding.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@pre_welding.completed, format: :long) if @pre_welding.completed %></dd>
+            <dd class="col-sm-6"><%= @pre_welding.completed.strftime("%d/%m/%Y %H:%M") if @pre_welding.completed %></dd>
           </dl>
         </div>
 
@@ -68,7 +68,7 @@
             <dd class="col-sm-6"><%= @pre_welding.on_hold_status %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.pre_welding.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@pre_welding.on_hold_date, format: :long) if @pre_welding.on_hold_date %></dd>
+            <dd class="col-sm-6"><%= @pre_welding.on_hold_date.strftime("%d/%m/%Y %H:%M") if @pre_welding.on_hold_date %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.pre_welding.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @pre_welding.on_hold_comment %></dd>

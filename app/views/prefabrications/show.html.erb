@@ -61,7 +61,7 @@
             <dd class="col-sm-6"><%= @prefabrication.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@prefabrication.completed, format: :long) if @prefabrication.completed %></dd>
+            <dd class="col-sm-6"><%= @prefabrication.completed.strftime("%d/%m/%Y %H:%M") if @prefabrication.completed %></dd>
           </dl>
         </div>
 
@@ -71,7 +71,7 @@
             <dd class="col-sm-6"><%= @prefabrication.on_hold_status %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@prefabrication.on_hold_date, format: :long) if @prefabrication.on_hold_date %></dd>
+            <dd class="col-sm-6"><%= @prefabrication.on_hold_date.strftime("%d/%m/%Y %H:%M") if @prefabrication.on_hold_date %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @prefabrication.on_hold_comment %></dd>

@@ -103,7 +103,7 @@
             <dd class="col-sm-6"><%= @work_preparation.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@work_preparation.completed, format: :long) if @work_preparation.completed %></dd>
+            <dd class="col-sm-6"><%= @work_preparation.completed.strftime("%d/%m/%Y %H:%M") if @work_preparation.completed %></dd>
           </dl>
         </div>
 
@@ -113,7 +113,7 @@
             <dd class="col-sm-6"><%= @work_preparation.on_hold_status %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@work_preparation.on_hold_date, format: :long) if @work_preparation.on_hold_date %></dd>
+            <dd class="col-sm-6"><%= @work_preparation.on_hold_date.strftime("%d/%m/%Y %H:%M") if @work_preparation.on_hold_date %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @work_preparation.on_hold_comment %></dd>

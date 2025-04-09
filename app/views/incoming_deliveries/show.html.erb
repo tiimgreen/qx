@@ -40,7 +40,7 @@
             <dd class="col-sm-8"><%= @incoming_delivery.delivery_note_number %></dd>
 
             <dt class="col-sm-4"><%= t('.delivery_date') %></dt>
-            <dd class="col-sm-8"><%= l(@incoming_delivery.delivery_date, format: :long) %></dd>
+            <dd class="col-sm-8"><%= @incoming_delivery.delivery_date.strftime("%d/%m/%Y %H:%M") %></dd>
 
             <dt class="col-sm-4"><%= t('.supplier') %></dt>
             <dd class="col-sm-8"><%= @incoming_delivery.supplier_name %></dd>

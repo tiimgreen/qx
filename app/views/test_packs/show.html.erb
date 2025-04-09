@@ -80,8 +80,8 @@
             <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
             <dd class="col-sm-6"><%= @test_pack.user.name %></dd>
 
-            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.completed') %>
-            <dd class="col-sm-6"><%= l(@test_pack.completed, format: :long) if @test_pack.completed %></dd>
+            <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.completed') %></dt>
+            <dd class="col-sm-6"><%= @test_pack.completed.strftime("%d/%m/%Y %H:%M") if @test_pack.completed %></dd>
           </dl>
         </div>
 
@@ -91,7 +91,7 @@
             <dd class="col-sm-6"><%= @test_pack.on_hold_status %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@test_pack.on_hold_date, format: :long) if @test_pack.on_hold_date %></dd>
+            <dd class="col-sm-6"><%= @test_pack.on_hold_date.strftime("%d/%m/%Y %H:%M") if @test_pack.on_hold_date %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @test_pack.on_hold_comment %></dd>

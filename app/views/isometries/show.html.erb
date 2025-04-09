@@ -64,7 +64,7 @@
   <div class="col-md-6 mb-4">
     <dl class="row">
       <dt class="col-sm-4"><%= t('.received_date') %></dt>
-      <dd class="col-sm-8"><%= @isometry.received_date.strftime("%Y-%m-%d %H:%M") %></dd>
+      <dd class="col-sm-8"><%= @isometry.received_date.strftime("%d/%m/%Y %H:%M") %></dd>
 
       <dt class="col-sm-4"><%= t('.pid_number') %></dt>
       <dd class="col-sm-8"><%= @isometry.pid_number %></dd>
@@ -305,7 +305,7 @@
       <dd class="col-sm-8"><%= @isometry.on_hold_comment %></dd>
 
       <dt class="col-sm-4"><%= t('.date') %></dt>
-      <dd class="col-sm-8"><%= l(@isometry.on_hold_date, format: :long) if @isometry.on_hold_date %></dd>
+      <dd class="col-sm-8"><%= @isometry.on_hold_date.strftime("%d/%m/%Y %H:%M") if @isometry.on_hold_date %></dd>
 
       <% if @isometry.on_hold_images.attached? %>
         <div class="row row-cols-1 row-cols-md-3 g-3">

@@ -64,7 +64,7 @@
 
             <%= f.label :completed, class: 'form-label' %>
             <%= f.text_field :completed, 
-                            value: (@work_preparation.completed ? l(@work_preparation.completed, format: :long) : nil),
+                            value: (@work_preparation.completed ? @work_preparation.completed.strftime("%d/%m/%Y %H:%M") : nil),
                             class: 'form-control', 
                             disabled: true %>
           <% end %>

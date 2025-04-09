@@ -57,7 +57,7 @@
             <dd class="col-sm-6"><%= @site_assembly.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.site_assembly.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@site_assembly.completed, format: :long) if @site_assembly.completed %></dd>
+            <dd class="col-sm-6"><%= @site_assembly.completed.strftime("%d/%m/%Y %H:%M") if @site_assembly.completed %></dd>
           </dl>
         </div>
 
@@ -67,7 +67,7 @@
             <dd class="col-sm-6"><%= @site_assembly.on_hold_status %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.site_assembly.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@site_assembly.on_hold_date, format: :long) if @site_assembly.on_hold_date %></dd>
+            <dd class="col-sm-6"><%= @site_assembly.on_hold_date.strftime("%d/%m/%Y %H:%M") if @site_assembly.on_hold_date %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.site_assembly.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @site_assembly.on_hold_comment %></dd>

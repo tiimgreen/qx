@@ -6,5 +6,5 @@
   <dd class="col-sm-8"><%= record.on_hold_comment %></dd>
 
   <dt class="col-sm-4"><%= t('common.messages.on_hold_at') %></dt>
-  <dd class="col-sm-8"><%= l(record.on_hold_date, format: :long) if record.on_hold_date %></dd>
+  <dd class="col-sm-8"><%= record.on_hold_date.strftime("%d/%m/%Y %H:%M") if record.on_hold_date %></dd>
 <% end %>

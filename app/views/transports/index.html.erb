@@ -58,7 +58,7 @@
             <td><%= revision_status_label(transport.isometry) %></td>
             <td><%= transport.work_package_number %></td>
             <td><%= status_label(transport.check_spools_status) %></td>
-            <td><%= l(transport.completed, format: :short) if transport.completed %></td>
+            <td><%= transport.completed.strftime("%d/%m/%Y %H:%M") if transport.completed %></td>
             <td><%= transport.user.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("Transport") %>

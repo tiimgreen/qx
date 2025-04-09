@@ -60,7 +60,7 @@
             <dd class="col-sm-6"><%= @final_inspection.user.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.completed') %></dt>
-            <dd class="col-sm-6"><%= l(@final_inspection.completed, format: :long) if @final_inspection.completed %></dd>
+            <dd class="col-sm-6"><%= @final_inspection.completed.strftime("%d/%m/%Y %H:%M") if @final_inspection.completed %></dd>
           </dl>
         </div>
 
@@ -70,7 +70,7 @@
             <dd class="col-sm-6"><%= @final_inspection.on_hold_status %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.on_hold_date') %></dt>
-            <dd class="col-sm-6"><%= l(@final_inspection.on_hold_date, format: :long) if @final_inspection.on_hold_date %></dd>
+            <dd class="col-sm-6"><%= @final_inspection.on_hold_date.strftime("%d/%m/%Y %H:%M") if @final_inspection.on_hold_date %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.on_hold_comment %></dd>

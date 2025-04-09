@@ -58,7 +58,7 @@
             <td><%= revision_status_label(site_delivery.isometry) %></td>
             <td><%= site_delivery.work_package_number %></td>
             <td><%= status_label(site_delivery.check_spools_status) %></td>
-            <td><%= l(site_delivery.completed, format: :short) if site_delivery.completed %></td>
+            <td><%= site_delivery.completed.strftime("%d/%m/%Y %H:%M") if site_delivery.completed %></td>
             <td><%= site_delivery.user.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("SiteDelivery") %>
