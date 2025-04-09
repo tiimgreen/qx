@@ -234,10 +234,10 @@
         <thead>
           <tr>
             <th><%= t('progress_tracking.table.week') %></th>
-            <th><%= t('progress_tracking.table.soll') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
-            <th><%= t('progress_tracking.table.ist') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
-            <th><%= t('progress_tracking.table.soll_total') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
-            <th><%= t('progress_tracking.table.ist_total') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.soll') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.ist') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.soll_total') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.ist_total') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
             <th><%= t('progress_tracking.table.soll') %> %</th>
             <th><%= t('progress_tracking.table.ist') %> %</th>
           </tr>
@@ -264,13 +264,13 @@
                         onchange: 'this.form.requestSubmit()',
                         disabled: @progress_plan.locked? || !user_signed_in? || !current_user&.admin?,
                         title: @progress_plan.locked? ? t('progress_tracking.locked_error') : (!user_signed_in? || !current_user&.admin? ? t('progress_tracking.admin_only_error') : nil) %>
-                    <span class="input-group-text" style="padding: 0 4px;"><%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></span>
+                    <span class="input-group-text" style="padding: 0 4px;"><%= progress_unit(@progress_plan.work_type_sector) %></span>
                   </div>
                 <% end %>
               </td>
-              <td><%= number_with_precision(data[:ist_meters], precision: 1) %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></td>
-              <td><%= number_with_precision(data[:soll_total], precision: 0) %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></td>
-              <td><%= number_with_precision(data[:ist_total], precision: 0) %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></td>
+              <td><%= number_with_precision(data[:ist_meters], precision: 1) %> <%= progress_unit(@progress_plan.work_type_sector) %></td>
+              <td><%= number_with_precision(data[:soll_total], precision: 0) %> <%= progress_unit(@progress_plan.work_type_sector) %></td>
+              <td><%= number_with_precision(data[:ist_total], precision: 0) %> <%= progress_unit(@progress_plan.work_type_sector) %></td>
               <td><%= number_with_precision(data[:soll_percentage], precision: 0) %>%</td>
               <td><%= number_with_precision(data[:ist_percentage], precision: 0) %>%</td>
             </tr>
@@ -285,10 +285,10 @@
         <thead>
           <tr>
             <th><%= t('progress_tracking.table.week') %></th>
-            <th><%= t('progress_tracking.table.soll') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
-            <th><%= t('progress_tracking.table.ist') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
-            <th><%= t('progress_tracking.table.soll_total') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
-            <th><%= t('progress_tracking.table.ist_total') %> <%= @progress_plan.work_type_sector.key == 'isometry' ? 'pcs' : progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.soll') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.ist') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.soll_total') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
+            <th><%= t('progress_tracking.table.ist_total') %> <%= progress_unit(@progress_plan.work_type_sector) %></th>
             <th><%= t('progress_tracking.table.soll') %> %</th>
             <th><%= t('progress_tracking.table.ist') %> %</th>
           </tr>
