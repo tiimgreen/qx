@@ -141,8 +141,10 @@
             difference: diff.abs,      # Store the absolute difference
             color: '#FFB6C1',         # Pink color for difference bars
             dataLabels: {
+              enabled: true,
+              inside: true,
               y: diff > 0 ? -5 : 5,   # Position labels inside the bar
-              format: '{point.difference}%'  # Show the stored difference
+              format: '{point.difference}%'  # Show the percentage difference
             }
           }
         end
@@ -173,7 +175,7 @@
             name: t('progress_tracking.table.ist'),
             type: 'line',
             data: weekly_data.values.map { |v| v[:ist_percentage] },
-            color: '#198754',  # Bootstrap success green
+            color: 'rgb(144, 238, 144)',  # Light green (more shiny)
             marker: {
               enabled: true,
               radius: 4
@@ -188,7 +190,17 @@
             pointPadding: 0.2,
             groupPadding: 0.2,
             borderWidth: 0,
-            zIndex: 1
+            zIndex: 1,
+            dataLabels: {
+              enabled: true,
+              inside: true,
+              format: '{point.difference}%',
+              style: {
+                fontSize: '11px',
+                textOutline: 'none',
+                fontWeight: 'normal'
+              }
+            }
           }
         ],
         plotOptions: {
