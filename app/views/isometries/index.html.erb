@@ -118,7 +118,7 @@
               <% end %>
             </td>
             <td><%= isometry.material %></td>
-            <td><%= isometry.received_date.strftime("%d/%m/%Y %H:%M") if isometry.received_date %></td>
+            <td><%= isometry.received_date.strftime("%d/%m/%Y") if isometry.received_date %></td>
             <td>
                 <%= status_label(isometry.on_hold_status)  %>
             </td>
