@@ -37,6 +37,8 @@ class IsometriesController < ApplicationController
     if sort_column == "line_id"
       @isometries = @isometries.reorder(line_id: sort_direction)
                               .order(page_number: sort_direction, id: :asc)
+    elsif sort_column == "received_date"
+      @isometries = @isometries.reorder(Arel.sql("received_date #{sort_direction} NULLS LAST"))
     else
       @isometries = @isometries.reorder(sort_column => sort_direction)
     end
@@ -304,7 +306,7 @@ class IsometriesController < ApplicationController
     allowed_columns = %w[
       line_id work_package_number system pid_number
       material medium pipe_class revision_number
-      page_number page_total
+      page_number page_total received_date
       on_hold_status
     ]
     params[:sort].to_s if allowed_columns.include?(params[:sort].to_s)
