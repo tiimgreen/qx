@@ -9,7 +9,7 @@ class IsometriesController < ApplicationController
 
   def index
     base_scope = if @project
-      @project.isometries.active
+      @project.isometries
     else
       Isometry.active
     end
@@ -220,7 +220,7 @@ class IsometriesController < ApplicationController
   end
 
   def search_work_packages
-    isometries = @project.isometries.active
+    isometries = @project.isometries
                         .where("work_package_number LIKE ?", "%#{params[:query]}%")
                         .select(:id, :work_package_number, :line_id)
                         .limit(10).distinct
