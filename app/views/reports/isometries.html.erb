@@ -56,22 +56,43 @@
     </div>
   </div>
 
-  <% 
+  <%
   # Common calculations for all sections using total filtered isometries
   total_isometries = @all_isometries.count
-  total_pipe_length = @all_isometries.sum { |iso| iso.pipe_length&.to_f || 0 }
+  # Round pipe length calculations to 2 decimal places to match schema
+  total_pipe_length = @all_isometries.sum { |iso| iso.pipe_length&.to_f || 0 }.round(2)
+
+  # Get sector counts from the project
+  sector_counts = {}
+  @sector_models.each do |sector|
+    # Get the sector model from the project's sectors
+    sector_model = @project.sectors.find_by(key: sector)
+    # Use the count attribute directly from the sector model
+    if sector_model && sector_model.respond_to?(:count) && !sector_model.count.nil?
+      sector_counts[sector] = sector_model.count
+    else
+      # Fallback to counting isometries if sector model doesn't exist or doesn't have count
+      if sector == 'work_preparation'
+        sector_counts[sector] = @project.isometries.sum { |iso| iso.work_preparations.count }
+      elsif sector == 'test_pack'
+        sector_counts[sector] = @project.isometries.sum { |iso| iso&.test_packs&.count }
+      else
+        sector_counts[sector] = @project.isometries.count { |iso| iso.send(sector).present? }
+      end
+    end
+  end
 
   # Calculate sector completions
   sector_completions = {}
   @sector_models.each do |sector|
     if sector == 'work_preparation'
       completed_isos = @all_isometries.select { |iso| WorkPreparation.completed_for?(iso) }
-      in_progress_isos = @all_isometries.select { |iso| 
+      in_progress_isos = @all_isometries.select { |iso|
         WorkPreparation.in_progress_for?(iso) && !WorkPreparation.completed_for?(iso)
       }
     elsif sector == 'test_pack'
       completed_isos = @all_isometries.select { |iso| TestPack.completed_for?(iso) }
-      in_progress_isos = @all_isometries.select { |iso| 
+      in_progress_isos = @all_isometries.select { |iso|
         !TestPack.completed_for?(iso) && TestPack.in_progress_for?(iso)
       }
     else
@@ -79,13 +100,18 @@
       in_progress_isos = @all_isometries.select { |iso| iso.send(sector) && !iso.send(sector).completed? }
     end
 
-    completed_pipe_length = completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 }
-    
+    # Round completed pipe length to 2 decimal places
+    completed_pipe_length = completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 }.round(2)
+
+    # Use the sector count from the project instead of total_isometries
+    sector_count = sector_counts[sector]
+
     sector_completions[sector] = {
       completed_count: completed_isos.count,
       in_progress_count: in_progress_isos.count,
       completed_meters: completed_pipe_length,
-      count_percentage: total_isometries.zero? ? 0 : (completed_isos.count * 100.0 / total_isometries).round,
+      sector_count: sector_count,
+      count_percentage: sector_count.zero? ? 0 : (completed_isos.count * 100.0 / sector_count).round,
       meters_percentage: total_pipe_length.zero? ? 0 : ((completed_pipe_length || 0) * 100.0 / total_pipe_length).round
     }
   end
@@ -94,10 +120,10 @@
   if @project.progress_filter1_sector && @project.progress_filter2_sector
     filter1_key = @project.progress_filter1_sector.key
     filter2_key = @project.progress_filter2_sector.key
-    
+
     if sector_completions[filter1_key] && sector_completions[filter2_key]
       # Calculate total completed meters
-      total_completed_meters = sector_completions[filter1_key][:completed_meters].to_f + 
+      total_completed_meters = sector_completions[filter1_key][:completed_meters].to_f +
                              sector_completions[filter2_key][:completed_meters].to_f
       average_pipe_length = (total_completed_meters / 2.0).round(2)
       average_percentage = total_pipe_length.zero? ? 0 : ((average_pipe_length || 0) * 100.0 / total_pipe_length).round
@@ -116,7 +142,7 @@
     <div class="card-body">
       <h5>Total Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-        <div class="progress-bar" role="progressbar" 
+        <div class="progress-bar" role="progressbar"
              style="width: <%= average_percentage %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
@@ -134,14 +160,14 @@
     <div class="card-body">
       <h5><%= t("sectors_progress.#{@project.progress_filter1_sector.key}") %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-        <div class="progress-bar" role="progressbar" 
+        <div class="progress-bar" role="progressbar"
              style="width: <%= sector_completions[@project.progress_filter1_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= sector_completions[@project.progress_filter1_sector.key][:completed_count] %>/<%= total_isometries %> pcs 
-            (<%= sector_completions[@project.progress_filter1_sector.key][:count_percentage] %>%) | 
-            <%= sector_completions[@project.progress_filter1_sector.key][:completed_meters].round() %>/<%= total_pipe_length.round() %>m 
+            <%= sector_completions[@project.progress_filter1_sector.key][:completed_count] %>/<%= sector_completions[@project.progress_filter1_sector.key][:sector_count] %> pcs
+            (<%= sector_completions[@project.progress_filter1_sector.key][:count_percentage] %>%) |
+            <%= sector_completions[@project.progress_filter1_sector.key][:completed_meters].round() %>/<%= total_pipe_length.round() %>m
             (<%= sector_completions[@project.progress_filter1_sector.key][:meters_percentage] %>%)
           </span>
         </div>
@@ -156,14 +182,14 @@
     <div class="card-body">
       <h5><%= t("sectors_progress.#{@project.progress_filter2_sector.key}") %> Progress</h5>
       <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-        <div class="progress-bar" role="progressbar" 
+        <div class="progress-bar" role="progressbar"
              style="width: <%= sector_completions[@project.progress_filter2_sector.key][:meters_percentage] %>%; background-color: lawngreen;">
         </div>
         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
           <span style="color: #000; font-weight: 500;">
-            <%= sector_completions[@project.progress_filter2_sector.key][:completed_count] %>/<%= total_isometries %> pcs 
-            (<%= sector_completions[@project.progress_filter2_sector.key][:count_percentage] %>%) | 
-            <%= sector_completions[@project.progress_filter2_sector.key][:completed_meters].round() %>/<%= total_pipe_length.round() %>m 
+            <%= sector_completions[@project.progress_filter2_sector.key][:completed_count] %>/<%= sector_completions[@project.progress_filter2_sector.key][:sector_count] %> pcs
+            (<%= sector_completions[@project.progress_filter2_sector.key][:count_percentage] %>%) |
+            <%= sector_completions[@project.progress_filter2_sector.key][:completed_meters].round() %>/<%= total_pipe_length.round() %>m
             (<%= sector_completions[@project.progress_filter2_sector.key][:meters_percentage] %>%)
           </span>
         </div>
@@ -183,12 +209,15 @@
               <div class="card-body">
                 <h5 class="card-title"><%= t("sectors.#{sector}") %></h5>
                 <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-                  <div class="progress-bar" role="progressbar" 
+                  <div class="progress-bar" role="progressbar"
                        style="width: <%= sector_completions[sector][:count_percentage] %>%; background-color: lawngreen;">
                   </div>
                   <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                     <span style="color: #000; font-weight: 500;">
-                      <%= sector_completions[sector][:completed_count] %>/<%= total_isometries %> (<%= sector_completions[sector][:count_percentage] %>%) pcs | <%= sector_completions[sector][:completed_meters].round() %>/<%= total_pipe_length.round() %>m (<%= sector_completions[sector][:meters_percentage] %>%)
+                      <%= sector_completions[sector][:completed_count] %>/<%= sector_completions[sector][:sector_count] %>
+                      (<%= sector_completions[sector][:count_percentage] %>%) pcs |
+                      <%= sector_completions[sector][:completed_meters].round() %>/<%= total_pipe_length.round() %>m
+                      (<%= sector_completions[sector][:meters_percentage] %>%)
                     </span>
                   </div>
                 </div>
@@ -211,6 +240,7 @@
           <th><%= t('activerecord.attributes.isometry.pipe_class') %></th>
           <th><%= t('activerecord.attributes.isometry.material') %></th>
           <th><%= t('activerecord.attributes.isometry.medium') %></th>
+          <th><%= t('activerecord.attributes.isometry.pipe_lenght') %></th>
           <% @sector_models.each do |sector| %>
             <th><%= t("sectors.#{sector}") %></th>
           <% end %>
@@ -226,6 +256,7 @@
             <td><%= isometry.pipe_class %></td>
             <td><%= isometry.material %></td>
             <td><%= isometry.medium %></td>
+            <td><%= isometry.pipe_length %></td>
             <% @sector_models.each do |sector| %>
               <td>
                 <% if sector == 'work_preparation' %>
@@ -262,7 +293,7 @@
               </td>
             <% end %>
             <td>
-              <% completed_sectors = @sector_models.count do |sector| 
+              <% completed_sectors = @sector_models.count do |sector|
                 if sector == 'work_preparation'
                   WorkPreparation.completed_for?(isometry)
                 elsif sector == 'test_pack'
@@ -274,7 +305,7 @@
               <% total_sectors = @sector_models.size %>
               <% progress = (completed_sectors * 100.0 / total_sectors).round() %>
               <div class="progress position-relative" style="height: 25px; background-color: #e9ecef;">
-                <div class="progress-bar" role="progressbar" 
+                <div class="progress-bar" role="progressbar"
                      style="width: <%= progress %>%; background-color: lawngreen;">
                 </div>
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
