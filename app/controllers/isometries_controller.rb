@@ -158,7 +158,8 @@ class IsometriesController < ApplicationController
 
   def destroy
     @isometry.transaction do
-      @isometry.update_columns(deleted: true)
+      # @isometry.update_columns(deleted: true)
+      @isometry.destroy_all
     end
     redirect_to project_isometries_path(@project, locale: I18n.locale),
                 notice: t("common.messages.deleted", model: "Isometry")
