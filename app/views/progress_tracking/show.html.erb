@@ -133,7 +133,7 @@
             y: [soll, ist].max,       # End point of the bar
             low: [soll, ist].min,     # Start point of the bar
             difference: diff.abs,      # Store the absolute difference
-            color: '#FFB6C1',         # Pink color for difference bars
+            color: diff > 0 ? '#90EE90' : '#FFB6C1',  # Green for positive, red for negative
             dataLabels: {
               enabled: true,
               inside: true,
@@ -180,7 +180,7 @@
             name: t('progress_tracking.table.difference'),
             type: 'column',
             data: differences,
-            color: '#FFB6C1',
+            color: 'rgb(144, 238, 144)',
             pointPadding: 0.2,
             groupPadding: 0.2,
             borderWidth: 0,
