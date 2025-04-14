@@ -10,6 +10,7 @@ en:
       name: "Name"
       description: "Description"
       project_manager: "Project Manager"
+      project_end: "Project End"
       client_name: "Client"
       created_by: "Created By"
       created: "Created"
