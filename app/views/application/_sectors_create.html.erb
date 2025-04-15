@@ -7,7 +7,7 @@
     <div class="card-body" data-collapse-target="content">
         <div class="row row-cols-2 row-cols-md-3 row-cols-xl-5 g-4 mb-4">
             <% sectors_to_display = if @project.workshop?
-                @project.project_sectors.map(&:sector).map { |key| Sector.find_by(key: key) }.compact
+                @project.project_sectors.map(&:sector).compact.uniq
               else
                 current_user.sectors
               end %>
