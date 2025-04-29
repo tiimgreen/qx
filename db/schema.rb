@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_22_115108) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_29_220058) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -322,6 +322,26 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_115108) do
     t.index ["work_location_id"], name: "index_prefabrications_on_work_location_id"
   end
 
+  create_table "project_logs", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "user_id"
+    t.string "level", default: "info", null: false
+    t.string "source", null: false
+    t.text "message", null: false
+    t.text "details"
+    t.json "metadata"
+    t.string "tag"
+    t.datetime "logged_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["level"], name: "index_project_logs_on_level"
+    t.index ["logged_at"], name: "index_project_logs_on_logged_at"
+    t.index ["project_id"], name: "index_project_logs_on_project_id"
+    t.index ["source"], name: "index_project_logs_on_source"
+    t.index ["tag"], name: "index_project_logs_on_tag"
+    t.index ["user_id"], name: "index_project_logs_on_user_id"
+  end
+
   create_table "project_progress_plans", force: :cascade do |t|
     t.integer "project_id", null: false
     t.datetime "start_date"
@@ -625,6 +645,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_22_115108) do
   add_foreign_key "prefabrications", "projects"
   add_foreign_key "prefabrications", "users"
   add_foreign_key "prefabrications", "work_locations"
+  add_foreign_key "project_logs", "projects"
+  add_foreign_key "project_logs", "users"
   add_foreign_key "project_progress_plans", "projects"
   add_foreign_key "project_progress_plans", "sectors", column: "work_type_sector_id"
   add_foreign_key "project_sectors", "projects"

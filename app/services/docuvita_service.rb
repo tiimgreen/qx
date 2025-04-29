@@ -8,12 +8,12 @@ module DocuvitaService
     def initialize(base_url, session_guid)
       @base_url = base_url
       @session_guid = session_guid
-      Rails.logger.info "Initializing DocuvitaService with base_url: #{@base_url}"
+      ProjectLog.info("Initializing DocuvitaService", source: "DocuvitaService", metadata: { base_url: @base_url })
     end
 
     # Get object properties
     def get_object_properties(object_id)
-      Rails.logger.info "Getting object properties for ID: #{object_id}"
+      ProjectLog.info("Getting object properties", source: "DocuvitaService", metadata: { object_id: object_id })
       uri = URI("#{@base_url}/getobject")
       params = {
         format: "json",
@@ -25,7 +25,7 @@ module DocuvitaService
 
     # Get new object properties structure for creating a new object
     def get_new_object_properties(object_type_id)
-      Rails.logger.info "Getting new object properties structure for ObjectTypeId: #{object_type_id}"
+      ProjectLog.info("Getting new object properties", source: "DocuvitaService", metadata: { object_type_id: object_type_id })
       uri = URI("#{@base_url}/getobjectproperties")
       params = {
         format: "json",
@@ -41,7 +41,7 @@ module DocuvitaService
     # the original filename, and an optional version comment.
     # Returns the response, which should include the DocUploadGuid for the subsequent file upload.
     def set_object_properties(property_list, original_filename, version_comment = "File Upload")
-      Rails.logger.info "Creating object record (SetObjectProperties) for file: #{original_filename}"
+      ProjectLog.info("Creating object record (SetObjectProperties)", source: "DocuvitaService", metadata: { filename: original_filename })
       uri = URI("#{@base_url}/setobjectproperties") # Use /setobjectproperties endpoint
 
       # Construct payload according to API documentation (matching C# example)
@@ -51,7 +51,6 @@ module DocuvitaService
         VersionOriginalFilename: original_filename,
         VersionComment: version_comment
       }
-      Rails.logger.debug "SetObjectProperties Payload: #{payload.inspect}" # Log the payload structure
 
       # Use the standard post_request
       post_request(uri, payload)
@@ -59,7 +58,7 @@ module DocuvitaService
 
     # Create object using setobject endpoint (simpler payload structure)
     def set_object(parent_object_id, object_type_id, name, options = {})
-      Rails.logger.info "Creating object record (SetObject) with name: #{name}"
+      ProjectLog.info("Creating object record (SetObject)", source: "DocuvitaService", metadata: { name: name })
       uri = URI("#{@base_url}/setobject")
 
       # Construct payload according to the Postman collection example
@@ -91,19 +90,12 @@ module DocuvitaService
         VersionOriginalFilename: options[:version_original_filename] || ""
       }
 
-      Rails.logger.debug "SetObject Payload: #{payload.inspect}"
-      Rails.logger.debug "SetObject URL: #{uri}"
       post_request(uri, payload)
     end
 
     # Upload file content using GUID from SetObject response
     def upload_file(file_path, guid)
-      Rails.logger.info "Uploading file: #{file_path} with GUID: #{guid}"
-
-      # Add more debugging
-      puts "DEBUG: GUID for upload: #{guid.inspect}"
-      puts "DEBUG: GUID class: #{guid.class}"
-      puts "DEBUG: GUID empty?: #{guid.empty?}" if guid.respond_to?(:empty?)
+      ProjectLog.info("Uploading file", source: "DocuvitaService", metadata: { file_path: file_path, guid: guid })
 
       uri = URI("#{@base_url}/fileupload")
 
@@ -115,11 +107,6 @@ module DocuvitaService
       # Add query parameters to URI
       uri.query = URI.encode_www_form(params)
 
-      # Log the full URL for debugging
-      puts "DEBUG: Full upload URL: #{uri}"
-      Rails.logger.debug "Making file upload request to: #{uri}"
-
-      # Create HTTP client
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == "https"
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE # Skip SSL verification for self-signed cert
@@ -143,10 +130,7 @@ module DocuvitaService
         )
 
         # Send the request
-        Rails.logger.debug "Request headers: #{request.to_hash}"
         response = http.request(request)
-        Rails.logger.debug "Response code: #{response.code}"
-        Rails.logger.debug "Response headers: #{response.to_hash}"
 
         # Handle the response
         return handle_response(response)
@@ -178,7 +162,7 @@ module DocuvitaService
 
     # Get document content using object ID
     def get_document(object_id)
-      Rails.logger.info "Getting document for object ID: #{object_id}"
+      ProjectLog.info("Getting document content", source: "DocuvitaService", metadata: { object_id: object_id })
       uri = URI("#{@base_url}/getdocument")
 
       # Set query parameters
@@ -189,9 +173,6 @@ module DocuvitaService
 
       # Add query parameters to URI
       uri.query = URI.encode_www_form(params)
-
-      # Log the full URL for debugging
-      Rails.logger.debug "Making get_document request to: #{uri}"
 
       # Create HTTP client
       http = Net::HTTP.new(uri.host, uri.port)
@@ -204,10 +185,7 @@ module DocuvitaService
       request = Net::HTTP::Get.new(uri)
 
       # Send the request
-      Rails.logger.debug "Request headers: #{request.to_hash}"
       response = http.request(request)
-      Rails.logger.debug "Response code: #{response.code}"
-      Rails.logger.debug "Response headers: #{response.to_hash}"
 
       # For document downloads, we want to return the raw response if successful
       if response.code.to_i == 200
@@ -222,7 +200,6 @@ module DocuvitaService
 
     def get_request(uri, params)
       uri.query = URI.encode_www_form(params)
-      Rails.logger.debug "Making GET request to: #{uri}"
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == "https"
@@ -233,19 +210,13 @@ module DocuvitaService
       request = Net::HTTP::Get.new(uri)
       request["Accept"] = "application/json"
 
-      Rails.logger.debug "Request headers: #{request.to_hash}"
       response = http.request(request)
-      Rails.logger.debug "Response code: #{response.code}"
-      Rails.logger.debug "Response headers: #{response.to_hash}"
 
       handle_response(response)
     end
 
     # POST request helper (ensure it handles payload correctly, revert param logic)
     def post_request(uri, body_hash)
-      Rails.logger.debug "Making POST request to: #{uri}"
-      Rails.logger.debug "Request body: #{body_hash.to_json}"
-
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == "https"
       # TODO: Remove this for production or configure properly
@@ -256,14 +227,12 @@ module DocuvitaService
       request["Accept"] = "application/json"
       request.body = body_hash.to_json
 
-      Rails.logger.debug "Request headers: #{request.to_hash}"
       response = http.request(request)
       handle_response(response)
     end
 
     def post_multipart(uri, body, params)
       uri.query = URI.encode_www_form(params)
-      Rails.logger.debug "Making multipart POST request to: #{uri}"
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == "https"
@@ -291,10 +260,7 @@ module DocuvitaService
         "" => upload_io_object  # Empty key for the file
       )
 
-      Rails.logger.debug "Request headers: #{request.to_hash}"
       response = http.request(request)
-      Rails.logger.debug "Response code: #{response.code}"
-      Rails.logger.debug "Response headers: #{response.to_hash}"
 
       handle_response(response)
     end
@@ -303,23 +269,26 @@ module DocuvitaService
       case response
       when Net::HTTPSuccess
         begin
-          Rails.logger.debug "Response body: #{response.body[0..500]}"
           JSON.parse(response.body)
         rescue JSON::ParserError => e
-          Rails.logger.error "Invalid JSON response from docuvita:"
-          Rails.logger.error "URL: #{response.uri}"
-          Rails.logger.error "Response code: #{response.code}"
-          Rails.logger.error "Response headers: #{response.to_hash}"
-          Rails.logger.error "Response body: #{response.body[0..1000]}"
-          Rails.logger.error "Parse error: #{e.message}"
+          ProjectLog.error("Invalid JSON response from docuvita",
+                          source: "DocuvitaService",
+                          details: e.message,
+                          metadata: {
+                            url: response.uri,
+                            response_code: response.code,
+                            response_body_sample: response.body[0..100]
+                          })
           raise "Invalid JSON response from docuvita. First 100 chars: #{response.body[0..100]}..."
         end
       else
-        Rails.logger.error "Docuvita API error:"
-        Rails.logger.error "URL: #{response.uri}"
-        Rails.logger.error "Response code: #{response.code}"
-        Rails.logger.error "Response headers: #{response.to_hash}"
-        Rails.logger.error "Response body: #{response.body[0..1000]}"
+        ProjectLog.error("Docuvita API error",
+                        source: "DocuvitaService",
+                        metadata: {
+                          url: response.uri,
+                          response_code: response.code,
+                          response_message: response.message
+                        })
         raise "API Error: #{response.code} - #{response.message}"
       end
     end
