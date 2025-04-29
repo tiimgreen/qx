@@ -187,6 +187,7 @@ GEM
     mini_portile2 (2.8.8)
     minitest (5.25.4)
     msgpack (1.7.5)
+    multipart-post (2.4.1)
     nested_form (0.3.2)
     net-imap (0.5.5)
       date
@@ -434,6 +435,7 @@ DEPENDENCIES
   jbuilder
   lazy_high_charts
   mini_magick
+  multipart-post
   pagy (~> 9.3)
   pdf-reader
   prawn
