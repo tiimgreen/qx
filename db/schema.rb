@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_29_220058) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_29_224549) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -95,6 +95,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_29_220058) do
     t.index ["incoming_delivery_id", "tag_number"], name: "index_delivery_items_on_incoming_delivery_id_and_tag_number", unique: true, where: "tag_number IS NOT NULL"
     t.index ["incoming_delivery_id"], name: "index_delivery_items_on_incoming_delivery_id"
     t.index ["user_id"], name: "index_delivery_items_on_user_id"
+  end
+
+  create_table "docuvita_documents", force: :cascade do |t|
+    t.string "documentable_type", null: false
+    t.integer "documentable_id", null: false
+    t.string "docuvita_object_id", null: false
+    t.string "document_type", null: false
+    t.string "filename"
+    t.string "content_type"
+    t.integer "byte_size"
+    t.string "checksum"
+    t.json "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_type"], name: "index_docuvita_documents_on_document_type"
+    t.index ["documentable_type", "documentable_id"], name: "index_docuvita_documents_on_documentable"
+    t.index ["docuvita_object_id"], name: "index_docuvita_documents_on_docuvita_object_id"
   end
 
   create_table "final_inspections", force: :cascade do |t|

@@ -346,11 +346,11 @@
 </div>
 
 <!-- Isometry Images -->
-<% if @isometry.isometry_documents.any? %>
+<% if @isometry.docuvita_documents.any? %>
   <div class="row mb-4">
     <div class="col-12">
-      <%= render partial: 'documents', locals: {
-        documents: @isometry.isometry_documents,
+      <%= render partial: 'docuvita_documents', locals: {
+        documents: @isometry.docuvita_documents,
         title: t('.isometry_documents')
       } %>
     </div>
@@ -374,4 +374,3 @@
              model_name: 'isometry'
            } %>
 </div>
-

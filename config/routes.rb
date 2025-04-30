@@ -133,6 +133,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :docuvita_documents, only: [] do
+      member do
+        get :download
+        get :view
+      end
+    end
+
+
     # Existing routes...
     get "up" => "rails/health#show", as: :rails_health_check
     get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
