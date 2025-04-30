@@ -55,8 +55,8 @@ class Isometry < ApplicationRecord
   has_one :pre_welding, dependent: :destroy
   has_one :incoming_delivery, dependent: :destroy
 
-  after_commit :process_isometry_documents, on: [ :create, :update ]
-  after_commit :ensure_qr_code_exists, on: [ :create, :update ]
+  # after_commit :process_isometry_documents, on: [ :create, :update ]
+  after_commit :ensure_qr_code_exists, on: [ :create ]
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   PED_CATEGORIES = [ "N/A", "0", "I", "II", "III", "IV" ].freeze
