@@ -6,7 +6,10 @@ class Isometry < ApplicationRecord
   include QrCodeable
 
   def qr_code_url
-    Rails.application.routes.url_helpers.qr_redirect_url(self, host: Rails.application.routes.default_url_options[:host])
+    Rails.application.routes.url_helpers.qr_redirect_url(
+      isometry_id: id,
+      host: Rails.application.routes.default_url_options[:host]
+    )
   end
 
   has_many :isometry_material_certificates, dependent: :destroy
@@ -186,158 +189,54 @@ class Isometry < ApplicationRecord
 
   # Method to upload a PDF to Docuvita
   def upload_pdf_to_docuvita(file_io, filename, options = {})
-    # Process the PDF with QR code if a position is specified
-    if options[:qr_position].present?
-      # Create temporary files
-      qr_temp_file = Tempfile.new([ "qr", ".png" ])
-      pdf_temp_file = Tempfile.new([ "processed", ".pdf" ])
-      input_pdf_file = Tempfile.new([ "input", ".pdf" ])
+    qr_position = options.delete(:qr_position)
+    content_type = file_io.content_type # Store content type before processing
+    content = file_io.read
+    byte_size = content.bytesize
+    checksum = Digest::MD5.base64digest(content)
+    file_io.rewind
 
-      begin
-        # Generate QR code
-        current_url = Rails.application.routes.url_helpers.qr_redirect_url(
-          isometry_id: id,
-          host: Rails.application.routes.default_url_options[:host]
-        )
-        # Generate QR code image
-        qrcode = RQRCode::QRCode.new(current_url, size: 4, level: :l)
-        qrcode.as_png(
-          bit_depth: 1,
-          border_modules: 1,
-          color_mode: ChunkyPNG::COLOR_GRAYSCALE,
-          color: "black",
-          file: qr_temp_file.path,
-          fill: "white",
-          module_px_size: 3,
-          resize_exactly_to: 120
-        )
-
-        # Save the original PDF to a temp file
-        FileUtils.copy_stream(file_io, input_pdf_file.path)
-
-        # Get PDF dimensions from the first page
-        reader = PDF::Reader.new(input_pdf_file.path)
-        page = reader.pages.first
-        page_width = page.width
-        page_height = page.height
-        page_rotation = page.attributes[:Rotate] || 0
-
-        # Add QR code to PDF
-        Prawn::Document.generate(pdf_temp_file.path,
-                               template: input_pdf_file.path,
-                               page_size: [ page_width, page_height ]) do |pdf|
-          pdf.go_to_page(1)
-
-          # Convert measurements
-          mm_to_points = 2.83465
-          qr_size = 40
-          margin_mm = 15
-          margin_pts = margin_mm * mm_to_points
-
-          # Get base coordinates
-          base_x, base_y = case options[:qr_position].to_s
-          when "bottom_left"
-            [ margin_pts - 70, margin_pts - 38 ]
-          when "bottom_right"
-            [ page_width - margin_pts - qr_size, margin_pts - 38 ]
-          when "top_left"
-            [ margin_pts + 50, page_height - margin_pts - qr_size + 10 ]
-          when "top_right"
-            [ page_width - margin_pts - qr_size, page_height - (margin_pts - 12 * mm_to_points) - qr_size ]
-          else
-            [ margin_pts, margin_pts ]
-          end
-
-          # Adjust coordinates based on rotation
-          x, y = case page_rotation
-          when 90
-            # For 90-degree rotation, swap width and height and adjust coordinates
-            case options[:qr_position].to_s
-            when "bottom_left"
-              [ margin_pts - 70, page_width - margin_pts - qr_size ]
-            when "bottom_right"
-              [ page_height - margin_pts - qr_size, page_width - margin_pts - qr_size ]
-            when "top_left"
-              [ margin_pts + 50, margin_pts - 38 ]
-            when "top_right"
-              [ page_height - margin_pts - qr_size, margin_pts - 38 ]
-            else
-              [ base_x, base_y ]
-            end
-          else
-            [ base_x, base_y ]
-          end
-
-          pdf.image qr_temp_file.path,
-                   at: [ x, y ],
-                   width: qr_size,
-                   height: qr_size
-        end
-
-        # Create uploader with the processed PDF
-        uploader = DocuvitaUploader.new
-
-        # Upload the processed file
-        result = uploader.upload_io(
-          File.open(pdf_temp_file.path, "rb"),
-          filename,
-          {
-            name: "#{line_id}_#{pid_number}_Rev#{revision_number}_Page#{page_number}",
-            description: "Isometry PDF for #{line_id}"
-          }.merge(options)
-        )
-
-        # Create a record of the uploaded document
-        docuvita_documents.create!(
-          docuvita_object_id: result[:object_id],
-          document_type: "isometry_pdf",
-          filename: filename,
-          content_type: "application/pdf",
-          metadata: {
-            qr_position: options[:qr_position],
-            qr_url: current_url,
-            response: result[:response]
-          }
-        )
-      ensure
-        # Clean up temporary files
-        qr_temp_file.close
-        qr_temp_file.unlink if qr_temp_file && File.exist?(qr_temp_file.path)
-        pdf_temp_file.close
-        pdf_temp_file.unlink if pdf_temp_file && File.exist?(pdf_temp_file.path)
-        input_pdf_file.close
-        input_pdf_file.unlink if input_pdf_file && File.exist?(input_pdf_file.path)
-
-        # Reset the file position for potential future use
-        file_io.rewind if file_io.respond_to?(:rewind)
-      end
-    else
-      # No QR code needed, upload the original file
-      # Create uploader
-      uploader = DocuvitaUploader.new
-
-      # Upload the file
-      result = uploader.upload_io(
-        file_io,
-        filename,
-        {
-          name: "#{line_id}_#{pid_number}_Rev#{revision_number}_Page#{page_number}",
-          description: "Isometry PDF for #{line_id}"
-        }.merge(options)
-      )
-
-      # Create a record of the uploaded document
-      docuvita_documents.create!(
-        docuvita_object_id: result[:object_id],
+    # Process the PDF with QR code if position is specified
+    if qr_position.present?
+      # Create a temporary document to use QrCodeable methods
+      temp_doc = docuvita_documents.build(
         document_type: "isometry_pdf",
         filename: filename,
-        content_type: "application/pdf",
-        metadata: {
-          qr_position: options[:qr_position],
-          response: result[:response]
-        }
+        content_type: content_type,
+        qr_position: qr_position
       )
+      processed_content = temp_doc.process_pdf_with_qr(content)
+      byte_size = processed_content.bytesize
+      checksum = Digest::MD5.base64digest(processed_content)
+      file_io = StringIO.new(processed_content)
+      file_io.set_encoding("ASCII-8BIT") # Ensure binary encoding for PDF
     end
+
+    # Upload to Docuvita
+    uploader = DocuvitaUploader.new
+    result = uploader.upload_io(
+      file_io,
+      filename,
+      {
+        name: "PDF for #{line_id}",
+        description: "PDF for Isometry #{line_id}",
+        metadata: options
+      }
+    )
+
+    # Create the document record after successful upload
+    docuvita_documents.create!(
+      document_type: "isometry_pdf",
+      filename: filename,
+      content_type: content_type,
+      qr_position: qr_position,
+      docuvita_object_id: result[:object_id],
+      byte_size: byte_size,
+      checksum: checksum,
+      metadata: {
+        response: result[:response]
+      }
+    )
   end
 
   # Similar methods for other document types
@@ -367,65 +266,17 @@ class Isometry < ApplicationRecord
     )
   end
 
-  private
-
-  def process_isometry_documents
-    return if draft? || !isometry_documents.any?
-
-    isometry_documents.each do |document|
-      next unless document.pdf.attached?
-    end
-  end
-
   def ensure_qr_code_exists
-    debugger
-    # Generate QR code if it doesn't exist and we have a valid ID
-    return if draft? # Don't generate QR codes for draft isometries
-    return if !persisted? # Must be saved first
+    return if draft? || !persisted? || @generating_qr_code
 
-    # Create a QR code image even if one is already attached (in case URL changed)
-    qr_temp_file = Tempfile.new([ "qr", ".png" ])
+    @generating_qr_code = true
     begin
-      # Generate two URLs - one for show page QR code and one for Docuvita
-      show_url = Rails.application.routes.url_helpers.qr_redirect_url(
-        self,  # For show page, use self as it works with ActiveStorage
-        host: Rails.application.routes.default_url_options[:host]
-      )
+      # Generate QR code for show page display
+      qr_temp_file = Tempfile.new([ "qr", ".png" ])
+      begin
+        show_url = qr_code_url
+        qrcode = RQRCode::QRCode.new(show_url, size: 4, level: :l)
 
-      docuvita_url = Rails.application.routes.url_helpers.qr_redirect_url(
-        id: id,  # For Docuvita, use id as it needs the explicit parameter
-        host: Rails.application.routes.default_url_options[:host]
-      )
-
-      Rails.logger.info "Generating QR code for URL: #{show_url}"
-
-      # Generate QR code for show page (uses show_url)
-      qrcode = RQRCode::QRCode.new(show_url, size: 4, level: :l)
-
-      # Generate PNG with optimized settings
-      qrcode.as_png(
-        bit_depth: 1,
-        border_modules: 1,
-        color_mode: ChunkyPNG::COLOR_GRAYSCALE,
-        color: "black",
-        file: qr_temp_file.path,
-        fill: "white",
-        module_px_size: 3,
-        resize_exactly_to: 120
-      )
-
-      # First, attach the QR code to the isometry for display in the show page
-      qr_code.attach(
-        io: File.open(qr_temp_file.path),
-        filename: "qr_code_#{id}.png",
-        content_type: "image/png",
-        metadata: { qr_url: show_url }
-      )
-
-      # Then, if we have a qr_position set, also create a Docuvita document
-      if qr_position.present?
-        # Generate new QR code for Docuvita (uses docuvita_url)
-        qrcode = RQRCode::QRCode.new(docuvita_url, size: 4, level: :l)
         qrcode.as_png(
           bit_depth: 1,
           border_modules: 1,
@@ -437,39 +288,30 @@ class Isometry < ApplicationRecord
           resize_exactly_to: 120
         )
 
-        docuvita_documents.create!(
-          docuvita_object_id: upload_qr_to_docuvita(qr_temp_file),
-          document_type: "qr_code",
+        # Attach QR code for display in show page
+        qr_code.attach(
+          io: File.open(qr_temp_file.path),
           filename: "qr_code_#{id}.png",
           content_type: "image/png",
-          metadata: {
-            qr_url: docuvita_url,
-            qr_position: qr_position
-          }
+          metadata: { qr_url: show_url }
         )
+      ensure
+        qr_temp_file.close
+        qr_temp_file.unlink if qr_temp_file && File.exist?(qr_temp_file.path)
       end
-
-      Rails.logger.info "QR code successfully attached to isometry #{id}"
-    rescue => e
-      Rails.logger.error "Error generating QR code: #{e.message}"
-      Rails.logger.error e.backtrace.join("\n")
     ensure
-      qr_temp_file.close
-      qr_temp_file.unlink if qr_temp_file && File.exist?(qr_temp_file.path)
+      @generating_qr_code = false
     end
   end
 
-  def upload_qr_to_docuvita(temp_file)
-    uploader = DocuvitaUploader.new
-    result = uploader.upload_io(
-      File.open(temp_file.path, "rb"),
-      "qr_code_#{id}.png",
-      {
-        name: "QR Code for #{line_id}",
-        description: "QR Code for Isometry #{line_id}"
-      }
-    )
-    result[:object_id]
+  private
+
+  def process_isometry_documents
+    return if draft? || !isometry_documents.any?
+
+    isometry_documents.each do |document|
+      next unless document.pdf.attached?
+    end
   end
 
   def calculate_total_sn
