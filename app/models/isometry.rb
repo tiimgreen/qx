@@ -35,6 +35,7 @@ class Isometry < ApplicationRecord
   has_many :test_packs, dependent: :destroy
 
   has_many :docuvita_documents, as: :documentable, dependent: :destroy
+  accepts_nested_attributes_for :docuvita_documents, allow_destroy: true
 
   # Backward compatibility method for the old has_one association
   def work_preparation

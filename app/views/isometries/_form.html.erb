@@ -490,11 +490,11 @@
               </div>
 
               <!-- Existing PDFs with QR Position Selection -->
-              <% if @isometry.persisted? && @isometry.isometry_documents.any? %>
+              <% if @isometry.persisted? && @isometry.docuvita_documents.any? %>
                 <div class="col-12">
                   <h6 class="mb-3"><%= t('.existing_documents') %></h6>
 
-                  <%= f.fields_for :isometry_documents do |doc_form| %>
+                  <%= f.fields_for :docuvita_documents do |doc_form| %>
                     <div class="card mb-3">
                       <div class="card-body">
                         <div class="row align-items-center">
@@ -502,15 +502,15 @@
                             <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
                           </div>
                           <div class="col-md-4">
-                            <h6 class="mb-1"><%= doc_form.object.pdf.filename %></h6>
+                            <h6 class="mb-1"><%= doc_form.object.filename %></h6>
                             <small class="text-muted">
-                              <%= number_to_human_size(doc_form.object.pdf.byte_size) %> •
-                              <%= l(doc_form.object.pdf.created_at, format: :short) if doc_form.object.pdf.created_at.present? %>
+                              <%= number_to_human_size(doc_form.object.byte_size) %> •
+                              <%= l(doc_form.object.created_at, format: :short) if doc_form.object.created_at.present? %>
                             </small>
                           </div>
                           <div class="col-md-3 text-end">
-                            <% if doc_form.object.pdf.persisted? %>
-                              <%= link_to url_for(doc_form.object.pdf),
+                            <% if doc_form.object.persisted? %>
+                              <%= link_to view_docuvita_document_path(doc_form.object),
                                             target: "_blank",
                                             class: "btn btn-outline-primary btn-sm me-2" do %>
                                 <i class="bi bi-eye"></i> <%= t('.view') %>
