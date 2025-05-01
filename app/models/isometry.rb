@@ -163,33 +163,37 @@ class Isometry < ApplicationRecord
     end
   end
 
-  # Helper methods to access specific document types
-  def docuvita_pdfs
-    docuvita_documents.of_type("isometry_pdf")
-  end
+# Add to the Isometry model
+def isometry_pdfs
+  docuvita_documents.where(document_type: "isometry_pdf")
+end
 
-  def docuvita_rt_images
-    docuvita_documents.of_type("rt_image")
-  end
+# You might also want methods for other document types, for example:
+def rt_images
+  docuvita_documents.where(document_type: "rt_image")
+end
 
-  def docuvita_vt_images
-    docuvita_documents.of_type("vt_image")
-  end
+def vt_images
+  docuvita_documents.where(document_type: "vt_image")
+end
 
-  def docuvita_pt_images
-    docuvita_documents.of_type("pt_image")
-  end
+def pt_images
+  docuvita_documents.where(document_type: "pt_image")
+end
 
-  def docuvita_on_hold_images
-    docuvita_documents.of_type("on_hold_image")
-  end
+def on_hold_documents
+  docuvita_documents.where(document_type: "on_hold")
+end
 
-  def docuvita_qr_code
-    docuvita_documents.of_type("qr_code").first
-  end
+  # def qr_code
+  #   docuvita_documents.where(document_type: "qr_code").first
+  # end
 
   # Method to upload a PDF to Docuvita
-  def upload_pdf_to_docuvita(file_io, filename, options = {})
+  def upload_pdf_to_docuvita(file_io, filename,
+    options = { voucher_number: @isometry.line_id,
+      Transactionkey: @project.project_number,
+      Documenttype: "Isometry" })
     qr_position = options.delete(:qr_position)
     content_type = file_io.content_type # Store content type before processing
     content = file_io.read
