@@ -36,25 +36,6 @@ module DocuvitaService
       get_request(uri, params)
     end
 
-    # Create object record with metadata (SetObjectProperties)
-    # Takes the full list/array of property objects (obtained from get_new_object_properties and modified),
-    # the original filename, and an optional version comment.
-    # Returns the response, which should include the DocUploadGuid for the subsequent file upload.
-    def set_object_properties(property_list, original_filename, version_comment = "File Upload")
-      ProjectLog.info("Creating object record (SetObjectProperties)", source: "DocuvitaService", metadata: { filename: original_filename })
-      uri = URI("#{@base_url}/setobjectproperties") # Use /setobjectproperties endpoint
-
-      # Construct payload according to API documentation (matching C# example)
-      payload = {
-        SessionGuid: @session_guid,
-        ObjectPropertyList: property_list, # Expecting the full list of property objects
-        VersionOriginalFilename: original_filename,
-        VersionComment: version_comment
-      }
-
-      # Use the standard post_request
-      post_request(uri, payload)
-    end
 
     # Create object using setobject endpoint (simpler payload structure)
     def set_object(parent_object_id, object_type_id, name, options = {})
@@ -115,7 +96,6 @@ module DocuvitaService
 
       # Open the file and create the multipart request directly
       File.open(file_path) do |file|
-        # Create upload IO object
         upload_io = UploadIO.new(
           file,
           "application/octet-stream",
@@ -231,39 +211,39 @@ module DocuvitaService
       handle_response(response)
     end
 
-    def post_multipart(uri, body, params)
-      uri.query = URI.encode_www_form(params)
+    # def post_multipart(uri, body, params)
+    #   uri.query = URI.encode_www_form(params)
 
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = uri.scheme == "https"
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE # Skip SSL verification for self-signed cert
-      http.read_timeout = 30
-      http.open_timeout = 30
+    #   http = Net::HTTP.new(uri.host, uri.port)
+    #   http.use_ssl = uri.scheme == "https"
+    #   http.verify_mode = OpenSSL::SSL::VERIFY_NONE # Skip SSL verification for self-signed cert
+    #   http.read_timeout = 30
+    #   http.open_timeout = 30
 
-      # Get the file from the body hash - it could be using an empty string key
-      file_io = body[""] || body[:file]
-      unless file_io
-        # Basic error handling if the expected structure isn't found
-        raise ArgumentError, "Multipart body must contain a file IO object"
-      end
+    #   # Get the file from the body hash - it could be using an empty string key
+    #   file_io = body[""] || body[:file]
+    #   unless file_io
+    #     # Basic error handling if the expected structure isn't found
+    #     raise ArgumentError, "Multipart body must contain a file IO object"
+    #   end
 
-      # Use UploadIO from multipart-post gem
-      upload_io_object = UploadIO.new(
-        file_io,
-        "application/octet-stream", # Standard MIME type for binary data
-        File.basename(file_io.path) # Extract filename from the IO path
-      )
+    #   # Use UploadIO from multipart-post gem
+    #   upload_io_object = UploadIO.new(
+    #     file_io,
+    #     "application/octet-stream", # Standard MIME type for binary data
+    #     File.basename(file_io.path) # Extract filename from the IO path
+    #   )
 
-      # Create a multipart POST request with an empty key for the file
-      request = Net::HTTP::Post::Multipart.new(
-        uri.path,
-        "" => upload_io_object  # Empty key for the file
-      )
+    #   # Create a multipart POST request with an empty key for the file
+    #   request = Net::HTTP::Post::Multipart.new(
+    #     uri.path,
+    #     "" => upload_io_object  # Empty key for the file
+    #   )
 
-      response = http.request(request)
+    #   response = http.request(request)
 
-      handle_response(response)
-    end
+    #   handle_response(response)
+    # end
 
     def handle_response(response)
       case response

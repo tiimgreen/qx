@@ -245,26 +245,93 @@ class Isometry < ApplicationRecord
     # Create uploader
     uploader = DocuvitaUploader.new
 
-    # Upload the file
-    result = uploader.upload_io(
-      file_io,
-      filename,
-      {
-        name: "#{line_id}_#{type}_#{Time.current.to_i}",
-        description: "#{type.upcase} image for #{line_id}"
-      }.merge(options)
-    )
+    begin
+      # Check if this is an image file
+      is_image = file_io.content_type&.start_with?("image/") ||
+                %w[.jpg .jpeg .png .gif .bmp .tiff].include?(File.extname(filename).downcase)
 
-    # Create a record of the uploaded document
-    docuvita_documents.create!(
-      docuvita_object_id: result[:object_id],
-      document_type: type,
-      filename: filename,
-      content_type: file_io.content_type,
-      metadata: {
-        response: result[:response]
-      }
-    )
+      unless is_image
+        ProjectLog.error("Invalid file type for upload_image_to_docuvita",
+                      source: "Isometry#upload_image_to_docuvita",
+                      metadata: {
+                        filename: filename,
+                        content_type: file_io.content_type
+                      })
+        raise "File must be an image type for upload_image_to_docuvita method"
+      end
+
+      # For image files, convert to PDF first (Docuvita seems to handle PDFs better)
+      ProjectLog.info("Converting image to PDF for better Docuvita compatibility",
+                    source: "Isometry#upload_image_to_docuvita")
+
+      # Create temporary files for conversion
+      temp_image = Tempfile.new([ "image_orig", File.extname(filename) ])
+      temp_pdf = Tempfile.new([ "image_converted", ".pdf" ])
+
+      begin
+        # Write image to temp file
+        file_io.rewind
+        temp_image.binmode
+        temp_image.write(file_io.read)
+        temp_image.close
+
+        # Convert to PDF using MiniMagick/ImageMagick
+        require "mini_magick"
+
+        image = MiniMagick::Image.open(temp_image.path)
+        image.format "pdf"
+        image.write temp_pdf.path
+
+        # Upload the PDF instead of the image
+        pdf_filename = "#{File.basename(filename, '.*')}.pdf"
+
+        # Upload the converted PDF
+        result = uploader.upload_io(
+          File.open(temp_pdf.path, "rb"),
+          pdf_filename,
+          {
+            name: "#{line_id}_#{type}_#{Time.current.to_i}",
+            description: "#{type.upcase} image (PDF converted) for #{line_id}"
+          }.merge(options)
+        )
+
+        # Create a record of the uploaded document - still record as image type
+        # but note the conversion in metadata
+        docuvita_documents.create!(
+          docuvita_object_id: result[:object_id],
+          document_type: type,
+          filename: pdf_filename,
+          content_type: "application/pdf",  # Actual uploaded content type
+          metadata: {
+            response: result[:response],
+            original_content_type: file_io.content_type,
+            converted_from_image: true
+          }
+        )
+
+      ensure
+        # Clean up temp files
+        temp_image.unlink if temp_image && File.exist?(temp_image.path)
+        temp_pdf.unlink if temp_pdf && File.exist?(temp_pdf.path)
+      end
+
+      ProjectLog.info("Document successfully uploaded to Docuvita",
+                    source: "Isometry#upload_image_to_docuvita",
+                    metadata: {
+                      filename: filename,
+                      type: type
+                    })
+    rescue => e
+      ProjectLog.error("Failed to upload image to Docuvita",
+                      source: "Isometry#upload_image_to_docuvita",
+                      details: e.message,
+                      metadata: {
+                        filename: filename,
+                        content_type: file_io.content_type,
+                        backtrace: e.backtrace.first(5)
+                      })
+      raise e
+    end
   end
 
   def ensure_qr_code_exists
