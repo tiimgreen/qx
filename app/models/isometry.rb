@@ -17,8 +17,8 @@ class Isometry < ApplicationRecord
   has_many :weldings, dependent: :destroy
   accepts_nested_attributes_for :weldings, allow_destroy: true, reject_if: :all_blank
 
-  # has_many :isometry_documents, dependent: :destroy
-  # accepts_nested_attributes_for :isometry_documents, allow_destroy: true
+  has_many :isometry_documents, dependent: :destroy
+  accepts_nested_attributes_for :isometry_documents, allow_destroy: true
 
   has_many_attached :on_hold_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
