@@ -12,23 +12,38 @@ class DocuvitaUploader
     @system_reference = options[:system_reference] || DOCUVITA_CONFIG[:system_reference]
   end
 
-  def upload_file(file_path, options = {})
-    # Extract filename from path
-    original_filename = File.basename(file_path)
+  def upload_io(io, filename, options = {})
+    temp_file = Tempfile.new([ "docuvita_upload", File.extname(filename) ])
 
-    # Set default options
+    begin
+      io.binmode if io.respond_to?(:binmode)
+      io.rewind
+
+      temp_file.binmode
+      temp_file.write(io.read)
+      temp_file.close
+
+      # Upload the temp file
+      result = upload_file(temp_file.path, options.merge(name: filename))
+
+      result
+    ensure
+      # Clean up the temp file
+      temp_file.unlink if temp_file && File.exist?(temp_file.path)
+    end
+  end
+
+  def upload_file(file, options = {})
+    if file.is_a?(ActionDispatch::Http::UploadedFile)
+      original_filename = file.original_filename
+      file_path = file.tempfile.path
+    else
+      file_path = file
+      original_filename = File.basename(file_path)
+    end
+
     doc_name = options[:name] || original_filename
     description = options[:description] || ""
-
-    # Log the upload attempt
-    ProjectLog.info("Uploading file to Docuvita",
-                   source: "DocuvitaUploader",
-                   metadata: {
-                     file_path: file_path,
-                     parent_object_id: @parent_object_id,
-                     object_type_id: @object_type_id,
-                     doc_name: doc_name
-                   })
 
     # Step 1: Create object in Docuvita
     set_object_response = @client.set_object(
@@ -38,7 +53,10 @@ class DocuvitaUploader
       {
         description: description,
         version_original_filename: original_filename,
-        system_reference: @system_reference
+        system_reference: @system_reference,
+        voucher_number: options[:voucher_number],
+        transaction_key: options[:transaction_key],
+        document_type: options[:document_type]
       }
     )
 
@@ -68,29 +86,6 @@ class DocuvitaUploader
       object_id: object_id,
       response: upload_response
     }
-  end
-
-  def upload_io(io, filename, options = {})
-    # Create a temporary file from the IO with binary mode
-    temp_file = Tempfile.new([ "docuvita_upload", File.extname(filename) ])
-    begin
-      # Write the IO content to the temp file in binary mode
-      io.binmode if io.respond_to?(:binmode)
-      io.rewind
-
-      # Ensure we're writing in binary mode
-      temp_file.binmode
-      temp_file.write(io.read)
-      temp_file.close
-
-      # Upload the temp file
-      result = upload_file(temp_file.path, options.merge(name: filename))
-
-      result
-    ensure
-      # Clean up the temp file
-      temp_file.unlink if temp_file && File.exist?(temp_file.path)
-    end
   end
 
   def download_document(object_id)

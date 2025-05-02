@@ -133,7 +133,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :docuvita_documents, only: [] do
+    resources :docuvita_documents, only: [ :destroy ] do
       member do
         get :download
         get :view

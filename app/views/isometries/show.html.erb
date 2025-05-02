@@ -233,37 +233,19 @@
         <dt class="col-sm-2"><%= t('.rt_percentage') %></dt>
         <dd class="col-sm-10"><%= @isometry.rt %> %</dd>
       </dl>
-      <% if @isometry.rt_images.attached? %>
-        <%= render partial: 'images', locals: {
-          images: @isometry.rt_images,
-          image_type: 'rt',
-          model_type: @isometry
-        } %>
-      <% end %>
+
 
       <dl class="row mb-3">
         <dt class="col-sm-2"><%= t('.vt_percentage') %></dt>
         <dd class="col-sm-10"><%= @isometry.vt2 %> %</dd>
       </dl>
-      <% if @isometry.vt_images.attached? %>
-        <%= render partial: 'images', locals: {
-          images: @isometry.vt_images,
-          image_type: 'vt',
-          model_type: @isometry
-        } %>
-      <% end %>
+
 
       <dl class="row mb-3">
         <dt class="col-sm-2"><%= t('.pt_percentage') %></dt>
         <dd class="col-sm-10"><%= @isometry.pt2%> %</dd>
       </dl>
-      <% if @isometry.pt_images.attached? %>
-        <%= render partial: 'images', locals: {
-          images: @isometry.pt_images,
-          image_type: 'pt',
-          model_type: @isometry
-        } %>
-      <% end %>
+
     </div>
   </div>
 </div>
@@ -346,11 +328,11 @@
 </div>
 
 <!-- Isometry Images -->
-<% if @isometry.docuvita_documents.any? %>
+<% if @isometry.isometry_pdfs.any? %>
   <div class="row mb-4">
     <div class="col-12">
       <%= render partial: 'docuvita_documents', locals: {
-        documents: @isometry.docuvita_documents,
+        documents: @isometry.isometry_pdfs,
         title: t('.isometry_documents')
       } %>
     </div>

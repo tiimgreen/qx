@@ -190,23 +190,21 @@ end
   # end
 
   # Method to upload a PDF to Docuvita
-  def upload_pdf_to_docuvita(file_io, filename,
-    options = { voucher_number: @isometry.line_id,
-      Transactionkey: @project.project_number,
-      Documenttype: "Isometry" })
+  def upload_pdf_to_docuvita(file_io, original_filename, options = {})
     qr_position = options.delete(:qr_position)
-    content_type = file_io.content_type # Store content type before processing
+    content_type = file_io.content_type
     content = file_io.read
     byte_size = content.bytesize
     checksum = Digest::MD5.base64digest(content)
     file_io.rewind
+    filename = "#{line_id}_isometry.pdf"
 
     # Process the PDF with QR code if position is specified
     if qr_position.present?
       # Create a temporary document to use QrCodeable methods
       temp_doc = docuvita_documents.build(
         document_type: "isometry_pdf",
-        filename: filename,
+        filename: original_filename,
         content_type: content_type,
         qr_position: qr_position
       )
@@ -223,9 +221,10 @@ end
       file_io,
       filename,
       {
-        name: "PDF for #{line_id}",
-        description: "PDF for Isometry #{line_id}",
-        metadata: options
+        voucher_number: self.line_id,
+        transaction_key: project.project_number,
+        document_type: "Isometry",
+        description: "Isometry PDF with line_id: #{self.line_id} and project_number: #{self.project.project_number} and original filename: #{original_filename}"
       }
     )
 

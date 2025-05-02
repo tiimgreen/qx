@@ -42,6 +42,28 @@ class DocuvitaDocumentsController < ApplicationController
               filename: filename
   end
 
+  def destroy
+    @document = DocuvitaDocument.find(params[:id])
+
+    if @document.destroy
+      respond_to do |format|
+        format.html {
+          redirect_back(fallback_location: root_path,
+                       notice: t("common.messages.deleted", model: t("activerecord.models.docuvita_document")))
+        }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html {
+          redirect_back(fallback_location: root_path,
+                       alert: t("common.messages.delete_error", model: t("activerecord.models.docuvita_document")))
+        }
+        format.json { render json: @document.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def set_document

@@ -227,40 +227,19 @@
               <div class="row">
                 <dt><%= f.label :rt_percentage %></dt>
                 <%= f.file_field :rt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
-                <% if @isometry.rt_images.attached? %>
-                  <%= render partial: 'images', locals: {
-                    images: @isometry.rt_images,
-                    image_type: 'rt',
-                    edit_mode: true,
-                    model_type: @isometry
-                  } %>
-                <% end %>
+
               </div>
 
               <div class="row">
                 <dt><%= f.label :vt2_percentage %></dt>
                 <%= f.file_field :vt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
-                <% if @isometry.vt_images.attached? %>
-                  <%= render partial: 'images', locals: {
-                    images: @isometry.vt_images,
-                    image_type: 'vt',
-                    edit_mode: true,
-                    model_type: @isometry
-                  } %>
-                <% end %>
+
               </div>
 
               <div class="row">
                 <dt><%= f.label :pt2_percentage %></dt>
                 <%= f.file_field :pt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
-                <% if @isometry.pt_images.attached? %>
-                  <%= render partial: 'images', locals: {
-                    images: @isometry.pt_images,
-                    image_type: 'pt',
-                    edit_mode: true,
-                    model_type: @isometry
-                  } %>
-                <% end %>
+  
               </div>
             </div>
           </div>
@@ -490,11 +469,11 @@
               </div>
 
               <!-- Existing PDFs with QR Position Selection -->
-              <% if @isometry.persisted? && @isometry.docuvita_documents.any? %>
+              <% if @isometry.persisted? && @isometry.isometry_pdfs.any? %>
                 <div class="col-12">
                   <h6 class="mb-3"><%= t('.existing_documents') %></h6>
 
-                  <%= f.fields_for :docuvita_documents do |doc_form| %>
+                  <% @isometry.isometry_pdfs.each do |document| %>
                     <div class="card mb-3">
                       <div class="card-body">
                         <div class="row align-items-center">
@@ -502,28 +481,33 @@
                             <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
                           </div>
                           <div class="col-md-4">
-                            <h6 class="mb-1"><%= doc_form.object.filename %></h6>
+                            <h6 class="mb-1"><%= document.filename %></h6>
                             <small class="text-muted">
-                              <%= number_to_human_size(doc_form.object.byte_size) %> •
-                              <%= l(doc_form.object.created_at, format: :short) if doc_form.object.created_at.present? %>
+                              <%= number_to_human_size(document.byte_size) %> •
+                              <%= l(document.created_at, format: :short) if document.created_at.present? %>
                             </small>
                           </div>
                           <div class="col-md-3 text-end">
-                            <% if doc_form.object.persisted? %>
-                              <%= link_to view_docuvita_document_path(doc_form.object),
+                            <% if document.persisted? %>
+                              <%= link_to view_docuvita_document_path(document),
                                             target: "_blank",
                                             class: "btn btn-outline-primary btn-sm me-2" do %>
                                 <i class="bi bi-eye"></i> <%= t('.view') %>
                               <% end %>
                             <% end %>
-                            <%= doc_form.check_box :_destroy,
-                                                class: "btn-check",
-                                                id: "delete_doc_#{doc_form.object.id}" %>
-                            <%= doc_form.label :_destroy,
-                                            class: "btn btn-outline-danger btn-sm",
-                                            for: "delete_doc_#{doc_form.object.id}" do %>
+                          <% if current_user.can_delete?("Isometry") %>  
+                            <%= button_tag type: 'button',
+                                         class: 'btn btn-outline-danger btn-sm',
+                                         data: {
+                                           bs_toggle: "modal",
+                                           bs_target: "#deleteDocumentModal",
+                                           "document-id": document.id,
+                                           "document-name": document.filename,
+                                           "document-number": document.docuvita_object_id
+                                         } do %>
                               <i class="bi bi-trash"></i> <%= t('.delete') %>
                             <% end %>
+                          <% end %>
                           </div>
                         </div>
                       </div>
@@ -572,5 +556,11 @@
 </div>
 
 </div>
+<%= render partial: 'delete_confirmation_modal',
+           locals: {
+             modal_id: 'deleteDocumentModal',
+             controller_name: 'delete-document',
+             model_name: 'docuvita_document'
+           } %>
 <% end %>
 </div>
