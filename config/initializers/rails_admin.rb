@@ -35,6 +35,11 @@ RailsAdmin.config do |config|
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
 
+  # Exclude IsometryDocument model
+  config.model "IsometryDocument" do
+    visible false
+  end
+
   config.model "User" do
     list do
       field :email
