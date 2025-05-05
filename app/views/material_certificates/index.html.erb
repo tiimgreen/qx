@@ -59,11 +59,14 @@
             <td><%= certificate.issue_date.strftime("%d/%m/%Y %H:%M") if certificate.issue_date %></td>
             <td><%= certificate.issuer_name %></td>
             <td>
-              <% if certificate.certificate_file.attached? %>
-                <%= link_to rails_blob_path(certificate.certificate_file, disposition: "inline"),
-                    class: "text-decoration-none",
-                    target: "_blank" do %>
-                  <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+              <%# Find the relevant Docuvita document for this certificate %>
+              <% docuvita_doc = certificate.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+              <% if docuvita_doc %>
+                <%= link_to view_docuvita_document_path(docuvita_doc),
+                    class: "text-decoration-none text-primary",
+                    target: "_blank",
+                    title: "View certificate #{docuvita_doc.filename} from Docuvita" do %>
+                  <i class="bi bi-file-earmark-text"></i>
                 <% end %>
               <% end %>
             </td>

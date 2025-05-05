@@ -10,6 +10,7 @@ class MaterialCertificatesController < ApplicationController
 
     @pagy, @material_certificates = pagy(
       MaterialCertificate.search_by_term(params[:search])
+                        .includes(:docuvita_documents)
                         .order(sort_column => sort_direction)
     )
   end
@@ -17,9 +18,16 @@ class MaterialCertificatesController < ApplicationController
   def search
     query = (params[:q] || params[:query])&.strip&.downcase
     @certificates = if query.present?
-      MaterialCertificate.where("LOWER(batch_number) LIKE ? OR LOWER(certificate_number) LIKE ?",
-                               "%#{query}%", "%#{query}%")
-                        .limit(10)
+      MaterialCertificate
+        .left_outer_joins(:docuvita_documents)
+        .where(
+          "LOWER(material_certificates.batch_number) LIKE :query OR " \
+          "LOWER(material_certificates.certificate_number) LIKE :query OR " \
+          "(docuvita_documents.document_type = 'material_certificate_pdf' AND LOWER(docuvita_documents.filename) LIKE :query)",
+          { query: "%#{query}%" }
+        )
+        .distinct
+        .limit(10)
     else
       MaterialCertificate.none
     end
@@ -51,12 +59,10 @@ class MaterialCertificatesController < ApplicationController
 
     if @material_certificate.save
       begin
-        # Upload to Docuvita after save if file present
         handle_docuvita_certificate_upload(@material_certificate, uploaded_file) if uploaded_file
 
         redirect_to @material_certificate, notice: t(".success")
       rescue StandardError => e
-        # If upload fails, destroy the created record (or handle differently)
         # and show error
         @material_certificate.destroy
         flash.now[:alert] = t(".upload_error", message: e.message)
@@ -74,12 +80,10 @@ class MaterialCertificatesController < ApplicationController
 
     if @material_certificate.update(cert_params)
       begin
-        # Upload to Docuvita if a new file was provided
         handle_docuvita_certificate_upload(@material_certificate, uploaded_file) if uploaded_file
 
         redirect_to @material_certificate, notice: t(".success")
       rescue StandardError => e
-        # If upload fails, keep the record changes but show error
         flash.now[:alert] = t(".upload_error", message: e.message)
         render :edit, status: :unprocessable_entity
       end
