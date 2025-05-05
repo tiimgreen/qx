@@ -28,11 +28,16 @@ de:
         empty: "darf nicht leer sein"
         too_fast: "wurde zu schnell wiederholt. Bitte warte %{count} Sekunden."
         wrong_recaptcha: "ist ungültig. Bitte überprüfe deine Eingabe."
+        inclusion: "ist kein gültiger Wert"
       models:
         incoming_delivery:
           attributes:
             order_number:
               taken: "ist bereits vergeben"
+        docuvita_document:
+          attributes:
+            document_type:
+              inclusion: "ist kein gültiger Dokumententyp"
     models:
       project: "Projekt"
       incoming_delivery: "Wareneingang"

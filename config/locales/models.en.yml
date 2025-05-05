@@ -7,11 +7,16 @@ en:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
         taken: "has already been taken"
+        inclusion: "is not included in the list"
       models:
         incoming_delivery:
           attributes:
             order_number:
               taken: "has already been taken"
+        docuvita_document:
+          attributes:
+            document_type:
+              inclusion: "is not a valid document type"
     models:
       project: "Project"
       incoming_delivery: "Incoming Delivery"
@@ -97,6 +102,8 @@ en:
         ra_value: "Ra Value"
         on_hold_status: "On Hold"
         on_hold_comment: "On Hold Comment"
+      docuvita_document:
+        document_type: "Document Type"
   material_certificates:
     index:
       title: "Material Certificates"
