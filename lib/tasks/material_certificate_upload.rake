@@ -6,7 +6,7 @@ namespace :docuvita do
   task :upload_material_certificates, [ :limit ] => :environment do |_task, args|
     # Set a default limit or use the one from args, default to a high number if none provided
     upload_limit = args[:limit].present? ? args[:limit].to_i : 1_000_000 # Effectively no limit unless specified
-    testing_limit = 10 # Define the specific limit for testing
+    testing_limit = 5 # Define the specific limit for testing
     effective_limit = [ upload_limit, testing_limit ].min # Use the smaller of the argument or the hardcoded test limit
 
     puts "Starting Docuvita Material Certificate upload (Limit: #{effective_limit})..."
@@ -68,7 +68,7 @@ namespace :docuvita do
         end
 
         docuvita_filename = "#{certificate.certificate_number}_cert.pdf"
-        description = "Material Certificate: #{certificate.certificate_number}, Batch: #{certificate.batch_number || 'N/A'}, Project: #{project_number}. Original: #{original_filename}"
+        description = "Material Certificate: #{certificate.certificate_number}, Batch: #{certificate.batch_number || 'N/A'}, Issue Date: #{certificate.issue_date || 'N/A'},Issuer: #{certificate.issuer_name || 'N/A'},Description: #{certificate.description || 'N/A'},Position: #{certificate.line_id || 'N/A'}, Original: #{original_filename}"
         voucher_number = certificate.certificate_number
         transaction_key = project_number
         docuvita_api_document_type = "MaterialCertificate"
