@@ -4,6 +4,7 @@ class MaterialCertificate < ApplicationRecord
   has_many :isometries, through: :isometry_material_certificates
   has_many :weldings_as_certificate, class_name: "Welding", foreign_key: "material_certificate_id", dependent: :nullify
   has_many :weldings_as_certificate1, class_name: "Welding", foreign_key: "material_certificate1_id", dependent: :nullify
+  has_many :docuvita_documents, as: :documentable, dependent: :destroy # Add this line
 
   validates :certificate_number,
             presence: true,

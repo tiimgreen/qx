@@ -13,3 +13,6 @@ Access to Project Reports - user must be added into Project User table.
 
 # Docuvita download
 # bundle exec rake 'docuvita:download[6186,/Users/nezirzahirovic/Downloads/downloaded_document.pdf,1]'
+
+# Docuvita upload isometry pdfs (for a specific project)
+# rails 'docuvita:upload_isometry_pdfs[26]'
