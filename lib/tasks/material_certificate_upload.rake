@@ -56,9 +56,29 @@ namespace :docuvita do
         upload_attempts += 1 # Increment only for eligible certificates that will be attempted
 
         # 3. Prepare metadata...
-        # ... (rest of the metadata preparation code remains the same) ...
         project = certificate.isometries.first&.project
-        project_number = project&.project_number || "N/A"
+        project_number = project&.project_number || "UNKNOWN_PROJECT"
+
+        # --- Metadata Preparation ---
+        certificate_metadata = {
+          certificate_number: certificate.certificate_number,
+          batch_number: certificate.batch_number,
+          issue_date: certificate.issue_date,
+          issuer_name: certificate.issuer_name,
+          description: certificate.description,
+          line_id: certificate.line_id, # Assuming line_id is relevant here
+          original_filename: original_filename,
+          project_number: project_number
+        }
+
+        # --- Docuvita API Payload Preparation ---
+        docuvita_filename = "#{certificate.certificate_number}_cert.pdf"
+        # Use a concise description for the API, full details are in metadata
+        api_description = certificate_metadata,
+        voucher_number = certificate.certificate_number
+        transaction_key = project_number
+        docuvita_api_document_type = "MaterialCertificate" # Type for Docuvita API
+        local_document_type = "material_certificate_pdf" # Type for our DocuvitaDocument model
 
         unless certificate.certificate_number.present?
            puts "  [SKIP] Certificate Number is missing, which is required for Docuvita metadata (voucher_number)."
@@ -67,23 +87,16 @@ namespace :docuvita do
            next
         end
 
-        docuvita_filename = "#{certificate.certificate_number}_cert.pdf"
-        description = "Material Certificate: #{certificate.certificate_number}, Batch: #{certificate.batch_number || 'N/A'}, Issue Date: #{certificate.issue_date || 'N/A'},Issuer: #{certificate.issuer_name || 'N/A'},Description: #{certificate.description || 'N/A'},Position: #{certificate.line_id || 'N/A'}, Original: #{original_filename}"
-        voucher_number = certificate.certificate_number
-        transaction_key = project_number
-        docuvita_api_document_type = "MaterialCertificate"
-
-        puts "  Uploading '#{original_filename}' as '#{docuvita_filename}'..."
+        puts "  Uploading '#{original_filename}' (Certificate ##{certificate.id}) as '#{docuvita_filename}'..."
 
         begin
           # 4. Perform upload...
-          # ... (upload logic remains the same) ...
           certificate.certificate_file.open do |tempfile|
             upload_result = uploader.upload_file(
               tempfile.path,
               {
                 name: docuvita_filename,
-                description: description,
+                description: api_description,
                 voucher_number: voucher_number,
                 transaction_key: transaction_key,
                 document_type: docuvita_api_document_type,
@@ -92,13 +105,14 @@ namespace :docuvita do
             )
             object_id = upload_result[:object_id]
             # 5. Create DocuvitaDocument record...
-            # ... (record creation logic remains the same) ...
             if object_id
                # ... create record ...
                DocuvitaDocument.create!(
-                 documentable: certificate,
+                 documentable: certificate, # Link to the MaterialCertificate
                  docuvita_object_id: object_id,
-                 document_type: local_document_type, # Use the specific local type
+                 document_type: local_document_type, # Use our internal type
+                 # --- Save collected metadata to our model ---
+                 metadata: certificate_metadata,
                  filename: docuvita_filename,
                  content_type: certificate_blob.content_type,
                  byte_size: certificate_blob.byte_size,
