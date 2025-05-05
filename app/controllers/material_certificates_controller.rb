@@ -38,6 +38,7 @@ class MaterialCertificatesController < ApplicationController
   end
 
   def show
+    # @material_certificate is set by the before_action :set_material_certificate
     respond_to do |format|
       format.html
       format.pdf { render pdf: "certificate_#{@material_certificate.certificate_number}" }

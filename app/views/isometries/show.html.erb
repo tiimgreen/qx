@@ -127,28 +127,28 @@
       <div class="row g-3">
         <% @isometry.material_certificates.each do |cert| %>
           <div class="col-md-1">
-            <div class="d-flex flex-column position-relative border rounded p-2">
-              <% if cert.certificate_file.attached? %>
-                <%= link_to rails_blob_path(cert.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none text-dark" do %>
-                  <div class="text-center mb-2">
-                    <i class="bi bi-file-text" style="font-size: 2rem;"></i>
-                  </div>
-                  <div class="text-center">
-                    <small><%= cert.certificate_number %></small><br>
-                    <span class="text-secondary small"><%= cert.batch_number %></span>
+            <%# Find the relevant Docuvita document for this certificate %>
+            <% docuvita_doc = cert.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+
+            <div class="d-flex flex-column align-items-center position-relative border rounded p-2 text-center">
+              <% if docuvita_doc %>
+                <%= link_to view_docuvita_document_path(docuvita_doc),
+                    target: "_blank",
+                    class: "text-decoration-none text-dark",
+                    title: "View certificate #{docuvita_doc.filename} from Docuvita" do %>
+                  <div class="mb-2">
+                    <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
                   </div>
                 <% end %>
               <% else %>
-                <div class="text-decoration-none text-dark">
-                  <div class="text-center mb-2">
-                    <i class="bi bi-file-text" style="font-size: 2rem; opacity: 0.5;"></i>
-                  </div>
-                  <div class="text-center">
-                    <small><%= cert.certificate_number %></small><br>
-                    <span class="text-secondary small"><%= cert.batch_number %></span>
-                  </div>
+                <div class="text-center mb-2 text-muted">
+                  <i class="bi bi-file-earmark-minus" style="font-size: 2rem;"></i>
                 </div>
               <% end %>
+              <small class="text-muted text-truncate" title="<%= cert.certificate_number %>">
+                <%= cert.certificate_number %>
+              </small><br>
+              <span class="text-secondary small"><%= cert.batch_number %></span>
             </div>
           </div>
         <% end %>

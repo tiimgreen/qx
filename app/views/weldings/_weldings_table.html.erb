@@ -49,25 +49,40 @@
           <div class="d-flex flex-column">
             <div>
             <% if welding.material_certificate %>
-              <% if welding.material_certificate&.certificate_file&.attached? %>
-                <%= link_to rails_blob_path(welding.material_certificate.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
+              <%# Find the relevant Docuvita document for the welding's certificate %>
+              <% docuvita_doc = welding.material_certificate.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+              <% if docuvita_doc %>
+                <%= link_to view_docuvita_document_path(docuvita_doc),
+                          target: "_blank",
+                          class: "text-decoration-none",
+                          title: "View certificate #{docuvita_doc.filename} from Docuvita" do %>
                   <small class="bg-success text-white rounded p-1"><%= welding.material_certificate.certificate_number %></small>
                 <% end %>
               <% else %>
-                <small class="bg-secondary text-white rounded p-1"><%= welding.material_certificate&.certificate_number %></small>
+                <%# Display number without link if no document found %>
+                <small class="bg-secondary text-white rounded p-1" title="Certificate document not found in Docuvita"><%= welding.material_certificate.certificate_number %></small>
               <% end %>
+            <% else %>
+              <small><%= t('.no_certificate') %></small>
             <% end %>
             </div>
               <div>
                 <% if welding.material_certificate1 %>
-                  <% if welding.material_certificate1&.certificate_file&.attached? %>
-                    <%= link_to rails_blob_path(welding.material_certificate1.certificate_file, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
+                  <%# Find the relevant Docuvita document for the welding's certificate %>
+                  <% docuvita_doc = welding.material_certificate1.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+                  <% if docuvita_doc %>
+                    <%= link_to view_docuvita_document_path(docuvita_doc),
+                              target: "_blank",
+                              class: "text-decoration-none",
+                              title: "View certificate #{docuvita_doc.filename} from Docuvita" do %>
                       <small class="bg-success text-white rounded p-1"><%= welding.material_certificate1.certificate_number %></small>
                     <% end %>
                   <% else %>
-                    <small class="bg-secondary text-white rounded p-1"><%= welding.material_certificate1&.certificate_number %></small>
+                    <%# Display number without link if no document found %>
+                    <small class="bg-secondary text-white rounded p-1" title="Certificate document not found in Docuvita"><%= welding.material_certificate1.certificate_number %></small>
                   <% end %>
-
+                <% else %>
+                  <small><%= t('.no_certificate') %></small>
                 <% end %>                
               </div>
             </div>

@@ -409,7 +409,8 @@
                           <button type="button"
                                   class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1"
                                   data-action="click->material-certificate-search#removeCertificate">×</button>
-                          <%= link_to material_certificate_path(cert), class: "text-decoration-none text-dark" do %>
+                          <%= link_to view_docuvita_document_path(cert.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' }),target: "_blank",
+                                      class: "text-decoration-none text-dark" do %>
                             <div class="text-center mb-2">
                               <i class="bi bi-file-text" style="font-size: 2rem;"></i>
                             </div>
