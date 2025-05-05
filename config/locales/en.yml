@@ -664,3 +664,16 @@ en:
       completed: Completed
       in_progress: In Progress
       not_started: Not Started
+  material_certificates:
+    title: "Material Certificates"
+    new: "New Material Certificate"
+    edit: "Edit Material Certificate"
+    create:
+      success: "Material Certificate successfully created."
+      upload_error: "Failed to upload certificate: %{message}"
+    update:
+      success: "Material Certificate successfully updated."
+      upload_error: "Failed to upload new certificate: %{message}"
+    destroy:
+      success: "Material Certificate successfully deleted."
+      confirm: "Are you sure you want to delete this Material Certificate?"

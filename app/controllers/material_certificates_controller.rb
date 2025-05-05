@@ -44,20 +44,47 @@ class MaterialCertificatesController < ApplicationController
   end
 
   def create
-    @material_certificate = MaterialCertificate.new(material_certificate_params)
+    cert_params = material_certificate_params
+    uploaded_file = cert_params.delete(:certificate_file)
+
+    @material_certificate = MaterialCertificate.new(cert_params)
 
     if @material_certificate.save
-      redirect_to @material_certificate, notice: t(".success")
+      begin
+        # Upload to Docuvita after save if file present
+        handle_docuvita_certificate_upload(@material_certificate, uploaded_file) if uploaded_file
+
+        redirect_to @material_certificate, notice: t(".success")
+      rescue StandardError => e
+        # If upload fails, destroy the created record (or handle differently)
+        # and show error
+        @material_certificate.destroy
+        flash.now[:alert] = t(".upload_error", message: e.message)
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if @material_certificate.update(material_certificate_params)
-      redirect_to @material_certificate, notice: t(".success")
+    # Separate file param
+    cert_params = material_certificate_params
+    uploaded_file = cert_params.delete(:certificate_file)
+
+    if @material_certificate.update(cert_params)
+      begin
+        # Upload to Docuvita if a new file was provided
+        handle_docuvita_certificate_upload(@material_certificate, uploaded_file) if uploaded_file
+
+        redirect_to @material_certificate, notice: t(".success")
+      rescue StandardError => e
+        # If upload fails, keep the record changes but show error
+        flash.now[:alert] = t(".upload_error", message: e.message)
+        render :edit, status: :unprocessable_entity
+      end
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -139,5 +166,16 @@ class MaterialCertificatesController < ApplicationController
       flash[:alert] = t("common.messages.unauthorized", action: t("common.actions.delete"), model: MaterialCertificate.model_name.human)
       redirect_to request.referer || material_certificate_path(@material_certificate)
     end
+  end
+
+  # Handles uploading the certificate file to Docuvita
+  def handle_docuvita_certificate_upload(certificate, file)
+    unless file.is_a?(ActionDispatch::Http::UploadedFile)
+      Rails.logger.warn("Skipping Docuvita upload: Invalid file parameter type.")
+      return # Or raise an error if file is mandatory
+    end
+
+    # Delegate to the model instance method for actual upload logic
+    certificate.upload_certificate_to_docuvita(file, file.original_filename)
   end
 end

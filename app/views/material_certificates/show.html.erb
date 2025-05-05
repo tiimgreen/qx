@@ -65,14 +65,19 @@
     </div>
   </div>
 
-  <% if @material_certificate.certificate_file.attached? %>
+  <%# Find the relevant Docuvita document for this certificate %>
+  <% docuvita_doc = @material_certificate.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+
+  <% if docuvita_doc %>
     <div class="row mb-4">
       <div class="col-12">
         <h5 class="border-bottom pb-2 mb-3"><%= t('.certificate_file') %></h5>
         <div class="d-flex align-items-center">
-          <%= link_to rails_blob_path(@material_certificate.certificate_file, disposition: "inline"),
-              class: "text-decoration-none",
-              target: "_blank" do %>
+          <%# TODO: Replace '#' with actual download path, e.g., download_docuvita_document_path(docuvita_doc) %>
+          <%= link_to view_docuvita_document_path(docuvita_doc),
+              class: "text-decoration-none text-dark",
+              target: "_blank",
+              title: "View certificate #{docuvita_doc.filename} from Docuvita" do %>
             <i class="bi bi-file-earmark-text" style="font-size: 4rem;"></i>
           <% end %>
         </div>

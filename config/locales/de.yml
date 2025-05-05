@@ -649,3 +649,16 @@ de:
       completed: Abgeschlossen
       in_progress: In Arbeit
       not_started: Noch nicht begonnen
+  material_certificates:
+    title: "Werkzeugnisse"
+    new: "Neues Werkzeugnis"
+    edit: "Werkzeugnis bearbeiten"
+    create:
+      success: "Werkzeugnis erfolgreich erstellt."
+      upload_error: "Hochladen des Zertifikats fehlgeschlagen: %{message}"
+    update:
+      success: "Werkzeugnis erfolgreich aktualisiert."
+      upload_error: "Hochladen des neuen Zertifikats fehlgeschlagen: %{message}"
+    destroy:
+      success: "Werkzeugnis erfolgreich gelöscht."
+      confirm: "Sind Sie sicher, dass Sie dieses Werkzeugnis löschen möchten?"
