@@ -14,7 +14,7 @@
     <div class="col-md-6">
       <div class="form-group mb-3">
         <%= f.label :certificate_number,
-            t('.certificate_number_last', number: MaterialCertificate.last&.certificate_number),
+            t('.certificate_number_last', number: @last_uploaded_cert_number),
             class: 'form-label' %>
         <%= f.text_field :certificate_number, class: 'form-control', required: true %>
       </div>

@@ -46,6 +46,11 @@ class MaterialCertificatesController < ApplicationController
 
   def new
     @material_certificate = MaterialCertificate.new
+
+    last_uploaded_doc = DocuvitaDocument.where(document_type: "material_certificate_pdf")
+                                        .order(created_at: :desc)
+                                        .first
+    @last_uploaded_cert_number = last_uploaded_doc&.metadata&.dig(:certificate_number) || last_uploaded_doc&.metadata&.dig("certificate_number")
   end
 
   def edit
@@ -74,7 +79,6 @@ class MaterialCertificatesController < ApplicationController
   end
 
   def update
-    # Separate file param
     cert_params = material_certificate_params
     uploaded_file = cert_params.delete(:certificate_file)
 
