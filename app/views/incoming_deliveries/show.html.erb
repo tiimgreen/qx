@@ -59,30 +59,23 @@
         </div>
 
         <div class="col-md-6">
-          <% if @incoming_delivery.delivery_notes.attached? %>
-            <div class="mb-3">
-              <strong><%= t('.delivery_note') %>:</strong><br>
-              <div class="d-flex flex-wrap gap-2">
-                <% @incoming_delivery.delivery_notes.each do |note| %>
-                  <%= link_to rails_blob_path(note, disposition: "inline"), target: "_blank", class: "text-decoration-none" do %>
-                    <div class="border rounded p-2" style="width: 150px;">
-                      <div class="text-center">
-                        <% if note.content_type.start_with?('image/') %>
-                          <%= image_tag note.representation(resize_to_limit: [100, 100]), class: "img-fluid mb-1" %>
-                        <% else %>
-                          <i class="bi bi-file-pdf text-danger" style="font-size: 1.5rem;"></i>
-                        <% end %>
-                        <div class="small text-dark text-truncate mt-1" title="<%= note.filename.to_s %>">
-                          <%= note.filename.to_s %>
-                        </div>
-                        <div class="text-muted" style="font-size: 0.7rem;">
-                          <%= number_to_human_size(note.byte_size) %>
-                        </div>
-                      </div>
-                    </div>
-                  <% end %>
+          <%# Find all delivery notes in Docuvita %>
+          <% docuvita_docs = @incoming_delivery.docuvita_documents.select { |doc| doc.document_type == 'delivery_note_pdf' } %>
+          
+          <% if docuvita_docs.any? %>
+            <h5 class="border-bottom pb-2 mb-3"><%= t('.delivery_notes') %></h5>
+            <div class="d-flex flex-wrap gap-3">
+              <% docuvita_docs.each do |doc| %>
+                <%= link_to view_docuvita_document_path(doc),
+                    class: "text-decoration-none text-dark",
+                    target: "_blank",
+                    title: "View delivery note #{doc.filename} from Docuvita" do %>
+                  <div class="d-flex flex-column align-items-center">
+                    <i class="bi bi-file-earmark-text" style="font-size: 4rem;"></i>
+                    <small class="text-muted"><%= doc.filename %></small>
+                  </div>
                 <% end %>
-              </div>
+              <% end %>
             </div>
           <% end %>
         </div>

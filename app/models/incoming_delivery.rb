@@ -84,13 +84,86 @@ class IncomingDelivery < ApplicationRecord
     true
   end
 
+  # Uploads the given delivery note file to Docuvita
+  # @param file [ActionDispatch::Http::UploadedFile] The uploaded file object
+  # @param original_filename [String] The original name of the file
+  # @return [DocuvitaDocument] The created DocuvitaDocument record
+  # @raise [StandardError] If upload fails or required data is missing
+  def upload_delivery_note_to_docuvita(file, original_filename)
+    # Ensure required attributes are present
+    unless delivery_note_number.present?
+      raise StandardError, "Delivery Note Number is missing, cannot upload to Docuvita."
+    end
+
+    # Instantiate uploader with correct object type ID for delivery notes
+    uploader = DocuvitaUploader.new(object_type_id: 29)
+
+    # Prepare metadata hash for DocuvitaDocument
+    delivery_metadata = {
+      delivery_note_number: delivery_note_number,
+      order_number: order_number,
+      supplier_name: supplier_name,
+      project_id: project_id,
+      original_filename: original_filename,
+      upload_context: "manual_form"
+    }
+
+    # Prepare Docuvita API payload
+    docuvita_filename = "#{delivery_note_number}_dn.pdf"
+    api_description = delivery_metadata
+    voucher_number = delivery_note_number
+    transaction_key = project&.project_number || "UNKNOWN_PROJECT"
+    local_document_type = "delivery_note_pdf"
+
+    # Perform upload using tempfile
+    object_id = nil
+    begin
+      File.open(file.tempfile.path, "rb") do |tempfile_handle|
+        upload_result = uploader.upload_file(
+          tempfile_handle.path,
+          {
+            name: docuvita_filename,
+            description: api_description,
+            voucher_number: voucher_number,
+            transaction_key: transaction_key,
+            version_original_filename: original_filename
+          }
+        )
+        object_id = upload_result[:object_id]
+      end
+
+      unless object_id
+        raise StandardError, "Docuvita upload failed: No object_id received."
+      end
+
+      # Create DocuvitaDocument record on success
+      docuvita_doc = docuvita_documents.create!(
+        docuvita_object_id: object_id,
+        document_type: local_document_type,
+        metadata: delivery_metadata,
+        filename: docuvita_filename,
+        content_type: file.content_type,
+        byte_size: file.size
+      )
+
+      Rails.logger.info "Successfully uploaded Delivery Note ##{id} to Docuvita (ObjectID: #{object_id})"
+      docuvita_doc
+
+    rescue StandardError => e
+      Rails.logger.error "Docuvita upload failed for Delivery Note ##{id}: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      # Re-raise the error to be caught by the controller
+      raise StandardError, "Failed to upload delivery note to Docuvita: #{e.message}"
+    end
+  end
+
   private
 
   def purge_attached_files
-    delivery_notes.purge
+    delivery_notes.purge_later if delivery_notes.attached?
   end
 
   def cleanup_delivery_items
-    delivery_items.each(&:destroy)
+    delivery_items.destroy_all
   end
 end

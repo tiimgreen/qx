@@ -30,6 +30,11 @@ class IncomingDeliveriesController < ApplicationController
       @delivery_items = @incoming_delivery.delivery_items
                                         .includes(:user, :project)
                                         .sorted_by(params[:sort], params[:direction])
+
+      respond_to do |format|
+        format.html
+        format.pdf { render pdf: "delivery_note_#{@incoming_delivery.delivery_note_number}" }
+      end
     else
       flash[:alert] = "Delivery not found"
       redirect_to project_incoming_deliveries_path(@project)
@@ -44,16 +49,31 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   def create
-    @incoming_delivery = @project.incoming_deliveries.build
-    @incoming_delivery.assign_attributes(incoming_delivery_params.to_h)
+    delivery_params = incoming_delivery_params
+    uploaded_files = delivery_params.delete(:delivery_notes)
+
+    @incoming_delivery = @project ? @project.incoming_deliveries.build(delivery_params) : IncomingDelivery.new(delivery_params)
     @incoming_delivery.user = current_user
 
     # Set on_hold_date when status is On Hold
     @incoming_delivery.on_hold_date = Time.current if @incoming_delivery.on_hold_status == "On Hold"
 
     if @incoming_delivery.save
-      redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: t("common.messages.created", model: "Delivery")
+      begin
+        if uploaded_files.present?
+          uploaded_files.each do |file|
+            handle_docuvita_delivery_note_upload(@incoming_delivery, file)
+          end
+        end
+
+        redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                    notice: t("common.messages.created", model: "Delivery")
+      rescue StandardError => e
+        # Show error and rollback
+        @incoming_delivery.destroy
+        flash.now[:alert] = t(".upload_error", message: e.message)
+        render :new, status: :unprocessable_entity
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -63,11 +83,14 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
+      delivery_params = incoming_delivery_params
+      uploaded_files = delivery_params.delete(:delivery_notes)
+
       # Handle delivery notes attachments first
-      attach_delivery_notes if delivery_notes_present_in_params?
+      # attach_delivery_notes if delivery_notes_present_in_params?
 
       # Process remaining attributes
-      params_hash = remove_delivery_notes_params(incoming_delivery_params.to_h)
+      params_hash = remove_delivery_notes_params(delivery_params)
 
       # Set on_hold_date when status is On Hold
       if params_hash[:on_hold_status] == "On Hold"
@@ -75,15 +98,25 @@ class IncomingDeliveriesController < ApplicationController
       end
 
       if @incoming_delivery.update(params_hash)
-        @incoming_delivery.update_completion_status
-        redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                    notice: t("common.messages.updated", model: "Delivery")
+        begin
+          if uploaded_files.present?
+            uploaded_files.each do |file|
+              handle_docuvita_delivery_note_upload(@incoming_delivery, file)
+            end
+          end
+
+          @incoming_delivery.update_completion_status
+          redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                      notice: t("common.messages.updated", model: "Delivery")
+        rescue StandardError => e
+          flash.now[:alert] = t(".upload_error", message: e.message)
+          render :edit, status: :unprocessable_entity
+        end
       else
         render :edit, status: :unprocessable_entity
       end
     end
   end
-
 
   def destroy
     @incoming_delivery.destroy
@@ -212,5 +245,16 @@ class IncomingDeliveriesController < ApplicationController
 
   def remove_delivery_notes_params(params_hash)
     params_hash.except(:delivery_notes)
+  end
+
+  # Handles uploading the delivery note file to Docuvita
+  def handle_docuvita_delivery_note_upload(delivery, file)
+    unless file.is_a?(ActionDispatch::Http::UploadedFile)
+      Rails.logger.warn("Skipping Docuvita upload: Invalid file parameter type.")
+      return # Or raise an error if file is mandatory
+    end
+
+    # Delegate to the model instance method for actual upload logic
+    delivery.upload_delivery_note_to_docuvita(file, file.original_filename)
   end
 end
