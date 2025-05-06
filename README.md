@@ -19,7 +19,7 @@ Access to Project Reports - user must be added into Project User table.
 
 # Docuvita upload isometry pdfs (for a specific project)
 # rails 'docuvita:upload_isometry_pdfs[26]'
-#rails 'docuvita:upload_isometry_pdfs[project_id,limit]'
+# rails 'docuvita:upload_isometry_pdfs[17,5]'
 
 # Docuvita upload material certificates
 # rails 'docuvita:upload_material_certificates'
