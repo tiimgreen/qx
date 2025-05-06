@@ -63,7 +63,7 @@
           <% docuvita_docs = @incoming_delivery.docuvita_documents.select { |doc| doc.document_type == 'delivery_note_pdf' } %>
           
           <% if docuvita_docs.any? %>
-            <h5 class="border-bottom pb-2 mb-3"><%= t('.delivery_notes') %></h5>
+            <h5 class="border-bottom pb-2 mb-3"><%= t('.delivery_note') %></h5>
             <div class="d-flex flex-wrap gap-3">
               <% docuvita_docs.each do |doc| %>
                 <%= link_to view_docuvita_document_path(doc),
