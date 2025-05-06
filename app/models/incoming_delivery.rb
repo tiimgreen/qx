@@ -126,7 +126,8 @@ class IncomingDelivery < ApplicationRecord
             description: api_description,
             voucher_number: voucher_number,
             transaction_key: transaction_key,
-            version_original_filename: original_filename
+            version_original_filename: original_filename,
+            document_type: "DeliveryNote"
           }
         )
         object_id = upload_result[:object_id]
