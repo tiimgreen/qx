@@ -71,8 +71,9 @@
                     target: "_blank",
                     title: "View delivery note #{doc.filename} from Docuvita" do %>
                   <div class="d-flex flex-column align-items-center">
-                    <i class="bi bi-file-earmark-text" style="font-size: 4rem;"></i>
+                    <i class="bi bi-file-pdf text-danger" style="font-size: 4rem;"></i>
                     <small class="text-muted"><%= doc.filename %></small>
+                    <small class="text-muted"><%= doc.created_at.strftime("%d/%m/%Y %H:%M") %></small>
                   </div>
                 <% end %>
               <% end %>
