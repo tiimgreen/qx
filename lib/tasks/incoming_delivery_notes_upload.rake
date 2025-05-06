@@ -12,13 +12,12 @@ namespace :docuvita do
     puts "Starting Docuvita Delivery Notes upload (Limit: #{effective_limit})..."
     puts "--------------------------------------------------"
 
-    # Initialize uploader with the correct object type ID for delivery notes
-    uploader = DocuvitaUploader.new(object_type_id: 29) # Use the same object type ID as in README example
+    uploader = DocuvitaUploader.new
     uploaded_count = 0
     skipped_count = 0
     error_count = 0
-    upload_attempts = 0 # Counter for attempts
-    limit_reached = false # Flag to break outer loop
+    upload_attempts = 0
+    limit_reached = false
 
     # Find IncomingDeliveries that have delivery_notes attached
     # Query ActiveStorage::Attachment directly and eager load associations
@@ -62,9 +61,9 @@ namespace :docuvita do
         if upload_attempts >= effective_limit
           puts "  [INFO] Reached upload limit of #{effective_limit}. Stopping."
           limit_reached = true
-          break # Exit inner .each loop
+          break
         end
-        upload_attempts += 1 # Increment only for eligible attachments that will be attempted
+        upload_attempts += 1
 
         # --- Prepare Metadata ---
         delivery_metadata = {
@@ -80,8 +79,7 @@ namespace :docuvita do
         api_description = delivery_metadata
         voucher_number = delivery.delivery_note_number
         transaction_key = delivery.project&.project_number || "UNKNOWN_PROJECT"
-        local_document_type = "delivery_note_pdf" # Type for our DocuvitaDocument model
-        docuvita_api_document_type = "DeliveryNote" # Type for Docuvita API
+        docuvita_api_document_type = "DeliveryNote"
 
         unless delivery.delivery_note_number.present?
           puts "  [SKIP] Delivery Note Number is missing, which is required for Docuvita metadata (voucher_number)."

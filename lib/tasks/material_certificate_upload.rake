@@ -16,11 +16,9 @@ namespace :docuvita do
     uploaded_count = 0
     skipped_count = 0
     error_count = 0
-    upload_attempts = 0 # Counter for attempts
-    limit_reached = false # Flag to break outer loop
+    upload_attempts = 0
+    limit_reached = false
 
-    # Eager load attachments and existing docuvita documents to minimize queries
-    # Process in batches of 100
     MaterialCertificate.includes(:certificate_file_attachment, :docuvita_documents, { isometries: :project })
                        .find_in_batches(batch_size: 100) do |certificates_batch|
       puts "Processing batch of #{certificates_batch.size} certificates..."
@@ -73,12 +71,11 @@ namespace :docuvita do
 
         # --- Docuvita API Payload Preparation ---
         docuvita_filename = "#{certificate.certificate_number}_cert.pdf"
-        # Use a concise description for the API, full details are in metadata
         api_description = certificate_metadata,
         voucher_number = certificate.certificate_number
         transaction_key = project_number
-        docuvita_api_document_type = "MaterialCertificate" # Type for Docuvita API
-        local_document_type = "material_certificate_pdf" # Type for our DocuvitaDocument model
+        docuvita_api_document_type = "MaterialCertificate"
+        local_document_type = "material_certificate_pdf"
 
         unless certificate.certificate_number.present?
            puts "  [SKIP] Certificate Number is missing, which is required for Docuvita metadata (voucher_number)."
@@ -106,12 +103,10 @@ namespace :docuvita do
             object_id = upload_result[:object_id]
             # 5. Create DocuvitaDocument record...
             if object_id
-               # ... create record ...
                DocuvitaDocument.create!(
-                 documentable: certificate, # Link to the MaterialCertificate
+                 documentable: certificate,
                  docuvita_object_id: object_id,
-                 document_type: local_document_type, # Use our internal type
-                 # --- Save collected metadata to our model ---
+                 document_type: local_document_type,
                  metadata: certificate_metadata,
                  filename: docuvita_filename,
                  content_type: certificate_blob.content_type,
