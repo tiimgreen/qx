@@ -67,10 +67,8 @@ class DocuvitaUploader
     end
 
     # Step 2: Get upload GUID
-    set_version_response = @client.set_version(object_id, original_filename, true)
-
     # Extract the upload GUID
-    upload_guid = set_version_response["DocUploadGuid"]
+    upload_guid = set_object_response["DocUploadGuid"]
     unless upload_guid
       raise "Failed to get Upload GUID from Docuvita"
     end
