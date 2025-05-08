@@ -119,7 +119,10 @@
             <dd class="col-sm-6"><%= @work_preparation.on_hold_comment %></dd>
           </dl>
 
-          <%= render partial: 'application/image_gallery', locals: { images: @work_preparation.on_hold_images } %>
+          <%= render partial: 'docuvita_documents', locals: {
+            documents: @work_preparation.on_hold_images,
+            title: t('.on_hold_images')
+          } %>
         </div>
       </div>
     </div>

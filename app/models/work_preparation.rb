@@ -1,9 +1,11 @@
 class WorkPreparation < ApplicationRecord
   include SectorModel
+  include DocuvitaUploadable
 
   belongs_to :project
   belongs_to :work_location
   belongs_to :user
+  belongs_to :isometry
 
   has_many :welding_batch_assignments, dependent: :destroy
   has_many :weldings, through: :welding_batch_assignments
@@ -13,10 +15,10 @@ class WorkPreparation < ApplicationRecord
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   WORK_PREPARATION_TYPES = [ "cutting_pipes", "small_parts" ].freeze
 
-  has_many_attached :on_hold_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
+  # has_many_attached :on_hold_images do |attachable|
+  #   attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+  #   attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  # end
 
   validates :work_package_number, presence: true, uniqueness: { scope: [ :project_id, :isometry_id, :work_preparation_type ] }
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
@@ -47,20 +49,23 @@ class WorkPreparation < ApplicationRecord
     .distinct
   }
 
+  # Helper methods for Docuvita document access
+  def on_hold_images
+    docuvita_documents.where(document_type: "on_hold_image")
+  end
+  alias_method :on_hold_documents, :on_hold_images
+
   def on_hold?
     on_hold_status == "On Hold"
   end
 
-  # Validate image format and size
-  validate :validate_image_format
+  def self.in_progress_for?(isometry)
+    isometry.work_preparations.any? { |wp| wp.completed.nil? }
+  end
 
   def self.completed_for?(isometry)
     completed_count = isometry.work_preparations.count { |wp| wp.completed.present? }
     completed_count == WORK_PREPARATION_TYPES.size
-  end
-
-  def self.in_progress_for?(isometry)
-    isometry.work_preparations.any? { |wp| wp.completed.nil? }
   end
 
   def self.status_for(isometry)
@@ -93,19 +98,20 @@ class WorkPreparation < ApplicationRecord
 
   private
 
-  def validate_image_format
-    return unless on_hold_images.attached?
-
-    on_hold_images.each do |image|
-      unless image.content_type.in?(%w[image/jpeg image/png])
-        errors.add(:on_hold_images, :invalid_format)
-        image.purge
-      end
-
-      if image.byte_size > 5.megabytes
-        errors.add(:on_hold_images, :too_large)
-        image.purge
-      end
-    end
-  end
+  # Validation is now handled in DocuvitaUploadable concern
+  # def validate_image_format
+  #   return unless on_hold_images.attached?
+  #
+  #   on_hold_images.each do |image|
+  #     unless image.content_type.in?(%w[image/jpeg image/png])
+  #       errors.add(:on_hold_images, :invalid_format)
+  #       image.purge
+  #     end
+  #
+  #     if image.byte_size > 5.megabytes
+  #       errors.add(:on_hold_images, :too_large)
+  #       image.purge
+  #     end
+  #   end
+  # end
 end

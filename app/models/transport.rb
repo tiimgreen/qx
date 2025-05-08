@@ -1,5 +1,6 @@
 class Transport < ApplicationRecord
   include SectorModel
+  include DocuvitaUploadable
 
   belongs_to :project
   belongs_to :user

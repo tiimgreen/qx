@@ -59,11 +59,12 @@ class WorkPreparationsController < ApplicationController
   end
 
   def create
-    @work_preparation = @project.work_preparations.build(work_preparation_params)
+    @work_preparation = @project.work_preparations.build(work_preparation_params.except(:on_hold_images))
     @work_preparation.user = current_user
 
     if @work_preparation.save
       update_weldings if params[:weldings].present?
+      handle_docuvita_image_uploads(@work_preparation)
       redirect_to project_work_preparations_path(@project), notice: t(".success")
     else
       render :new, status: :unprocessable_entity
@@ -71,8 +72,9 @@ class WorkPreparationsController < ApplicationController
   end
 
   def update
-    if @work_preparation.update(work_preparation_params)
+    if @work_preparation.update(work_preparation_params.except(:on_hold_images))
       update_weldings if params[:weldings].present?
+      handle_docuvita_image_uploads(@work_preparation)
       redirect_to project_work_preparations_path(@project), notice: t(".success")
     else
       render :edit, status: :unprocessable_entity
@@ -139,8 +141,7 @@ class WorkPreparationsController < ApplicationController
         :material_certificate_id,
         :material_certificate1_id,
         :_destroy
-      ],
-      on_hold_images: []
+      ]
     )
   end
 
@@ -154,6 +155,16 @@ class WorkPreparationsController < ApplicationController
         material_certificate1_id: welding_params[:batch_number1].blank? ? nil : welding_params[:material_certificate1_id]
       }
       welding.update(update_params)
+    end
+  end
+
+  def handle_docuvita_image_uploads(work_preparation)
+    # Handle on-hold images from the raw params, not the filtered params
+    if params.dig(:work_preparation, :on_hold_images).present?
+      Array(params[:work_preparation][:on_hold_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        work_preparation.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+      end
     end
   end
 
