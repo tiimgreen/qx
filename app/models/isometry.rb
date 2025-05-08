@@ -277,7 +277,7 @@ class Isometry < ApplicationRecord
         image.write temp_pdf.path
 
         # Upload the PDF instead of the image
-        pdf_filename = "#{File.basename(filename, '.*')}_#{type}.pdf"
+        pdf_filename = "#{line_id}_#{type}.pdf"
 
         # Upload the converted PDF
         result = uploader.upload_io(

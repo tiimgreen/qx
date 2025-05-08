@@ -130,14 +130,14 @@
             <%# Find the relevant Docuvita document for this certificate %>
             <% docuvita_doc = cert.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
 
-            <div class="d-flex flex-column align-items-center position-relative border rounded p-2 text-center">
+            <div class="d-flex flex-column align-items-center position-relative text-center">
               <% if docuvita_doc %>
                 <%= link_to view_docuvita_document_path(docuvita_doc),
                     target: "_blank",
                     class: "text-decoration-none text-dark",
                     title: "View certificate #{docuvita_doc.filename} from Docuvita" do %>
                   <div class="mb-2">
-                    <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+                    <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
                   </div>
                 <% end %>
               <% else %>

@@ -9,12 +9,12 @@
     <div class="d-flex flex-wrap gap-2">
       <% documents.each do |document| %>
         <%= link_to view_docuvita_document_path(document), target: "_blank", class: "text-decoration-none" do %>
-          <div class="border rounded p-2" style="width: 150px;">
+          <div style="width: 120px;">
             <div class="text-center">
               <% if document.document_type.include?('pdf') || document.document_type.include?('image') %>
-                <i class="bi bi-file-pdf text-danger" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
               <% else %>
-                <i class="bi bi-file-earmark text-secondary" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-file-earmark text-secondary" style="font-size: 2rem;"></i>
               <% end %>
               <div class="small text-dark text-truncate mt-1" title="<%= document.filename %>">
                 <%= document.filename %>
