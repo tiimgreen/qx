@@ -59,7 +59,7 @@ class IsometriesController < ApplicationController
   def create
     # Remove file upload parameters before creating the isometry
     create_params = isometry_params.except(
-      :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position
+      :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
     )
 
     @isometry = @project.isometries.new(create_params)
@@ -103,7 +103,7 @@ class IsometriesController < ApplicationController
       format.html do
         # Remove file upload parameters before updating
         update_params = isometry_params.except(
-          :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position
+          :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
         )
 
         if @isometry.update(update_params)
@@ -126,7 +126,7 @@ class IsometriesController < ApplicationController
       format.json do
         # For autosave, only exclude image parameters
         save_params = isometry_params.except(
-          :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position
+          :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
         )
         @isometry.assign_attributes(save_params)
         @isometry.draft = true

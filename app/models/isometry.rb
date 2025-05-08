@@ -20,10 +20,10 @@ class Isometry < ApplicationRecord
   has_many :isometry_documents, dependent: :destroy
   accepts_nested_attributes_for :isometry_documents, allow_destroy: true
 
-  has_many_attached :on_hold_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
+  # has_many_attached :on_hold_images do |attachable|
+  #   attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+  #   attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  # end
   has_one_attached :qr_code do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 100, 100 ]
   end
@@ -163,31 +163,27 @@ class Isometry < ApplicationRecord
     end
   end
 
-# Add to the Isometry model
-def isometry_pdfs
-  docuvita_documents.where(document_type: "isometry_pdf")
-end
+  # Methods to get different types of Docuvita documents
+  def isometry_pdfs
+    docuvita_documents.where(document_type: "isometry_pdf")
+  end
 
-# You might also want methods for other document types, for example:
-def rt_images
-  docuvita_documents.where(document_type: "rt_image")
-end
+  def rt_images
+    docuvita_documents.where(document_type: "rt_image")
+  end
 
-def vt_images
-  docuvita_documents.where(document_type: "vt_image")
-end
+  def vt_images
+    docuvita_documents.where(document_type: "vt_image")
+  end
 
-def pt_images
-  docuvita_documents.where(document_type: "pt_image")
-end
+  def pt_images
+    docuvita_documents.where(document_type: "pt_image")
+  end
 
-def on_hold_documents
-  docuvita_documents.where(document_type: "on_hold")
-end
-
-  # def qr_code
-  #   docuvita_documents.where(document_type: "qr_code").first
-  # end
+  def on_hold_images
+    docuvita_documents.where(document_type: "on_hold_image")
+  end
+  alias_method :on_hold_documents, :on_hold_images
 
   # Method to upload a PDF to Docuvita
   def upload_pdf_to_docuvita(file_io, original_filename, options = {})
@@ -243,7 +239,6 @@ end
     )
   end
 
-  # Similar methods for other document types
   def upload_image_to_docuvita(file_io, filename, type, options = {})
     # Create uploader
     uploader = DocuvitaUploader.new
