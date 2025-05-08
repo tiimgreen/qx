@@ -163,6 +163,22 @@ class WeldingPdfGenerator
           inline_format: true
         )
 
+        # Set specific column widths to prevent truncation
+        t.column_widths = [
+          45,   # Naht Nr.
+          70,   # Komponente
+          60,   # Abmessung
+          60,   # Werkstoff
+          70,   # Charge
+          70,   # Zeugnis
+          70,   # Prozess
+          70,   # Schweisser
+          75,   # RT / Date - wider for dates
+          75,   # PT / Date - wider for dates
+          75,   # VT / Date - wider for dates
+          40    # Erg
+        ]
+
         # Style header rows (first two rows)
         t.row(0..1).style(
           font_style: :bold,
