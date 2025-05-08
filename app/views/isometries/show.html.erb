@@ -224,8 +224,9 @@
     </dl>
   </div>
 
+
+  <!-- Inspections -->
   <div class="col-md-8">
-    <!-- Inspections -->
     <div class="col-12">
       <h5 class="border-bottom pb-2 mb-3"><%= t('.inspections') %></h5>
 
@@ -233,24 +234,32 @@
         <dt class="col-sm-2"><%= t('.rt_percentage') %></dt>
         <dd class="col-sm-10"><%= @isometry.rt %> %</dd>
       </dl>
-
+      <%= render partial: 'docuvita_documents', locals: {
+        documents: @isometry.rt_images,
+        title: t('.isometry_documents')
+      } %>
 
       <dl class="row mb-3">
         <dt class="col-sm-2"><%= t('.vt_percentage') %></dt>
         <dd class="col-sm-10"><%= @isometry.vt2 %> %</dd>
       </dl>
+      <%= render partial: 'docuvita_documents', locals: {
+        documents: @isometry.vt_images,
+        title: t('.isometry_documents')
+      } %>
 
 
       <dl class="row mb-3">
         <dt class="col-sm-2"><%= t('.pt_percentage') %></dt>
         <dd class="col-sm-10"><%= @isometry.pt2%> %</dd>
       </dl>
-
+      <%= render partial: 'docuvita_documents', locals: {
+        documents: @isometry.pt_images,
+        title: t('.isometry_documents')
+      } %>
     </div>
   </div>
 </div>
-
-
 
 <!-- Spooling -->
 <div class="row mb-4">
@@ -328,6 +337,8 @@
 </div>
 
 <!-- Isometry Images -->
+<h5 class="border-bottom pb-2 mb-3"><%= t('.isometries') %></h5>
+
 <% if @isometry.isometry_pdfs.any? %>
   <div class="row mb-4">
     <div class="col-12">

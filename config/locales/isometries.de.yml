@@ -69,6 +69,7 @@ de:
       qr_code: "QR Code"
       on_site_sn: "On Site SN"
       no_qr_code: "Kein QR Code verfügbar"
+      isometries: "Isometrie"
     create_revision:
       revision_created: "Neue Revision wurde erfolgreich erstellt"
       revision_failed: "Neue Revision konnte nicht erstellt werden"

@@ -5,18 +5,14 @@
 
 <% if documents.any? %>
   <div class="mb-3">
-    <% if local_assigns[:title].present? %>
-      <h5 class="border-bottom pb-2 mb-3"><%= title %></h5>
-    <% end %>
+
     <div class="d-flex flex-wrap gap-2">
       <% documents.each do |document| %>
         <%= link_to view_docuvita_document_path(document), target: "_blank", class: "text-decoration-none" do %>
           <div class="border rounded p-2" style="width: 150px;">
             <div class="text-center">
-              <% if document.document_type == 'isometry_pdf' %>
+              <% if document.document_type.include?('pdf') || document.document_type.include?('image') %>
                 <i class="bi bi-file-pdf text-danger" style="font-size: 1.5rem;"></i>
-              <% elsif document.document_type.include?('image') %>
-                <i class="bi bi-file-image text-primary" style="font-size: 1.5rem;"></i>
               <% else %>
                 <i class="bi bi-file-earmark text-secondary" style="font-size: 1.5rem;"></i>
               <% end %>
