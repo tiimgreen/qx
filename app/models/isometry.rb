@@ -293,8 +293,10 @@ end
           File.open(temp_pdf.path, "rb"),
           pdf_filename,
           {
-            name: "#{line_id}_#{type}_#{Time.current.to_i}",
-            description: "#{type.upcase} image (PDF converted) for #{line_id}"
+            voucher_number: self.line_id,
+            transaction_key: project.project_number,
+            document_type: "Image",
+            description: "#{type.upcase} image (PDF converted) for Isometry: #{line_id}"
           }.merge(options)
         )
 
