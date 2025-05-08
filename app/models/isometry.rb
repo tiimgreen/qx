@@ -263,10 +263,6 @@ end
         raise "File must be an image type for upload_image_to_docuvita method"
       end
 
-      # For image files, convert to PDF first (Docuvita seems to handle PDFs better)
-      ProjectLog.info("Converting image to PDF for better Docuvita compatibility",
-                    source: "Isometry#upload_image_to_docuvita")
-
       # Create temporary files for conversion
       temp_image = Tempfile.new([ "image_orig", File.extname(filename) ])
       temp_pdf = Tempfile.new([ "image_converted", ".pdf" ])
@@ -286,7 +282,7 @@ end
         image.write temp_pdf.path
 
         # Upload the PDF instead of the image
-        pdf_filename = "#{File.basename(filename, '.*')}.pdf"
+        pdf_filename = "#{File.basename(filename, '.*')}_#{type}.pdf"
 
         # Upload the converted PDF
         result = uploader.upload_io(
@@ -296,7 +292,7 @@ end
             voucher_number: self.line_id,
             transaction_key: project.project_number,
             document_type: "Image",
-            description: "#{type.upcase} image (PDF converted) for Isometry: #{line_id}"
+            description: "#{type} image (PDF converted) for Isometry: #{line_id} and project: #{project.project_number} and original filename: #{filename}"
           }.merge(options)
         )
 
