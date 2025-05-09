@@ -70,6 +70,7 @@ de:
       on_site_sn: "On Site SN"
       no_qr_code: "Kein QR Code verfügbar"
       isometries: "Isometrie"
+      no_isometry_documents: "Keine Dokumente an dieser Isometrie angehaengt"
     create_revision:
       revision_created: "Neue Revision wurde erfolgreich erstellt"
       revision_failed: "Neue Revision konnte nicht erstellt werden"
