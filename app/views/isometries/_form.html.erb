@@ -226,19 +226,19 @@
             <div class="card-body">
               <div class="row">
                 <dt><%= f.label :rt_percentage %></dt>
-                <%= f.file_field :rt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
+                <%= f.file_field :rt_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: "form-control my-2 w-100 w-md-50" %>
 
               </div>
 
               <div class="row">
                 <dt><%= f.label :vt2_percentage %></dt>
-                <%= f.file_field :vt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
+                <%= f.file_field :vt_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: "form-control my-2 w-100 w-md-50" %>
 
               </div>
 
               <div class="row">
                 <dt><%= f.label :pt2_percentage %></dt>
-                <%= f.file_field :pt_images, multiple: true, class: "form-control my-2 w-100 w-md-50" %>
+                <%= f.file_field :pt_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: "form-control my-2 w-100 w-md-50" %>
   
               </div>
             </div>
@@ -451,7 +451,7 @@
                 <div class="row">
                   <div class="col-md-8">
                     <%= f.label :new_pdf, t('.upload_new_pdf'), class: "form-label" %>
-                    <%= f.file_field :new_pdf, class: "form-control" %>
+                    <%= f.file_field :new_pdf, accept: 'application/pdf', class: "form-control" %>
                   </div>
 
                   <div class="col-md-4">
