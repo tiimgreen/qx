@@ -34,7 +34,7 @@ class Prefabrication < ApplicationRecord
   }
 
   def on_hold_images
-    docuvita_documents.where(document_type: "on_hold_image")
+    docuvita_documents.where(documentable_type: "Prefabrication", document_type: "on_hold_image")
   end
   alias_method :on_hold_documents, :on_hold_images
 

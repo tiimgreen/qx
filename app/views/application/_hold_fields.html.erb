@@ -10,7 +10,7 @@
       <% if f.object.respond_to?(:on_hold_images) %>
         <div class="col-md-6">
           <%= f.label :on_hold_images, t('common.labels.on_hold_images'), class: 'form-label' %>
-          <%= f.file_field :on_hold_images, multiple: true, class: 'form-control' %>
+          <%= f.file_field :on_hold_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: 'form-control' %>
         </div>
       <% end %>
     </div>

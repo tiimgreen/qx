@@ -52,10 +52,8 @@ class TestPacksController < ApplicationController
     @test_pack = @project.test_packs.new(test_pack_params_without_images)
     @test_pack.user = current_user
 
-    # Handle image attachments separately
-    attach_images(:on_hold_images) if params.dig(:test_pack, :on_hold_images).present?
-
     if @test_pack.save
+      handle_docuvita_image_uploads(@test_pack)
       redirect_to project_test_pack_path(@project, @test_pack),
                       notice: t("common.messages.success.created", model: "TestPack")
     else
@@ -74,9 +72,9 @@ class TestPacksController < ApplicationController
 
   def update
     on_hold_params(params)
-    attach_images(:on_hold_images) if params.dig(:test_pack, :on_hold_images).present?
 
     if @test_pack.update(test_pack_params_without_images)
+      handle_docuvita_image_uploads(@test_pack)
       redirect_to project_test_pack_path(@project, @test_pack),
                       notice: t("common.messages.updated", model: "TestPack")
     else
@@ -164,11 +162,13 @@ class TestPacksController < ApplicationController
     test_pack_params.except(:on_hold_images)
   end
 
-  def attach_images(image_type)
-    return unless params.dig(:test_pack, image_type).present?
-
-    params[:test_pack][image_type].each do |image|
-      @test_pack.send(image_type).attach(image)
+  def handle_docuvita_image_uploads(test_pack)
+    # Handle on-hold images
+    if params.dig(:test_pack, :on_hold_images).present?
+      Array(params[:test_pack][:on_hold_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        test_pack.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+      end
     end
   end
 

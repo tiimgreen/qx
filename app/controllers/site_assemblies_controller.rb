@@ -52,10 +52,8 @@ class SiteAssembliesController < ApplicationController
     @site_assembly = @project.site_assemblies.new(site_assembly_params_without_images)
     @site_assembly.user = current_user
 
-    # Handle image attachments separately
-    attach_on_hold_images if params.dig(:site_assembly, :on_hold_images).present?
-
     if @site_assembly.save
+      handle_docuvita_image_uploads(@site_assembly)
       redirect_to project_site_assembly_path(@project, @site_assembly),
                   notice: t("common.messages.success.created", model: SiteAssembly.model_name.human)
     else
@@ -74,9 +72,9 @@ class SiteAssembliesController < ApplicationController
 
   def update
     on_hold_params(params)
-    attach_on_hold_images if params.dig(:site_assembly, :on_hold_images).present?
 
     if @site_assembly.update(site_assembly_params_without_images)
+      handle_docuvita_image_uploads(@site_assembly)
       redirect_to project_site_assembly_path(@project, @site_assembly),
                   notice: t("common.messages.success.updated", model: SiteAssembly.model_name.human)
     else
@@ -149,11 +147,13 @@ class SiteAssembliesController < ApplicationController
     site_assembly_params.except(:on_hold_images)
   end
 
-  def attach_on_hold_images
-    return unless params.dig(:site_assembly, :on_hold_images).present?
-
-    params[:site_assembly][:on_hold_images].each do |image|
-      @site_assembly.on_hold_images.attach(image)
+  def handle_docuvita_image_uploads(site_assembly)
+    # Handle on-hold images from the raw params, not the filtered params
+    if params.dig(:site_assembly, :on_hold_images).present?
+      Array(params[:site_assembly][:on_hold_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        site_assembly.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+      end
     end
   end
 

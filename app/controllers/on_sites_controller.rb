@@ -52,11 +52,8 @@ class OnSitesController < ApplicationController
       @on_site = @project.on_sites.new(on_site_params_without_images)
       @on_site.user = current_user
 
-      # Handle image attachments separately
-      attach_on_hold_images if params.dig(:on_site, :on_hold_images).present?
-      attach_images if params.dig(:on_site, :images).present?
-
       if @on_site.save
+        handle_docuvita_image_uploads(@on_site)
         redirect_to project_on_site_path(@project, @on_site),
                     notice: t("common.messages.success.created", model: OnSite.model_name.human)
       else
@@ -75,10 +72,9 @@ class OnSitesController < ApplicationController
 
     def update
       on_hold_params(params)
-      attach_on_hold_images if params.dig(:on_site, :on_hold_images).present?
-      attach_images if params.dig(:on_site, :images).present?
 
       if @on_site.update(on_site_params_without_images)
+        handle_docuvita_image_uploads(@on_site)
         redirect_to project_on_site_path(@project, @on_site),
                     notice: t("common.messages.success.updated", model: OnSite.model_name.human)
       else
@@ -143,7 +139,7 @@ class OnSitesController < ApplicationController
         :isometry_id,
         :total_time,
         on_hold_images: [],
-        images: []
+        on_site_images: []
       )
     end
 
@@ -158,15 +154,21 @@ class OnSitesController < ApplicationController
       )
     end
 
-    def attach_on_hold_images
-      Array(params[:on_site][:on_hold_images]).each do |image|
-        @on_site.on_hold_images.attach(image)
+    def handle_docuvita_image_uploads(on_site)
+      # Handle on-hold images
+      if params.dig(:on_site, :on_hold_images).present?
+        Array(params[:on_site][:on_hold_images]).each do |image|
+          next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+          on_site.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+        end
       end
-    end
 
-    def attach_images
-      Array(params[:on_site][:images]).each do |image|
-        @on_site.images.attach(image)
+      # Handle regular images
+      if params.dig(:on_site, :on_site_images).present?
+        Array(params[:on_site][:on_site_images]).each do |image|
+          next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+          on_site.upload_image_to_docuvita(image, image.original_filename, "on_site_image")
+        end
       end
     end
 

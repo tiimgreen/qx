@@ -153,6 +153,8 @@ module DocuvitaUploadable
                     "pt_image"
         when /hold/i
                     "on_hold_image"
+        when /on_site/i
+                    "on_site_image"
         else
                     "on_hold_image" # fallback
         end

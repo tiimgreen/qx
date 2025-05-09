@@ -1,5 +1,6 @@
 class TestPack < ApplicationRecord
   include SectorModel
+  include DocuvitaUploadable
 
   belongs_to :project
   belongs_to :work_location
@@ -7,11 +8,6 @@ class TestPack < ApplicationRecord
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   TEST_PACK_TYPES = [ "pressure_test", "leak_test" ].freeze
-
-  has_many_attached :on_hold_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
 
   validates :work_package_number, presence: true, uniqueness: { scope: [ :project_id, :isometry_id, :test_pack_type ] }
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
@@ -57,11 +53,6 @@ class TestPack < ApplicationRecord
     completed.present?
   end
 
-  # Validate image format and size
-  validate :validate_image_format
-
-
-
   def self.completed_for?(isometry)
     return true if isometry.test_packs.any? { |tp| tp.one_test? && tp.completed? }
     completed_count = isometry.test_packs.count { |tp| tp.completed.present? }
@@ -71,7 +62,6 @@ class TestPack < ApplicationRecord
   def self.in_progress_for?(isometry)
     isometry.test_packs.any? { |tp| tp.completed.nil? }
   end
-
 
   def self.status_for(isometry)
     test_packs = isometry.test_packs
@@ -105,21 +95,9 @@ class TestPack < ApplicationRecord
     end
   end
 
-  private
-
-  def validate_image_format
-    return unless on_hold_images.attached?
-
-    on_hold_images.each do |image|
-      unless image.content_type.in?(%w[image/jpeg image/png])
-        errors.add(:on_hold_images, :invalid_format)
-        image.purge
-      end
-
-      if image.byte_size > 5.megabytes
-        errors.add(:on_hold_images, :too_large)
-        image.purge
-      end
-    end
+  # Helper methods for Docuvita document access
+  def on_hold_images
+    docuvita_documents.where(documentable_type: "TestPack", document_type: "on_hold_image")
   end
+  alias_method :on_hold_documents, :on_hold_images
 end

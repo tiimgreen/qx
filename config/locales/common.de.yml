@@ -61,6 +61,7 @@ de:
       "yes": "Ja"
       "no": "Nein"
       images: "Bilder"
+      on_site_images: "On Site Bilder"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"

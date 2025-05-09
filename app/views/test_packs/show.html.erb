@@ -96,7 +96,10 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @test_pack.on_hold_comment %></dd>
 
-            <%= render partial: 'application/image_gallery', locals: { images: @test_pack.on_hold_images } %>
+            <%= render partial: 'application/docuvita_documents', locals: {
+              documents: @test_pack.on_hold_images,
+              title: t('.on_hold_images')
+            } %>
 
           </dl>
         </div>

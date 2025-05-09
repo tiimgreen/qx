@@ -43,17 +43,14 @@
       </div>
 
       <div class="mb-3">
-        <%= f.label t('common.labels.images'), class: 'form-label' %>
-        <%= f.file_field :images, multiple: true, class: 'form-control', accept: 'image/*' %>
-
-        <% if f.object.respond_to?(:images) && f.object.images.attached? %>
-          <%= render partial: 'images', locals: { 
-            images: f.object.images, 
-            image_type: 'images',
-            edit_mode: true,
-            model_type: f.object
-          } %>
-        <% end %>
+        <%= f.label t('common.labels.on_site_images'), class: 'form-label' %>
+        <%= f.file_field :on_site_images, multiple: true, class: 'form-control', accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff' %>
+        <%= render partial: 'docuvita_documents', locals: {
+          documents: f.object.on_site_images,
+          edit_mode: true,
+          model_type: f.object,
+          title: t('.on_site_images')
+        } %>
       </div>
 
       <div class="mb-3">

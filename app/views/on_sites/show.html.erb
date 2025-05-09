@@ -59,8 +59,11 @@
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.completed') %></dt>
             <dd class="col-sm-6"><%= @on_site.completed.strftime("%d/%m/%Y %H:%M") if @on_site.completed %></dd>
+            <%= render partial: 'application/docuvita_documents', locals: {
+              documents: @on_site.on_site_images,
+              title: t('.images')
+            } %>
           </dl>
-            <%= render partial: 'application/image_gallery', locals: { images: @on_site.images } %>
         </div>
 
         <div class="col-md-6">
@@ -74,28 +77,10 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.on_site.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @on_site.on_hold_comment %></dd>
 
-                  <% if @on_site.on_hold_images.attached? %>
-                  <div class="row row-cols-1 row-cols-md-3 g-3">
-                    <% @on_site.on_hold_images.each do |attachment| %>
-                      <div class="col">
-                        <div class="card h-100">
-                          <% if attachment.content_type.start_with?('image/') %>
-                            <%= link_to rails_blob_path(attachment, disposition: "inline"), target: "_blank" do %>
-                              <%= image_tag(attachment.variant(:thumb), 
-                                          class: "card-img-top", 
-                                          style: "object-fit: cover; height: 100px;") %>
-                            <% end %>
-                          <% else %>
-                            <%= link_to rails_blob_path(attachment, disposition: "inline"), target: "_blank", class: "text-center p-3" do %>
-                              <i class="bi bi-file-pdf fs-1 text-danger"></i>
-                              <p class="small text-muted mt-2 mb-0"><%= attachment.filename %></p>
-                            <% end %>
-                          <% end %>
-                        </div>
-                      </div>
-                    <% end %>
-                  </div>
-                <% end %>
+            <%= render partial: 'application/docuvita_documents', locals: {
+              documents: @on_site.on_hold_images,
+              title: t('.on_hold_images')
+            } %>
 
           </dl>
         </div>
