@@ -49,17 +49,11 @@ class FinalInspectionsController < ApplicationController
   end
 
   def create
-    @final_inspection = @project.final_inspections.new(final_inspection_params_without_images)
+    @final_inspection = @project.final_inspections.build(final_inspection_params_without_images)
     @final_inspection.user = current_user
 
-    # Handle image attachments separately
-    attach_images(:on_hold_images) if params.dig(:final_inspection, :on_hold_images).present?
-    attach_images(:visual_check_images) if params.dig(:final_inspection, :visual_check_images).present?
-    attach_images(:vt2_check_images) if params.dig(:final_inspection, :vt2_check_images).present?
-    attach_images(:pt2_check_images) if params.dig(:final_inspection, :pt2_check_images).present?
-    attach_images(:rt_check_images) if params.dig(:final_inspection, :rt_check_images).present?
-
     if @final_inspection.save
+      handle_docuvita_uploads(@final_inspection)
       redirect_to project_final_inspection_path(@project, @final_inspection),
                   notice: t("common.messages.success.created", model: FinalInspection.model_name.human)
     else
@@ -78,14 +72,10 @@ class FinalInspectionsController < ApplicationController
 
   def update
     on_hold_params(params)
-    attach_images(:on_hold_images) if params.dig(:final_inspection, :on_hold_images).present?
-    attach_images(:visual_check_images) if params.dig(:final_inspection, :visual_check_images).present?
-    attach_images(:vt2_check_images) if params.dig(:final_inspection, :vt2_check_images).present?
-    attach_images(:pt2_check_images) if params.dig(:final_inspection, :pt2_check_images).present?
-    attach_images(:rt_check_images) if params.dig(:final_inspection, :rt_check_images).present?
 
     if @final_inspection.update(final_inspection_params_without_images)
-      redirect_to project_final_inspection_path(@project, @final_inspection),
+      handle_docuvita_uploads(@final_inspection)
+        redirect_to project_final_inspection_path(@project, @final_inspection),
                   notice: t("common.messages.success.updated", model: FinalInspection.model_name.human)
     else
       respond_to do |format|
@@ -171,11 +161,30 @@ class FinalInspectionsController < ApplicationController
     final_inspection_params.except(:on_hold_images, :visual_check_images, :vt2_check_images, :pt2_check_images, :rt_check_images)
   end
 
-  def attach_images(image_type)
-    return unless params.dig(:final_inspection, image_type).present?
+  def handle_docuvita_uploads(final_inspection)
+    success = true
+    upload_images(final_inspection, :on_hold_images, "on_hold_image")
+    upload_images(final_inspection, :visual_check_images, "visual_check_image")
+    upload_images(final_inspection, :vt2_check_images, "vt2_check_image")
+    upload_images(final_inspection, :pt2_check_images, "pt2_check_image")
+    upload_images(final_inspection, :rt_check_images, "rt_check_image")
+    success
+  rescue RuntimeError => e
+    flash[:alert] = e.message
+    false
+  end
 
-    params[:final_inspection][image_type].each do |image|
-      @final_inspection.send(image_type).attach(image)
+  def upload_images(final_inspection, param_key, document_type)
+    if params.dig(:final_inspection, param_key).present?
+      Array(params[:final_inspection][param_key]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        begin
+          final_inspection.upload_image_to_docuvita(image, image.original_filename, document_type)
+        rescue RuntimeError => e
+          flash[:alert] = e.message
+          raise e
+        end
+      end
     end
   end
 

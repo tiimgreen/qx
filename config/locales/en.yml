@@ -63,10 +63,12 @@ en:
       on_hold_status: "On Hold"
       on_hold_comment: "On Hold Comment"
       on_hold_at: "On Hold Since"
-
-      file_deleted: "File was successfully deleted"
-      unauthorized: "You are not authorized to perform this action"
-      confirm_delete: "Are you sure you want to delete this image?"
+    errors:
+      messages:
+        invalid_image_type: "The file '%{filename}' must be an image (JPG, PNG, GIF, BMP, or TIFF)"
+        file_deleted: "File was successfully deleted"
+        unauthorized: "You are not authorized to perform this action"
+        confirm_delete: "Are you sure you want to delete this image?"
     image_upload_note: "Upload document if needed"
     comment: "Comment"
     "yes": "Yes"
@@ -677,3 +679,6 @@ en:
     destroy:
       success: "Material Certificate successfully deleted."
       confirm: "Are you sure you want to delete this Material Certificate?"
+  errors:
+    messages:
+      invalid_image_type: "The file '%{filename}' must be an image (JPG, PNG, GIF, BMP, or TIFF)"

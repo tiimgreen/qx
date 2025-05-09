@@ -54,25 +54,24 @@ de:
     edit: "Bearbeiten"
     delete: "Löschen"
     confirm: "Sind Sie sicher?"
-    messages:
-      created: "%{model} wurde erfolgreich erstellt."
-      updated: "%{model} wurde erfolgreich aktualisiert."
-      deleted: "%{model} wurde erfolgreich gelöscht."
-      completed: "%{model} wurde erfolgreich abgeschlossen."
-      put_on_hold: "%{model} wurde erfolgreich auf den Halt gesetzt"
-      hold_failed: "Fehler beim Setzen von %{model} auf den Halt"
-      removed_from_hold: "%{model} wurde erfolgreich aus dem Halt entfernt"
-      remove_hold_failed: "Fehler beim Entfernen von %{model} aus dem Halt"
-      on_hold_status: "On Hold"
-      on_hold_comment: "On Hold Kommentar"
-      on_hold_at: "On Hold seit"
-
-      file_deleted: "Datei wurde erfolgreich gelöscht"
-      unauthorized: "Sie sind nicht berechtigt, diese Aktion auszuführen"
-      confirm_delete: "Sind Sie sicher, dass Sie dieses Bild löschen möchten?"
-
-    image_upload_note: "Dokument hochladen, wenn nötig"
-
+    errors:
+      messages:
+        created: "%{model} wurde erfolgreich erstellt."
+        updated: "%{model} wurde erfolgreich aktualisiert."
+        deleted: "%{model} wurde erfolgreich gelöscht."
+        completed: "%{model} wurde erfolgreich abgeschlossen."
+        put_on_hold: "%{model} wurde erfolgreich auf den Halt gesetzt"
+        hold_failed: "Fehler beim Setzen von %{model} auf den Halt"
+        removed_from_hold: "%{model} wurde erfolgreich aus dem Halt entfernt"
+        remove_hold_failed: "Fehler beim Entfernen von %{model} aus dem Halt"
+        on_hold_status: "On Hold"
+        on_hold_comment: "On Hold Kommentar"
+        on_hold_at: "On Hold seit"
+        invalid_image_type: "Die Datei '%{filename}' muss ein Bild sein (JPG, PNG, GIF, BMP oder TIFF)"
+        file_deleted: "Datei wurde erfolgreich gelöscht"
+        unauthorized: "Sie sind nicht berechtigt, diese Aktion auszuführen"
+        confirm_delete: "Sind Sie sicher, dass Sie dieses Bild löschen möchten?"
+        image_upload_note: "Dokument hochladen, wenn nötig"
     comment: "Kommentar"
     "yes": "Ja"
     "no": "Nein"
@@ -662,3 +661,6 @@ de:
     destroy:
       success: "Werkzeugnis erfolgreich gelöscht."
       confirm: "Sind Sie sicher, dass Sie dieses Werkzeugnis löschen möchten?"
+  errors:
+    messages:
+      invalid_image_type: "Die Datei '%{filename}' muss ein Bild sein (JPG, PNG, GIF, BMP oder TIFF)"

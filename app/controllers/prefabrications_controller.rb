@@ -49,14 +49,12 @@ class PrefabricationsController < ApplicationController
   end
 
   def create
-    @prefabrication = @project.prefabrications.new(prefabrication_params_without_images)
+    @prefabrication = @project.prefabrications.build(prefabrication_params.except(:on_hold_images))
     @prefabrication.user = current_user
     @prefabrication.active = true
 
-    # Handle image attachments separately
-    attach_on_hold_images if params.dig(:prefabrication, :on_hold_images).present?
-
     if @prefabrication.save
+      handle_docuvita_image_uploads(@prefabrication)
       redirect_to project_prefabrication_path(@project, @prefabrication),
                   notice: t("common.messages.success.created", model: Prefabrication.model_name.human)
     else
@@ -75,9 +73,9 @@ class PrefabricationsController < ApplicationController
 
   def update
     on_hold_params(params)
-    attach_on_hold_images if params.dig(:prefabrication, :on_hold_images).present?
 
-    if @prefabrication.update(prefabrication_params_without_images)
+    if @prefabrication.update(prefabrication_params.except(:on_hold_images))
+      handle_docuvita_image_uploads(@prefabrication)
       redirect_to project_prefabrication_path(@project, @prefabrication),
                   notice: t("common.messages.success.updated", model: Prefabrication.model_name.human)
     else
@@ -148,15 +146,12 @@ class PrefabricationsController < ApplicationController
     )
   end
 
-  def prefabrication_params_without_images
-    prefabrication_params.except(:on_hold_images)
-  end
-
-  def attach_on_hold_images
-    return unless params.dig(:prefabrication, :on_hold_images).present?
-
-    params[:prefabrication][:on_hold_images].each do |image|
-      @prefabrication.on_hold_images.attach(image)
+  def handle_docuvita_image_uploads(prefabrication)
+    if params.dig(:prefabrication, :on_hold_images).present?
+      Array(params[:prefabrication][:on_hold_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        prefabrication.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+      end
     end
   end
 

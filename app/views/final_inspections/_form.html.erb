@@ -85,13 +85,13 @@
             </div>
             <div class="col-md-6">
               <%= f.label :visual_check_images, t('activerecord.attributes.final_inspection.visual_check_images'), class: 'form-label' %>
-              <%= f.file_field :visual_check_images, multiple: true, class: 'form-control' %>
+              <%= f.file_field :visual_check_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: 'form-control' %>
             </div>
           </div>
           
-          <%= render partial: 'images', locals: { 
-            images: f.object.visual_check_images, 
-            image_type: 'visual_check',
+          <%= render partial: 'application/docuvita_documents', locals: {
+            documents: f.object.visual_check_images,
+            title: t('.visual_check_images'),
             edit_mode: true,
             model_type: f.object
           } %>
@@ -115,13 +115,13 @@
             </div>
             <div class="col-md-6">
               <%= f.label :vt2_check_images, t('activerecord.attributes.final_inspection.vt2_check_images'), class: 'form-label' %>
-              <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control' %>
+              <%= f.file_field :vt2_check_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: 'form-control' %>
             </div>
           </div>
           
-          <%= render partial: 'images', locals: { 
-            images: f.object.vt2_check_images, 
-            image_type: 'vt2_check',
+          <%= render partial: 'application/docuvita_documents', locals: { 
+            documents: f.object.vt2_check_images, 
+            title: t('.vt2_check_images'),
             edit_mode: true,
             model_type: f.object
           } %>
@@ -148,13 +148,13 @@
             </div>
             <div class="col-md-6">
               <%= f.label :rt_check_images, t('activerecord.attributes.final_inspection.rt_check_images'), class: 'form-label' %>
-              <%= f.file_field :rt_check_images, multiple: true, class: 'form-control' %>
+              <%= f.file_field :rt_check_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: 'form-control' %>
             </div>
           </div>
           
-          <%= render partial: 'images', locals: { 
-            images: f.object.rt_check_images, 
-            image_type: 'rt_check',
+          <%= render partial: 'application/docuvita_documents', locals: { 
+            documents: f.object.rt_check_images, 
+            title: t('.rt_check_images'),
             edit_mode: true,
             model_type: f.object
           } %>
@@ -178,13 +178,13 @@
             </div>
             <div class="col-md-6">
               <%= f.label :pt2_check_images, t('activerecord.attributes.final_inspection.pt2_check_images'), class: 'form-label' %>
-              <%= f.file_field :pt2_check_images, multiple: true, class: 'form-control' %>
+              <%= f.file_field :pt2_check_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: 'form-control' %>
             </div>
           </div>
           
-          <%= render partial: 'images', locals: { 
-            images: f.object.pt2_check_images, 
-            image_type: 'pt2_check',
+          <%= render partial: 'application/docuvita_documents', locals: { 
+            documents: f.object.pt2_check_images, 
+            title: t('.pt2_check_images'),
             edit_mode: true,
             model_type: f.object
           } %>

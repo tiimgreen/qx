@@ -1,5 +1,6 @@
 class FinalInspection < ApplicationRecord
   include SectorModel
+  include DocuvitaUploadable
 
   belongs_to :project
   belongs_to :work_location
@@ -9,31 +10,6 @@ class FinalInspection < ApplicationRecord
   VT2_STATUSES = [ "Passed", "Failed", "N/A" ].freeze
   PT2_STATUSES = [ "Passed", "Failed", "N/A" ].freeze
   RT_STATUSES = [ "Passed", "Failed", "N/A" ].freeze
-
-  has_many_attached :on_hold_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
-
-  has_many_attached :visual_check_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
-
-  has_many_attached :vt2_check_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
-
-  has_many_attached :pt2_check_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
-
-  has_many_attached :rt_check_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
 
   validates :work_package_number, presence: true, uniqueness: { scope: [ :project_id, :isometry_id ] }
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
@@ -72,32 +48,24 @@ class FinalInspection < ApplicationRecord
     on_hold_status == "On Hold"
   end
 
-  # Validate image format and size
-  validate :validate_image_format
-
-  private
-
-  def validate_image_format
-    validate_images(on_hold_images)
-    validate_images(visual_check_images)
-    validate_images(vt2_check_images)
-    validate_images(pt2_check_images)
-    validate_images(rt_check_images)
+  # Helper methods for Docuvita document access
+  def on_hold_images
+    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "on_hold_image")
   end
 
-  def validate_images(images)
-    return unless images.attached?
+  def visual_check_images
+    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "visual_check_image")
+  end
 
-    images.each do |image|
-      unless image.content_type.in?(%w[image/jpeg image/png])
-        errors.add(:base, "Invalid format for #{image.filename}")
-        image.purge
-      end
+  def vt2_check_images
+    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "vt2_check_image")
+  end
 
-      if image.byte_size > 5.megabytes
-        errors.add(:base, "#{image.filename} is too large")
-        image.purge
-      end
-    end
+  def pt2_check_images
+    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "pt2_check_image")
+  end
+
+  def rt_check_images
+    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "rt_check_image")
   end
 end

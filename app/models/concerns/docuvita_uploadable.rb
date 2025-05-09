@@ -107,7 +107,7 @@ module DocuvitaUploadable
                         filename: filename,
                         content_type: file_io.content_type
                       })
-        raise "File must be an image type for upload_image_to_docuvita method"
+        raise I18n.t("errors.messages.invalid_image_type", filename: filename)
       end
 
       uploader = DocuvitaUploader.new
@@ -137,6 +137,14 @@ module DocuvitaUploadable
 
         # Ensure type is one of the valid document types
         doc_type = case type.to_s
+        when /rt_check/i, /rt2_check/i
+                    "rt_check_image"
+        when /vt2_check/i
+                    "vt2_check_image"
+        when /pt2_check/i
+                    "pt2_check_image"
+        when /visual_check/i
+                    "visual_check_image"
         when /rt/i
                     "rt_image"
         when /vt/i

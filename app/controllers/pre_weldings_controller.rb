@@ -49,13 +49,11 @@ class PreWeldingsController < ApplicationController
   end
 
   def create
-    @pre_welding = @project.pre_weldings.new(pre_welding_params_without_images)
+    @pre_welding = @project.pre_weldings.build(pre_welding_params.except(:on_hold_images))
     @pre_welding.user = current_user
 
-    # Handle image attachments separately
-    attach_on_hold_images if params.dig(:pre_welding, :on_hold_images).present?
-
     if @pre_welding.save
+      handle_docuvita_image_uploads(@pre_welding)
       redirect_to project_pre_welding_path(@project, @pre_welding),
                   notice: t("common.messages.success.created", model: PreWelding.model_name.human)
     else
@@ -74,9 +72,9 @@ class PreWeldingsController < ApplicationController
 
   def update
     on_hold_params(params)
-    attach_on_hold_images if params.dig(:pre_welding, :on_hold_images).present?
 
-    if @pre_welding.update(pre_welding_params_without_images)
+    if @pre_welding.update(pre_welding_params.except(:on_hold_images))
+      handle_docuvita_image_uploads(@pre_welding)
       redirect_to project_pre_welding_path(@project, @pre_welding),
                   notice: t("common.messages.success.updated", model: PreWelding.model_name.human)
     else
@@ -147,15 +145,12 @@ class PreWeldingsController < ApplicationController
     )
   end
 
-  def pre_welding_params_without_images
-    pre_welding_params.except(:on_hold_images)
-  end
-
-  def attach_on_hold_images
-    return unless params.dig(:pre_welding, :on_hold_images).present?
-
-    params[:pre_welding][:on_hold_images].each do |image|
-      @pre_welding.on_hold_images.attach(image)
+  def handle_docuvita_image_uploads(pre_welding)
+    if params.dig(:pre_welding, :on_hold_images).present?
+      Array(params[:pre_welding][:on_hold_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        pre_welding.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+      end
     end
   end
 

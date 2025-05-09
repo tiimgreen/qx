@@ -75,7 +75,7 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.on_hold_comment') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.on_hold_comment %></dd>
 
-            <%= render partial: 'application/image_gallery', locals: { images: @final_inspection.on_hold_images } %>
+            <%= render 'application/docuvita_documents', documents: @final_inspection.on_hold_images %>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.visual_check_status') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.visual_check_status %></dd>
@@ -83,7 +83,7 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.visual_check_comment') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.visual_check_comment %></dd>
 
-            <%= render partial: 'application/image_gallery', locals: { images: @final_inspection.visual_check_images } %>
+            <%= render 'application/docuvita_documents', documents: @final_inspection.visual_check_images %>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.vt2_check_status') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.vt2_check_status %></dd>
@@ -91,7 +91,7 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.vt2_check_comment') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.vt2_check_comment %></dd>
             
-            <%= render partial: 'application/image_gallery', locals: { images: @final_inspection.vt2_check_images } %>
+            <%= render 'application/docuvita_documents', documents: @final_inspection.vt2_check_images %>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.pt2_check_status') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.pt2_check_status %></dd>
@@ -99,7 +99,7 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.pt2_check_comment') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.pt2_check_comment %></dd>
 
-            <%= render partial: 'application/image_gallery', locals: { images: @final_inspection.pt2_check_images } %>
+            <%= render 'application/docuvita_documents', documents: @final_inspection.pt2_check_images %>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.rt_check_status') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.rt_check_status %></dd>
@@ -107,8 +107,7 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.rt_check_comment') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.rt_check_comment %></dd>
 
-            <%= render partial: 'application/image_gallery', locals: { images: @final_inspection.rt_check_images } %>
-
+            <%= render 'application/docuvita_documents', documents: @final_inspection.rt_check_images %>
           </dl>
         </div>
       </div>
