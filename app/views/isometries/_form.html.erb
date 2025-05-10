@@ -227,19 +227,29 @@
               <div class="row">
                 <dt><%= f.label :rt_percentage %></dt>
                 <%= f.file_field :rt_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: "form-control my-2 w-100 w-md-50" %>
-
+                <%= render partial: 'docuvita_documents', locals: {
+                  documents: @isometry.rt_images,
+                  title: t('.rt_images')
+                } %>
               </div>
 
               <div class="row">
                 <dt><%= f.label :vt2_percentage %></dt>
                 <%= f.file_field :vt_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: "form-control my-2 w-100 w-md-50" %>
+                <%= render partial: 'docuvita_documents', locals: {
+                  documents: @isometry.vt_images,
+                  title: t('.vt_images')
+                } %>
 
               </div>
 
               <div class="row">
                 <dt><%= f.label :pt2_percentage %></dt>
                 <%= f.file_field :pt_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff', class: "form-control my-2 w-100 w-md-50" %>
-  
+                <%= render partial: 'docuvita_documents', locals: {
+                  documents: @isometry.pt_images,
+                  title: t('.pt_images')
+                } %>
               </div>
             </div>
           </div>

@@ -8,8 +8,8 @@
 
     <div class="d-flex flex-wrap gap-2">
       <% documents.each do |document| %>
-        <%= link_to view_docuvita_document_path(document), target: "_blank", class: "text-decoration-none" do %>
-          <div style="width: 120px;">
+        <div style="width: 120px;">
+          <%= link_to view_docuvita_document_path(document), target: "_blank", class: "text-decoration-none" do %>
             <div class="text-center">
               <% if document.document_type.include?('pdf') || document.document_type.include?('image') %>
                 <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
@@ -29,8 +29,23 @@
                 <%= document.created_at.strftime("%Y-%m-%d") %>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+          <% if current_user.can_delete?("Isometry") %>
+            <div class="text-center mt-1">
+              <%= button_tag type: 'button',
+                           class: 'btn btn-outline-danger btn-sm',
+                           data: {
+                             bs_toggle: "modal",
+                             bs_target: "#deleteDocumentModal",
+                             "document-id": document.id,
+                             "document-name": document.filename,
+                             "document-number": document.docuvita_object_id
+                           } do %>
+                <i class="bi bi-trash"></i> <%= t('.delete') %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

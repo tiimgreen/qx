@@ -23,3 +23,12 @@ Access to Project Reports - user must be added into Project User table.
 
 # Docuvita upload material certificates
 # rails 'docuvita:upload_material_certificates'
+
+# NEED TO DO
+# 2. Update current rake tasks to use docuvita
+# 3. Create new rake tasks for uploading isometry rt vt pt on_hold images
+# 4. Create new rake tasks for uploading on_hold images for all other sectors/models
+# 5. Create new rake tasks for uploading other image files types on other models
+# 6. Copy db 
+# 7. Add keys into credentials for production
+
