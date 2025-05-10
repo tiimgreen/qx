@@ -226,6 +226,7 @@ en:
       weekly_progress_entry: "Weekly Progress Entry"
       welding_batch_assignment: "Welding Batch Assignment"
       guest: "Guest"
+      docuvita_document: "Document"
     errors:
       models:
         isometry_document:

@@ -227,6 +227,7 @@ de:
       weekly_progress_entry: "Wochenentwurf"
       welding_batch_assignment: "Schweisszertifikat"
       guest: "Gast"
+      docuvita_document: "Dokument"
     errors:
       models:
         isometry_document:

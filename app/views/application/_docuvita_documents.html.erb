@@ -1,11 +1,11 @@
 <%# Params:
     - documents: collection of Docuvita documents
     - title: section title (optional)
+    - edit_mode: boolean
 %>
 
 <% if documents.any? %>
   <div class="mb-3">
-
     <div class="d-flex flex-wrap gap-2">
       <% documents.each do |document| %>
         <div style="width: 120px;">
@@ -30,7 +30,7 @@
               </div>
             </div>
           <% end %>
-          <% if current_user.can_delete?("Isometry") %>
+          <% if current_user.can_delete?("Isometry") && local_assigns[:edit_mode] %>
             <div class="text-center mt-1">
               <%= button_tag type: 'button',
                            class: 'btn btn-outline-danger btn-sm',
@@ -50,3 +50,10 @@
     </div>
   </div>
 <% end %>
+
+<%= render partial: 'delete_confirmation_modal',
+           locals: {
+             modal_id: 'deleteDocumentModal',
+             controller_name: 'delete-document',
+             model_name: 'docuvita_document'
+           } %>
