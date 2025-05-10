@@ -49,13 +49,11 @@ class SiteDeliveriesController < ApplicationController
   end
 
   def create
-    @site_delivery = @project.site_deliveries.new(site_delivery_params_without_images)
+    @site_delivery = @project.site_deliveries.new(site_delivery_params.except(:check_spools_images))
     @site_delivery.user = current_user
 
-    # Handle image attachments separately
-    attach_check_spool_images if params.dig(:site_delivery, :check_spool_images).present?
-
     if @site_delivery.save
+      handle_docuvita_image_uploads(@site_delivery)
       redirect_to project_site_delivery_path(@project, @site_delivery),
                   notice: t("common.messages.success.created", model: SiteDelivery.model_name.human)
     else
@@ -74,9 +72,9 @@ class SiteDeliveriesController < ApplicationController
 
   def update
     check_spool_params(params)
-    attach_check_spool_images if params.dig(:site_delivery, :check_spool_images).present?
 
-    if @site_delivery.update(site_delivery_params_without_images)
+    if @site_delivery.update(site_delivery_params.except(:check_spools_images))
+      handle_docuvita_image_uploads(@site_delivery)
       redirect_to project_site_delivery_path(@project, @site_delivery),
                   notice: t("common.messages.success.updated", model: SiteDelivery.model_name.human)
     else
@@ -138,19 +136,16 @@ class SiteDeliveriesController < ApplicationController
       :completed,
       :isometry_id,
       :total_time,
-      check_spool_images: []
+      check_spools_images: []
     )
   end
 
-  def site_delivery_params_without_images
-    site_delivery_params.except(:check_spool_images)
-  end
-
-  def attach_check_spool_images
-    return unless params.dig(:site_delivery, :check_spool_images).present?
-
-    params[:site_delivery][:check_spool_images].each do |image|
-      @site_delivery.check_spool_images.attach(image)
+  def handle_docuvita_image_uploads(site_delivery)
+    if params.dig(:site_delivery, :check_spools_images).present?
+      Array(params[:site_delivery][:check_spools_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        site_delivery.upload_image_to_docuvita(image, image.original_filename, "check_spools_image")
+      end
     end
   end
 

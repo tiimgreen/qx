@@ -9,7 +9,7 @@ class DocuvitaDocument < ApplicationRecord
 
   # Document types
   # DOCUMENT_TYPES = %w[isometry_pdf rt_image vt_image pt_image on_hold_image qr_code].freeze
-  DOCUMENT_TYPES = %w[isometry_pdf rt_image vt_image pt_image on_hold_image qr_code material_certificate_pdf delivery_note_pdf visual_check_image vt2_check_image pt2_check_image rt_check_image on_site_image].freeze
+  DOCUMENT_TYPES = %w[isometry_pdf rt_image vt_image pt_image on_hold_image qr_code material_certificate_pdf delivery_note_pdf visual_check_image vt2_check_image pt2_check_image rt_check_image on_site_image check_spools_image].freeze
   VALID_QR_POSITIONS = %w[top_left top_right bottom_left bottom_right].freeze
 
   validates :document_type, inclusion: { in: DOCUMENT_TYPES }

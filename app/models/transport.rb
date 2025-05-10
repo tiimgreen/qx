@@ -7,13 +7,7 @@ class Transport < ApplicationRecord
 
   CHECK_SPOOLS_STATUSES = [ "N/A", "Passed", "Failed" ].freeze
 
-  has_many_attached :check_spools_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
-
   validates :work_package_number, presence: true, uniqueness: { scope: [ :project_id, :isometry_id ] }
-  # validates :check_spools_status, inclusion: { in: CHECK_SPOOLS_STATUSES }, on: :update
   validates :check_spools_comment, length: { maximum: 2000 }
 
   scope :search_by_term, ->(search_term) {
@@ -41,23 +35,8 @@ class Transport < ApplicationRecord
     check_spools_status == "Failed"
   end
 
-  validate :validate_image_format
-
-  private
-
-  def validate_image_format
-    return unless check_spools_images.attached?
-
-    check_spools_images.each do |image|
-      unless image.content_type.in?(%w[image/jpeg image/png])
-        errors.add(:check_spools_images, :invalid_format)
-        image.purge
-      end
-
-      if image.byte_size > 5.megabytes
-        errors.add(:check_spools_images, :too_large)
-        image.purge
-      end
-    end
+  def check_spools_images
+    docuvita_documents.where(documentable_type: "Transport", document_type: "check_spools_image")
   end
+  alias_method :check_spools_documents, :check_spools_images
 end

@@ -49,12 +49,11 @@ class TransportsController < ApplicationController
   end
 
   def create
-    @transport = @project.transports.new(transport_params_without_images)
+    @transport = @project.transports.new(transport_params.except(:check_spools_images))
     @transport.user = current_user
 
-    attach_check_spools_images if params.dig(:transport, :check_spools_images).present?
-
     if @transport.save
+      handle_docuvita_image_uploads(@transport)
       redirect_to project_transport_path(@project, @transport),
                   notice: t("common.messages.success.created", model: Transport.model_name.human)
     else
@@ -73,9 +72,9 @@ class TransportsController < ApplicationController
 
   def update
     check_spools_params(params)
-    attach_check_spools_images if params.dig(:transport, :check_spools_images).present?
 
-    if @transport.update(transport_params_without_images)
+    if @transport.update(transport_params.except(:check_spools_images))
+      handle_docuvita_image_uploads(@transport)
       redirect_to project_transport_path(@project, @transport),
                   notice: t("common.messages.success.updated", model: Transport.model_name.human)
     else
@@ -143,15 +142,12 @@ class TransportsController < ApplicationController
     )
   end
 
-  def transport_params_without_images
-    transport_params.except(:check_spools_images)
-  end
-
-  def attach_check_spools_images
-    return unless params.dig(:transport, :check_spools_images).present?
-
-    params[:transport][:check_spools_images].each do |image|
-      @transport.check_spools_images.attach(image)
+  def handle_docuvita_image_uploads(transport)
+    if params.dig(:transport, :check_spools_images).present?
+      Array(params[:transport][:check_spools_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        transport.upload_image_to_docuvita(image, image.original_filename, "check_spools_image")
+      end
     end
   end
 

@@ -72,40 +72,10 @@
             <dt class="col-sm-6"><%= t('activerecord.attributes.site_delivery.check_spools_comment') %></dt>
             <dd class="col-sm-6"><%= @site_delivery.check_spools_comment %></dd>
 
-            <% if @site_delivery.check_spools_images.attached? %>
-              <div class="row row-cols-1 row-cols-md-3 g-3">
-                <% @site_delivery.check_spools_images.each do |image| %>
-                  <div class="col">
-                    <div class="card h-100">
-                      <%= link_to image_tag(image.variant(:thumb), 
-                                          class: "card-img-top", 
-                                          style: "object-fit: cover; height: 100px;",
-                                          data: { 
-                                            bs_toggle: "modal",
-                                            bs_target: "#imageModal#{image.id}"
-                                          }),
-                                "#" %>
-
-                      <!-- Modal for this image -->
-                      <div class="modal fade" id="imageModal<%= image.id %>" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title"><%= t('common.labels.image_preview') %></h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                              <%= image_tag image.variant(:medium), class: "img-fluid" %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-
+            <%= render partial: 'application/docuvita_documents', locals: {
+              documents: @site_delivery.check_spools_images,
+              title: t('.check_spools_images')
+            } %>
           </dl>
         </div>
       </div>

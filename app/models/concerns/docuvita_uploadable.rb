@@ -155,8 +155,10 @@ module DocuvitaUploadable
                     "on_hold_image"
         when /on_site/i
                     "on_site_image"
+        when /check_spools/i
+                    "check_spools_image"
         else
-                    "on_hold_image" # fallback
+                    "on_hold_image"
         end
 
         # Upload the converted PDF

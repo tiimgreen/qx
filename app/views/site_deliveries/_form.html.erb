@@ -67,13 +67,13 @@
               </div>
               <div class="col-md-6">
                 <%= f.label :check_spools_images, t('activerecord.attributes.site_delivery.check_spools_images'), class: 'form-label' %>
-                <%= f.file_field :check_spools_images, multiple: true, class: 'form-control' %>
+                <%= f.file_field :check_spools_images, multiple: true, class: 'form-control', accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff' %>
               </div>
             </div>
             
-            <%= render partial: 'images', locals: { 
-              images: f.object.check_spools_images, 
-              image_type: 'check_spools',
+            <%= render partial: 'application/docuvita_documents', locals: { 
+              documents: f.object.check_spools_images, 
+              document_type: 'check_spools_image',
               edit_mode: true,
               model_type: f.object
             } %>
