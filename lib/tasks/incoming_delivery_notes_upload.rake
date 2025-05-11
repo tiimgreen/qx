@@ -93,17 +93,62 @@ namespace :docuvita do
         begin
           # --- Perform Upload ---
           blob.open do |tempfile|
-            upload_result = uploader.upload_file(
-              tempfile.path,
-              {
-                name: docuvita_filename,
-                description: api_description,
-                voucher_number: voucher_number,
-                transaction_key: transaction_key,
-                document_type: docuvita_api_document_type,
-                version_original_filename: original_filename
-              }
-            )
+            # Check if this is an image file that needs conversion
+            is_image = blob.content_type&.start_with?("image/") ||
+                      %w[.jpg .jpeg .png .gif .bmp .tiff].include?(File.extname(original_filename).downcase)
+
+            if is_image
+              puts "  Converting image to PDF before upload..."
+              # Create temporary files for the conversion process
+              temp_image = Tempfile.new([ "image", File.extname(original_filename) ])
+              temp_pdf = Tempfile.new([ "image_converted", ".pdf" ])
+
+              begin
+                # Write image to temp file
+                tempfile.rewind
+                temp_image.binmode
+                temp_image.write(tempfile.read)
+                temp_image.close
+
+                # Convert to PDF using MiniMagick/ImageMagick
+                require "mini_magick"
+
+                image = MiniMagick::Image.open(temp_image.path)
+                image.format "pdf"
+                image.write temp_pdf.path
+
+                # Upload the converted PDF
+                upload_result = uploader.upload_file(
+                  temp_pdf.path,
+                  {
+                    name: docuvita_filename,
+                    description: api_description,
+                    voucher_number: voucher_number,
+                    transaction_key: transaction_key,
+                    document_type: docuvita_api_document_type,
+                    version_original_filename: original_filename
+                  }
+                )
+              ensure
+                # Clean up temp files
+                temp_image.unlink if temp_image && File.exist?(temp_image.path)
+                temp_pdf.unlink if temp_pdf && File.exist?(temp_pdf.path)
+              end
+            else
+              # Regular upload for PDFs and other documents
+              upload_result = uploader.upload_file(
+                tempfile.path,
+                {
+                  name: docuvita_filename,
+                  description: api_description,
+                  voucher_number: voucher_number,
+                  transaction_key: transaction_key,
+                  document_type: docuvita_api_document_type,
+                  version_original_filename: original_filename
+                }
+              )
+            end
+
             object_id = upload_result[:object_id]
 
             # --- Create DocuvitaDocument record ---
