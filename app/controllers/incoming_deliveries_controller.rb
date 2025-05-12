@@ -49,8 +49,7 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   def create
-    delivery_params = incoming_delivery_params
-    uploaded_files = delivery_params.delete(:delivery_notes)
+    delivery_params = incoming_delivery_params_without_files
 
     @incoming_delivery = @project ? @project.incoming_deliveries.build(delivery_params) : IncomingDelivery.new(delivery_params)
     @incoming_delivery.user = current_user
@@ -60,11 +59,8 @@ class IncomingDeliveriesController < ApplicationController
 
     if @incoming_delivery.save
       begin
-        if uploaded_files.present?
-          uploaded_files.each do |file|
-            handle_docuvita_delivery_note_upload(@incoming_delivery, file)
-          end
-        end
+        # Handle all document uploads
+        handle_docuvita_uploads(@incoming_delivery)
 
         redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                     notice: t("common.messages.created", model: "Delivery")
@@ -83,27 +79,20 @@ class IncomingDeliveriesController < ApplicationController
     if params[:complete_delivery]
       complete
     else
-      delivery_params = incoming_delivery_params
-      uploaded_files = delivery_params.delete(:delivery_notes)
-
-      # Handle delivery notes attachments first
-      # attach_delivery_notes if delivery_notes_present_in_params?
-
-      # Process remaining attributes
-      params_hash = remove_delivery_notes_params(delivery_params)
+      delivery_params = incoming_delivery_params_without_files
 
       # Set on_hold_date when status is On Hold
-      if params_hash[:on_hold_status] == "On Hold"
-        params_hash[:on_hold_date] = Time.current
+      if delivery_params[:on_hold_status] == "On Hold"
+        delivery_params[:on_hold_date] = Time.current
+      elsif delivery_params[:on_hold_status] == "N/A"
+        delivery_params[:on_hold_date] = nil
+        delivery_params[:on_hold_comment] = nil
       end
 
-      if @incoming_delivery.update(params_hash)
+      if @incoming_delivery.update(delivery_params)
         begin
-          if uploaded_files.present?
-            uploaded_files.each do |file|
-              handle_docuvita_delivery_note_upload(@incoming_delivery, file)
-            end
-          end
+          # Handle all document uploads
+          handle_docuvita_uploads(@incoming_delivery)
 
           @incoming_delivery.update_completion_status
           redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
@@ -229,7 +218,26 @@ class IncomingDeliveriesController < ApplicationController
       :on_hold_date,
       :total_time,
       *completable_params,
-      delivery_notes: []
+      delivery_notes: [],
+      on_hold_images: []
+    )
+  end
+
+  def incoming_delivery_params_without_files
+    params.require(:incoming_delivery).permit(
+      :project_id,
+      :delivery_date,
+      :order_number,
+      :supplier_name,
+      :notes,
+      :work_location_id,
+      :delivery_note_number,
+      :completed,
+      :on_hold_status,
+      :on_hold_comment,
+      :on_hold_date,
+      :total_time,
+      *completable_params
     )
   end
 
@@ -247,6 +255,25 @@ class IncomingDeliveriesController < ApplicationController
     params_hash.except(:delivery_notes)
   end
 
+  # Handles all document uploads to Docuvita
+  def handle_docuvita_uploads(delivery)
+    # Handle delivery notes
+    if params.dig(:incoming_delivery, :delivery_notes).present?
+      Array(params[:incoming_delivery][:delivery_notes]).each do |file|
+        next unless file.is_a?(ActionDispatch::Http::UploadedFile)
+        handle_docuvita_delivery_note_upload(delivery, file)
+      end
+    end
+
+    # Handle on-hold images
+    if params.dig(:incoming_delivery, :on_hold_images).present?
+      Array(params[:incoming_delivery][:on_hold_images]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        delivery.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+      end
+    end
+  end
+
   # Handles uploading the delivery note file to Docuvita
   def handle_docuvita_delivery_note_upload(delivery, file)
     unless file.is_a?(ActionDispatch::Http::UploadedFile)
@@ -254,7 +281,36 @@ class IncomingDeliveriesController < ApplicationController
       return # Or raise an error if file is mandatory
     end
 
-    # Delegate to the model instance method for actual upload logic
-    delivery.upload_delivery_note_to_docuvita(file, file.original_filename)
+    # Check if this is an image file that needs conversion
+    is_image = file.content_type&.start_with?("image/") ||
+              %w[.jpg .jpeg .png .gif .bmp .tiff].include?(File.extname(file.original_filename).downcase)
+
+    if is_image
+      # Use the upload_image_to_docuvita method for images
+      delivery.upload_image_to_docuvita(
+        file,
+        file.original_filename,
+        "delivery_note_pdf"
+      )
+    else
+      # Use upload_pdf_to_docuvita for PDFs and other documents
+      delivery.upload_pdf_to_docuvita(
+        file,
+        file.original_filename,
+        {
+          voucher_number: delivery.delivery_note_number,
+          transaction_key: delivery.project&.project_number || "",
+          document_type: "DeliveryNote",
+          description: {
+            delivery_note_number: delivery.delivery_note_number,
+            order_number: delivery.order_number,
+            supplier_name: delivery.supplier_name,
+            project_id: delivery.project_id,
+            original_filename: file.original_filename,
+            upload_context: "manual_form"
+          }
+        }
+      )
+    end
   end
 end
