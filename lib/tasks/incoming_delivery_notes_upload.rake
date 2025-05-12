@@ -114,6 +114,8 @@ namespace :docuvita do
                 require "mini_magick"
 
                 image = MiniMagick::Image.open(temp_image.path)
+                # Auto-orient the image to fix orientation issues
+                image.auto_orient
                 image.format "pdf"
                 image.write temp_pdf.path
 
