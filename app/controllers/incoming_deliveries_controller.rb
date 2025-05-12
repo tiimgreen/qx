@@ -108,6 +108,8 @@ class IncomingDeliveriesController < ApplicationController
   end
 
   def destroy
+    @incoming_delivery.docuvita_documents.destroy_all
+
     @incoming_delivery.destroy
     redirect_to project_incoming_deliveries_path(@project), notice: t(".success")
   end

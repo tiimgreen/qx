@@ -13,7 +13,7 @@ class DeliveryItem < ApplicationRecord
   # has_many_attached :ra_check_images
   # has_many_attached :on_hold_images
 
-  before_destroy :purge_attached_files
+  # before_destroy :purge_attached_files
 
   validates :delivery_note_position, presence: true, on: :create
   validates :tag_number, presence: true, uniqueness: { scope: :incoming_delivery_id }, on: :create

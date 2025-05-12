@@ -87,6 +87,9 @@ class DeliveryItemsController < ApplicationController
   end
 
   def destroy
+    # Delete associated Docuvita documents first
+    @delivery_item.docuvita_documents.destroy_all
+
     @delivery_item.destroy
   end
 

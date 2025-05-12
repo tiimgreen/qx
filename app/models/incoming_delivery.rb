@@ -5,10 +5,10 @@ class IncomingDelivery < ApplicationRecord
   belongs_to :user, optional: true
   has_many_attached :delivery_notes
   has_many :delivery_items
-  has_many :docuvita_documents, as: :documentable
+  has_many :docuvita_documents, as: :documentable, dependent: :destroy
 
-  before_destroy :purge_attached_files
-  before_destroy :cleanup_delivery_items
+  # before_destroy :purge_attached_files
+  # before_destroy :cleanup_delivery_items
 
   validates :delivery_date, presence: true
   validates :order_number, presence: true, uniqueness: true
@@ -103,11 +103,11 @@ class IncomingDelivery < ApplicationRecord
 
   private
 
-  def purge_attached_files
-    delivery_notes.purge_later if delivery_notes.attached?
-  end
+  # def purge_attached_files
+  #   delivery_notes.purge_later if delivery_notes.attached?
+  # end
 
-  def cleanup_delivery_items
-    delivery_items.destroy_all
-  end
+  # def cleanup_delivery_items
+  #   delivery_items.destroy_all
+  # end
 end
