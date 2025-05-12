@@ -157,6 +157,8 @@ module DocuvitaUploadable
                     "on_site_image"
         when /check_spools/i
                     "check_spools_image"
+        when /delivery_note/i
+                    "delivery_note_pdf"
         else
                     "on_hold_image"
         end

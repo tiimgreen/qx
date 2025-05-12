@@ -61,6 +61,11 @@
                          direct_upload: true,
                          multiple: true %>
       </div>
+      <%= render partial: 'application/docuvita_documents', locals: {
+        documents: @incoming_delivery.delivery_notes,
+        edit_mode: true,
+        title: t('.delivery_notes')
+      } %>
 
       <%= render 'hold_fields', f: f %>
 

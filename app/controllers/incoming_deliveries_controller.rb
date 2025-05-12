@@ -67,7 +67,7 @@ class IncomingDeliveriesController < ApplicationController
       rescue StandardError => e
         # Show error and rollback
         @incoming_delivery.destroy
-        flash.now[:alert] = t(".upload_error", message: e.message)
+        flash.now[:alert] = t("incoming_deliveries.upload_error", message: e.message)
         render :new, status: :unprocessable_entity
       end
     else
@@ -98,7 +98,7 @@ class IncomingDeliveriesController < ApplicationController
           redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
                       notice: t("common.messages.updated", model: "Delivery")
         rescue StandardError => e
-          flash.now[:alert] = t(".upload_error", message: e.message)
+          flash.now[:alert] = t("incoming_deliveries.upload_error", message: e.message)
           render :edit, status: :unprocessable_entity
         end
       else

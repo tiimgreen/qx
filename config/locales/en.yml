@@ -141,6 +141,7 @@ en:
       delivery_notes: "Delivery Notes"
     edit:
       title: "Incoming Delivery Edit: %{order_number}"
+    upload_error: "Error uploading document: %{message}. Please check the Docuvita connection."
   delivery_items:
     edit:
       title: "Delivery Item Edit: %{delivery_note_position}"

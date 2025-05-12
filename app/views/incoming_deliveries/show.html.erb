@@ -55,30 +55,19 @@
             <dd class="col-sm-8"><%= status_label(@incoming_delivery.completed ? t('common.yes') : t('common.no')) %></dd>
 
           <%= render 'hold_info', record: @incoming_delivery %>
+          <%= render partial: 'application/docuvita_documents', locals: {
+            documents: @incoming_delivery.on_hold_images,
+            title: t('.on_hold_images')
+          } %>
           </dl>
         </div>
 
         <div class="col-md-6">
-          <%# Find all delivery notes in Docuvita %>
-          <% docuvita_docs = @incoming_delivery.docuvita_documents.select { |doc| doc.document_type == 'delivery_note_pdf' } %>
-          
-          <% if docuvita_docs.any? %>
-            <h5 class="border-bottom pb-2 mb-3"><%= t('.delivery_note') %></h5>
-            <div class="d-flex flex-wrap gap-3">
-              <% docuvita_docs.each do |doc| %>
-                <%= link_to view_docuvita_document_path(doc),
-                    class: "text-decoration-none text-dark",
-                    target: "_blank",
-                    title: "View delivery note #{doc.filename} from Docuvita" do %>
-                  <div class="d-flex flex-column align-items-center">
-                    <i class="bi bi-file-pdf text-danger" style="font-size: 4rem;"></i>
-                    <small class="text-muted"><%= doc.filename %></small>
-                    <small class="text-muted"><%= doc.created_at.strftime("%d/%m/%Y %H:%M") %></small>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
+          <dt class="col-sm-4"><%= t('.delivery_notes') %></dt>
+          <%= render partial: 'application/docuvita_documents', locals: {
+            documents: @incoming_delivery.delivery_notes,
+            title: t('.delivery_notes')
+          } %>
         </div>
       </div>
     </div>

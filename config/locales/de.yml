@@ -144,7 +144,7 @@ de:
       delivery_notes: "Lieferscheine"
     edit:
       title: "Wareneingang bearbeiten: %{order_number}"
-  sectors:
+    upload_error: "Fehler beim Hochladen des Dokuments: %{message}. Bitte überprüfen Sie die Docuvita-Verbindung."
     project: "Projekt"
     project_description: "Projektbezogene Aktivitäten"
     isometry: "Isometrie"
