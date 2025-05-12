@@ -55,7 +55,7 @@ namespace :docuvita do
 
         # 3. Prepare metadata...
         project = certificate.isometries.first&.project
-        project_number = project&.project_number || "UNKNOWN_PROJECT"
+        project_number = project&.project_number || ""
 
         # --- Metadata Preparation ---
         certificate_metadata = {
