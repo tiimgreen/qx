@@ -1,15 +1,17 @@
 class DeliveryItem < ApplicationRecord
   belongs_to :incoming_delivery
   belongs_to :user, optional: true
+  include DocuvitaUploadable
 
   has_one :project, through: :incoming_delivery
 
-  has_many_attached :quantity_check_images
-  has_many_attached :dimension_check_images
-  has_many_attached :visual_check_images
-  has_many_attached :vt2_check_images
-  has_many_attached :ra_check_images
-  has_many_attached :on_hold_images
+  # Remove ActiveStorage attachments
+  # has_many_attached :quantity_check_images
+  # has_many_attached :dimension_check_images
+  # has_many_attached :visual_check_images
+  # has_many_attached :vt2_check_images
+  # has_many_attached :ra_check_images
+  # has_many_attached :on_hold_images
 
   before_destroy :purge_attached_files
 
@@ -71,15 +73,41 @@ class DeliveryItem < ApplicationRecord
     update(completed: all_checks_passed?)
   end
 
+  # Helper methods for Docuvita document access
+  def quantity_check_images
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "quantity_check_image")
+  end
+
+  def dimension_check_images
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "dimension_check_image")
+  end
+
+  def visual_check_images
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "visual_check_image")
+  end
+
+  def vt2_check_images
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "vt2_check_image")
+  end
+
+  def ra_check_images
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "ra_check_image")
+  end
+
+  def on_hold_images
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "on_hold_image")
+  end
+
   private
 
   def purge_attached_files
-    quantity_check_images.purge
-    dimension_check_images.purge
-    visual_check_images.purge
-    vt2_check_images.purge
-    ra_check_images.purge
-    on_hold_images.purge
+    # No need to purge ActiveStorage files anymore
+    # quantity_check_images.purge
+    # dimension_check_images.purge
+    # visual_check_images.purge
+    # vt2_check_images.purge
+    # ra_check_images.purge
+    # on_hold_images.purge
   end
 
   def all_checks_passed?

@@ -27,16 +27,26 @@ class DeliveryItemsController < ApplicationController
 
   def create
     @delivery_item = @incoming_delivery.delivery_items.build
-    @delivery_item.assign_attributes(delivery_item_params.to_h)
+    @delivery_item.assign_attributes(delivery_item_params_without_images.to_h)
     @delivery_item.user = current_user
 
     # Set on_hold_date when status is On Hold
     @delivery_item.on_hold_date = Time.current if @delivery_item.on_hold_status == "On Hold"
 
     if @delivery_item.save
-      @incoming_delivery.update_completion_status
-      redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: t("common.messages.created", model: DeliveryItem.model_name.human)
+      begin
+        # Handle all document uploads
+        handle_docuvita_uploads(@delivery_item)
+
+        @incoming_delivery.update_completion_status
+        redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                    notice: t("common.messages.created", model: DeliveryItem.model_name.human)
+      rescue StandardError => e
+        # Show error and rollback
+        @delivery_item.destroy
+        flash.now[:alert] = t("incoming_deliveries.upload_error", message: e.message)
+        render :new, status: :unprocessable_entity
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -46,22 +56,30 @@ class DeliveryItemsController < ApplicationController
     if params[:complete_delivery_item]
       complete
     else
-      # Handle image attachments first
-      attach_images if images_present_in_params?
-
-      # Process remaining attributes
-      params_without_images = remove_image_params(delivery_item_params)
+      # Process remaining attributes without images
+      params_without_images = delivery_item_params_without_images
 
       # Set on_hold_date when status is On Hold
       if params_without_images[:on_hold_status] == "On Hold"
         params_without_images[:on_hold_date] = Time.current
+      elsif params_without_images[:on_hold_status] == "N/A"
+        params_without_images[:on_hold_date] = nil
+        params_without_images[:on_hold_comment] = nil
       end
 
       if @delivery_item.update(params_without_images)
-        @delivery_item.update_completion_status
-        @incoming_delivery.update_completion_status
-        redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                  notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
+        begin
+          # Handle all document uploads
+          handle_docuvita_uploads(@delivery_item)
+
+          @delivery_item.update_completion_status
+          @incoming_delivery.update_completion_status
+          redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
+                    notice: t("common.messages.updated", model: DeliveryItem.model_name.human)
+        rescue StandardError => e
+          flash.now[:alert] = t("incoming_deliveries.upload_error", message: e.message)
+          render :edit, status: :unprocessable_entity
+        end
       else
         render :edit, status: :unprocessable_entity
       end
@@ -76,18 +94,20 @@ class DeliveryItemsController < ApplicationController
     complete_resource(
       @delivery_item,
       project_incoming_delivery_delivery_item_path(@project, @incoming_delivery, @delivery_item),
-      delivery_item_params
+      delivery_item_params_without_images
     )
     @incoming_delivery.update_completion_status
   end
 
   def delete_image
+    # This method needs to be updated to handle Docuvita documents
     image_type = params[:image_type]
     return handle_invalid_image_type unless valid_image_type?(image_type)
 
-    image = @delivery_item.send(image_type).find_by(id: params[:image_id])
-    if image
-      image.purge
+    # Find the document in Docuvita
+    document = @delivery_item.send(image_type).find_by(id: params[:image_id])
+    if document
+      document.destroy
       redirect_to_delivery_item(notice: t("common.messages.file_deleted"))
     else
       redirect_to_delivery_item(alert: t("common.messages.unauthorized"))
@@ -119,20 +139,26 @@ class DeliveryItemsController < ApplicationController
     end
   end
 
-  def attach_images
+  # Handle all document uploads to Docuvita
+  def handle_docuvita_uploads(delivery_item)
     IMAGE_TYPES.each do |image_type|
-      if delivery_item_params[image_type].present?
-        @delivery_item.send(image_type).attach(delivery_item_params[image_type])
-      end
+      upload_images(delivery_item, image_type.to_sym, image_type.sub("_images", "_image"))
     end
   end
 
-  def images_present_in_params?
-    IMAGE_TYPES.any? { |type| delivery_item_params[type].present? }
-  end
-
-  def remove_image_params(params)
-    params.except(*IMAGE_TYPES)
+  # Upload images for a specific type to Docuvita
+  def upload_images(delivery_item, param_key, document_type)
+    if params.dig(:delivery_item, param_key).present?
+      Array(params[:delivery_item][param_key]).each do |image|
+        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
+        begin
+          delivery_item.upload_image_to_docuvita(image, image.original_filename, document_type)
+        rescue StandardError => e
+          flash[:alert] = e.message
+          raise e
+        end
+      end
+    end
   end
 
   def valid_image_type?(image_type)
@@ -200,10 +226,21 @@ class DeliveryItemsController < ApplicationController
         dimension_check_images: [],
         visual_check_images: [],
         vt2_check_images: [],
-        ra_check_images: []
+        ra_check_images: [],
+        on_hold_images: []
       },
-      specifications: {},
-      on_hold_images: []
+      specifications: {}
+    )
+  end
+
+  def delivery_item_params_without_images
+    delivery_item_params.except(
+      :quantity_check_images,
+      :dimension_check_images,
+      :visual_check_images,
+      :vt2_check_images,
+      :ra_check_images,
+      :on_hold_images
     )
   end
 end

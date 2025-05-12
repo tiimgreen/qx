@@ -159,6 +159,12 @@ module DocuvitaUploadable
                     "check_spools_image"
         when /delivery_note/i
                     "delivery_note_pdf"
+        when /quantity_check/i
+                    "quantity_check_image"
+        when /dimension_check/i
+                    "dimension_check_image"
+        when /ra_check/i
+                    "ra_check_image"
         else
                     "on_hold_image"
         end

@@ -12,7 +12,7 @@
     <h5 class="mb-0"><%= t('.title') %></h5>
     <div class="btn-group btn-group-sm">
       <%= link_to edit_project_incoming_delivery_delivery_item_path(@delivery_item.incoming_delivery.project, @delivery_item.incoming_delivery, @delivery_item),
-                  class: 'btn btn-outline-primary m-1',
+                  class: 'btn btn-outline-primary m-1 text-white',
                   title: t('delivery_items.buttons.edit'),
                   data: { bs_toggle: 'tooltip' } do %>
         <i class="bi bi-pencil"></i>
@@ -116,22 +116,8 @@
               <% end %>
             </p>
 
-            <!-- Image attachments section -->
-            <% if check[:images].attached? %>
-              <div class="mt-3">
-                <div class="row g-2">
-                  <% check[:images].each do |image| %>
-                    <div class="col-6">
-                      <%= image_tag image, class: "img-thumbnail w-100",
-                          data: {
-                            bs_toggle: "modal",
-                            bs_target: "#imageModal#{image.id}"
-                          } %>
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
+            <%= render 'application/docuvita_documents', documents: check[:images] %>
+
           </div>
         </div>
       </div>
@@ -141,42 +127,3 @@
 
   </div>
 </div>
-
-<!-- Image Modals -->
-<% %w[quantity_check_images dimension_check_images visual_check_images vt2_check_images ra_check_images].each do |image_type| %>
-  <% @delivery_item.send(image_type).each do |image| %>
-    <div class="modal fade" id="imageModal<%= image.id %>" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"><%= image_type.humanize %></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <%= image_tag image, class: "img-fluid w-100" %>
-          </div>
-          <div class="modal-footer">
-            <%= button_to delete_image_project_incoming_delivery_delivery_item_path(
-                  project_id: @project,
-                  incoming_delivery_id: @incoming_delivery,
-                  id: @delivery_item,
-                  image_id: image.id,
-                  image_type: image_type
-                ),
-                method: :delete,
-                class: "btn btn-danger",
-                data: {
-                  turbo_confirm: t('common.messages.confirm_delete'),
-                  bs_dismiss: "modal"
-                } do %>
-              <i class="bi bi-trash"></i> <%= t('common.buttons.delete') %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-<% end %>
-
-
-

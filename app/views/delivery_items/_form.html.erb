@@ -60,9 +60,14 @@
                         class: 'form-control' %>
           </div>
           <div class="col-md-6">
-            <%= f.file_field :quantity_check_images, multiple: true, class: 'form-control' %>
+            <%= f.file_field :quantity_check_images, multiple: true, class: 'form-control', accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff'%>
           </div>
         </div>
+        <%= render partial: 'application/docuvita_documents', locals: {
+          documents: @delivery_item.quantity_check_images,
+          edit_mode: true,
+          title: t('activerecord.attributes.delivery_item.quantity_check')
+        } %>
         <%= f.text_area :quantity_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.quantity_check_comment') %>
       </div>
@@ -78,9 +83,14 @@
                         class: 'form-control' %>
           </div>
           <div class="col-md-6">
-            <%= f.file_field :dimension_check_images, multiple: true, class: 'form-control' %>
+            <%= f.file_field :dimension_check_images, multiple: true, class: 'form-control',accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff' %>
           </div>
         </div>
+        <%= render partial: 'application/docuvita_documents', locals: {
+          documents: @delivery_item.dimension_check_images,
+          edit_mode: true,
+          title: t('activerecord.attributes.delivery_item.dimension_check')
+        } %>
         <%= f.text_area :dimension_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.dimension_check_comment') %>
       </div>
@@ -96,9 +106,14 @@
                         class: 'form-control' %>
           </div>
           <div class="col-md-6">
-            <%= f.file_field :visual_check_images, multiple: true, class: 'form-control' %>
+            <%= f.file_field :visual_check_images, multiple: true, class: 'form-control', accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff' %>
           </div>
         </div>
+        <%= render partial: 'application/docuvita_documents', locals: {
+          documents: @delivery_item.visual_check_images,
+          edit_mode: true,
+          title: t('activerecord.attributes.delivery_item.visual_check')
+        } %>
         <%= f.text_area :visual_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.visual_check_comment') %>
       </div>
@@ -117,9 +132,14 @@
                         class: 'form-control' %>
           </div>
           <div class="col-md-6">
-            <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control' %>
+            <%= f.file_field :vt2_check_images, multiple: true, class: 'form-control', accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff' %>
           </div>
         </div>
+        <%= render partial: 'application/docuvita_documents', locals: {
+          documents: @delivery_item.vt2_check_images,
+          edit_mode: true,
+          title: t('activerecord.attributes.delivery_item.vt2_check')
+        } %>
         <%= f.text_area :vt2_check_comment, class: 'form-control mt-2', rows: 2,
             placeholder: t('activerecord.attributes.delivery_item.vt2_check_comment') %>
       </div>
@@ -135,10 +155,14 @@
                         class: 'form-control' %>
           </div>
           <div class="col-md-6">
-            <%= f.file_field :ra_check_images, multiple: true, class: 'form-control' %>
+            <%= f.file_field :ra_check_images, multiple: true, class: 'form-control', accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff' %>
           </div>
         </div>
-
+        <%= render partial: 'application/docuvita_documents', locals: {
+          documents: @delivery_item.ra_check_images,
+          edit_mode: true,
+          title: t('activerecord.attributes.delivery_item.ra_check')
+        } %>
         <div class="row">
           <div class="col-md-4">
             <%= f.label :ra_date, t('activerecord.attributes.delivery_item.ra_date'), class: 'form-label' %>
@@ -158,7 +182,6 @@
       </div>
 
       <%= render 'hold_fields', f: f %>
-
 
       <div class="mb-3">
         <%= f.label :completed, t('common.completed'), class: 'form-label' %>
