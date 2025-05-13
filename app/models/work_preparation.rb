@@ -15,10 +15,10 @@ class WorkPreparation < ApplicationRecord
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   WORK_PREPARATION_TYPES = [ "cutting_pipes", "small_parts" ].freeze
 
-  # has_many_attached :on_hold_images do |attachable|
-  #   attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-  #   attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  # end
+  has_many_attached :on_hold_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
 
   validates :work_package_number, presence: true, uniqueness: { scope: [ :project_id, :isometry_id, :work_preparation_type ] }
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
@@ -50,10 +50,10 @@ class WorkPreparation < ApplicationRecord
   }
 
   # Helper methods for Docuvita document access
-  def on_hold_images
-    docuvita_documents.where(documentable_type: "WorkPreparation", document_sub_type: "on_hold_image")
-  end
-  alias_method :on_hold_documents, :on_hold_images
+  # def on_hold_images
+  #   docuvita_documents.where(documentable_type: "WorkPreparation", document_sub_type: "on_hold_image")
+  # end
+  # alias_method :on_hold_documents, :on_hold_images
 
   def on_hold?
     on_hold_status == "On Hold"

@@ -31,6 +31,158 @@ Access to Project Reports - user must be added into Project User table.
 # rails 'docuvita:upload_incoming_delivery_attachments'
 # rails 'docuvita:upload_incoming_delivery_attachments[2]'
 
+<!-- rails 'docuvita:upload_isometry_attachments[15,3]' -->
+<!-- # Migrate all attachment types for all projects (default 10 isometries)
+rails docuvita:upload_isometry_attachments
+
+# Migrate specific number of isometries
+rails docuvita:upload_isometry_attachments[50]
+
+# Migrate for a specific project
+rails docuvita:upload_isometry_attachments[50,123]  # Where 123 is the project_id
+
+# Migrate only a specific attachment type
+rails docuvita:upload_isometry_attachments[50,123,pdf]
+rails docuvita:upload_isometry_attachments[50,123,rt_images]
+rails docuvita:upload_isometry_attachments[50,123,vt_images]
+rails docuvita:upload_isometry_attachments[50,123,pt_images]
+rails docuvita:upload_isometry_attachments[50,123,on_hold_images] -->
+
+
+
+<!-- # Migrate for all projects (default 10 images)
+rails docuvita:upload_work_preparation_images
+
+# Migrate specific number of images
+rails docuvita:upload_work_preparation_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_work_preparation_images[50,123]  -->
+
+<!-- 
+# Migrate for all projects (default 10 images)
+rails docuvita:upload_prefabrication_images
+
+# Migrate specific number of images
+rails docuvita:upload_prefabrication_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_prefabrication_images[50,123]  # Where 123 is the project_id -->
+
+<!-- 
+# Migrate for all projects (default 10 images)
+rails docuvita:upload_pre_welding_images
+
+# Migrate specific number of images
+rails docuvita:upload_pre_welding_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_pre_welding_images[50,123]  # Where 123 is the project_id -->
+
+
+
+<!-- # Migrate for all projects (default 10 images)
+rails docuvita:upload_transport_images
+
+# Migrate specific number of images
+rails docuvita:upload_transport_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_transport_images[50,123]  # Where 123 is the project_id -->
+
+
+<!-- # Migrate for all projects (default 10 images)
+rails docuvita:upload_site_delivery_images
+
+# Migrate specific number of images
+rails docuvita:upload_site_delivery_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_site_delivery_images[50,123]  # Where 123 is the project_id -->
+
+
+
+<!-- # Migrate for all projects (default 10 images)
+rails docuvita:upload_site_assembly_images
+
+# Migrate specific number of images
+rails docuvita:upload_site_assembly_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_site_assembly_images[50,123]  # Where 123 is the project_id -->
+
+
+<!-- # Migrate both image types for all projects (default 10 images)
+rails docuvita:upload_on_site_images
+
+# Migrate specific number of images
+rails docuvita:upload_on_site_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_on_site_images[50,123]  # Where 123 is the project_id
+
+# Migrate only on_hold_images
+rails docuvita:upload_on_site_images[50,123,on_hold_images]
+
+# Migrate only regular images
+rails docuvita:upload_on_site_images[50,123,images] -->
+
+
+
+<!-- # Migrate for all projects and all test pack types (default 10 images)
+rails docuvita:upload_test_pack_images
+
+# Migrate specific number of images
+rails docuvita:upload_test_pack_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_test_pack_images[50,123]  # Where 123 is the project_id
+
+# Migrate only pressure test packs
+rails docuvita:upload_test_pack_images[50,123,pressure_test]
+
+# Migrate only leak test packs
+rails docuvita:upload_test_pack_images[50,123,leak_test] -->
+
+
+
+<!-- # Migrate all image types for all projects (default 10 images)
+rails docuvita:upload_final_inspection_images
+
+# Migrate specific number of images
+rails docuvita:upload_final_inspection_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_final_inspection_images[50,123]  # Where 123 is the project_id
+
+# Migrate only a specific image type
+rails docuvita:upload_final_inspection_images[50,123,on_hold_images]
+rails docuvita:upload_final_inspection_images[50,123,visual_check_images]
+rails docuvita:upload_final_inspection_images[50,123,vt2_check_images]
+rails docuvita:upload_final_inspection_images[50,123,pt2_check_images]
+rails docuvita:upload_final_inspection_images[50,123,rt_check_images] -->
+
+
+<!-- # Migrate all image types for all projects (default 10 images)
+rails docuvita:upload_delivery_item_images
+
+# Migrate specific number of images
+rails docuvita:upload_delivery_item_images[50]
+
+# Migrate for a specific project
+rails docuvita:upload_delivery_item_images[50,123]  # Where 123 is the project_id
+
+# Migrate only a specific image type
+rails docuvita:upload_delivery_item_images[50,123,quantity_check_images]
+rails docuvita:upload_delivery_item_images[50,123,dimension_check_images]
+rails docuvita:upload_delivery_item_images[50,123,visual_check_images]
+rails docuvita:upload_delivery_item_images[50,123,vt2_check_images]
+rails docuvita:upload_delivery_item_images[50,123,ra_check_images]
+rails docuvita:upload_delivery_item_images[50,123,on_hold_images] -->
+
+
+
+
 # NEED TO DO
 # 2. Update current rake tasks to use docuvita
 # 3. Create new rake tasks for uploading isometry rt vt pt on_hold images

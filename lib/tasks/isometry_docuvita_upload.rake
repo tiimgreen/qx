@@ -1,21 +1,7 @@
 # lib/tasks/isometry_docuvita_upload.rake
 namespace :docuvita do
-  desc "Upload Isometry attachments to Docuvita with latest implementation. Usage: rails docuvita:upload_isometry_attachments[project_id,count]"
-  task :upload_isometry_attachments, [ :project_id, :count ] => :environment do |_task, args|
-    # Validate project_id
-    project_id = args[:project_id]
-    unless project_id
-      puts "ERROR: Project ID is required."
-      puts "Usage: rails 'docuvita:upload_isometry_attachments[your_project_id,optional_count]'"
-      abort
-    end
-
-    project = Project.find_by(id: project_id)
-    unless project
-      puts "ERROR: Project with ID #{project_id} not found."
-      abort
-    end
-
+  desc "Upload Isometry attachments to Docuvita. Usage: rails docuvita:upload_isometry_attachments [count] [project_id] [attachment_type]"
+  task :upload_isometry_attachments, [ :count, :project_id, :attachment_type ] => :environment do |_task, args|
     # Get the number of isometries to process from args or prompt for it
     upload_count = if args[:count].present?
                      args[:count].to_i
@@ -25,9 +11,45 @@ namespace :docuvita do
                      input.present? ? input.to_i : 10
     end
 
-    project_display_name = project.project_number ? "#{project.name} (#{project.project_number})" : project.name
-    puts "Starting Docuvita Isometry attachments upload for Project: #{project_display_name} (ID: #{project.id})"
-    puts "Upload count: #{upload_count}"
+    # Get the project ID if provided
+    project_id = args[:project_id]
+
+    # Get the attachment type if provided
+    attachment_type = args[:attachment_type]
+
+    # Valid attachment types
+    valid_attachment_types = [
+      "pdf",
+      "rt_images",
+      "vt_images",
+      "pt_images",
+      "on_hold_images"
+    ]
+
+    unless attachment_type.nil? || valid_attachment_types.include?(attachment_type)
+      puts "Error: Invalid attachment type. Must be one of: #{valid_attachment_types.join(', ')}"
+      exit 1
+    end
+
+    attachment_type_display = if attachment_type.nil?
+                                "all types"
+    elsif attachment_type == "pdf"
+                                "PDF documents"
+    else
+                                attachment_type.gsub("_", " ")
+    end
+
+    if project_id.present?
+      project = Project.find_by(id: project_id)
+      if project.nil?
+        puts "Error: Project with ID #{project_id} not found."
+        exit 1
+      end
+      project_display_name = project.project_number ? "#{project.name} (#{project.project_number})" : project.name
+      puts "Starting Docuvita Isometry #{attachment_type_display} upload for Project: #{project_display_name} (Count: #{upload_count})..."
+    else
+      puts "Starting Docuvita Isometry #{attachment_type_display} upload for ALL projects (Count: #{upload_count})..."
+    end
     puts "--------------------------------------------------"
 
     uploaded_count = 0
@@ -35,36 +57,34 @@ namespace :docuvita do
     error_count = 0
     total_processed = 0
 
-    # Ask user which type of attachments to upload
-    print "Upload isometry PDFs? (Y/n): "
-    upload_pdfs = (STDIN.gets.chomp.downcase != "n")
+    # Determine which attachment types to upload based on the attachment_type parameter
+    upload_pdfs = attachment_type.nil? || attachment_type == "pdf"
+    upload_rt_images = attachment_type.nil? || attachment_type == "rt_images"
+    upload_vt_images = attachment_type.nil? || attachment_type == "vt_images"
+    upload_pt_images = attachment_type.nil? || attachment_type == "pt_images"
+    upload_on_hold_images = attachment_type.nil? || attachment_type == "on_hold_images"
 
-    print "Upload RT images? (Y/n): "
-    upload_rt_images = (STDIN.gets.chomp.downcase != "n")
-
-    print "Upload VT images? (Y/n): "
-    upload_vt_images = (STDIN.gets.chomp.downcase != "n")
-
-    print "Upload PT images? (Y/n): "
-    upload_pt_images = (STDIN.gets.chomp.downcase != "n")
-
-    print "Upload on-hold images? (Y/n): "
-    upload_on_hold_images = (STDIN.gets.chomp.downcase != "n")
-
-    unless upload_pdfs || upload_rt_images || upload_vt_images || upload_pt_images || upload_on_hold_images
-      puts "No attachment types selected for upload. Exiting."
-      return
-    end
-
+    # Display what will be uploaded
     puts "Will upload: #{upload_pdfs ? 'PDFs ' : ''}#{upload_rt_images ? 'RT images ' : ''}#{upload_vt_images ? 'VT images ' : ''}#{upload_pt_images ? 'PT images ' : ''}#{upload_on_hold_images ? 'On-Hold images' : ''}"
 
     # Process isometries
-    isometries = project.isometries.includes(:project, :docuvita_documents)
+    isometries = Isometry.includes(:project, :docuvita_documents)
+
+    # Filter by project if specified
+    isometries = isometries.where(project_id: project_id) if project_id.present?
 
     # Process only the latest revisions by default
-    isometries = isometries.where(revision_last: true) unless args[:all_revisions]
+    isometries = isometries.where(revision_last: true)
 
-    isometries.find_in_batches(batch_size: 50) do |batch|
+    # Check if there are any isometries to process
+    if isometries.count == 0
+      puts "No isometries found matching the criteria. Nothing to migrate."
+      exit 0
+    end
+
+    puts "Found #{isometries.count} isometries to process"
+
+    isometries.find_in_batches(batch_size: 20) do |batch|
       puts "Processing batch of #{batch.size} isometries..."
 
       batch.each do |isometry|

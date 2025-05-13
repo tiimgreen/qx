@@ -15,6 +15,33 @@ class FinalInspection < ApplicationRecord
   validates :on_hold_status, inclusion: { in: ON_HOLD_STATUSES, allow_nil: true }
   validates :on_hold_comment, length: { maximum: 2000 }
 
+
+  has_many_attached :on_hold_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+
+  has_many_attached :visual_check_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+
+  has_many_attached :vt2_check_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+
+  has_many_attached :pt2_check_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+
+  has_many_attached :rt_check_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+
+
   scope :search_by_term, ->(search_term) {
     return all unless search_term.present?
 
@@ -48,24 +75,24 @@ class FinalInspection < ApplicationRecord
     on_hold_status == "On Hold"
   end
 
-  # Helper methods for Docuvita document access
-  def on_hold_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "on_hold_image")
-  end
+  # # Helper methods for Docuvita document access
+  # def on_hold_images
+  #   docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "on_hold_image")
+  # end
 
-  def visual_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "visual_check_image")
-  end
+  # def visual_check_images
+  #   docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "visual_check_image")
+  # end
 
-  def vt2_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "vt2_check_image")
-  end
+  # def vt2_check_images
+  #   docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "vt2_check_image")
+  # end
 
-  def pt2_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "pt2_check_image")
-  end
+  # def pt2_check_images
+  #   docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "pt2_check_image")
+  # end
 
-  def rt_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "rt_check_image")
-  end
+  # def rt_check_images
+  #   docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "rt_check_image")
+  # end
 end
