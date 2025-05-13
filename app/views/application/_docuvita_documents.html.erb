@@ -11,11 +11,7 @@
         <div style="width: 120px;">
           <%= link_to view_docuvita_document_path(document), target: "_blank", class: "text-decoration-none" do %>
             <div class="text-center">
-              <% if document.document_type.include?('pdf') || document.document_type.include?('image') %>
-                <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
-              <% else %>
-                <i class="bi bi-file-earmark text-secondary" style="font-size: 2rem;"></i>
-              <% end %>
+              <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
               <div class="small text-dark text-truncate mt-1" title="<%= document.filename %>">
                 <%= document.filename %>
               </div>

@@ -55,6 +55,7 @@ class DocuvitaUploader
         version_original_filename: original_filename,
         system_reference: @system_reference,
         voucher_number: options[:voucher_number],
+        voucher_type: options[:voucher_type],
         transaction_key: options[:transaction_key],
         document_type: options[:document_type]
       }

@@ -167,23 +167,23 @@ class Isometry < ApplicationRecord
 
   # Methods to get different types of Docuvita documents
   def isometry_pdfs
-    docuvita_documents.where(document_type: "isometry_pdf")
+    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "isometry")
   end
 
   def rt_images
-    docuvita_documents.where(document_type: "rt_image")
+    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "rt_image")
   end
 
   def vt_images
-    docuvita_documents.where(document_type: "vt_image")
+    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "vt_image")
   end
 
   def pt_images
-    docuvita_documents.where(document_type: "pt_image")
+    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "pt_image")
   end
 
   def on_hold_images
-    docuvita_documents.where(document_type: "on_hold_image")
+    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "on_hold_image")
   end
   alias_method :on_hold_documents, :on_hold_images
 

@@ -37,6 +37,6 @@ class SiteDelivery < ApplicationRecord
   end
 
   def check_spools_images
-    docuvita_documents.where(documentable_type: "SiteDelivery", document_type: "check_spools_image")
+    docuvita_documents.where(documentable_type: "SiteDelivery", document_sub_type: "check_spools_image")
   end
 end

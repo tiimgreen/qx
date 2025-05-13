@@ -50,22 +50,22 @@ class FinalInspection < ApplicationRecord
 
   # Helper methods for Docuvita document access
   def on_hold_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "on_hold_image")
+    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "on_hold_image")
   end
 
   def visual_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "visual_check_image")
+    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "visual_check_image")
   end
 
   def vt2_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "vt2_check_image")
+    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "vt2_check_image")
   end
 
   def pt2_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "pt2_check_image")
+    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "pt2_check_image")
   end
 
   def rt_check_images
-    docuvita_documents.where(documentable_type: "FinalInspection", document_type: "rt_check_image")
+    docuvita_documents.where(documentable_type: "FinalInspection", document_sub_type: "rt_check_image")
   end
 end

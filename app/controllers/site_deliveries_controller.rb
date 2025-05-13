@@ -144,7 +144,7 @@ class SiteDeliveriesController < ApplicationController
     if params.dig(:site_delivery, :check_spools_images).present?
       Array(params[:site_delivery][:check_spools_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        site_delivery.upload_image_to_docuvita(image, image.original_filename, "check_spools_image")
+        site_delivery.upload_image_to_docuvita(image, image.original_filename, "check_spools_image", "site_delivery")
       end
     end
   end

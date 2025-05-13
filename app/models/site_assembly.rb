@@ -35,7 +35,7 @@ class SiteAssembly < ApplicationRecord
 
   # Helper methods for Docuvita document access
   def on_hold_images
-    docuvita_documents.where(documentable_type: "SiteAssembly", document_type: "on_hold_image")
+    docuvita_documents.where(documentable_type: "SiteAssembly", document_sub_type: "on_hold_image")
   end
   alias_method :on_hold_documents, :on_hold_images
 end

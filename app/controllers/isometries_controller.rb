@@ -101,20 +101,17 @@ class IsometriesController < ApplicationController
   def update
     respond_to do |format|
       format.html do
-        # Remove file upload parameters before updating
         update_params = isometry_params.except(
           :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
         )
 
         if @isometry.update(update_params)
-          # Handle file uploads after successful update
           begin
             handle_docuvita_pdf_upload(@isometry) if params.dig(:isometry, :new_pdf).present?
             handle_docuvita_image_uploads(@isometry)
             redirect_to project_isometry_path(@project, @isometry),
                       notice: t("common.messages.updated", model: "Isometry")
           rescue => e
-            # If file upload fails, show the error but keep the base record changes
             flash.now[:alert] = e.message
             render :edit, status: :unprocessable_entity
           end
@@ -322,49 +319,43 @@ class IsometriesController < ApplicationController
 
   def handle_docuvita_pdf_upload(isometry)
     if params.dig(:isometry, :new_pdf).present? && params[:isometry][:new_pdf].is_a?(ActionDispatch::Http::UploadedFile)
-      # Get the uploaded file and QR position
       pdf_file = params[:isometry][:new_pdf]
       qr_position = params.dig(:isometry, :new_pdf_qr_position).presence
 
-      # Upload to Docuvita with QR code if position specified
       isometry.upload_pdf_to_docuvita(
         pdf_file,
-        pdf_file.original_filename,
+        pdf_file.original_filename, "isometry",
         { qr_position: qr_position }
       )
     end
   end
 
   def handle_docuvita_image_uploads(isometry)
-    # Handle RT images
     if params.dig(:isometry, :rt_images).present?
       params[:isometry][:rt_images].each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "rt_image")
+        isometry.upload_image_to_docuvita(image, image.original_filename, "rt_image", "isometry")
       end
     end
 
-    # Handle VT images
     if params.dig(:isometry, :vt_images).present?
       params[:isometry][:vt_images].each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "vt_image")
+        isometry.upload_image_to_docuvita(image, image.original_filename, "vt_image", "isometry")
       end
     end
 
-    # Handle PT images
     if params.dig(:isometry, :pt_images).present?
       params[:isometry][:pt_images].each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "pt_image")
+        isometry.upload_image_to_docuvita(image, image.original_filename, "pt_image", "isometry")
       end
     end
 
-    # Handle on-hold images
     if params.dig(:isometry, :on_hold_images).present?
       params[:isometry][:on_hold_images].each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+        isometry.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "isometry")
       end
     end
   end

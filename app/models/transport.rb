@@ -36,7 +36,7 @@ class Transport < ApplicationRecord
   end
 
   def check_spools_images
-    docuvita_documents.where(documentable_type: "Transport", document_type: "check_spools_image")
+    docuvita_documents.where(documentable_type: "Transport", document_sub_type: "check_spools_image")
   end
   alias_method :check_spools_documents, :check_spools_images
 end

@@ -87,7 +87,7 @@ class IncomingDelivery < ApplicationRecord
 
   # Returns docuvita documents that are on_hold_images
   def on_hold_images
-    docuvita_documents.where(document_type: "on_hold_image")
+    docuvita_documents.where(documentable_type: "IncomingDelivery", document_sub_type: "on_hold_image")
   end
   alias_method :on_hold_documents, :on_hold_images
 
@@ -98,7 +98,7 @@ class IncomingDelivery < ApplicationRecord
 
   # Returns docuvita documents that are delivery_notes
   def delivery_notes
-    docuvita_documents.where(document_type: "delivery_note_pdf")
+    docuvita_documents.where(documentable_type: "IncomingDelivery", document_sub_type: "delivery_note")
   end
 
   private

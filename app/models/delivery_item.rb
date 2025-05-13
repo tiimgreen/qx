@@ -75,27 +75,27 @@ class DeliveryItem < ApplicationRecord
 
   # Helper methods for Docuvita document access
   def quantity_check_images
-    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "quantity_check_image")
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_sub_type: "quantity_check_image")
   end
 
   def dimension_check_images
-    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "dimension_check_image")
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_sub_type: "dimension_check_image")
   end
 
   def visual_check_images
-    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "visual_check_image")
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_sub_type: "visual_check_image")
   end
 
   def vt2_check_images
-    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "vt2_check_image")
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_sub_type: "vt2_check_image")
   end
 
   def ra_check_images
-    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "ra_check_image")
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_sub_type: "ra_check_image")
   end
 
   def on_hold_images
-    docuvita_documents.where(documentable_type: "DeliveryItem", document_type: "on_hold_image")
+    docuvita_documents.where(documentable_type: "DeliveryItem", document_sub_type: "on_hold_image")
   end
 
   private

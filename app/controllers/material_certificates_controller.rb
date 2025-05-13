@@ -184,7 +184,6 @@ class MaterialCertificatesController < ApplicationController
       return # Or raise an error if file is mandatory
     end
 
-    # Delegate to the model instance method for actual upload logic
     certificate.upload_certificate_to_docuvita(file, file.original_filename)
   end
 end

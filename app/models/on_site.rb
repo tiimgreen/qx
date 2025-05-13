@@ -34,12 +34,12 @@ class OnSite < ApplicationRecord
 
   # Helper methods for Docuvita document access
   def on_hold_images
-    docuvita_documents.where(documentable_type: "OnSite", document_type: "on_hold_image")
+    docuvita_documents.where(documentable_type: "OnSite", document_sub_type: "on_hold_image")
   end
   alias_method :on_hold_documents, :on_hold_images
 
   def on_site_images
-    docuvita_documents.where(documentable_type: "OnSite", document_type: "on_site_image")
+    docuvita_documents.where(documentable_type: "OnSite", document_sub_type: "on_site_image")
   end
   alias_method :on_site_documents, :on_site_images
 end

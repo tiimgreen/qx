@@ -49,7 +49,7 @@ namespace :docuvita do
         end
 
         # --- Check if Already Uploaded ---
-        local_document_type = "delivery_note_pdf"
+        local_document_type = "delivery_note"
         existing_docuvita_doc = delivery.docuvita_documents.of_type(local_document_type).where(filename: original_filename).first
         if existing_docuvita_doc
           puts "  [SKIP] Already uploaded. Docuvita Object ID: #{existing_docuvita_doc.docuvita_object_id}"

@@ -51,6 +51,13 @@
     <%= f.file_field :certificate_file, class: 'form-control' %>
   </div>
 
+  <%= render partial: 'application/docuvita_documents', locals: {
+    documents: @material_certificate.material_certificates,
+    edit_mode: true,
+    model_type: @material_certificate,
+    title: t('.certificate_file')
+  } %>
+
   <div class="form-group mt-4">
     <%= f.submit t('.submit'), class: 'btn btn-primary' %>
     <%= link_to t('.cancel'), material_certificates_path, class: 'btn btn-secondary' %>

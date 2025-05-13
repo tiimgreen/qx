@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_30_015628) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_12_123727) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -110,6 +110,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_015628) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "qr_position"
+    t.string "document_sub_type"
     t.index ["document_type"], name: "index_docuvita_documents_on_document_type"
     t.index ["documentable_type", "documentable_id"], name: "index_docuvita_documents_on_documentable"
     t.index ["docuvita_object_id"], name: "index_docuvita_documents_on_docuvita_object_id"

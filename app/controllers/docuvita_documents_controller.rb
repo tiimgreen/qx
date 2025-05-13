@@ -71,7 +71,7 @@ class DocuvitaDocumentsController < ApplicationController
   end
 
   def determine_content_type(document)
-    if document.document_type == "isometry_pdf"
+    if document.document_type == "isometry"
       "application/pdf"
     elsif document.document_type.include?("image")
       # Try to determine image type from filename if available

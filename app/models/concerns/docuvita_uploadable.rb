@@ -1,12 +1,15 @@
 module DocuvitaUploadable
   extend ActiveSupport::Concern
 
+  # voucher_number: respond_to?(:line_id) ? line_id : id.to_s,
+  # transaction_key: project.project_number,
+
   included do
     has_many :docuvita_documents, as: :documentable, dependent: :destroy
     accepts_nested_attributes_for :docuvita_documents, allow_destroy: true
   end
 
-  def upload_pdf_to_docuvita(file_io, original_filename, options = {})
+  def upload_pdf_to_docuvita(file_io, original_filename, sector_name, options = {})
     begin
       uploader = DocuvitaUploader.new
       qr_position = options.delete(:qr_position)
@@ -19,20 +22,16 @@ module DocuvitaUploadable
       # Determine document type based on the model
       doc_type = case self.class.name
       when "Isometry"
-                  "isometry_pdf"
+                  "isometry"
       when "MaterialCertificate"
-                  "material_certificate_pdf"
+                  "material_certificate"
       when "DeliveryNote"
-                  "delivery_note_pdf"
+                  "delivery_note"
       else
-                  "isometry_pdf" # fallback to isometry_pdf as it's most common
+                  "isometry"
       end
 
-      filename = if respond_to?(:line_id)
-                  "#{line_id}_#{doc_type}.pdf"
-      else
-                  "#{id}_#{doc_type}.pdf"
-      end
+      filename = "#{sector_name}.pdf"
 
       # Process the PDF with QR code if position is specified
       if qr_position.present?
@@ -56,16 +55,18 @@ module DocuvitaUploadable
         filename,
         {
           voucher_number: respond_to?(:line_id) ? line_id : id.to_s,
-          transaction_key: project.project_number,
-          document_type: doc_type.titleize,
-          description: "#{doc_type.titleize} for #{self.class.name}: #{id} and project: #{project.project_number}"
+          transaction_key: base_project_number,
+          document_type: sector_name,
+          voucher_type: doc_type,
+          description: "#{doc_type.titleize} for #{self.class.name}: #{id}#{respond_to?(:project) && project ? " and project: #{project.project_number}" : ""}"
         }.merge(options)
       )
 
       # Create the document record after successful upload
       docuvita_documents.create!(
         docuvita_object_id: result[:object_id],
-        document_type: doc_type,
+        document_type: sector_name,
+        document_sub_type: doc_type,
         filename: filename,
         content_type: content_type,
         qr_position: qr_position,
@@ -94,7 +95,7 @@ module DocuvitaUploadable
     end
   end
 
-  def upload_image_to_docuvita(file_io, filename, type, options = {})
+  def upload_image_to_docuvita(file_io, filename, type, sector_name, options = {})
     begin
       # Check if this is an image file
       is_image = file_io.content_type&.start_with?("image/") ||
@@ -129,11 +130,7 @@ module DocuvitaUploadable
         image.write temp_pdf.path
 
         # Upload the PDF instead of the image
-        pdf_filename = if respond_to?(:line_id)
-                        "#{line_id}_#{type}.pdf"
-        else
-                        "#{id}_#{type}.pdf"
-        end
+        pdf_filename = "#{sector_name}.pdf"
 
         # Ensure type is one of the valid document types
         doc_type = case type.to_s
@@ -158,7 +155,7 @@ module DocuvitaUploadable
         when /check_spools/i
                     "check_spools_image"
         when /delivery_note/i
-                    "delivery_note_pdf"
+                    "delivery_note"
         when /quantity_check/i
                     "quantity_check_image"
         when /dimension_check/i
@@ -175,16 +172,18 @@ module DocuvitaUploadable
           pdf_filename,
           {
             voucher_number: respond_to?(:line_id) ? line_id : id.to_s,
-            transaction_key: project.project_number,
-            document_type: "Image",
-            description: "#{type} image (PDF converted) for #{self.class.name}: #{id} and project: #{project.project_number} and original filename: #{filename}"
+            transaction_key: base_project_number,
+            document_type: sector_name,
+            voucher_type: doc_type,
+            description: "#{type} for #{self.class.name}: #{id} and project: #{project.project_number} and original filename: #{filename}"
           }.merge(options)
         )
 
         # Create a record of the uploaded document
         docuvita_documents.create!(
           docuvita_object_id: result[:object_id],
-          document_type: doc_type,
+          document_type: sector_name,
+          document_sub_type: doc_type,
           filename: pdf_filename,
           content_type: "application/pdf",
           metadata: {
@@ -217,5 +216,12 @@ module DocuvitaUploadable
                       })
       raise e
     end
+  end
+
+  def base_project_number
+    return "" if !respond_to?(:project) || project.nil?
+
+    project_num = project.project_number.gsub(" ", "/")
+    project_num.include?("/") ? project_num.split("/").first : project_num
   end
 end

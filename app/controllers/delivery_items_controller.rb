@@ -155,7 +155,7 @@ class DeliveryItemsController < ApplicationController
       Array(params[:delivery_item][param_key]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
         begin
-          delivery_item.upload_image_to_docuvita(image, image.original_filename, document_type)
+          delivery_item.upload_image_to_docuvita(image, image.original_filename, document_type, "delivery_item")
         rescue StandardError => e
           flash[:alert] = e.message
           raise e

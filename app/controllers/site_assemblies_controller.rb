@@ -152,7 +152,7 @@ class SiteAssembliesController < ApplicationController
     if params.dig(:site_assembly, :on_hold_images).present?
       Array(params[:site_assembly][:on_hold_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        site_assembly.upload_image_to_docuvita(image, image.original_filename, "on_hold_image")
+        site_assembly.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "site_assembly")
       end
     end
   end
