@@ -7,7 +7,7 @@ class MaterialCertificate < ApplicationRecord
   has_many :weldings_as_certificate1, class_name: "Welding", foreign_key: "material_certificate1_id", dependent: :nullify
 
   # need for migration
-  # has_one_attached :certificate_file
+  has_one_attached :certificate_file
 
   validates :certificate_number,
             presence: true,

@@ -51,6 +51,11 @@
         </tr>
       </thead>
       <tbody>
+        <% # Pre-compute permission checks once before the loop %>
+        <% can_view = current_user.can_view?("MaterialCertificate") %>
+        <% can_edit = current_user.can_edit?("MaterialCertificate") %>
+        <% can_delete = current_user.can_delete?("MaterialCertificate") %>
+        
         <% @material_certificates.each do |certificate| %>
           <tr>
             <td><%= certificate.certificate_number %></td>
@@ -60,7 +65,7 @@
             <td><%= certificate.issuer_name %></td>
             <td>
               <%# Find the relevant Docuvita document for this certificate %>
-              <% docuvita_doc = certificate.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+              <% docuvita_doc = certificate.docuvita_documents.detect { |doc| doc.document_type == 'material_certificate' } %>
               <% if docuvita_doc %>
                 <%= link_to view_docuvita_document_path(docuvita_doc),
                     class: "text-decoration-none text-primary",
@@ -71,19 +76,19 @@
               <% end %>
             </td>
             <td class="text-end">
-              <% if current_user.can_view?("MaterialCertificate") %>
+              <% if can_view %>
                 <%= link_to material_certificate_path(certificate), class: "btn btn-sm btn-outline-primary me-1" do %>
                   <i class="bi bi-eye"></i>
                 <% end %>
               <% end %>
               
-              <% if current_user.can_edit?("MaterialCertificate") %>
+              <% if can_edit %>
                 <%= link_to edit_material_certificate_path(certificate), class: "btn btn-sm btn-primary me-1" do %>
                   <i class="bi bi-pencil"></i>
                 <% end %>
               <% end %>
               
-              <% if current_user.can_delete?("MaterialCertificate") %>
+              <% if can_delete %>
                 <%= button_tag type: 'button',
                     class: 'btn btn-sm btn-outline-danger',
                     title: t('common.buttons.delete'),
