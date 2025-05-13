@@ -304,7 +304,8 @@ class IncomingDeliveriesController < ApplicationController
         {
           voucher_number: delivery.delivery_note_number,
           transaction_key: delivery.project&.project_number || "",
-          document_type: "DeliveryNote",
+          document_type: "incoming_delivery",
+          voucher_type: "delivery_note",
           description: {
             delivery_note_number: delivery.delivery_note_number,
             order_number: delivery.order_number,

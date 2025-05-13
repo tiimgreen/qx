@@ -21,8 +21,15 @@ Access to Project Reports - user must be added into Project User table.
 # rails 'docuvita:upload_isometry_pdfs[26]'
 # rails 'docuvita:upload_isometry_pdfs[17,5]'
 
+
+# NEW
+
 # Docuvita upload material certificates
-# rails 'docuvita:upload_material_certificates'
+# rails 'docuvita:upload_material_certificates_v2[2]'
+# rails 'docuvita:upload_material_certificates_v2' 
+
+# rails 'docuvita:upload_incoming_delivery_attachments'
+# rails 'docuvita:upload_incoming_delivery_attachments[2]'
 
 # NEED TO DO
 # 2. Update current rake tasks to use docuvita
@@ -32,3 +39,19 @@ Access to Project Reports - user must be added into Project User table.
 # 6. Copy db 
 # 7. Add keys into credentials for production
 
+
+<!-- 
+# Count delivery_notes attachments
+delivery_notes_count = ActiveStorage::Attachment.where(
+  record_type: "IncomingDelivery",
+  name: "delivery_notes"
+).count
+
+# Count on_hold_images attachments
+on_hold_images_count = ActiveStorage::Attachment.where(
+  record_type: "IncomingDelivery",
+  name: "on_hold_images"
+).count
+
+puts "Total delivery_notes attachments: #{delivery_notes_count}"
+puts "Total on_hold_images attachments: #{on_hold_images_count}" -->

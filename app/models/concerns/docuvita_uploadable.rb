@@ -25,7 +25,7 @@ module DocuvitaUploadable
                   "isometry"
       when "MaterialCertificate"
                   "material_certificate"
-      when "DeliveryNote"
+      when "IncomingDelivery"
                   "delivery_note"
       else
                   "isometry"
