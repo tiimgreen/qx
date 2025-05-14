@@ -207,3 +207,41 @@ on_hold_images_count = ActiveStorage::Attachment.where(
 
 puts "Total delivery_notes attachments: #{delivery_notes_count}"
 puts "Total on_hold_images attachments: #{on_hold_images_count}" -->
+
+
+
+# document_types:
+<!-- isometry
+incoming_delivery
+work_preparation
+prefabrication
+welding
+final_inspection
+transport
+site_delivery
+site_assembly
+as_built
+test_pack -->
+
+# document_sub_types:
+<!-- 
+on_hold_image
+visual_check_image
+vt2_check_image
+pt2_check_image
+rt_check_image
+
+quantity_check_image
+dimension_check_image
+ra_check_image
+
+delivery_note
+
+isometry
+rt_image
+vt_image
+pt_image
+
+material_certificate
+on_site_image
+check_spools_image -->
