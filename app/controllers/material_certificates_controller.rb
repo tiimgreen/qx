@@ -18,16 +18,9 @@ class MaterialCertificatesController < ApplicationController
   def search
     query = (params[:q] || params[:query])&.strip&.downcase
     @certificates = if query.present?
-      MaterialCertificate
-        .left_outer_joins(:docuvita_documents)
-        .where(
-          "LOWER(material_certificates.batch_number) LIKE :query OR " \
-          "LOWER(material_certificates.certificate_number) LIKE :query OR " \
-          "(docuvita_documents.document_type = 'material_certificate_pdf' AND LOWER(docuvita_documents.filename) LIKE :query)",
-          { query: "%#{query}%" }
-        )
-        .distinct
-        .limit(10)
+      MaterialCertificate.where("LOWER(batch_number) LIKE ? OR LOWER(certificate_number) LIKE ?",
+                               "%#{query}%", "%#{query}%")
+                        .limit(10)
     else
       MaterialCertificate.none
     end
@@ -45,13 +38,18 @@ class MaterialCertificatesController < ApplicationController
     end
   end
 
+  def show
+    # @material_certificate is set by the before_action :set_material_certificate
+    respond_to do |format|
+      format.html
+      format.pdf { render pdf: "certificate_#{@material_certificate.certificate_number}" }
+    end
+  end
+
   def new
     @material_certificate = MaterialCertificate.new
 
-    last_uploaded_doc = DocuvitaDocument.where(document_type: "material_certificate_pdf")
-                                        .order(created_at: :desc)
-                                        .first
-    @last_uploaded_cert_number = last_uploaded_doc&.metadata&.dig(:certificate_number) || last_uploaded_doc&.metadata&.dig("certificate_number")
+    @last_uploaded_cert_number = MaterialCertificate.last&.certificate_number || ""
   end
 
   def edit
