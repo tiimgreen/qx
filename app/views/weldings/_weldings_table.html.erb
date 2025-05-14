@@ -50,7 +50,7 @@
             <div>
             <% if welding.material_certificate %>
               <%# Find the relevant Docuvita document for the welding's certificate %>
-              <% docuvita_doc = welding.material_certificate.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+              <% docuvita_doc = welding.material_certificate.docuvita_documents.find { |doc| doc.document_type == 'material_certificate' } %>
               <% if docuvita_doc %>
                 <%= link_to view_docuvita_document_path(docuvita_doc),
                           target: "_blank",
@@ -69,7 +69,7 @@
               <div>
                 <% if welding.material_certificate1 %>
                   <%# Find the relevant Docuvita document for the welding's certificate %>
-                  <% docuvita_doc = welding.material_certificate1.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' } %>
+                  <% docuvita_doc = welding.material_certificate1.docuvita_documents.find { |doc| doc.document_type == 'material_certificate' } %>
                   <% if docuvita_doc %>
                     <%= link_to view_docuvita_document_path(docuvita_doc),
                               target: "_blank",

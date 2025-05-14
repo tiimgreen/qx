@@ -422,14 +422,24 @@
                           <button type="button"
                                   class="btn btn-sm btn-danger remove-certificate position-absolute top-0 end-0 m-1"
                                   data-action="click->material-certificate-search#removeCertificate">×</button>
-                          <%= link_to view_docuvita_document_path(cert.docuvita_documents.find { |doc| doc.document_type == 'material_certificate_pdf' }),target: "_blank",
-                                      class: "text-decoration-none text-dark" do %>
+                          <% docuvita_doc = cert.docuvita_documents.find { |doc| doc.document_type == 'material_certificate' } %>
+                          <% if docuvita_doc %>
+                            <%= link_to view_docuvita_document_path(docuvita_doc), target: "_blank",
+                                        class: "text-decoration-none text-dark" do %>
+                              <div class="text-center mb-2">
+                                <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
+                              </div>
+                              <div class="small">
+                                <%= cert.certificate_number %>
+                              </div>
+                            <% end %>
+                          <% else %>
                             <div class="text-center mb-2">
-                              <i class="bi bi-file-pdf text-danger" style="font-size: 2rem;"></i>
+                              <i class="bi bi-file-pdf text-danger" style="font-size: 2rem; opacity: 0.5;"></i>
                             </div>
-                            <div class="d-flex flex-column text-center">
-                              <span class="fw-medium"><%= cert.certificate_number %></span>
-                              <span class="text-secondary small"><%= cert.batch_number %></span>
+                            <div class="small">
+                              <%= cert.certificate_number %> <br>
+                              <span class="text-muted">(No document)</span>
                             </div>
                           <% end %>
                         </div>

@@ -40,7 +40,7 @@ namespace :docuvita do
         end
 
         # Check if already uploaded to Docuvita - using the correct document_type
-        existing_docuvita_docs = certificate.docuvita_documents.where(document_sub_type: "material_certificate_pdf").or(
+        existing_docuvita_docs = certificate.docuvita_documents.where(document_sub_type: "material_certificate").or(
           certificate.docuvita_documents.where(document_sub_type: "material_certificate")
         )
 
