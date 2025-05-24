@@ -12,10 +12,10 @@ class SiteDelivery < ApplicationRecord
   validates :check_spools_comment, length: { maximum: 2000 }
 
 
-  has_many_attached :check_spools_images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  end
+  # has_many_attached :check_spools_images do |attachable|
+  #   attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+  #   attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  # end
 
   scope :search_by_term, ->(search_term) {
     return all unless search_term.present?
@@ -42,7 +42,7 @@ class SiteDelivery < ApplicationRecord
     check_spools_status == "Failed"
   end
 
-  # def check_spools_images
-  #   docuvita_documents.where(documentable_type: "SiteDelivery", document_sub_type: "check_spools_image")
-  # end
+  def check_spools_images
+    docuvita_documents.where(documentable_type: "SiteDelivery", document_sub_type: "check_spools_image")
+  end
 end

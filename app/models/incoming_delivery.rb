@@ -3,8 +3,8 @@ class IncomingDelivery < ApplicationRecord
   belongs_to :project
   belongs_to :work_location
   belongs_to :user, optional: true
-  has_many_attached :delivery_notes
-  has_many_attached :on_hold_images
+  # has_many_attached :delivery_notes
+  # has_many_attached :on_hold_images
   has_many :delivery_items
   has_many :docuvita_documents, as: :documentable, dependent: :destroy
 
@@ -87,20 +87,22 @@ class IncomingDelivery < ApplicationRecord
   end
 
   # Returns docuvita documents that are on_hold_images
-  # def on_hold_images
-  #   docuvita_documents.where(documentable_type: "IncomingDelivery", document_sub_type: "on_hold_image")
-  # end
-  # alias_method :on_hold_documents, :on_hold_images
+  def on_hold_images
+    docuvita_documents.where(documentable_type: "IncomingDelivery", document_sub_type: "on_hold_image")
+  end
+  alias_method :on_hold_documents, :on_hold_images
+
+  # Returns docuvita documents that are delivery_notes
+  def delivery_notes
+    docuvita_documents.where(documentable_type: "IncomingDelivery", document_sub_type: "delivery_note")
+  end
 
   # Check if the delivery is on hold
   def on_hold?
     on_hold_status == "On Hold"
   end
 
-  # Returns docuvita documents that are delivery_notes
-  # def delivery_notes
-  #   docuvita_documents.where(documentable_type: "IncomingDelivery", document_sub_type: "delivery_note")
-  # end
+
 
   private
 
