@@ -54,6 +54,9 @@
             <dt class="col-sm-4"><%= t('.completed') %></dt>
             <dd class="col-sm-8"><%= status_label(@incoming_delivery.completed ? t('common.yes') : t('common.no')) %></dd>
 
+            <dt class="col-sm-4"><%= t('common.labels.closed') %></dt>
+            <dd class="col-sm-8"><%= status_label(@incoming_delivery.closed ? t('common.yes') : t('common.no')) %></dd>
+
           <%= render 'hold_info', record: @incoming_delivery %>
           <%= render partial: 'application/docuvita_documents', locals: {
             documents: @incoming_delivery.on_hold_images,

@@ -46,6 +46,7 @@ RailsAdmin.config do |config|
       field :first_name
       field :last_name
       field :admin
+      field :can_close_incoming_delivery
       field :active
       field :created_at
     end
@@ -59,6 +60,7 @@ RailsAdmin.config do |config|
       field :city
       field :active
       field :admin
+      field :can_close_incoming_delivery
       field :password
       field :password_confirmation
     end

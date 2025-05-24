@@ -75,6 +75,11 @@
                   request.params.merge(sort: 'completed', direction: (params[:sort] == 'completed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
               <%= sort_indicator('completed') %>
             </th>
+            <th>
+              <%= link_to t('activerecord.attributes.incoming_delivery.closed'),
+                  request.params.merge(sort: 'closed', direction: (params[:sort] == 'closed' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+              <%= sort_indicator('closed') %>
+            </th>
             <th><%= t('activerecord.attributes.incoming_delivery.created_by') %></th>
             <th class="text-end"><%= t('common.labels.actions') %></th>
           </tr>
@@ -91,6 +96,7 @@
               <td><%= delivery.delivery_items.count %></td>
               <td><%= status_label(delivery.on_hold_status) %></td>
               <td><%= status_label(delivery.completed ? t('common.yes') : t('common.no')) %></td>
+              <td><%= status_label(delivery.closed ? t('common.yes') : t('common.no')) %></td>
               <td><%= delivery.user&.name %></td>
               <td class="text-end">
                 <div class="btn-group btn-group-sm">

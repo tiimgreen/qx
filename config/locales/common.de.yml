@@ -53,6 +53,7 @@ de:
       on_hold_status: "On Hold"
       active: "Aktiv"
       completed: "Abgeschlossen"
+      closed: "Geschlossen"
       select: "Bitte auswählen"
       view_sectors_info: "Um Sektor zu sehen, muss ein Benutzer in der Tabelle 'benutzerbereich' hinzugefügt werden! Auch der Benutzer muss View-Zugriff auf Projekt und Isometrie haben."
       permissions_info: "Jeder Benutzer muss in der Tabelle 'benutzerresourcen' hinzugefügt werden! Auch der Benutzer muss die richtigen Zugriffsrechte pro Sektor/Model haben."

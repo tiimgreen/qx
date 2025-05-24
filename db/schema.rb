@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_12_123727) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_24_085405) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -178,6 +178,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_12_123727) do
     t.text "on_hold_comment"
     t.datetime "on_hold_date"
     t.integer "isometry_id"
+    t.boolean "closed", default: false
     t.index ["delivery_note_number"], name: "index_incoming_deliveries_on_delivery_note_number"
     t.index ["isometry_id"], name: "index_incoming_deliveries_on_isometry_id"
     t.index ["order_number"], name: "index_incoming_deliveries_on_order_number"
@@ -538,6 +539,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_12_123727) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
+    t.boolean "can_close_incoming_delivery", default: false
     t.index ["admin"], name: "index_users_on_admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

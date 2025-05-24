@@ -74,6 +74,15 @@
         <%= @incoming_delivery.completed? ? t('common.yes') : t('common.no') %>
       </div>
 
+      <% if current_user.can_close_incoming_delivery? || current_user.admin? %>
+      <div class="mb-3">
+        <div class="form-check form-check-inline">
+          <%= f.check_box :closed, class: 'form-check-input' %>
+          <%= f.label :closed, t('common.labels.closed'), class: 'form-check-label' %>
+        </div>
+      </div>
+      <% end %>
+
 
       <div class="d-flex justify-content-between align-items-center my-5">
         <%= link_to t('incoming_deliveries.buttons.cancel'), :back, class: 'btn btn-secondary' %>
