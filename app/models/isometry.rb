@@ -28,14 +28,14 @@ class Isometry < ApplicationRecord
   end
 
   # remove after migrating --------
-  # has_many_attached :on_hold_images do |attachable|
-  #   attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-  #   attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  # end
-  # has_many_attached :rt_images
-  # has_many_attached :vt_images
-  # has_many_attached :pt_images
-  # has_many :isometry_documents, dependent: :destroy
+  has_many_attached :on_hold_images do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
+    attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
+  end
+  has_many_attached :rt_images
+  has_many_attached :vt_images
+  has_many_attached :pt_images
+  has_many :isometry_documents, dependent: :destroy
   # -------------------------------
 
 
@@ -173,27 +173,27 @@ class Isometry < ApplicationRecord
 
   # uncoment after migrating
 
-  # Methods to get different types of Docuvita documents
-  def isometry_pdfs
-    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "isometry")
-  end
+  # # Methods to get different types of Docuvita documents
+  # def isometry_pdfs
+  #   docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "isometry")
+  # end
 
-  def rt_images
-    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "rt_image")
-  end
+  # def rt_images
+  #   docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "rt_image")
+  # end
 
-  def vt_images
-    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "vt_image")
-  end
+  # def vt_images
+  #   docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "vt_image")
+  # end
 
-  def pt_images
-    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "pt_image")
-  end
+  # def pt_images
+  #   docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "pt_image")
+  # end
 
-  def on_hold_images
-    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "on_hold_image")
-  end
-  alias_method :on_hold_documents, :on_hold_images
+  # def on_hold_images
+  #   docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "on_hold_image")
+  # end
+  # alias_method :on_hold_documents, :on_hold_images
 
   def ensure_qr_code_exists
     return if draft? || !persisted? || @generating_qr_code
