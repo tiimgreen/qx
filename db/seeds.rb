@@ -13,7 +13,7 @@
 
 # Admin.create!(email: "nezir.zahirovic@gmail.com", password: "kiGA5#iyFc8$e8&bX", password_confirmation: "kiGA5#iyFc8$e8&bX", name: "Nezir Zahirovic")
 # Admin.create!(email: "iztok.goetsch@qualinox.ch", password: "657$G9BnhQmQBs8hX", password_confirmation: "657$G9BnhQmQBs8hX", name: "Iztok Goetsch")
-# Admin.create!(email: "adnan.kovacevic@qualinox.ch", password: "fGK&&9FKG9KCGhzhX", password_confirmation: "fGK&&9FKG9KCGhzhX", name: "Adnan Kovacevic")
+# Admin.create!(email: "adnan.kovacevic@qualinox.ch", password: "657$G9BnhQmQBs8hX", password_confirmation: "657$G9BnhQmQBs8hX", name: "Adnan Kovacevic")
 # puts "added admins"
 
 # User.create!(

@@ -144,12 +144,13 @@ class IsometriesController < ApplicationController
   end
 
   def destroy
-    @isometry.transaction do
-      # @isometry.update_columns(deleted: true)
-      @isometry.destroy_all
+    if destroy_isometry_associations(@isometry)
+      redirect_to project_isometries_path(@project, locale: I18n.locale),
+                  notice: t("common.messages.success.deleted", model: "Isometry")
+    else
+      redirect_to project_isometries_path(@project, locale: I18n.locale),
+                  alert: "Failed to delete isometry: #{@isometry.errors.full_messages.join(', ')}"
     end
-    redirect_to project_isometries_path(@project, locale: I18n.locale),
-                notice: t("common.messages.deleted", model: "Isometry")
   end
 
   def remove_certificate
@@ -383,5 +384,49 @@ class IsometriesController < ApplicationController
         :is_orbital, :is_manuell, :_destroy
       ]
     )
+  end
+
+  def destroy_isometry_associations(isometry)
+    ActiveRecord::Base.connection.execute("PRAGMA foreign_keys = OFF;")
+
+    begin
+      ActiveRecord::Base.transaction do
+        # First, handle any Active Storage attachments
+        isometry.qr_code.purge_later if isometry.qr_code.attached?
+
+        # Handle has_many associations
+        isometry.isometry_material_certificates.delete_all
+        isometry.weldings.delete_all
+        isometry.work_preparations.destroy_all
+        isometry.test_packs.destroy_all
+        isometry.docuvita_documents.destroy_all
+
+        # Handle has_one associations
+        isometry.prefabrication&.destroy
+        isometry.final_inspection&.destroy
+        isometry.transport&.destroy
+        isometry.site_delivery&.destroy
+        isometry.site_assembly&.destroy
+        isometry.on_site&.destroy
+        isometry.pre_welding&.destroy
+
+        # Handle incoming_delivery and its items
+        if isometry.incoming_delivery
+          isometry.incoming_delivery.delivery_items.delete_all
+          isometry.incoming_delivery.destroy
+        end
+
+        # Finally, delete the isometry
+        isometry.destroy
+      end
+      true
+    rescue => e
+      Rails.logger.error "Failed to delete isometry #{isometry.id}: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      false
+    ensure
+      # Always re-enable foreign keys after we're done
+      ActiveRecord::Base.connection.execute("PRAGMA foreign_keys = ON;")
+    end
   end
 end

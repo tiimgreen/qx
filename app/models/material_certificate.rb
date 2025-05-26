@@ -1,13 +1,13 @@
 class MaterialCertificate < ApplicationRecord
   include DocuvitaUploadable
 
-  has_many :isometry_material_certificates, dependent: :destroy
+  has_many :isometry_material_certificates, dependent: :delete_all
   has_many :isometries, through: :isometry_material_certificates
   has_many :weldings_as_certificate, class_name: "Welding", foreign_key: "material_certificate_id", dependent: :nullify
   has_many :weldings_as_certificate1, class_name: "Welding", foreign_key: "material_certificate1_id", dependent: :nullify
 
   # need for migration
-  has_one_attached :certificate_file
+  # has_one_attached :certificate_file
 
   validates :certificate_number,
             presence: true,
