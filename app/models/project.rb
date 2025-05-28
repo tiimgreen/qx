@@ -57,6 +57,12 @@ class Project < ApplicationRecord
     )
   }
 
+  # Returns true if all incoming deliveries are closed, false otherwise
+  def all_incoming_deliveries_closed?
+    return true if incoming_deliveries.none?
+    incoming_deliveries.all?(&:closed?)
+  end
+
   private
 
   def requires_filters?

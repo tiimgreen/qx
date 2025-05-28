@@ -60,7 +60,7 @@
       </thead>
       <tbody>
         <% @projects.each do |project| %>
-          <tr>
+          <tr class="<%= 'table-danger' unless project.all_incoming_deliveries_closed? %>">
             <td><%= project.project_number %></td>
             <td><%= project.client_name %></td>
             <td><%= link_to project.name, project %></td>
