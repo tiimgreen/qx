@@ -52,7 +52,7 @@ de:
       missing_delivery_item: "Fehlende Lieferposition"
       admin: "Administrator"
       weldings: "Schweissnäht"
-      docuvita_document: "DocuVita Dokumente"
+      docuvita_document: "Docuvita"
     attributes:
       admin:
         email: "E-Mail"
