@@ -38,6 +38,12 @@ de:
           attributes:
             document_type:
               inclusion: "ist kein gültiger Dokumententyp"
+        material_certificate:
+          attributes:
+            certificate_number:
+              taken: "ist bereits vergeben (Groß-/Kleinschreibung wird ignoriert)"
+            batch_number:
+              taken: "ist bereits vergeben (Groß-/Kleinschreibung wird ignoriert)"
     models:
       project: "Projekt"
       incoming_delivery: "Wareneingang"

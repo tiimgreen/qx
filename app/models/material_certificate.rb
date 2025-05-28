@@ -10,9 +10,11 @@ class MaterialCertificate < ApplicationRecord
   # has_one_attached :certificate_file
 
   validates :certificate_number,
-            presence: true,
-            uniqueness: { case_sensitive: false, message: "already exists (case insensitive)" }
-  validates :batch_number, presence: true
+            presence: { message: :blank },
+            uniqueness: { case_sensitive: false, message: :taken }
+  validates :batch_number, presence: { message: :blank },
+                           uniqueness: { case_sensitive: false, message: :taken }
+
   validates :issue_date, presence: true
 
   before_validation :upcase_certificate_number

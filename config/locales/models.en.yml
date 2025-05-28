@@ -17,6 +17,12 @@ en:
           attributes:
             document_type:
               inclusion: "is not a valid document type"
+        material_certificate:
+          attributes:
+            certificate_number:
+              taken: "has already been taken (case insensitive)"
+            batch_number:
+              taken: "has already been taken (case insensitive)"
     models:
       project: "Project"
       incoming_delivery: "Incoming Delivery"
