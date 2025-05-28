@@ -30,7 +30,7 @@ en:
       delivery_item: "Delivery Item"
       missing_delivery_item: "Missing Delivery Item"
       admin: "Administrator"
-      docuvita_document: "Docuvita Document"
+      docuvita_document: "DocuVita Documents"
     attributes:
       admin:
         email: "Email"
