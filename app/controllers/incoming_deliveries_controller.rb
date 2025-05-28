@@ -123,7 +123,7 @@ class IncomingDeliveriesController < ApplicationController
     complete_resource(
       @incoming_delivery,
       project_incoming_delivery_path(@project, @incoming_delivery),
-      incoming_delivery_params
+      incoming_delivery_params_without_files
     )
   end
 
