@@ -178,11 +178,10 @@ class FinalInspectionsController < ApplicationController
     if params.dig(:final_inspection, param_key).present?
       Array(params[:final_inspection][param_key]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        begin
+        if image.content_type == "application/pdf"
+          final_inspection.upload_pdf_to_docuvita(image, image.original_filename, document_type, "final_inspection")
+        else
           final_inspection.upload_image_to_docuvita(image, image.original_filename, document_type, "final_inspection")
-        rescue RuntimeError => e
-          flash[:alert] = e.message
-          raise e
         end
       end
     end

@@ -159,7 +159,11 @@ class OnSitesController < ApplicationController
       if params.dig(:on_site, :on_hold_images).present?
         Array(params[:on_site][:on_hold_images]).each do |image|
           next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-          on_site.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "as_built")
+          if image.content_type == "application/pdf"
+            on_site.upload_pdf_to_docuvita(image, image.original_filename, "on_hold_image", "as_built")
+          else
+            on_site.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "as_built")
+          end
         end
       end
 
@@ -167,7 +171,11 @@ class OnSitesController < ApplicationController
       if params.dig(:on_site, :on_site_images).present?
         Array(params[:on_site][:on_site_images]).each do |image|
           next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-          on_site.upload_image_to_docuvita(image, image.original_filename, "on_site_image", "as_built")
+          if image.content_type == "application/pdf"
+            on_site.upload_pdf_to_docuvita(image, image.original_filename, "on_site_image", "as_built")
+          else
+            on_site.upload_image_to_docuvita(image, image.original_filename, "on_site_image", "as_built")
+          end
         end
       end
     end

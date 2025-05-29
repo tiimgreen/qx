@@ -150,7 +150,11 @@ class PrefabricationsController < ApplicationController
     if params.dig(:prefabrication, :on_hold_images).present?
       Array(params[:prefabrication][:on_hold_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        prefabrication.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "prefabrication")
+        if image.content_type == "application/pdf"
+          prefabrication.upload_pdf_to_docuvita(image, image.original_filename, "on_hold_image", "prefabrication")
+        else
+          prefabrication.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "prefabrication")
+        end
       end
     end
   end

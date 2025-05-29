@@ -146,7 +146,11 @@ class TransportsController < ApplicationController
     if params.dig(:transport, :check_spools_images).present?
       Array(params[:transport][:check_spools_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        transport.upload_image_to_docuvita(image, image.original_filename, "check_spools_image", "transport")
+        if image.content_type == "application/pdf"
+          transport.upload_pdf_to_docuvita(image, image.original_filename, "check_spools_image", "transport")
+        else
+          transport.upload_image_to_docuvita(image, image.original_filename, "check_spools_image", "transport")
+        end
       end
     end
   end

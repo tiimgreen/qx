@@ -149,7 +149,11 @@ class PreWeldingsController < ApplicationController
     if params.dig(:pre_welding, :on_hold_images).present?
       Array(params[:pre_welding][:on_hold_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        pre_welding.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "welding")
+        if image.content_type == "application/pdf"
+          pre_welding.upload_pdf_to_docuvita(image, image.original_filename, "on_hold_image", "welding")
+        else
+          pre_welding.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "welding")
+        end
       end
     end
   end

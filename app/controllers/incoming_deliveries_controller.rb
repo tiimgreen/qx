@@ -273,7 +273,11 @@ class IncomingDeliveriesController < ApplicationController
     if params.dig(:incoming_delivery, :on_hold_images).present?
       Array(params[:incoming_delivery][:on_hold_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        delivery.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "incoming_delivery")
+        if image.content_type == "application/pdf"
+          delivery.upload_pdf_to_docuvita(image, image.original_filename, "on_hold_image", "incoming_delivery")
+        else
+          delivery.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "incoming_delivery")
+        end
       end
     end
   end
@@ -302,6 +306,7 @@ class IncomingDeliveriesController < ApplicationController
       delivery.upload_pdf_to_docuvita(
         file,
         file.original_filename,
+        "delivery_note",
         "incoming_delivery",
         {
           voucher_number: delivery.delivery_note_number,

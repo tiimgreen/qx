@@ -163,7 +163,11 @@ class WorkPreparationsController < ApplicationController
     if params.dig(:work_preparation, :on_hold_images).present?
       Array(params[:work_preparation][:on_hold_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        work_preparation.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "work_preparation")
+        if image.content_type == "application/pdf"
+          work_preparation.upload_pdf_to_docuvita(image, image.original_filename, "on_hold_image", "work_preparation")
+        else
+          work_preparation.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "work_preparation")
+        end
       end
     end
   end

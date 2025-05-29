@@ -167,7 +167,11 @@ class TestPacksController < ApplicationController
     if params.dig(:test_pack, :on_hold_images).present?
       Array(params[:test_pack][:on_hold_images]).each do |image|
         next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        test_pack.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "test_pack")
+        if image.content_type == "application/pdf"
+          test_pack.upload_pdf_to_docuvita(image, image.original_filename, "on_hold_image", "test_pack")
+        else
+          test_pack.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "test_pack")
+        end
       end
     end
   end

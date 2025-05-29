@@ -9,7 +9,7 @@ module DocuvitaUploadable
     accepts_nested_attributes_for :docuvita_documents, allow_destroy: true
   end
 
-  def upload_pdf_to_docuvita(file_io, original_filename, sector_name, options = {})
+  def upload_pdf_to_docuvita(file_io, original_filename, type, sector_name, options = {})
     begin
       uploader = DocuvitaUploader.new
       qr_position = options.delete(:qr_position)
@@ -31,7 +31,10 @@ module DocuvitaUploadable
                   "isometry"
       end
 
+      doc_sub_type = determine_document_type(type)
+
       filename = "#{sector_name}.pdf"
+      web_filename = "#{doc_sub_type}.pdf"
 
       # Process the PDF with QR code if position is specified
       if qr_position.present?
@@ -57,8 +60,8 @@ module DocuvitaUploadable
           voucher_number: respond_to?(:line_id) ? line_id : id.to_s,
           transaction_key: base_project_number,
           document_type: sector_name,
-          voucher_type: doc_type,
-          description: "#{doc_type.titleize} for #{self.class.name}: #{id}#{respond_to?(:project) && project ? " and project: #{project.project_number}" : ""}"
+          voucher_type: doc_sub_type,
+          description: "#{doc_sub_type.titleize} for #{self.class.name}: #{id}#{respond_to?(:project) && project ? " and project: #{project.project_number}" : ""}"
         }.merge(options)
       )
 
@@ -66,8 +69,8 @@ module DocuvitaUploadable
       docuvita_documents.create!(
         docuvita_object_id: result[:object_id],
         document_type: sector_name,
-        document_sub_type: doc_type,
-        filename: filename,
+        document_sub_type: doc_sub_type,
+        filename: web_filename,
         content_type: content_type,
         qr_position: qr_position,
         byte_size: byte_size,
@@ -133,38 +136,8 @@ module DocuvitaUploadable
         pdf_filename = "#{sector_name}.pdf"
 
         # Ensure type is one of the valid document types
-        doc_type = case type.to_s
-        when /rt_check/i, /rt2_check/i
-                    "rt_check_image"
-        when /vt2_check/i
-                    "vt2_check_image"
-        when /pt2_check/i
-                    "pt2_check_image"
-        when /visual_check/i
-                    "visual_check_image"
-        when /rt/i
-                    "rt_image"
-        when /vt/i
-                    "vt_image"
-        when /pt/i
-                    "pt_image"
-        when /hold/i
-                    "on_hold_image"
-        when /on_site/i
-                    "on_site_image"
-        when /check_spools/i
-                    "check_spools_image"
-        when /delivery_note/i
-                    "delivery_note"
-        when /quantity_check/i
-                    "quantity_check_image"
-        when /dimension_check/i
-                    "dimension_check_image"
-        when /ra_check/i
-                    "ra_check_image"
-        else
-                    "on_hold_image"
-        end
+        doc_type = determine_document_type(type)
+        web_filename = "#{doc_type}.pdf"
 
         # Upload the converted PDF
         result = uploader.upload_io(
@@ -184,7 +157,7 @@ module DocuvitaUploadable
           docuvita_object_id: result[:object_id],
           document_type: sector_name,
           document_sub_type: doc_type,
-          filename: pdf_filename,
+          filename: web_filename,
           content_type: "application/pdf",
           metadata: {
             response: result[:response],
@@ -223,5 +196,43 @@ module DocuvitaUploadable
 
     project_num = project.project_number.gsub(" ", "/")
     project_num.include?("/") ? project_num.split("/").first : project_num
+  end
+
+  # Determine the document type based on the provided type string
+  def determine_document_type(type)
+    case type.to_s
+    when /rt_check/i, /rt2_check/i
+                "rt_check_image"
+    when /vt2_check/i
+                "vt2_check_image"
+    when /pt2_check/i
+                "pt2_check_image"
+    when /visual_check/i
+                "visual_check_image"
+    when /rt/i
+                "rt_image"
+    when /vt/i
+                "vt_image"
+    when /pt/i
+                "pt_image"
+    when /hold/i
+                "on_hold_image"
+    when /on_site/i
+                "on_site_image"
+    when /check_spools/i
+                "check_spools_image"
+    when /delivery_note/i
+                "delivery_note"
+    when /quantity_check/i
+                "quantity_check_image"
+    when /dimension_check/i
+                "dimension_check_image"
+    when /ra_check/i
+                "ra_check_image"
+    when /isometry/i
+                "isometry"
+    else
+                "on_hold_image"
+    end
   end
 end

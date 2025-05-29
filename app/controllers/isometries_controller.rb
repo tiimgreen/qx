@@ -325,7 +325,7 @@ class IsometriesController < ApplicationController
 
       isometry.upload_pdf_to_docuvita(
         pdf_file,
-        pdf_file.original_filename, "isometry",
+        pdf_file.original_filename, "isometry", "isometry",
         { qr_position: qr_position }
       )
     end
@@ -333,30 +333,46 @@ class IsometriesController < ApplicationController
 
   def handle_docuvita_image_uploads(isometry)
     if params.dig(:isometry, :rt_images).present?
-      params[:isometry][:rt_images].each do |image|
-        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "rt_image", "isometry")
+      params[:isometry][:rt_images].each do |file|
+        next unless file.is_a?(ActionDispatch::Http::UploadedFile)
+        if file.content_type == "application/pdf"
+          isometry.upload_pdf_to_docuvita(file, file.original_filename, "rt_image", "isometry")
+        else
+          isometry.upload_image_to_docuvita(file, file.original_filename, "rt_image", "isometry")
+        end
       end
     end
 
     if params.dig(:isometry, :vt_images).present?
-      params[:isometry][:vt_images].each do |image|
-        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "vt_image", "isometry")
+      params[:isometry][:vt_images].each do |file|
+        next unless file.is_a?(ActionDispatch::Http::UploadedFile)
+        if file.content_type == "application/pdf"
+          isometry.upload_pdf_to_docuvita(file, file.original_filename, "vt_image", "isometry")
+        else
+          isometry.upload_image_to_docuvita(file, file.original_filename, "vt_image", "isometry")
+        end
       end
     end
 
     if params.dig(:isometry, :pt_images).present?
-      params[:isometry][:pt_images].each do |image|
-        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "pt_image", "isometry")
+      params[:isometry][:pt_images].each do |file|
+        next unless file.is_a?(ActionDispatch::Http::UploadedFile)
+        if file.content_type == "application/pdf"
+          isometry.upload_pdf_to_docuvita(file, file.original_filename, "pt_image", "isometry")
+        else
+          isometry.upload_image_to_docuvita(file, file.original_filename, "pt_image", "isometry")
+        end
       end
     end
 
     if params.dig(:isometry, :on_hold_images).present?
-      params[:isometry][:on_hold_images].each do |image|
-        next unless image.is_a?(ActionDispatch::Http::UploadedFile)
-        isometry.upload_image_to_docuvita(image, image.original_filename, "on_hold_image", "isometry")
+      params[:isometry][:on_hold_images].each do |file|
+        next unless file.is_a?(ActionDispatch::Http::UploadedFile)
+        if file.content_type == "application/pdf"
+          isometry.upload_pdf_to_docuvita(file, file.original_filename, "on_hold_image", "isometry")
+        else
+          isometry.upload_image_to_docuvita(file, file.original_filename, "on_hold_image", "isometry")
+        end
       end
     end
   end
