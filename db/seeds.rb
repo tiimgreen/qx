@@ -11,18 +11,18 @@
 # # This file should ensure the existence of records required to run the application in every environment (production,
 # # development, test). The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
-# Admin.create!(email: "nezir.zahirovic@gmail.com", password: "kiGA5#iyFc8$e8&bX123x", password_confirmation: "kiGA5#iyFc8$e8&bX123x", name: "Nezir Zahirovic")
-# Admin.create!(email: "iztok.goetsch@qualinox.ch", password: "657$G9BnhQmQBs8hX123X", password_confirmation: "657$G9BnhQmQBs8hX123X", name: "Iztok Goetsch")
-# Admin.create!(email: "adnan.kovacevic@qualinox.ch", password: "s&h7Xx9Mzho!yfPd", password_confirmation: "s&h7Xx9Mzho!yfPd", name: "Adnan Kovacevic")
-# Admin.create!(email: "marija.grgic@qualinox.ch", password: "#ygNYPp5#msExMAi", password_confirmation: "#ygNYPp5#msExMAi", name: "Marija Grgic")
+# Admin.create!(email: "nezir.zahirovic@gmail.com", password: "kiGA5#iyFc8$e8&bX123x1", password_confirmation: "kiGA5#iyFc8$e8&bX123x1", name: "Nezir Zahirovic")
+# Admin.create!(email: "iztok.goetsch@qualinox.ch", password: "657$G9BnhQmQBs8hX123X2", password_confirmation: "657$G9BnhQmQBs8hX123X2", name: "Iztok Goetsch")
+# Admin.create!(email: "adnan.kovacevic@qualinox.ch", password: "s&h7Xx9Mzho!yfPd3", password_confirmation: "s&h7Xx9Mzho!yfPd3", name: "Adnan Kovacevic")
+# Admin.create!(email: "marija.grgic@qualinox.ch", password: "#ygNYPp5#msExMAi4", password_confirmation: "#ygNYPp5#msExMAi4", name: "Marija Grgic")
 # puts "added admins"
 #
 
 
 # User.create!(
 #   email: "nezir@qx.com",
-#   password: "nezirqxd2025",
-#   password_confirmation: "nezirqxd2025",
+#   password: "nezirqxd20251",
+#   password_confirmation: "nezirqxd20251",
 #   first_name: "Nezir",
 #   last_name: "Zahirovic",
 #   phone: "12345678",
@@ -31,8 +31,8 @@
 # )
 # User.create!(
 #   email: "iztok@qx.com",
-#   password: "iztokqxd2025",
-#   password_confirmation: "iztokqxd2025",
+#   password: "iztokqxd20252",
+#   password_confirmation: "iztokqxd20252",
 #   first_name: "Iztok",
 #   last_name: "Goetsch",
 #   phone: "12345678",
@@ -41,8 +41,8 @@
 # )
 # User.create!(
 #   email: "adnan@qx.com",
-#   password: "123XXX567",
-#   password_confirmation: "123XXX567",
+#   password: "adnanqxd20253",
+#   password_confirmation: "adnanqxd20253",
 #   first_name: "Adnan",
 #   last_name: "Kovacevic",
 #   phone: "12345678",
