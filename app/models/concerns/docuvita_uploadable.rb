@@ -31,6 +31,7 @@ module DocuvitaUploadable
                   "isometry"
       end
 
+      # Ensure type is one of the valid document types
       doc_sub_type = determine_document_type(type)
 
       filename = "#{sector_name}.pdf"
@@ -201,6 +202,8 @@ module DocuvitaUploadable
   # Determine the document type based on the provided type string
   def determine_document_type(type)
     case type.to_s
+    when /material_certificate/i
+                "material_certificate"
     when /rt_check/i, /rt2_check/i
                 "rt_check_image"
     when /vt2_check/i
@@ -209,6 +212,20 @@ module DocuvitaUploadable
                 "pt2_check_image"
     when /visual_check/i
                 "visual_check_image"
+    when /isometry/i
+                "isometry"
+    when /delivery_note/i
+                "delivery_note"
+    when /check_spools/i
+                "check_spools_image"
+    when /quantity_check/i
+                "quantity_check_image"
+    when /dimension_check/i
+                "dimension_check_image"
+    when /ra_check/i
+                "ra_check_image"
+    when /on_site/i
+                "on_site_image"
     when /rt/i
                 "rt_image"
     when /vt/i
@@ -217,20 +234,6 @@ module DocuvitaUploadable
                 "pt_image"
     when /hold/i
                 "on_hold_image"
-    when /on_site/i
-                "on_site_image"
-    when /check_spools/i
-                "check_spools_image"
-    when /delivery_note/i
-                "delivery_note"
-    when /quantity_check/i
-                "quantity_check_image"
-    when /dimension_check/i
-                "dimension_check_image"
-    when /ra_check/i
-                "ra_check_image"
-    when /isometry/i
-                "isometry"
     else
                 "on_hold_image"
     end

@@ -60,7 +60,7 @@ class MaterialCertificate < ApplicationRecord
     }
 
     # Upload the file using the concern's method
-    upload_pdf_to_docuvita(file, original_filename, sector_name, options)
+    upload_pdf_to_docuvita(file, original_filename, "material_certificate", sector_name, options)
   rescue StandardError => e
     Rails.logger.error "Docuvita upload failed for Material Certificate ##{id}: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
@@ -69,7 +69,7 @@ class MaterialCertificate < ApplicationRecord
   end
 
   def material_certificates
-    docuvita_documents.where(documentable_type: "MaterialCertificate", document_sub_type: "material_certificate")
+    docuvita_documents.where(document_sub_type: "material_certificate")
   end
 
   private
