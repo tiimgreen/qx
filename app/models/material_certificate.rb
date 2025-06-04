@@ -12,8 +12,7 @@ class MaterialCertificate < ApplicationRecord
   validates :certificate_number,
             presence: { message: :blank },
             uniqueness: { case_sensitive: false, message: :taken }
-  validates :batch_number, presence: { message: :blank },
-                           uniqueness: { case_sensitive: false, message: :taken }
+  validates :batch_number, presence: true
 
   validates :issue_date, presence: true
 
