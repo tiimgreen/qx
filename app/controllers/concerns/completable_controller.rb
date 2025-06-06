@@ -19,7 +19,7 @@ module CompletableController
 
     if resource.save
       redirect_to redirect_path,
-                  notice: t("common.messages.completed",
+                  notice: t("common.messages.success.completed",
                           model: resource.model_name.human,
                           time: time_data[:formatted])
     else

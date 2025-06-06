@@ -74,7 +74,7 @@ class IsometriesController < ApplicationController
           handle_docuvita_image_uploads(@isometry)
 
           redirect_to project_isometry_path(@project, @isometry),
-                      notice: t("common.messages.created", model: "Isometry")
+                      notice: t("common.messages.success.created", model: "Isometry")
         else
           render :new, status: :unprocessable_entity
         end
@@ -110,7 +110,7 @@ class IsometriesController < ApplicationController
             handle_docuvita_pdf_upload(@isometry) if params.dig(:isometry, :new_pdf).present?
             handle_docuvita_image_uploads(@isometry)
             redirect_to project_isometry_path(@project, @isometry),
-                      notice: t("common.messages.updated", model: "Isometry")
+                      notice: t("common.common.messages.success.updated", model: "Isometry")
           rescue => e
             flash.now[:alert] = e.message
             render :edit, status: :unprocessable_entity
