@@ -76,7 +76,7 @@ class TestPacksController < ApplicationController
     if @test_pack.update(test_pack_params_without_images)
       handle_docuvita_image_uploads(@test_pack)
       redirect_to project_test_pack_path(@project, @test_pack),
-                      notice: t("common.common.messages.success.updated", model: "TestPack")
+                      notice: t("common.messages.success.updated", model: "TestPack")
     else
       respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }

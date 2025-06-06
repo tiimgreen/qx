@@ -96,7 +96,7 @@ class IncomingDeliveriesController < ApplicationController
 
           @incoming_delivery.update_completion_status
           redirect_to project_incoming_delivery_path(@project, @incoming_delivery),
-                      notice: t("common.common.messages.success.updated", model: "Delivery")
+                      notice: t("common.messages.success.updated", model: "Delivery")
         rescue StandardError => e
           flash.now[:alert] = t("incoming_deliveries.upload_error", message: e.message)
           render :edit, status: :unprocessable_entity
