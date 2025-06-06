@@ -236,7 +236,9 @@
       </dl>
       <%= render partial: 'docuvita_documents', locals: {
         documents: @isometry.rt_images,
-        title: t('.isometry_documents')
+        title: t('.isometry_documents'),
+        edit_mode: false,
+        modal_group_key: 'rt_images'
       } %>
 
       <dl class="row mb-3">
@@ -245,7 +247,9 @@
       </dl>
       <%= render partial: 'docuvita_documents', locals: {
         documents: @isometry.vt_images,
-        title: t('.isometry_documents')
+        title: t('.isometry_documents'),
+        edit_mode: false,
+        modal_group_key: 'vt_images'
       } %>
 
 
@@ -255,7 +259,9 @@
       </dl>
       <%= render partial: 'docuvita_documents', locals: {
         documents: @isometry.pt_images,
-        title: t('.isometry_documents')
+        title: t('.isometry_documents'),
+        edit_mode: false,
+        modal_group_key: 'pt_images'
       } %>
     </div>
   </div>
@@ -299,7 +305,9 @@
       <dd class="col-sm-8"><%= @isometry.on_hold_date.strftime("%d/%m/%Y %H:%M") if @isometry.on_hold_date %></dd>
       <%= render partial: 'docuvita_documents', locals: {
         documents: @isometry.on_hold_images,
-        title: t('.on_hold_images')
+        title: t('.on_hold_images'),
+        edit_mode: false,
+        modal_group_key: 'on_hold_images'
       } %>
     </dl>
   </div>
@@ -313,7 +321,9 @@
     <div class="col-12">
       <%= render partial: 'docuvita_documents', locals: {
         documents: @isometry.isometry_pdfs,
-        title: t('.isometry_documents')
+        title: t('.isometry_documents'),
+        edit_mode: false,
+        modal_group_key: 'isometry_pdfs'
       } %>
     </div>
   </div>
@@ -331,10 +341,4 @@
   </div>
 <% end %>
 
-<%= render partial: 'delete_confirmation_modal',
-           locals: {
-             modal_id: 'deleteIsometryModal',
-             controller_name: 'delete-isometry',
-             model_name: 'isometry'
-           } %>
-</div>
+

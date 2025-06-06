@@ -33,15 +33,20 @@ export default class extends Controller {
       const response = await fetch(`/${locale}/docuvita_documents/${this.documentId}`, {
         method: 'DELETE',
         headers: {
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+          'Accept': 'application/json'
         },
         redirect: 'follow'
       })
 
       if (response.redirected) {
         window.location.href = response.url
-      } else {
+      } else if (response.ok) { 
         window.location.reload()
+      } else {
+        console.error('Delete error:', response.status, await response.text());
+        alert('Failed to delete document. Please try again.');
+        window.location.reload(); 
       }
     } catch (error) {
       console.error('Delete error:', error)

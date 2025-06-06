@@ -2,9 +2,14 @@
     - documents: collection of Docuvita documents
     - title: section title (optional)
     - edit_mode: boolean
+    - modal_group_key: string to ensure unique modal IDs (e.g., 'rt_images', 'on_hold_images')
 %>
 
 <% if documents.any? %>
+  <%# Generate a unique ID for the modal associated with this group of documents %>
+  <% unique_key = local_assigns.fetch(:modal_group_key, SecureRandom.hex(4)) %>
+  <% dynamic_modal_id = "deleteDocumentModal_#{unique_key}" %>
+
   <div class="mb-3">
     <div class="d-flex flex-wrap gap-2">
       <% documents.each do |document| %>
@@ -26,13 +31,14 @@
               </div>
             </div>
           <% end %>
+          <%# Ensure edit_mode is explicitly checked and defaults to false if not provided %>
           <% if current_user.can_delete?("Isometry") && local_assigns[:edit_mode] %>
             <div class="text-center mt-1">
               <%= button_tag type: 'button',
                            class: 'btn btn-outline-danger btn-sm',
                            data: {
                              bs_toggle: "modal",
-                             bs_target: "#deleteDocumentModal",
+                             bs_target: "##{dynamic_modal_id}", # Target the unique modal ID
                              "document-id": document.id,
                              "document-name": document.filename,
                              "document-number": document.docuvita_object_id
@@ -47,9 +53,12 @@
   </div>
 <% end %>
 
+<%# Pass the dynamic_modal_id to the confirmation modal partial %>
+<%# Ensure dynamic_modal_id is defined even if documents is empty, to prevent render error, though modal won't be used %>
+<% dynamic_modal_id ||= "deleteDocumentModal_fallback_#{SecureRandom.hex(4)}" unless defined?(dynamic_modal_id) %>
 <%= render partial: 'delete_confirmation_modal',
            locals: {
-             modal_id: 'deleteDocumentModal',
+             modal_id: dynamic_modal_id, # Use the unique modal ID
              controller_name: 'delete-document',
              model_name: 'docuvita_document'
            } %>
