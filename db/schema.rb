@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_24_085405) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_10_232434) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -233,6 +233,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_24_085405) do
     t.string "dn"
     t.boolean "draft"
     t.string "revision_letter"
+    t.boolean "approved_for_production", default: true, null: false
+    t.index ["approved_for_production"], name: "index_isometries_on_approved_for_production"
     t.index ["deleted"], name: "index_isometries_on_deleted"
     t.index ["line_id"], name: "index_isometries_on_line_id"
     t.index ["on_hold_status"], name: "index_isometries_on_on_hold_status"

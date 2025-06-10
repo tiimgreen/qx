@@ -49,6 +49,7 @@ en:
       dp: "DP"
       dip: "DIP"
       isolation: "Isolation"
+      approved_for_production: "Approved for Production"
       gmp: "GMP"
       gdp: "GDP"
       ped_category: "PED"
