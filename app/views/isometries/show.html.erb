@@ -126,7 +126,7 @@
     <% if @isometry.material_certificates.any? %>
       <div class="row g-3">
         <% @isometry.material_certificates.each do |cert| %>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <%# Find the relevant Docuvita document for this certificate %>
             <% docuvita_doc = cert.docuvita_documents.find { |doc| doc.document_type == 'material_certificate' } %>
 
