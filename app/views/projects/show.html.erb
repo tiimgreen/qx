@@ -37,6 +37,9 @@
 
           <dt class="col-sm-3"><%= t('.workshop') %></dt>
           <dd class="col-sm-9"><%= @project.workshop ? t('common.labels.yes') : t('common.labels.no') %></dd>
+
+          <dt class="col-sm-3"><%= t('.archived') %></dt>
+          <dd class="col-sm-9"><%= @project.archived ? t('common.labels.yes') : t('common.labels.no') %></dd>
         </dl>
       </div>
       <div class="col-md-2 text-center">

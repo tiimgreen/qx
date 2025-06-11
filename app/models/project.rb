@@ -63,6 +63,10 @@ class Project < ApplicationRecord
     incoming_deliveries.all?(&:closed?)
   end
 
+  # app/models/project.rb
+  scope :active,   -> { where(archived: false) }
+  scope :archived, -> { where(archived: true) }
+
   private
 
   def requires_filters?

@@ -22,6 +22,8 @@ de:
         title: "Projekte"
         list: "Projekte auflisten"
         new: "Neues Projekt"
+        archived:
+          title: "Archivierte Projekte"
       incoming_deliveries:
         title: "Eingehende Lieferungen"
         deliveries: "Lieferungen"

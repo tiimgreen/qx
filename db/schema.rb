@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_10_232434) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_11_002145) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -416,6 +416,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_10_232434) do
     t.integer "sollist_filter3_sector_id"
     t.integer "progress_filter1_sector_id"
     t.integer "progress_filter2_sector_id"
+    t.boolean "archived", default: false, null: false
+    t.index ["archived"], name: "index_projects_on_archived"
     t.index ["progress_filter1_sector_id"], name: "index_projects_on_progress_filter1_sector_id"
     t.index ["progress_filter2_sector_id"], name: "index_projects_on_progress_filter2_sector_id"
     t.index ["project_number"], name: "index_projects_on_project_number", unique: true

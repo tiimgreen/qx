@@ -16,6 +16,8 @@ en:
         title: "Projects"
         list: "List Projects"
         new: "New Project"
+        archived:
+          title: "Archived Projects"
       incoming_deliveries:
         title: "Incoming Deliveries"
         deliveries: "Deliveries"
