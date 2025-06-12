@@ -67,6 +67,16 @@ class Project < ApplicationRecord
   scope :active,   -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
 
+  def readonly?
+    # Allow the one transition update that flips `archived` from false → true,
+    # block everything else once it is archived.
+    return false if will_save_change_to_archived? && !archived?
+
+    archived? || super
+  end
+
+  before_destroy -> { throw :abort if archived? }
+
   private
 
   def requires_filters?

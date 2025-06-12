@@ -1,5 +1,6 @@
 class Guest < ApplicationRecord
   # Include only necessary devise modules
+  include LockedByArchivedProject
   devise :database_authenticatable,
          :rememberable, :validatable
 

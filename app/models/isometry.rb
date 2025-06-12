@@ -1,5 +1,6 @@
 class Isometry < ApplicationRecord
   include DocuvitaUploadable
+  include LockedByArchivedProject
 
   belongs_to :project
   belongs_to :sector, optional: true
