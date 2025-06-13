@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0"><%= t('progress_tracking.title') %></h5>
-    <% if user_signed_in? %>
+    <% if user_signed_in? && !@project.archived? %>
     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newProgressPlanModal">
       <i class="bi bi-plus"></i> <%= t('progress_tracking.new_plan') %>
     </button>
@@ -56,7 +56,7 @@
                     <%= link_to project_progress_tracking_path(@project, plan, locale: I18n.locale), class: 'btn btn-sm btn-primary me-1 mb-1' do %>
                       <i class="bi bi-graph-up"></i> <%= t('progress_tracking.view') %>
                     <% end %>
-                    <% if user_signed_in? && current_user.admin? %>
+                    <% if user_signed_in? && current_user.admin? && !@project.archived? %>
                       <% if plan.revision_last? %>
                         <%= button_to create_revision_project_progress_tracking_path(@project, plan, locale: I18n.locale), class: 'btn btn-sm btn-outline-primary me-2 mb-1', method: :post, data: { turbo_confirm: t('progress_tracking.confirm_revision') } do %>
                           <i class="bi bi-plus-circle"></i> <%= t('progress_tracking.create_revision') %>
