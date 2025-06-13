@@ -14,14 +14,14 @@
   </div>
 
   <div class="btn-toolbar mb-2 mb-md-0">
-    <% if current_user.can_edit?("Isometry") && @isometry.can_add_page? %>
+    <% if current_user.can_edit?("Isometry") && @isometry.can_add_page? && !@project.archived? %>
       <%= link_to new_page_project_isometry_path(@project, @isometry),
             class: "btn btn-sm btn-outline-primary me-2",
             data: { turbo_method: :post } do %>
         <i class="bi bi-plus"></i> <%= t('isometries.actions.add_page') %>
       <% end %>
     <% end %>
-    <% if current_user.can_edit?("Isometry") && @isometry.page_number == 1 && @isometry.revision_last? %>
+    <% if current_user.can_edit?("Isometry") && @isometry.page_number == 1 && @isometry.revision_last? && !@project.archived? %>
       <%= button_to create_revision_project_isometry_path(@project, @isometry),
                   method: :post,
                   class: 'btn btn-sm btn-outline-primary me-2',
@@ -30,12 +30,12 @@
         <i class="bi bi-plus-circle"></i> <%= t('isometries.actions.create_revision') %>
       <% end %>
     <% end %>
-    <% if current_user.can_edit?("Isometry") %>
+    <% if current_user.can_edit?("Isometry") && !@project.archived? %>
       <%= link_to edit_project_isometry_path(@project, @isometry), class: "btn btn-sm btn-primary me-2" do %>
         <i class="bi bi-pencil"></i> <%= t('common.actions.edit') %>
       <% end %>
     <% end %>
-    <% if current_user.can_delete?("Isometry") %>
+    <% if current_user.can_delete?("Isometry") && !@project.archived? %>
       <%= button_tag type: 'button',
           class: 'btn btn-sm btn-outline-danger',
           title: t('common.buttons.delete'),

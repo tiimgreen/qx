@@ -2,7 +2,9 @@
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 class="mb-0"><%= t('.title') %></h5>
     <div>
-      <%= link_to t('projects.buttons.edit'), edit_project_path(@project), class: 'btn btn-primary btn-sm'%>
+      <% if current_user.can_edit?("Project") && !@project.archived? %>
+        <%= link_to t('projects.buttons.edit'), edit_project_path(@project), class: 'btn btn-primary btn-sm'%>
+      <% end %>
       <%= link_to t('projects.buttons.back'), projects_path, class: 'btn btn-secondary btn-sm' %>
     </div>
   </div>

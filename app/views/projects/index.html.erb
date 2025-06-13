@@ -83,7 +83,7 @@
                   <% end %>
                 <% end %>
 
-                <% if current_user.can_edit?("Project") %>
+                <% if current_user.can_edit?("Project") && !project.archived? %>
                   <%= link_to edit_project_path(project),
                              class: 'btn btn-outline-primary m-1',
                              title: t('projects.buttons.edit'),
@@ -92,7 +92,7 @@
                   <% end %>
                 <% end %>
 
-                <% if current_user.can_delete?("Project") %>
+                <% if current_user.can_delete?("Project") && !project.archived? %>
                   <%= button_tag type: 'button',
                              class: 'btn btn-outline-danger m-1',
                              title: t('projects.buttons.delete'),

@@ -4,6 +4,7 @@
      sectors
    end %>
 <% sectors_to_display.each do |sector| %>
+  <% next if sector.key == 'material_certificate' %>
   <div class="col-md-6 col-lg-4">
     <div class="card h-100">
       <div class="card-body">
@@ -31,8 +32,6 @@
             <i class="bi bi-diagram-3"></i> <%= project.test_packs.count %>
           <% when 'pre_welding' %>
             <i class="bi bi-diagram-3"></i> <%= project.pre_weldings.count %>
-          <% else %>
-            <i class="bi bi-diagram-3"></i> <%= MaterialCertificate.count %>
           <% end %>
         </h5>
         <p class="card-text">
@@ -46,22 +45,19 @@
             <%= link_to project_incoming_deliveries_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
-            <%= link_to new_project_incoming_delivery_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <%if !project.archived? %>
+              <%= link_to new_project_incoming_delivery_path(project), class: 'btn btn-primary' do %>
+                <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+              <% end %>
             <% end %>
           <% when 'isometry' %>
             <%= link_to project_isometries_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
-            <%= link_to new_project_isometry_path(project), class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
-            <% end %>
-          <% when 'material_certificate' %>
-            <%= link_to material_certificates_path, class: 'btn btn-outline-primary m-1 me-2' do %>
-              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
-            <% end %>
-            <%= link_to new_material_certificate_path, class: 'btn btn-primary' do %>
-              <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+            <%if !project.archived? %>
+              <%= link_to new_project_isometry_path(project), class: 'btn btn-primary' do %>
+                <i class="bi bi-plus"></i> <%= t('common.labels.new') %>
+              <% end %>
             <% end %>
           <% when 'prefabrication' %>
             <%= link_to project_prefabrications_path(project), class: 'btn btn-outline-primary m-1 me-2' do %>

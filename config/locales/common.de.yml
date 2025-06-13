@@ -1,5 +1,7 @@
 de:
   common:
+    errors:
+      archived: "Projekt ist archiviert"
     select_option: "Bitte auswählen"
     actions:
       show: "Anzeigen"

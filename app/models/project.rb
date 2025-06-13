@@ -68,9 +68,14 @@ class Project < ApplicationRecord
   scope :archived, -> { where(archived: true) }
 
   def readonly?
-    # Allow the one transition update that flips `archived` from false → true,
-    # block everything else once it is archived.
-    return false if will_save_change_to_archived? && !archived?
+    # Permit the single transition that archives the project (false -> true)
+    # while disallowing any other attribute modifications once archived.
+    if will_save_change_to_archived?
+      from, to = archived_change
+      # allow the transition even if other non-user-set columns (e.g., timestamps)
+      # also change in the same save call
+      return false if from == false && to == true
+    end
 
     archived? || super
   end

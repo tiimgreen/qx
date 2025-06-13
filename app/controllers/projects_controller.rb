@@ -66,8 +66,11 @@ class ProjectsController < ApplicationController
   private
 
   def handle_sector_associations
+    # When a project is archived we freeze its relations. Skip association
+    # rewriting in that case to avoid destroy-attempts that the
+    # LockedByArchivedProject concern rightfully prevents.
+    return if @project.archived?
     return unless params[:project][:sector_ids]
-
     # Clear existing associations and create new ones
     @project.project_sectors.destroy_all
     sector_ids = params[:project][:sector_ids].reject(&:blank?)

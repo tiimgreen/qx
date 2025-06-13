@@ -8,6 +8,6 @@ module LockedByArchivedProject
 
   private
   def project_not_archived
-    errors.add(:base, I18n.t("errors.archived_project")) if project&.archived?
+    errors.add(:base, I18n.t("common.errors.archived")) if project&.archived?
   end
 end
