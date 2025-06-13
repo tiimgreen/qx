@@ -23,7 +23,7 @@
       <% end %>
     </div>
     <div class="col-md-4 text-end">
-      <% if current_user.can_create?("IncomingDelivery") && !current_user.has_pending_deliveries?("IncomingDelivery", @project.id) %>
+      <% if current_user.can_create?("IncomingDelivery") && !current_user.has_pending_deliveries?("IncomingDelivery", @project.id) && !@project.archived? %>
         <%= link_to new_project_incoming_delivery_path(@project), class: 'btn btn-primary' do %>
           <i class="bi bi-plus"></i> <%= t('incoming_deliveries.buttons.new_delivery') %>
         <% end %>
@@ -109,7 +109,7 @@
                     <% end %>
                   <% end %>
 
-                  <% if current_user.can_edit?("IncomingDelivery") %>
+                  <% if current_user.can_edit?("IncomingDelivery") && !@project.archived? %>
                     <%= link_to edit_project_incoming_delivery_path(@project, delivery),
                                class: 'btn btn-outline-primary m-1',
                                title: t('incoming_deliveries.buttons.edit'),
@@ -118,7 +118,7 @@
                     <% end %>
                   <% end %>
 
-                  <% if current_user.can_delete?("IncomingDelivery") %>
+                  <% if current_user.can_delete?("IncomingDelivery") && !@project.archived? %>
                     <%= button_tag type: 'button',
                                class: 'btn btn-outline-danger m-1',
                                title: t('incoming_deliveries.buttons.delete'),

@@ -83,28 +83,28 @@
                          data: { bs_toggle: 'tooltip' } do %>
                 <i class="bi bi-eye"></i>
               <% end %>
-
-              <%= link_to edit_project_incoming_delivery_delivery_item_path(@project, @incoming_delivery, item),
-                         class: 'btn btn-outline-primary m-1',
-                         title: t('delivery_items.buttons.edit'),
-                         data: { bs_toggle: 'tooltip' } do %>
-                <i class="bi bi-pencil"></i>
+              <% if !@project.archived? %>
+                <%= link_to edit_project_incoming_delivery_delivery_item_path(@project, @incoming_delivery, item),
+                          class: 'btn btn-outline-primary m-1',
+                          title: t('delivery_items.buttons.edit'),
+                          data: { bs_toggle: 'tooltip' } do %>
+                  <i class="bi bi-pencil"></i>
               <% end %>
-
               <%= button_tag type: 'button',
-                         class: 'btn btn-outline-danger m-1',
-                         title: t('delivery_items.buttons.delete'),
-                         data: {
-                           bs_toggle: "modal",
-                           bs_target: "#deleteDeliveryItemModal_#{item.id}",
-                           "delivery-item-id": item.id,
-                           "project-id": @project.id,
-                           "incoming-delivery-id": @incoming_delivery.id,
-                           "delivery-item-name": item.batch_number.presence || t('common.labels.not_available'),
-                           "delivery-item-number": item.tag_number.presence || t('common.labels.not_available')
-                         } do %>
-                <i class="bi bi-trash"></i>
-              <% end %>
+                          class: 'btn btn-outline-danger m-1',
+                          title: t('delivery_items.buttons.delete'),
+                          data: {
+                            bs_toggle: "modal",
+                            bs_target: "#deleteDeliveryItemModal_#{item.id}",
+                            "delivery-item-id": item.id,
+                            "project-id": @project.id,
+                            "incoming-delivery-id": @incoming_delivery.id,
+                            "delivery-item-name": item.batch_number.presence || t('common.labels.not_available'),
+                            "delivery-item-number": item.tag_number.presence || t('common.labels.not_available')
+                          } do %>
+                  <i class="bi bi-trash"></i>
+                <% end %>
+                <% end %>
             </div>
           </td>
         </tr>

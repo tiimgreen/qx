@@ -92,7 +92,7 @@
         <%= link_to t('common.labels.back'), project_on_sites_path(@project), class: 'btn btn-primary' %>
         <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @on_site.isometry), class: 'btn btn-primary' %>
 
-        <% if current_user.can_edit?("OnSite") %>
+        <% if current_user.can_edit?("OnSite") && !@project.archived?%>
           <%= link_to edit_project_on_site_path(@project, @on_site), class: 'btn btn-outline-primary' do %>
             <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
           <% end %>
