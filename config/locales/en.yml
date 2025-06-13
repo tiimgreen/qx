@@ -655,6 +655,9 @@ en:
       create_new: "Create New"
       new_cutting_pipes: "New Cutting Pipes"
       new_small_parts: "New Small Parts"
+      project_archived: "Project archived"
+      project_archived_message: "This project is archived and cannot be edited."
+      back_to_dashboard: "Back to Dashboard"
   alerts:
     isometry_not_found: "Isometry not found"
     no_sector_assigned: "No sector assigned to user"

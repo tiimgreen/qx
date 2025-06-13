@@ -637,6 +637,9 @@ de:
       create_new: "Neu erstellen"
       new_cutting_pipes: "Neue Zuschneidungsrohr"
       new_small_parts: "Neue Kleinteile"
+      project_archived: "Projekt archiviert"
+      project_archived_message: "Dieses Projekt ist archiviert und kann nicht geändert werden."
+      back_to_dashboard: "Zurück zu Dashboard"
   alerts:
     isometry_not_found: "Isometrie nicht gefunden"
     no_sector_assigned: "Kein Sektor für den Benutzer zugewiesen"
