@@ -130,7 +130,7 @@
       <div class="d-flex justify-content-between">
         <%= link_to t('common.labels.back'), project_work_preparations_path(@project), class: 'btn btn-primary' %>
         <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @work_preparation.isometry), class: 'btn btn-primary' %>
-        <% if current_user.can_edit?("WorkPreparation") %>
+        <% if current_user.can_edit?("WorkPreparation") && !@project.archived? %>
           <%= link_to edit_project_work_preparation_path(@project, @work_preparation), class: 'btn btn-outline-primary' do %>
             <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
           <% end %>
