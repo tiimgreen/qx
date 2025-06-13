@@ -671,3 +671,11 @@ de:
   errors:
     messages:
       invalid_image_type: "Die Datei '%{filename}' muss ein Bild sein (JPG, PNG, GIF, BMP oder TIFF)"
+  admin:
+    actions:
+      manage_permissions:
+        title: "Verwaltung der Berechtigungen"
+        menu: "Verwaltung der Berechtigungen"
+        breadcrumb: "Verwaltung der Berechtigungen"
+        link: "Verwaltung der Benutzerberechtigungen"
+        done: "Berechtigungen aktualisiert"

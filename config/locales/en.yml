@@ -689,3 +689,11 @@ en:
   errors:
     messages:
       invalid_image_type: "The file '%{filename}' must be an image (JPG, PNG, GIF, BMP, or TIFF)"
+  admin:
+    actions:
+      manage_permissions:
+        title: "Manage Permissions"
+        menu: "Manage Permissions"
+        breadcrumb: "Manage Permissions"
+        link: "Manage User Permissions"
+        done: "Permissions updated"
