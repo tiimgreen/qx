@@ -245,3 +245,6 @@ pt_image
 material_certificate
 on_site_image
 check_spools_image -->
+
+# download db from vps:
+# scp deploy@188.245.217.88:/home/deploy/qx/db/production.sqlite3 /Volumes/CODE/qx/db/
