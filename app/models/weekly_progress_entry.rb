@@ -1,4 +1,6 @@
 class WeeklyProgressEntry < ApplicationRecord
+  include LockedByArchivedProject
+
   belongs_to :project_progress_plan
 
   validates :week_number, :year, presence: true

@@ -141,6 +141,11 @@ Rails.application.routes.draw do
     end
 
 
+    # RailsAdmin custom routes
+    scope "/admin" do
+      get "user_resource_permissions/current_permissions", to: "rails_admin/user_resource_permissions#current_permissions"
+    end
+
     # Existing routes...
     get "up" => "rails/health#show", as: :rails_health_check
     get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

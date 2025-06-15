@@ -2,14 +2,16 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card">
-        <div class="card-header">
-          <h4 class="mb-0"><%= t('.select_sector') %></h4>
-        </div>
-        <div class="card-body">
-          <p class="text-muted mb-4"><%= t('.please_select_sector') %></p>
-          
-          <div class="list-group">
-            <% @sectors.each do |sector| %>
+
+        <% if !@isometry.project.archived? %>
+          <div class="card-header">
+            <h4 class="mb-0"><%= t('.select_sector') %></h4>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4"><%= t('.please_select_sector') %></p>
+            
+            <div class="list-group">
+              <% @sectors.each do |sector| %>
               <% if sector.key == "work_preparation" %>
                 <div class="list-group-item">
                   <h5 class="mb-3"><%= sector.name %></h5>
@@ -84,6 +86,49 @@
             <% end %>
           </div>
         </div>
+        <% else %>
+          <div class="card-header">
+            <h4 class="mb-0"><%= t('.project_archived') %></h4>
+          </div>
+          <div class="card-body">
+        <dl class="row">
+          <dt class="col-sm-3"><%= t('.project_number') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.project_number %></dd>
+
+          <dt class="col-sm-3"><%= t('.client_name') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.client_name %></dd>
+
+          <dt class="col-sm-3"><%= t('.name') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.name %></dd>
+
+          <dt class="col-sm-3"><%= t('activerecord.attributes.project.project_manager_client') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.project_manager_client%></dd>
+
+          <dt class="col-sm-3"><%= t('activerecord.attributes.project.project_manager_qualinox') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.project_manager_qualinox %></dd>
+
+          <dt class="col-sm-3"><%= t('.project_end') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.project_end.strftime("%d/%m/%Y") if @isometry.project.project_end%></dd>
+
+          <dt class="col-sm-3"><%= t('.created_by') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.user&.name %></dd>
+
+          <dt class="col-sm-3"><%= t('.created') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.created_at.strftime("%d/%m/%Y %H:%M") %></dd>
+
+          <dt class="col-sm-3"><%= t('.workshop') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.workshop ? t('common.labels.yes') : t('common.labels.no') %></dd>
+
+          <dt class="col-sm-3"><%= t('.archived') %></dt>
+          <dd class="col-sm-9"><%= @isometry.project.archived ? t('common.labels.yes') : t('common.labels.no') %></dd>
+        </dl>
+        <p class="text-muted my-4 text-center"><%= t('.project_archived_message') %></p>
+          
+        <p class="text-muted mb-4 text-center"><%= link_to t('.back_to_dashboard'), dashboard_path, class: 'btn btn-primary btn-sm' %></p>
+
+
+        </div>
+        <% end %>
       </div>
     </div>
   </div>

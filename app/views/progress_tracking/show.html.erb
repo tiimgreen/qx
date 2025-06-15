@@ -282,7 +282,7 @@
                         class: 'form-control form-control-sm',
                         style: 'width: 50px; min-width: 50px; padding-left: 2px; padding-right: 2px;',
                         onchange: 'this.form.requestSubmit()',
-                        disabled: @progress_plan.locked? || !user_signed_in? || !current_user&.admin?,
+                        disabled: @progress_plan.locked? || !user_signed_in? || !current_user&.admin? || @project.archived?,
                         title: @progress_plan.locked? ? t('progress_tracking.locked_error') : (!user_signed_in? || !current_user&.admin? ? t('progress_tracking.admin_only_error') : nil) %>
                     <span class="input-group-text" style="padding: 0 4px;"><%= progress_unit(@progress_plan.work_type_sector) %></span>
                   </div>

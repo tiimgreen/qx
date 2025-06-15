@@ -8,9 +8,28 @@ class Welding < ApplicationRecord
   validates :number, presence: true
   validates :component, presence: true
 
+  # Automatically resolve certificates from entered batch numbers
+  before_validation :assign_material_certificates_from_batch_numbers
+
   # Define allowed values for process fields
   RESULT_TYPES = [ "ne", "e" ].freeze
 
   validates :result, inclusion: { in: RESULT_TYPES }, allow_nil: true
   validates :result1, inclusion: { in: RESULT_TYPES }, allow_nil: true
+
+  private
+
+  # Sets `material_certificate_id` / `_id1` based on the entered batch numbers so
+  # that nested‐attributes forms that only fill the `batch_number*` fields still
+  # establish the ActiveRecord associations. This enables later logic on the
+  # isometry to easily pick up the referenced certificates.
+  def assign_material_certificates_from_batch_numbers
+    if batch_number.present? && material_certificate_id.blank?
+      self.material_certificate = MaterialCertificate.find_by(batch_number: batch_number)
+    end
+
+    if batch_number1.present? && material_certificate1_id.blank?
+      self.material_certificate1 = MaterialCertificate.find_by(batch_number: batch_number1)
+    end
+  end
 end

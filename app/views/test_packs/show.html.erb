@@ -111,7 +111,7 @@
         <%= link_to t('common.labels.back'), project_test_packs_path(@project), class: 'btn btn-primary' %>
         <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @test_pack.isometry), class: 'btn btn-primary' %>
 
-        <% if current_user.can_edit?("TestPack") %>
+        <% if current_user.can_edit?("TestPack") && !@project.archived? %>
           <%= link_to edit_project_test_pack_path(@project, @test_pack), class: 'btn btn-outline-primary' do %>
             <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
           <% end %>

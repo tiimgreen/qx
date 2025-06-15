@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_24_085405) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_11_002145) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -233,6 +233,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_24_085405) do
     t.string "dn"
     t.boolean "draft"
     t.string "revision_letter"
+    t.boolean "approved_for_production", default: true, null: false
+    t.index ["approved_for_production"], name: "index_isometries_on_approved_for_production"
     t.index ["deleted"], name: "index_isometries_on_deleted"
     t.index ["line_id"], name: "index_isometries_on_line_id"
     t.index ["on_hold_status"], name: "index_isometries_on_on_hold_status"
@@ -414,6 +416,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_24_085405) do
     t.integer "sollist_filter3_sector_id"
     t.integer "progress_filter1_sector_id"
     t.integer "progress_filter2_sector_id"
+    t.boolean "archived", default: false, null: false
+    t.index ["archived"], name: "index_projects_on_archived"
     t.index ["progress_filter1_sector_id"], name: "index_projects_on_progress_filter1_sector_id"
     t.index ["progress_filter2_sector_id"], name: "index_projects_on_progress_filter2_sector_id"
     t.index ["project_number"], name: "index_projects_on_project_number", unique: true

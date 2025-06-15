@@ -5,12 +5,20 @@ class ProjectsController < ApplicationController
   before_action :authorize_action!
 
   def index
-    sort_column = sort_params || "created_at"
+    sort_column    = sort_params || "created_at"
     sort_direction = params[:direction] || "desc"
 
+    projects_scope = Project.search_by_term(params[:search])
+
+    if params.key?(:archived)
+      archived_flag = ActiveModel::Type::Boolean.new.cast(params[:archived])
+      projects_scope = archived_flag ? projects_scope.archived : projects_scope.active
+    else
+      projects_scope = projects_scope.active
+    end
+
     @pagy, @projects = pagy(
-      Project.search_by_term(params[:search])
-            .order(sort_column => sort_direction)
+      projects_scope.order(sort_column => sort_direction)
     )
   end
 
@@ -58,8 +66,11 @@ class ProjectsController < ApplicationController
   private
 
   def handle_sector_associations
+    # When a project is archived we freeze its relations. Skip association
+    # rewriting in that case to avoid destroy-attempts that the
+    # LockedByArchivedProject concern rightfully prevents.
+    return if @project.archived?
     return unless params[:project][:sector_ids]
-
     # Clear existing associations and create new ones
     @project.project_sectors.destroy_all
     sector_ids = params[:project][:sector_ids].reject(&:blank?)
@@ -90,7 +101,7 @@ class ProjectsController < ApplicationController
       :project_number, :name, :description,
       :project_manager_client, :project_manager_qualinox,
       :client_name, :project_start, :project_end,
-      :workshop,
+      :workshop, :archived,
       :sollist_filter1_sector_id, :sollist_filter2_sector_id, :sollist_filter3_sector_id,
       :progress_filter1_sector_id, :progress_filter2_sector_id,
       sector_ids: []

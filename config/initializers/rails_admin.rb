@@ -77,6 +77,75 @@ RailsAdmin.config do |config|
     delete
     show_in_app
 
+    # Add custom action for managing permissions
+    collection :manage_permissions do
+      register_instance_option :link_icon do
+        "fas fa-key"
+      end
+
+      register_instance_option :controller do
+        proc do
+          @users = User.all
+          @permissions = Permission.all
+          @resource_names = UserResourcePermission::RESOURCE_NAMES
+
+          if request.post?
+            user_id = params[:user_id]
+            resource_name = params[:resource_name]
+            permission_ids = Array(params[:permission_ids])
+
+            if user_id.present? && resource_name.present?
+              # Remove existing permissions for this user and resource
+              UserResourcePermission.where(user_id: user_id, resource_name: resource_name).delete_all
+
+              # Create new permissions
+              permission_ids.each do |permission_id|
+                UserResourcePermission.create!(
+                  user_id: user_id,
+                  resource_name: resource_name,
+                  permission_id: permission_id
+                )
+              end
+
+              respond_to do |format|
+                format.html {
+                  flash[:success] = t("admin.actions.manage_permissions.done")
+                  redirect_to manage_permissions_path
+                }
+                format.json {
+                  render json: { success: true }, status: :ok
+                }
+              end
+            else
+              respond_to do |format|
+                format.html {
+                  flash[:error] = "Please select a user and resource"
+                  redirect_to manage_permissions_path
+                }
+                format.json {
+                  render json: { error: "Please select a user and resource" }, status: :unprocessable_entity
+                }
+              end
+            end
+          else
+            render action: @action.template_name
+          end
+        end
+      end
+
+      register_instance_option :http_methods do
+        [ :get, :post ]
+      end
+
+      register_instance_option :visible? do
+        true
+      end
+
+      register_instance_option :authorized? do
+        true
+      end
+    end
+
     ## With an audit adapter, you can add:
     # history_index
     # history_show

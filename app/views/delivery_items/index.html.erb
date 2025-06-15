@@ -22,9 +22,11 @@
       <% end %>
     </div>
     <div class="col-md-4 text-end">
-      <%= link_to new_project_incoming_delivery_delivery_item_path(@incoming_delivery.project, @incoming_delivery),
-                  class: 'btn btn-primary' do %>
-        <i class="bi bi-plus"></i> <%= t('delivery_items.buttons.new_item') %>
+      <% if !@project.archived? %>
+        <%= link_to new_project_incoming_delivery_delivery_item_path(@incoming_delivery.project, @incoming_delivery),
+                    class: 'btn btn-primary' do %>
+          <i class="bi bi-plus"></i> <%= t('delivery_items.buttons.new_item') %>
+        <% end %>
       <% end %>
     </div>
   </div>

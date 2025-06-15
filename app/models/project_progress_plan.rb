@@ -1,4 +1,6 @@
 class ProjectProgressPlan < ApplicationRecord
+  include LockedByArchivedProject
+
   belongs_to :project
   belongs_to :work_type_sector, class_name: "Sector"
   has_many :weekly_progress_entries, dependent: :destroy

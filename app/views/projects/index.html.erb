@@ -1,6 +1,6 @@
 <div class="mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="text-white"><%= t('.title') %></h1>
+    <h1 class="text-white"><%= t('.title') %>: <%=@projects.count%></h1>
   </div>
 
   <%= form_tag projects_path, method: :get, class: 'mb-4' do %>
@@ -49,6 +49,7 @@
             <%= sort_indicator('project_end') %>
           </th>
           <th><%= t('activerecord.attributes.project.workshop') %></th>
+          <th><%= t('activerecord.attributes.project.archived') %></th>
           <th><%= t('activerecord.attributes.project.created_by') %></th>
           <th>
             <%= link_to t('activerecord.attributes.project.created_at'),
@@ -68,6 +69,7 @@
             <td><%= project.project_manager_qualinox %></td>
             <td><%= project.project_end.strftime("%d/%m/%Y") if project.project_end %></td>
             <td><%= project.workshop ? t('common.labels.yes') : t('common.labels.no') %></td>
+            <td><%= project.archived ? t('common.labels.yes') : t('common.labels.no') %></td>
             <td><%= project.user&.name %></td>
             <td><%= project.created_at.strftime("%d/%m/%Y") %></td>
             <td class="text-end">
@@ -81,7 +83,7 @@
                   <% end %>
                 <% end %>
 
-                <% if current_user.can_edit?("Project") %>
+                <% if current_user.can_edit?("Project") && !project.archived? %>
                   <%= link_to edit_project_path(project),
                              class: 'btn btn-outline-primary m-1',
                              title: t('projects.buttons.edit'),
@@ -90,7 +92,7 @@
                   <% end %>
                 <% end %>
 
-                <% if current_user.can_delete?("Project") %>
+                <% if current_user.can_delete?("Project") && !project.archived? %>
                   <%= button_tag type: 'button',
                              class: 'btn btn-outline-danger m-1',
                              title: t('projects.buttons.delete'),

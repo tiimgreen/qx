@@ -72,12 +72,12 @@
                   <i class="bi bi-eye"></i>
                 <% end %>
               <% end %>
-              <% if current_user.can_edit?("Prefabrication") %>
+              <% if current_user.can_edit?("Prefabrication") && !@project.archived? %>
                 <%= link_to edit_project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-primary' do %>
                   <i class="bi bi-pencil"></i>
                 <% end %>
               <% end %>
-              <% if current_user.can_delete?("Prefabrication") %>
+              <% if current_user.can_delete?("Prefabrication") && !@project.archived? %>
                   <%= button_tag type: 'button',
                              class: 'btn btn-outline-danger m-1',
                              title: t('common.buttons.delete'),

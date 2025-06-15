@@ -1,5 +1,6 @@
 class Isometry < ApplicationRecord
   include DocuvitaUploadable
+  include LockedByArchivedProject
 
   belongs_to :project
   belongs_to :sector, optional: true
@@ -66,6 +67,7 @@ class Isometry < ApplicationRecord
 
   # after_commit :process_isometry_documents, on: [ :create, :update ]
   after_commit :ensure_qr_code_exists, on: [ :create ]
+  after_save :sync_welding_certificates
 
   ON_HOLD_STATUSES = [ "N/A", "On Hold" ].freeze
   PED_CATEGORIES = [ "N/A", "0", "I", "II", "III", "IV" ].freeze
@@ -231,6 +233,16 @@ class Isometry < ApplicationRecord
     ensure
       @generating_qr_code = false
     end
+  end
+
+  def sync_welding_certificates
+    certs = weldings.includes(:material_certificate, :material_certificate1)
+                    .flat_map { |w| [ w.material_certificate, w.material_certificate1 ] }
+                    .compact
+    return if certs.blank?
+
+    missing = certs.uniq - material_certificates.to_a
+    self.material_certificates << missing if missing.any?
   end
 
   private

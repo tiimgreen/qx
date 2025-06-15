@@ -14,14 +14,14 @@
   </div>
 
   <div class="btn-toolbar mb-2 mb-md-0">
-    <% if current_user.can_edit?("Isometry") && @isometry.can_add_page? %>
+    <% if current_user.can_edit?("Isometry") && @isometry.can_add_page? && !@project.archived? %>
       <%= link_to new_page_project_isometry_path(@project, @isometry),
             class: "btn btn-sm btn-outline-primary me-2",
             data: { turbo_method: :post } do %>
         <i class="bi bi-plus"></i> <%= t('isometries.actions.add_page') %>
       <% end %>
     <% end %>
-    <% if current_user.can_edit?("Isometry") && @isometry.page_number == 1 && @isometry.revision_last? %>
+    <% if current_user.can_edit?("Isometry") && @isometry.page_number == 1 && @isometry.revision_last? && !@project.archived? %>
       <%= button_to create_revision_project_isometry_path(@project, @isometry),
                   method: :post,
                   class: 'btn btn-sm btn-outline-primary me-2',
@@ -30,12 +30,12 @@
         <i class="bi bi-plus-circle"></i> <%= t('isometries.actions.create_revision') %>
       <% end %>
     <% end %>
-    <% if current_user.can_edit?("Isometry") %>
+    <% if current_user.can_edit?("Isometry") && !@project.archived? %>
       <%= link_to edit_project_isometry_path(@project, @isometry), class: "btn btn-sm btn-primary me-2" do %>
         <i class="bi bi-pencil"></i> <%= t('common.actions.edit') %>
       <% end %>
     <% end %>
-    <% if current_user.can_delete?("Isometry") %>
+    <% if current_user.can_delete?("Isometry") && !@project.archived? %>
       <%= button_tag type: 'button',
           class: 'btn btn-sm btn-outline-danger',
           title: t('common.buttons.delete'),
@@ -126,7 +126,7 @@
     <% if @isometry.material_certificates.any? %>
       <div class="row g-3">
         <% @isometry.material_certificates.each do |cert| %>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <%# Find the relevant Docuvita document for this certificate %>
             <% docuvita_doc = cert.docuvita_documents.find { |doc| doc.document_type == 'material_certificate' } %>
 
@@ -204,6 +204,10 @@
       <dt class="col-sm-4"><%= t('.isolation') %></dt>
       <dd class="col-sm-8">
         <%= @isometry.isolation_required ? t('common.yes') : t('common.no') %>
+      </dd>
+      <dt class="col-sm-4"><%= t('.approved_for_production') %></dt>
+      <dd class="col-sm-8">
+        <%= status_label(@isometry.approved_for_production ? t('common.yes') : t('common.no')) %>
       </dd>
 
       <dt class="col-sm-4"><%= t('.gmp') %></dt>

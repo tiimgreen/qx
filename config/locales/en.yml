@@ -16,6 +16,8 @@ en:
         title: "Projects"
         list: "List Projects"
         new: "New Project"
+        archived:
+          title: "Archived Projects"
       incoming_deliveries:
         title: "Incoming Deliveries"
         deliveries: "Deliveries"
@@ -653,6 +655,9 @@ en:
       create_new: "Create New"
       new_cutting_pipes: "New Cutting Pipes"
       new_small_parts: "New Small Parts"
+      project_archived: "Project archived"
+      project_archived_message: "This project is archived and cannot be edited."
+      back_to_dashboard: "Back to Dashboard"
   alerts:
     isometry_not_found: "Isometry not found"
     no_sector_assigned: "No sector assigned to user"
@@ -684,3 +689,11 @@ en:
   errors:
     messages:
       invalid_image_type: "The file '%{filename}' must be an image (JPG, PNG, GIF, BMP, or TIFF)"
+  admin:
+    actions:
+      manage_permissions:
+        title: "Manage Permissions"
+        menu: "Manage Permissions"
+        breadcrumb: "Manage Permissions"
+        link: "Manage User Permissions"
+        done: "Permissions updated"

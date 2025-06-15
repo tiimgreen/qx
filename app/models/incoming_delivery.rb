@@ -1,5 +1,7 @@
 class IncomingDelivery < ApplicationRecord
   include DocuvitaUploadable
+  include LockedByArchivedProject
+
   belongs_to :project
   belongs_to :work_location
   belongs_to :user, optional: true

@@ -10,11 +10,13 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0"><%= t('.title') %></h5>
       <div>
-        <%= link_to edit_project_incoming_delivery_path(@project, @incoming_delivery),
-                    class: 'btn btn-primary m-1 btn-sm',
-                    title: t('incoming_deliveries.buttons.edit'),
-                    data: { bs_toggle: 'tooltip' } do %>
-          <i class="bi bi-pencil"></i>
+        <% if current_user.can_edit?("IncomingDelivery") && !@project.archived? %>
+          <%= link_to edit_project_incoming_delivery_path(@project, @incoming_delivery),
+                      class: 'btn btn-primary m-1 btn-sm',
+                      title: t('incoming_deliveries.buttons.edit'),
+                      data: { bs_toggle: 'tooltip' } do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
         <% end %>
         <%= link_to project_incoming_deliveries_path(@project),
                     class: 'btn btn-primary m-1 btn-sm',
@@ -88,12 +90,14 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0"><%= t('.delivery_items') %></h5>
       <div>
-        <%= link_to new_project_incoming_delivery_delivery_item_path(
-                      project_id: @project.id,
-                      incoming_delivery_id: @incoming_delivery.id
-                    ),
-                    class: 'btn btn-primary btn-sm' do %>
-          <i class="bi bi-plus"></i> <%= t('.add_item') %>
+        <% if !@project.archived? %>
+          <%= link_to new_project_incoming_delivery_delivery_item_path(
+                        project_id: @project.id,
+                        incoming_delivery_id: @incoming_delivery.id
+                      ),
+                      class: 'btn btn-primary btn-sm' do %>
+            <i class="bi bi-plus"></i> <%= t('.add_item') %>
+          <% end %>
         <% end %>
       </div>
     </div>

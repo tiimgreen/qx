@@ -11,11 +11,11 @@
             <i class="bi bi-folder"></i> <%= t('navigation.menu.projects.title') %>
           </h5>
           <p class="card-text">
-            <div class="h3 mb-2"><%= Project.count %></div>
+            <div class="h3 mb-2"><%= Project.active.count %></div>
             <%= t('common.labels.active_projects') %>
           </p>
           <div class="mt-3">
-            <%= link_to projects_path, class: 'btn btn-outline-primary m-1 me-2' do %>
+            <%= link_to projects_path(archived: false), class: 'btn btn-outline-primary m-1 me-2' do %>
               <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
             <% end %>
             <%= link_to new_project_path, class: 'btn btn-primary' do %>
@@ -49,3 +49,24 @@
       </div>
     </div>
 
+    <!-- Projects Card -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body grayed">
+          <h5 class="card-title">
+            <i class="bi bi-folder"></i> <%= t('navigation.menu.projects.archived.title') %>
+          </h5>
+          <p class="card-text">
+            <div class="h3 mb-2"><%= Project.archived.count %></div>
+            <%= t('navigation.menu.projects.archived.title') %>
+          </p>
+          <div class="mt-3">
+            <%= link_to projects_path(archived: true), class: 'btn btn-outline-primary m-1 me-2' do %>
+              <i class="bi bi-list"></i> <%= t('common.labels.overview') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,7 @@
 en:
   common:
+    errors:
+      archived: "Project is archived"
     select_option: "Please select"
     actions:
       save: "Save"

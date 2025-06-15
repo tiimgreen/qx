@@ -40,7 +40,7 @@
       <% end %>
     </div>
     <div class="col-md-4 text-end">
-      <% if current_user.can_create?("Isometry") %>
+      <% if current_user.can_create?("Isometry") && !@project.archived? %>
         <%= link_to new_project_isometry_path(@project), class: 'btn btn-primary' do %>
           <i class="bi bi-plus"></i> <%= t('isometries.buttons.new_isometry') %>
         <% end %>
@@ -141,7 +141,7 @@
                   <i class="bi bi-eye"></i>
                 <% end %>
               <% end %>
-              <% if current_user.can_edit?("Isometry") %>
+              <% if current_user.can_edit?("Isometry") && !@project.archived? %>
                 <%= link_to edit_project_isometry_path(@project, isometry),
                   class: 'btn btn-sm btn-outline-primary m-1',
                   title: t('common.actions.edit'),
@@ -149,7 +149,7 @@
                   <i class="bi bi-pencil"></i>
                 <% end %>
               <% end %>
-              <% if current_user.can_delete?("Isometry") %>
+              <% if current_user.can_delete?("Isometry") && !@project.archived? %>
                 <%= button_tag type: 'button',
                            class: 'btn btn-sm btn-outline-danger m-1',
                            title: t('isometries.buttons.delete'),

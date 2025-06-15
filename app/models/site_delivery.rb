@@ -1,6 +1,7 @@
 class SiteDelivery < ApplicationRecord
   include SectorModel
   include DocuvitaUploadable
+  include LockedByArchivedProject
 
   belongs_to :project
   belongs_to :user

@@ -86,7 +86,7 @@
         <%= link_to t('common.labels.back'), project_transports_path(@project), class: 'btn btn-primary' %>
         <%= link_to t('common.labels.back_isometry'), project_isometry_path(@project, @transport.isometry), class: 'btn btn-primary' %>
 
-        <% if current_user.can_edit?("Transport") %>
+        <% if current_user.can_edit?("Transport") && !@project.archived?%>
           <%= link_to edit_project_transport_path(@project, @transport), class: 'btn btn-outline-primary' do %>
             <i class="bi bi-pencil"></i> <%= t('common.labels.edit') %>
           <% end %>
