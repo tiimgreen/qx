@@ -20,24 +20,12 @@ class Isometry < ApplicationRecord
   has_many :weldings, dependent: :delete_all
   accepts_nested_attributes_for :weldings, allow_destroy: true, reject_if: :all_blank
 
-  # has_many :isometry_documents, dependent: :destroy
-  # accepts_nested_attributes_for :isometry_documents, allow_destroy: true
 
 
   has_one_attached :qr_code do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 100, 100 ]
   end
 
-  # remove after migrating --------
-  # has_many_attached :on_hold_images do |attachable|
-  #   attachable.variant :thumb, resize_to_limit: [ 200, 200 ]
-  #   attachable.variant :medium, resize_to_limit: [ 1200, 1200 ]
-  # end
-  # has_many_attached :rt_images
-  # has_many_attached :vt_images
-  # has_many_attached :pt_images
-  # has_many :isometry_documents, dependent: :destroy
-  # -------------------------------
 
 
   has_many :work_preparations, dependent: :destroy
