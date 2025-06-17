@@ -83,7 +83,7 @@
                   <% end %>
                 <% end %>
 
-                <% if current_user.can_edit?("Project") && !project.archived? %>
+                <% if current_user.can_edit?("Project") %>
                   <%= link_to edit_project_path(project),
                              class: 'btn btn-outline-primary m-1',
                              title: t('projects.buttons.edit'),

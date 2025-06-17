@@ -7,7 +7,7 @@ class IncomingDelivery < ApplicationRecord
   belongs_to :user, optional: true
   # has_many_attached :delivery_notes
   # has_many_attached :on_hold_images
-  has_many :delivery_items
+  has_many :delivery_items, dependent: :destroy
   has_many :docuvita_documents, as: :documentable, dependent: :destroy
 
   # before_destroy :purge_attached_files

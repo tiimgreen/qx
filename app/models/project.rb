@@ -16,7 +16,7 @@ class Project < ApplicationRecord
   has_many :project_sectors, dependent: :destroy
   has_many :sectors, through: :project_sectors
 
-  belongs_to :sollist_filter1_sector, class_name: "Sector"
+  belongs_to :sollist_filter1_sector, class_name: "Sector", optional: true
   belongs_to :sollist_filter2_sector, class_name: "Sector", optional: true
   belongs_to :sollist_filter3_sector, class_name: "Sector", optional: true
   belongs_to :progress_filter1_sector, class_name: "Sector", optional: true
@@ -67,20 +67,7 @@ class Project < ApplicationRecord
   scope :active,   -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
 
-  def readonly?
-    # Permit the single transition that archives the project (false -> true)
-    # while disallowing any other attribute modifications once archived.
-    if will_save_change_to_archived?
-      from, to = archived_change
-      # allow the transition even if other non-user-set columns (e.g., timestamps)
-      # also change in the same save call
-      return false if from == false && to == true
-    end
 
-    archived? || super
-  end
-
-  before_destroy -> { throw :abort if archived? }
 
   private
 
