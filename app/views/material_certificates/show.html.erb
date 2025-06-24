@@ -50,7 +50,7 @@
         <div class="col-md-6 mb-4">
           <dl class="row">
             <dt class="col-sm-4"><%= t('.issue_date') %></dt>
-            <dd class="col-sm-8"><%= @material_certificate.issue_date.strftime("%d/%m/%Y %H:%M") if @material_certificate.issue_date %></dd>
+            <dd class="col-sm-8"><%= @material_certificate.issue_date.strftime("%d/%m/%Y") if @material_certificate.issue_date %></dd>
 
             <dt class="col-sm-4"><%= t('.issuer') %></dt>
             <dd class="col-sm-8"><%= @material_certificate.issuer_name %></dd>
