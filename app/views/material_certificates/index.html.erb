@@ -32,19 +32,9 @@
             <%= sort_indicator('batch_number') %>
           </th>
           <th>
-            <%= link_to t('activerecord.attributes.material_certificate.line_id'),
-                request.params.merge(sort: 'line_id', direction: (params[:sort] == 'line_id' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('line_id') %>
-          </th>
-          <th>
-            <%= link_to t('activerecord.attributes.material_certificate.issue_date'),
-                request.params.merge(sort: 'issue_date', direction: (params[:sort] == 'issue_date' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('issue_date') %>
-          </th>
-          <th>
-            <%= link_to t('activerecord.attributes.material_certificate.issuer_name'),
-                request.params.merge(sort: 'issuer_name', direction: (params[:sort] == 'issuer_name' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
-            <%= sort_indicator('issuer_name') %>
+            <%= link_to t('activerecord.attributes.material_certificate.description'),
+                request.params.merge(sort: 'description', direction: (params[:sort] == 'description' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
+            <%= sort_indicator('description') %>
           </th>
           <th><%= t('activerecord.attributes.material_certificate.certificate') %></th>
           <th class="text-end"><%= t('common.labels.actions') %></th>
@@ -60,9 +50,7 @@
           <tr>
             <td><%= certificate.certificate_number %></td>
             <td><%= certificate.batch_number %></td>
-            <td><%= certificate.line_id %></td>
-            <td><%= certificate.issue_date.strftime("%d/%m/%Y %H:%M") if certificate.issue_date %></td>
-            <td><%= certificate.issuer_name %></td>
+            <td><%= certificate.description %></td>
             <td>
               <%# Find the relevant Docuvita document for this certificate %>
               <% docuvita_doc = certificate.docuvita_documents.detect { |doc| doc.document_type == 'material_certificate' } %>
