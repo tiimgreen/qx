@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
       # Add reports routes
       get "reports/isometries", to: "reports#isometries", as: :isometries_report
+      # Material certificates overview per project
+      get "material_certificates", to: "projects#material_certificates", as: :material_certificates
 
       resources :incoming_deliveries do
         resources :delivery_items do

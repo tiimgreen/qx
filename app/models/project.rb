@@ -63,6 +63,12 @@ class Project < ApplicationRecord
     incoming_deliveries.all?(&:closed?)
   end
 
+  # Returns an ActiveRecord::Relation of the project's isometries with eager-loaded material certificates.
+  # Useful for the material_certificates controller action / view.
+  def isometries_with_material_certificates
+    isometries.includes(:material_certificates)
+  end
+
   # app/models/project.rb
   scope :active,   -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }

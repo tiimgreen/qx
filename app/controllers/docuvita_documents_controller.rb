@@ -12,8 +12,15 @@ class DocuvitaDocumentsController < ApplicationController
     # Determine content type
     content_type = @document.content_type || determine_content_type(@document)
 
-    # Determine filename
-    filename = @document.filename || "document-#{@document.id}#{File.extname(@document.filename.to_s)}"
+    # Determine filename – for material certificates use the certificate number as filename when present
+    file_ext = File.extname(@document.filename.to_s).presence || ".pdf"
+    filename = if @document.document_type == "material_certificate" &&
+                  @document.documentable.is_a?(MaterialCertificate) &&
+                  @document.documentable.certificate_number.present?
+                "#{@document.documentable.certificate_number}#{file_ext}"
+    else
+                @document.filename.presence || "document-#{@document.id}#{file_ext}"
+    end
 
     # Send the file - use attachment disposition to download
     send_data content,
@@ -32,8 +39,15 @@ class DocuvitaDocumentsController < ApplicationController
     # Determine content type
     content_type = @document.content_type || determine_content_type(@document)
 
-    # Determine filename
-    filename = @document.filename || "document-#{@document.id}#{File.extname(@document.filename.to_s)}"
+    # Determine filename – for material certificates use the certificate number as filename when present
+    file_ext = File.extname(@document.filename.to_s).presence || ".pdf"
+    filename = if @document.document_type == "material_certificate" &&
+                  @document.documentable.is_a?(MaterialCertificate) &&
+                  @document.documentable.certificate_number.present?
+                "#{@document.documentable.certificate_number}#{file_ext}"
+    else
+                @document.filename.presence || "document-#{@document.id}#{file_ext}"
+    end
 
     # Send the file with inline disposition to display in browser
     send_data content,

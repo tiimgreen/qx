@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   layout "dashboard_layout"
   before_action :authenticate_user!
-  before_action :set_project, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_project, only: [ :show, :edit, :update, :destroy, :material_certificates ]
   before_action :authorize_action!
 
   def index
@@ -24,6 +24,23 @@ class ProjectsController < ApplicationController
 
   def show
     @sectors = Sector.where.not(id: Sector.find_by(key: :project).id)
+  end
+
+  # Displays a table of each isometry in the project and its related material certificates
+  def material_certificates
+    @isometries = @project.isometries
+                              .includes(:material_certificates)
+                              .left_outer_joins(:material_certificates)
+
+    if params[:search].present?
+      term = "%#{params[:search].strip.downcase}%"
+      @isometries = @isometries.where(
+        "LOWER(isometries.line_id) LIKE :term OR LOWER(material_certificates.certificate_number) LIKE :term OR LOWER(material_certificates.batch_number) LIKE :term",
+        term: term
+      )
+    end
+
+    @isometries = @isometries.distinct.order(:line_id)
   end
 
   def new
@@ -93,7 +110,8 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = Project.find(params[:id])
+    project_id = params[:id] || params[:project_id]
+    @project = Project.find(project_id)
   end
 
   def project_params
@@ -110,7 +128,7 @@ class ProjectsController < ApplicationController
 
   def authorize_action!
     case action_name
-    when "index", "show"
+    when "index", "show", "material_certificates"
       authorize_view!
     when "new", "create"
       authorize_create!

@@ -11,7 +11,7 @@
 
   <div class="card-body">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <dl class="row">
           <dt class="col-sm-3"><%= t('.project_number') %></dt>
           <dd class="col-sm-9"><%= @project.project_number %></dd>
@@ -58,6 +58,14 @@
         </div>
         <%= link_to project_isometries_report_path(@project), class: 'text-decoration-none' do %>
           <%= image_tag 'diagram2.png', alt: t('reports.isometries.title'), class: 'img-fluid', style: 'height: 120px; width: auto;' %>
+        <% end %>
+      </div>
+      <div class="col-md-2 text-center">
+        <div style="height: 110px; display: flex; align-items: flex-start; justify-content: center; padding-top: 10px">
+          <h5 class="mb-0"><%= t('.material_certificates') %></h5>
+        </div>
+        <%= link_to project_material_certificates_path(@project), class: 'text-decoration-none' do %>
+          <%= image_tag 'certificates.png', alt: t('.material_certificates'), class: 'img-fluid', style: 'height: 120px; width: auto;' %>
         <% end %>
       </div>
     </div>

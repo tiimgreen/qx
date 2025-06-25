@@ -1,0 +1,90 @@
+<%= render 'breadcrumb', breadcrumbs: [
+  { text: @project.name, path: project_path(@project) },
+  { text: t('navigation.menu.isometries.title'), path: project_isometries_path(@project) },
+  { text: t('projects.show.material_certificates') }
+] %>
+
+<div class="mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-white"><%= t('projects.show.material_certificates') %></h1>
+  </div>
+
+  <%= form_tag project_material_certificates_path(@project), method: :get, class: 'mb-4' do %>
+    <div class="input-group">
+      <%= text_field_tag :search, params[:search],
+                        class: 'form-control',
+                        placeholder: t('common.labels.search_placeholder') %>
+      <div class="input-group-append">
+        <%= submit_tag t('common.labels.search_button'), class: 'btn btn-primary m-1' %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-sm">
+      <thead>
+        <tr>
+          <th><%= t('activerecord.attributes.isometry.line_id') %></th>
+          <th><%= t('activerecord.attributes.material_certificate.certificate_number', default: 'Certificate No.') %></th>
+          <th><%= t('activerecord.attributes.material_certificate.batch_number', default: 'Batch No.') %></th>
+          <th class="text-center"><i class="bi bi-download fs-5"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @isometries.each do |iso| %>
+        <tr>
+            <td>
+            <i class="bi bi-file-earmark-pdf-fill text-danger fs-4"></i>
+            <%= link_to "#{iso.line_id} / #{iso.page_number}", project_isometry_path(@project, iso) %>
+            </td>
+            <!-- Certificate Number column -->
+            <td>
+              <% if iso.material_certificates.any? %>
+                <% iso.material_certificates.each do |cert| %>
+                  <% doc = cert.docuvita_documents.find_by(document_sub_type: 'material_certificate') %>
+                  <div class="d-flex align-items-center mb-2" style="gap: 8px;">
+                    <i class="bi bi-file-earmark-pdf-fill text-danger fs-4"></i>
+                    <%= link_to cert.certificate_number.presence || '-',
+                                (doc ? view_docuvita_document_path(doc) : material_certificate_path(cert)),
+                                target: '_blank', class: 'fw-semibold text-decoration-none' %>
+                  </div>
+                <% end %>
+              <% else %>
+                <span class="text-muted"><%= t('projects.show.no_certificates', default: 'No certificates') %></span>
+              <% end %>
+            </td>
+
+            <!-- Batch Number column -->
+            <td>
+              <% if iso.material_certificates.any? %>
+                <% iso.material_certificates.each do |cert| %>
+                  <div class="d-flex align-items-center mb-2 fs-4" style="gap: 8px;">
+                    <div class="text-muted">
+                      <%= cert.batch_number.present? ? cert.batch_number : '-' %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </td>
+
+            <!-- Download column -->
+            <td class="text-center">
+             <% if iso.material_certificates.any? %>
+                 <% iso.material_certificates.each do |cert| %>
+                 <% doc = cert.docuvita_documents.find_by(document_sub_type: 'material_certificate') %>
+                 <div class="mb-2">
+                   <% if doc %>
+                   <%= link_to download_docuvita_document_path(doc), target: '_blank', class: 'text-decoration-none' do %>
+                       <i class="bi bi-download fs-4"></i>
+                   <% end %>
+                   <% end %>
+                 </div>
+                 <% end %>
+             <% end %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+   </table>
+  </div>
+</div>

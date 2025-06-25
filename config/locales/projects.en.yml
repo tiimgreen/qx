@@ -15,6 +15,10 @@ en:
       created_by: "Created By"
       created: "Created"
       workshop: "Workshop"
+      material_certificates: "Material Certificates"
+      no_certificates: "No certificates"
+    new:
+      title: "New Project"
     index:
       title: "Projects"
       new: "New Project"
