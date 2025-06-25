@@ -102,9 +102,13 @@ class ReportsController < ApplicationController
   end
 
   def can_view_project?
+    # Must at least be authenticated as user or guest
     return false unless user_signed_in? || guest_signed_in?
 
-    # For guests, check if they have access to this project
+    # Admins can view any project, regardless of association
+    return true if current_user&.admin?
+
+    # Guests: only their project; Users: must be associated with project
     current_guest&.project_id == @project.id || current_user&.projects&.exists?(@project.id)
   end
 
