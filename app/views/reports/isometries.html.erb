@@ -62,25 +62,8 @@
   # Round pipe length calculations to 2 decimal places to match schema
   total_pipe_length = @all_isometries.sum { |iso| iso.pipe_length&.to_f || 0 }.round(2)
 
-  # Get sector counts from the project
-  sector_counts = {}
-  @sector_models.each do |sector|
-    # Get the sector model from the project's sectors
-    sector_model = @project.sectors.find_by(key: sector)
-    # Use the count attribute directly from the sector model
-    if sector_model && sector_model.respond_to?(:count) && !sector_model.count.nil?
-      sector_counts[sector] = sector_model.count
-    else
-      # Fallback to counting isometries if sector model doesn't exist or doesn't have count
-      if sector == 'work_preparation'
-        sector_counts[sector] = @project.isometries.sum { |iso| iso.work_preparations.count }
-      elsif sector == 'test_pack'
-        sector_counts[sector] = @project.isometries.sum { |iso| iso&.test_packs&.count }
-      else
-        sector_counts[sector] = @project.isometries.count { |iso| iso.send(sector).present? }
-      end
-    end
-  end
+  # Set a consistent denominator (total_isometries) for every sector
+  sector_counts = Hash[@sector_models.map { |sector| [sector, total_isometries] }]
 
   # Calculate sector completions
   sector_completions = {}
@@ -103,15 +86,12 @@
     # Round completed pipe length to 2 decimal places
     completed_pipe_length = completed_isos.sum { |iso| iso.pipe_length&.to_f || 0 }.round(2)
 
-    # Use the sector count from the project instead of total_isometries
-    sector_count = sector_counts[sector]
-
     sector_completions[sector] = {
       completed_count: completed_isos.count,
       in_progress_count: in_progress_isos.count,
       completed_meters: completed_pipe_length,
-      sector_count: sector_count,
-      count_percentage: sector_count.zero? ? 0 : (completed_isos.count * 100.0 / sector_count).round,
+      sector_count: sector_counts[sector],
+      count_percentage: sector_counts[sector].zero? ? 0 : (completed_isos.count * 100.0 / sector_counts[sector]).round,
       meters_percentage: total_pipe_length.zero? ? 0 : ((completed_pipe_length || 0) * 100.0 / total_pipe_length).round
     }
   end
