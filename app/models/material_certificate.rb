@@ -21,7 +21,7 @@ class MaterialCertificate < ApplicationRecord
   scope :pending, -> { where(status: "pending") }
 
   scope :search_by_term, ->(term) {
-    where("LOWER(certificate_number) LIKE :term OR LOWER(batch_number) LIKE :term OR LOWER(issuer_name) LIKE :term OR LOWER(line_id) LIKE :term",
+    where("LOWER(certificate_number) LIKE :term OR LOWER(batch_number) LIKE :term OR LOWER(issuer_name) LIKE :term OR LOWER(line_id) LIKE :term OR LOWER(description) LIKE :term",
           term: "%#{term&.downcase}%")
   }
 
