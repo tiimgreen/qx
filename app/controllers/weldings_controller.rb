@@ -1,7 +1,7 @@
 class WeldingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_isometry
-  before_action :set_welding, only: [:show, :edit, :update, :destroy]
+  before_action :set_welding, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @weldings = @isometry.weldings.includes(:material_certificate, :material_certificate1)
@@ -10,7 +10,7 @@ class WeldingsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json { render json: @welding.to_json(include: [:material_certificate, :material_certificate1]) }
+      format.json { render json: @welding.to_json(include: [ :material_certificate, :material_certificate1 ]) }
     end
   end
 
@@ -35,7 +35,7 @@ class WeldingsController < ApplicationController
     respond_to do |format|
       if @welding.update(welding_params)
         format.html { redirect_to project_isometry_path(@isometry.project, @isometry), notice: t(".success") }
-        format.json { render json: @welding.to_json(include: [:material_certificate, :material_certificate1]), status: :ok }
+        format.json { render json: @welding.to_json(include: [ :material_certificate, :material_certificate1 ]), status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @welding.errors, status: :unprocessable_entity }

@@ -110,6 +110,8 @@ de:
       second_set: "Zweiter Satz"
       view_welding_report: "Weldlog Report anzeigen"
       welding_number: "Schweissnäht Nr."
+      no_certificate: "-"
+      no_number: "-"
   activerecord:
     attributes:
       isometry:

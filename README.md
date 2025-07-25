@@ -248,3 +248,70 @@ check_spools_image -->
 
 # download db from vps:
 # scp deploy@188.245.217.88:/home/deploy/qx/db/production.sqlite3 /Volumes/CODE/qx/db/production3.sqlite3
+
+
+
+
+# generate qr code images on isometries
+<!-- 
+def regenerate_qr_codes(isometry_id = nil)
+  # Set default host for URL generation
+  host = "qxd-qualinox-rohrleitungsbau.ch"
+  
+  # Find isometries that need QR code regeneration
+  isometries = if isometry_id
+                 Isometry.where(id: isometry_id)
+               else
+                 Isometry.left_joins(:qr_code_attachment)
+                        .where(active_storage_attachments: { id: nil })
+               end
+
+  puts "Found #{isometries.count} isometries that need QR code regeneration"
+  
+  isometries.find_each do |isometry|
+    puts "Processing isometry #{isometry.id} (#{isometry.line_id})"
+    
+    begin
+      # Generate direct QR URL without using route helpers
+      url = "https://#{host}/de/qr/#{isometry.id}"
+      puts "Generated URL: #{url}"
+      
+      # Create temporary file for QR code
+      qr_temp_file = Tempfile.new(['qr', '.png'])
+      
+      begin
+        # Generate QR code image
+        qrcode = RQRCode::QRCode.new(url, size: 4, level: :l)
+        qrcode.as_png(
+          bit_depth: 1,
+          border_modules: 1,
+          color_mode: ChunkyPNG::COLOR_GRAYSCALE,
+          color: 'black',
+          file: qr_temp_file.path,
+          fill: 'white',
+          module_px_size: 3,
+          resize_exactly_to: 120
+        )
+        
+        # Attach QR code with URL metadata
+        isometry.qr_code.attach(
+          io: File.open(qr_temp_file.path),
+          filename: "qr_code_#{isometry.id}.png",
+          content_type: 'image/png',
+          metadata: { qr_url: url }
+        )
+        
+        puts "✓ Successfully generated QR code for isometry #{isometry.id}"
+      ensure
+        qr_temp_file.close
+        qr_temp_file.unlink
+      end
+    rescue => e
+      puts "✗ Failed to generate QR code for isometry #{isometry.id}: #{e.message}"
+      puts e.backtrace
+    end
+  end
+end
+
+# Try regenerating for isometry 149 again
+regenerate_qr_codes(149) -->

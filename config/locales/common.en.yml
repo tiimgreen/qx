@@ -96,6 +96,8 @@ en:
       first_set: "First Set"
       second_set: "Second Set"
       view_welding_report: "View Welding Report"
+      no_certificate: "-"
+      no_number: "-"
   activerecord:
     attributes:
       isometry:

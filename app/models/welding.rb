@@ -24,12 +24,22 @@ class Welding < ApplicationRecord
   # establish the ActiveRecord associations. This enables later logic on the
   # isometry to easily pick up the referenced certificates.
   def assign_material_certificates_from_batch_numbers
-    if batch_number.present? && material_certificate_id.blank?
-      self.material_certificate = MaterialCertificate.find_by(batch_number: batch_number)
+    # Handle first batch number and certificate
+    if batch_number.present?
+      found_cert = MaterialCertificate.find_by(batch_number: batch_number)
+      self.material_certificate_id = found_cert&.id
+    else
+      # Clear certificate when batch number is removed
+      self.material_certificate_id = nil
     end
 
-    if batch_number1.present? && material_certificate1_id.blank?
-      self.material_certificate1 = MaterialCertificate.find_by(batch_number: batch_number1)
+    # Handle second batch number and certificate
+    if batch_number1.present?
+      found_cert1 = MaterialCertificate.find_by(batch_number: batch_number1)
+      self.material_certificate1_id = found_cert1&.id
+    else
+      # Clear certificate when batch number is removed
+      self.material_certificate1_id = nil
     end
   end
 end

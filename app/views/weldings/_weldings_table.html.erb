@@ -35,14 +35,30 @@
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= welding.material %></div>
-              <div><%= welding.material1 %></div>
+              <div>
+                <%= welding.material %>
+              </div>
+              <div>
+                <%= welding.material1 %>
+              </div>
             </div>
           </td>
           <td>
             <div class="d-flex flex-column">
-              <div><%= welding.batch_number %></div>
-              <div><%= welding.batch_number1 %></div>
+              <div>
+                <% if welding.batch_number.present? %>
+                  <%= welding.batch_number %>
+                <% else %>
+                  <small><%= t('common.weldings.no_number') %></small>
+                <% end %>
+              </div>
+              <div>
+                <% if welding.batch_number1.present? %>
+                  <%= welding.batch_number1 %>
+                <% else %>
+                  <small><%= t('common.weldings.no_number') %></small>
+                <% end %>
+              </div>
             </div>
           </td>
           <td>
@@ -63,7 +79,7 @@
                 <small class="bg-secondary text-white rounded p-1" title="Certificate document not found in Docuvita"><%= welding.material_certificate.certificate_number %></small>
               <% end %>
             <% else %>
-              <small><%= t('.no_certificate') %></small>
+              <small><%= t('common.weldings.no_certificate') %></small>
             <% end %>
             </div>
               <div>
@@ -82,7 +98,7 @@
                     <small class="bg-secondary text-white rounded p-1" title="Certificate document not found in Docuvita"><%= welding.material_certificate1.certificate_number %></small>
                   <% end %>
                 <% else %>
-                  <small><%= t('.no_certificate') %></small>
+                  <small><%= t('common.weldings.no_certificate') %></small>
                 <% end %>                
               </div>
             </div>
