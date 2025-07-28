@@ -16,8 +16,23 @@ class User < ApplicationRecord
   has_many :user_resource_permissions, dependent: :destroy
   has_many :permissions, through: :user_resource_permissions
 
-  has_many :project_users
+  has_many :project_users, dependent: :destroy
   has_many :projects, through: :project_users
+
+  has_many :delivery_items, dependent: :nullify
+  has_many :final_inspections, dependent: :nullify
+  has_many :incoming_deliveries, dependent: :nullify
+  has_many :project_logs, dependent: :nullify
+  has_many :isometries, dependent: :nullify
+  has_many :pre_weldings, dependent: :nullify
+  has_many :prefabrications, dependent: :nullify
+  has_many :on_sites, dependent: :nullify
+  has_many :site_deliveries, dependent: :nullify
+  has_many :site_assemblies, dependent: :nullify
+  has_many :test_packs, dependent: :nullify
+  has_many :transports, dependent: :nullify
+  has_many :work_preparations, dependent: :nullify
+  has_many :owned_projects, class_name: "Project", foreign_key: "user_id", dependent: :nullify
 
   def name
     "#{first_name} #{last_name}"
