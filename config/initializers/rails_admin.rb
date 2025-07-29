@@ -42,9 +42,15 @@ RailsAdmin.config do |config|
 
   config.model "User" do
     list do
-      field :email
-      field :first_name
-      field :last_name
+      field :email do
+        searchable true
+      end
+      field :first_name do
+        searchable true
+      end
+      field :last_name do
+        searchable true
+      end
       field :admin
       field :can_close_incoming_delivery
       field :active
@@ -159,6 +165,8 @@ RailsAdmin.config do |config|
 
     list do
       field :user do
+        queryable true
+        searchable [ :first_name, :last_name, :email ]
       end
       field :sector
       field :created_at
