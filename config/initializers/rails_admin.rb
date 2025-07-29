@@ -216,4 +216,340 @@ RailsAdmin.config do |config|
       field :qr_position
     end
   end
+
+  config.model "ProjectSector" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :sector do
+        queryable true
+        searchable [ :key ]
+      end
+      field :created_at
+      field :updated_at
+    end
+
+    edit do
+      field :project
+      field :sector
+    end
+  end
+
+  config.model "ProjectUser" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :created_at
+      field :updated_at
+    end
+
+    edit do
+      field :project
+      field :user
+    end
+  end
+
+  config.model "WorkPreparation" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :isometry do
+        queryable true
+        searchable [ :line_id, :pid_number ]
+      end
+      field :work_location
+      field :work_package_number
+      field :on_hold_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :work_location
+      field :user
+      field :isometry
+      field :work_package_number
+      field :on_hold_status
+      field :on_hold_comment
+      field :completed
+      field :completed_by
+      field :work_preparation_type
+      field :welding_batch_assignments
+    end
+  end
+
+  config.model "Transport" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_package_number
+      field :check_spools_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :user
+      field :work_package_number
+      field :check_spools_status
+      field :check_spools_comment
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "SiteDelivery" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_package_number
+      field :check_spools_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :user
+      field :work_package_number
+      field :check_spools_status
+      field :check_spools_comment
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "Prefabrication" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_location
+      field :work_package_number
+      field :on_hold_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :work_location
+      field :user
+      field :work_package_number
+      field :on_hold_status
+      field :on_hold_comment
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "OnSite" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_package_number
+      field :on_hold_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :user
+      field :work_package_number
+      field :on_hold_status
+      field :on_hold_comment
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "FinalInspection" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_location
+      field :work_package_number
+      field :visual_check_status
+      field :vt2_check_status
+      field :pt2_check_status
+      field :rt_check_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :work_location
+      field :user
+      field :work_package_number
+      field :visual_check_status
+      field :visual_check_comment
+      field :vt2_check_status
+      field :vt2_check_comment
+      field :pt2_check_status
+      field :pt2_check_comment
+      field :rt_check_status
+      field :rt_check_comment
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "SiteAssembly" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_package_number
+      field :on_hold_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :user
+      field :work_package_number
+      field :on_hold_status
+      field :on_hold_comment
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "PreWelding" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_location
+      field :work_package_number
+      field :on_hold_status
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :work_location
+      field :user
+      field :work_package_number
+      field :on_hold_status
+      field :on_hold_comment
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "TestPack" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :user do
+        queryable true
+        searchable [ :email, :first_name, :last_name ]
+      end
+      field :work_location
+      field :work_package_number
+      field :on_hold_status
+      field :test_pack_type
+      field :completed
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :work_location
+      field :user
+      field :work_package_number
+      field :on_hold_status
+      field :on_hold_comment
+      field :test_pack_type
+      field :completed
+      field :completed_by
+    end
+  end
+
+  config.model "ProjectProgressPlan" do
+    list do
+      field :project do
+        queryable true
+        searchable [ :name ]
+      end
+      field :work_type_sector do
+        queryable true
+        searchable [ :key ]
+      end
+      field :start_date
+      field :end_date
+      field :revision_number
+      field :created_at
+    end
+
+    edit do
+      field :project
+      field :work_type_sector
+      field :start_date
+      field :end_date
+      field :revision_number
+    end
+  end
 end
