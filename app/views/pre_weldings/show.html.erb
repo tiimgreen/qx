@@ -55,7 +55,7 @@
             <dd class="col-sm-6"><%= @pre_welding.work_package_number %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.pre_welding.user') %></dt>
-            <dd class="col-sm-6"><%= @pre_welding.user.name %></dd>
+            <dd class="col-sm-6"><%= @pre_welding.user&.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.pre_welding.completed') %></dt>
             <dd class="col-sm-6"><%= @pre_welding.completed.strftime("%d/%m/%Y %H:%M") if @pre_welding.completed %></dd>

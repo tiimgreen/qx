@@ -89,7 +89,7 @@
             <td><%= status_label(final_inspection.rt_check_status) %></td>
             <td><%= status_label(final_inspection.on_hold_status) %></td>
             <td><%= final_inspection.completed.strftime("%d/%m/%Y %H:%M") if final_inspection.completed %></td>
-            <td><%= final_inspection.user.name %></td>
+            <td><%= final_inspection.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("FinalInspection") %>
                 <%= link_to project_final_inspection_path(@project, final_inspection), class: 'btn btn-sm btn-outline-primary' do %>

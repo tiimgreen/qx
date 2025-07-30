@@ -112,7 +112,7 @@
             <td><%= test_pack.dip_pressure %></td>
             <td><%= status_label(test_pack.on_hold_status) %></td>
             <td><%= test_pack.completed.strftime("%d/%m/%Y %H:%M") if test_pack.completed %></td>
-            <td><%= test_pack.user.name %></td>
+            <td><%= test_pack.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("TestPack") %>
                 <%= link_to project_test_pack_path(@project, test_pack), class: 'btn btn-sm btn-outline-primary' do %>

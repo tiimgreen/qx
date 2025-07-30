@@ -59,7 +59,7 @@
             <td><%= on_site.work_package_number %></td>
             <td><%= status_label(on_site.on_hold_status) %></td>
             <td><%= on_site.completed.strftime("%d/%m/%Y %H:%M") if on_site.completed %></td>
-            <td><%= on_site.user.name %></td>
+            <td><%= on_site.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("OnSite") %>
                 <%= link_to project_on_site_path(@project, on_site), class: 'btn btn-sm btn-outline-primary' do %>

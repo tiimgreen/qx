@@ -57,7 +57,7 @@
             <dd class="col-sm-6"><%= @transport.work_package_number %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.transport.user') %></dt>
-            <dd class="col-sm-6"><%= @transport.user.name %></dd>
+            <dd class="col-sm-6"><%= @transport.user&.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.transport.completed') %></dt>
             <dd class="col-sm-6"><%= @transport.completed.strftime("%d/%m/%Y %H:%M") if @transport.completed %></dd>

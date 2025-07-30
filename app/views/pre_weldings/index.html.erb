@@ -65,7 +65,7 @@
             <td><%= pre_welding.work_package_number %></td>
             <td><%= status_label(pre_welding.on_hold_status) %></td>
             <td><%= pre_welding.completed.strftime("%d/%m/%Y %H:%M") if pre_welding.completed %></td>
-            <td><%= pre_welding.user.name %></td>
+            <td><%= pre_welding.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("PreWelding") %>
                 <%= link_to project_pre_welding_path(@project, pre_welding), class: 'btn btn-sm btn-outline-primary' do %>

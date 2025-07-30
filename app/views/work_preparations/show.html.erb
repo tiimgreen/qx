@@ -100,7 +100,7 @@
             <dd class="col-sm-6"><%= @work_preparation.work_package_number %></dd>
 
             <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
-            <dd class="col-sm-6"><%= @work_preparation.user.name %></dd>
+            <dd class="col-sm-6"><%= @work_preparation.user&.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.work_preparation.completed') %></dt>
             <dd class="col-sm-6"><%= @work_preparation.completed.strftime("%d/%m/%Y %H:%M") if @work_preparation.completed %></dd>

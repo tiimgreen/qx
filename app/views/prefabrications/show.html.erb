@@ -58,7 +58,7 @@
             <dd class="col-sm-6"><%= @prefabrication.active ? t('common.yes') : t('common.no') %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.user') %></dt>
-            <dd class="col-sm-6"><%= @prefabrication.user.name %></dd>
+            <dd class="col-sm-6"><%= @prefabrication.user&.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.prefabrication.completed') %></dt>
             <dd class="col-sm-6"><%= @prefabrication.completed.strftime("%d/%m/%Y %H:%M") if @prefabrication.completed %></dd>

@@ -59,7 +59,7 @@
             <td><%= site_assembly.work_package_number %></td>
             <td><%= status_label(site_assembly.on_hold_status) %></td>
             <td><%= site_assembly.completed.strftime("%d/%m/%Y %H:%M") if site_assembly.completed %></td>
-            <td><%= site_assembly.user.name %></td>
+            <td><%= site_assembly.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("SiteAssembly") %>
                 <%= link_to project_site_assembly_path(@project, site_assembly), class: 'btn btn-sm btn-outline-primary' do %>

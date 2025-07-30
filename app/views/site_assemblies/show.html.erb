@@ -54,7 +54,7 @@
             <dd class="col-sm-6"><%= @site_assembly.work_package_number %></dd>
 
             <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
-            <dd class="col-sm-6"><%= @site_assembly.user.name %></dd>
+            <dd class="col-sm-6"><%= @site_assembly.user&.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.site_assembly.completed') %></dt>
             <dd class="col-sm-6"><%= @site_assembly.completed.strftime("%d/%m/%Y %H:%M") if @site_assembly.completed %></dd>

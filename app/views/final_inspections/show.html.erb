@@ -57,7 +57,7 @@
 
 
             <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
-            <dd class="col-sm-6"><%= @final_inspection.user.name %></dd>
+            <dd class="col-sm-6"><%= @final_inspection.user&.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.final_inspection.completed') %></dt>
             <dd class="col-sm-6"><%= @final_inspection.completed.strftime("%d/%m/%Y %H:%M") if @final_inspection.completed %></dd>

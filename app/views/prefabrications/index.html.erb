@@ -65,7 +65,7 @@
             <td><%= prefabrication.work_package_number %></td>
             <td><%= status_label(prefabrication.on_hold_status) %></td>
             <td><%= prefabrication.completed.strftime("%d/%m/%Y %H:%M") if prefabrication.completed %></td>
-            <td><%= prefabrication.user.name %></td>
+            <td><%= prefabrication.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("Prefabrication") %>
                 <%= link_to project_prefabrication_path(@project, prefabrication), class: 'btn btn-sm btn-outline-primary' do %>

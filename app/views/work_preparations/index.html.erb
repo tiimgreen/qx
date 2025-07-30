@@ -72,7 +72,7 @@
             <td><%= work_preparation_type_label(work_preparation) %></td>
             <td><%= status_label(work_preparation.on_hold_status) %></td>
             <td><%= work_preparation.completed.strftime("%d/%m/%Y %H:%M") if work_preparation.completed %></td>
-            <td><%= work_preparation.user.name %></td>
+            <td><%= work_preparation.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("WorkPreparation") %>
                 <%= link_to project_work_preparation_path(@project, work_preparation), class: 'btn btn-sm btn-outline-primary' do %>

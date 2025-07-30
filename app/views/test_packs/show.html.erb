@@ -78,7 +78,7 @@
             <dd class="col-sm-6"><%= @test_pack.dip_pressure %></dd>
 
             <dt class="col-sm-6"><%= t('common.labels.created_by') %></dt>
-            <dd class="col-sm-6"><%= @test_pack.user.name %></dd>
+            <dd class="col-sm-6"><%= @test_pack.user&.name %></dd>
 
             <dt class="col-sm-6"><%= t('activerecord.attributes.test_pack.completed') %></dt>
             <dd class="col-sm-6"><%= @test_pack.completed.strftime("%d/%m/%Y %H:%M") if @test_pack.completed %></dd>

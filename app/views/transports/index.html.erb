@@ -59,7 +59,7 @@
             <td><%= transport.work_package_number %></td>
             <td><%= status_label(transport.check_spools_status) %></td>
             <td><%= transport.completed.strftime("%d/%m/%Y %H:%M") if transport.completed %></td>
-            <td><%= transport.user.name %></td>
+            <td><%= transport.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("Transport") %>
                 <%= link_to project_transport_path(@project, transport), class: 'btn btn-sm btn-outline-primary' do %>
