@@ -59,7 +59,7 @@
             <td><%= site_delivery.work_package_number %></td>
             <td><%= status_label(site_delivery.check_spools_status) %></td>
             <td><%= site_delivery.completed.strftime("%d/%m/%Y %H:%M") if site_delivery.completed %></td>
-            <td><%= site_delivery.user.name %></td>
+            <td><%= site_delivery.user&.name %></td>
             <td class="text-end">
               <% if current_user.can_view?("SiteDelivery") %>
                 <%= link_to project_site_delivery_path(@project, site_delivery), class: 'btn btn-sm btn-outline-primary' do %>
