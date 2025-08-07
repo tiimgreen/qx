@@ -149,9 +149,9 @@ class WeldingPdfGenerator
           weld.material_certificate&.certificate_number,
           { content: "[#{weld.is_orbital ? 'X' : ' '}] #{weld.process}", inline_format: true },
           weld.welder,
-          weld.rt_done_by,
-          weld.pt_done_by,
-          weld.vt_done_by,
+          weld.rt_done_by.presence || "N/A",
+          weld.pt_done_by.presence || "N/A",
+          weld.vt_done_by.presence || "N/A",
           { content: weld.result, rowspan: 2 }
         ]
 
@@ -164,9 +164,9 @@ class WeldingPdfGenerator
           weld.material_certificate1&.certificate_number,
           { content: "[#{weld.is_manuell ? 'X' : ' '}] #{weld.process1}", inline_format: true },
           weld.welder1&.strftime("%d.%m.%Y"),
-          weld.rt_date1&.strftime("%d.%m.%Y"),
-          weld.pt_date1&.strftime("%d.%m.%Y"),
-          weld.vt_date1&.strftime("%d.%m.%Y")
+          weld.rt_date1&.strftime("%d.%m.%Y") || "N/A",
+          weld.pt_date1&.strftime("%d.%m.%Y") || "N/A",
+          weld.vt_date1&.strftime("%d.%m.%Y") || "N/A"
         ]
       end
 
