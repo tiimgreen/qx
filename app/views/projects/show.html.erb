@@ -37,8 +37,8 @@
           <dt class="col-sm-3"><%= t('.created') %></dt>
           <dd class="col-sm-9"><%= @project.created_at.strftime("%d/%m/%Y %H:%M") %></dd>
 
-          <dt class="col-sm-3"><%= t('.workshop') %></dt>
-          <dd class="col-sm-9"><%= @project.workshop ? t('common.labels.yes') : t('common.labels.no') %></dd>
+          <dt class="col-sm-3"><%= t('.project_type') %></dt>
+          <dd class="col-sm-9"><%= @project.workshop ? t('common.labels.plant') : t('common.labels.pipeline') %></dd>
 
           <dt class="col-sm-3"><%= t('.archived') %></dt>
           <dd class="col-sm-9"><%= @project.archived ? t('common.labels.yes') : t('common.labels.no') %></dd>

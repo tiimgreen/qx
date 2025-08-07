@@ -67,6 +67,8 @@ en:
       "no": "No"
       images: "Images"
       on_site_images: "On Site Images"
+      plant: "Plant construction"
+      pipeline: "Pipeline construction"
     buttons:
       cancel: "Cancel"
       delete: "Delete"
