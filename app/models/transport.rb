@@ -23,9 +23,12 @@ class Transport < ApplicationRecord
     term = "%#{search_term}%"
 
    joins("LEFT JOIN users ON transports.user_id = users.id")
+    .joins("LEFT JOIN isometries ON transports.isometry_id = isometries.id")
     .where(
       "users.first_name LIKE :search OR
        users.email LIKE :search OR
+       isometries.line_id LIKE :search OR
+       CAST(isometries.revision_number AS TEXT) LIKE :search OR
        transports.work_package_number LIKE :search OR
        transports.check_spools_status LIKE :search OR
        transports.check_spools_comment LIKE :search",

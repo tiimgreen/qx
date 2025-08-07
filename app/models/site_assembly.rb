@@ -24,9 +24,12 @@ class SiteAssembly < ApplicationRecord
     term = "%#{search_term}%"
 
     joins("LEFT JOIN users ON site_assemblies.user_id = users.id")
+      .joins("LEFT JOIN isometries ON site_assemblies.isometry_id = isometries.id")
       .where(
         "users.first_name LIKE :search OR
          users.email LIKE :search OR
+         isometries.line_id LIKE :search OR
+         CAST(isometries.revision_number AS TEXT) LIKE :search OR
          site_assemblies.work_package_number LIKE :search OR
          site_assemblies.on_hold_status LIKE :search OR
          site_assemblies.on_hold_comment LIKE :search",

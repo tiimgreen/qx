@@ -29,9 +29,12 @@ class OnSite < ApplicationRecord
     term = "%#{search_term}%"
 
     joins("LEFT JOIN users ON on_sites.user_id = users.id")
+      .joins("LEFT JOIN isometries ON on_sites.isometry_id = isometries.id")
       .where(
         "users.first_name LIKE :search OR
         users.email LIKE :search OR
+        isometries.line_id LIKE :search OR
+        CAST(isometries.revision_number AS TEXT) LIKE :search OR
         on_sites.work_package_number LIKE :search OR
         on_sites.on_hold_status LIKE :search OR
         on_sites.on_hold_comment LIKE :search",

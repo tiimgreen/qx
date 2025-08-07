@@ -50,12 +50,15 @@ class FinalInspection < ApplicationRecord
 
     joins("LEFT JOIN work_locations ON final_inspections.work_location_id = work_locations.id")
     .joins("LEFT JOIN users ON final_inspections.user_id = users.id")
+    .joins("LEFT JOIN isometries ON final_inspections.isometry_id = isometries.id")
     .where(
       "work_locations.location_type LIKE :search OR
        work_locations.name LIKE :search OR
        work_locations.key LIKE :search OR
        users.first_name LIKE :search OR
        users.email LIKE :search OR
+       isometries.line_id LIKE :search OR
+       CAST(isometries.revision_number AS TEXT) LIKE :search OR
        final_inspections.work_package_number LIKE :search OR
        final_inspections.on_hold_status LIKE :search OR
        final_inspections.on_hold_comment LIKE :search OR

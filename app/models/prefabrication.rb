@@ -26,12 +26,15 @@ class Prefabrication < ApplicationRecord
 
     joins("LEFT JOIN work_locations ON prefabrications.work_location_id = work_locations.id")
     .joins("LEFT JOIN users ON prefabrications.user_id = users.id")
+    .joins("LEFT JOIN isometries ON prefabrications.isometry_id = isometries.id")
     .where(
       "work_locations.location_type LIKE :search OR
        work_locations.name LIKE :search OR
        work_locations.key LIKE :search OR
        users.first_name LIKE :search OR
        users.email LIKE :search OR
+       isometries.line_id LIKE :search OR
+       CAST(isometries.revision_number AS TEXT) LIKE :search OR
        prefabrications.work_package_number LIKE :search OR
        prefabrications.on_hold_status LIKE :search OR
        prefabrications.on_hold_comment LIKE :search",

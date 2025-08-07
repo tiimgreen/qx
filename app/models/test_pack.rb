@@ -27,14 +27,17 @@ class TestPack < ApplicationRecord
 
     joins("LEFT JOIN work_locations ON test_packs.work_location_id = work_locations.id")
     .joins("LEFT JOIN users ON test_packs.user_id = users.id")
+    .joins("LEFT JOIN isometries ON test_packs.isometry_id = isometries.id")
     .where(
       "work_locations.location_type LIKE :search OR
        work_locations.name LIKE :search OR
        work_locations.key LIKE :search OR
        users.first_name LIKE :search OR
        users.email LIKE :search OR
+       isometries.line_id LIKE :search OR
+       CAST(isometries.revision_number AS TEXT) LIKE :search OR
+       REPLACE(LOWER(test_packs.test_pack_type), '_', ' ') LIKE LOWER(:search) OR
        test_packs.work_package_number LIKE :search OR
-       test_packs.test_pack_type LIKE :search OR
        test_packs.dp_team LIKE :search OR
        test_packs.operating_pressure LIKE :search OR
        test_packs.dp_pressure LIKE :search OR

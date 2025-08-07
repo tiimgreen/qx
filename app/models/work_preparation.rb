@@ -41,9 +41,10 @@ class WorkPreparation < ApplicationRecord
        work_preparations.work_package_number LIKE :search OR
        work_preparations.on_hold_status LIKE :search OR
        work_preparations.on_hold_comment LIKE :search OR
+       REPLACE(LOWER(work_preparations.work_preparation_type), '_', ' ') LIKE LOWER(:search) OR
        isometries.line_id LIKE :search OR
        isometries.page_number LIKE :search OR
-       isometries.revision_number LIKE :search OR
+       CAST(isometries.revision_number AS TEXT) LIKE :search OR
        isometries.pid_number LIKE :search",
       search: term
     )
