@@ -361,6 +361,15 @@
     </h2>
     <div id="section6" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
       <div class="accordion-body">
+      <!-- NEW: additional empty-row count -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-2">
+          <%= f.label :additional_empty_rows,
+                      t('isometries.form.additional_empty_rows', default: 'Additional empty rows'),
+                      class: 'form-label' %>
+          <%= f.number_field :additional_empty_rows, min: 0, step: 1, class: 'form-control' %>
+        </div>
+      </div>
         <div class="card mb-4">
           <div class="card-body" data-controller="nested-form">
             <template data-nested-form-target="template">

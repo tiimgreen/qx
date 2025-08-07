@@ -386,7 +386,7 @@ class IsometriesController < ApplicationController
       :slope_if_needed, :rt, :vt2, :pt2, :pipe_length, :workshop_sn,
       :assembly_sn, :total_sn, :total_supports, :total_spools,
       :on_hold_status, :on_hold_comment, :notes, :qr_position, :draft,
-      :new_pdf, :new_pdf_qr_position,
+      :new_pdf, :new_pdf_qr_position, :additional_empty_rows,
       rt_images: [], vt_images: [], pt_images: [], on_hold_images: [],
       material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],

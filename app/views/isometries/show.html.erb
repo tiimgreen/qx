@@ -176,6 +176,15 @@
         <% end %>
       </div>
     </div>
+
+    <dl class="row">
+      <dt class="col-sm-4"><%= t('.additional_empty_rows') %></dt>
+      <dd class="col-sm-8">
+        <%= @isometry.additional_empty_rows %>
+      </dd>
+    </dl>
+
+
     <% if @isometry.weldings.any? %>
       <%= render 'weldings/weldings_table', weldings: @isometry.weldings %>
     <% else %>

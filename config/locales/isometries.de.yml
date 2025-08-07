@@ -102,6 +102,7 @@ de:
       isometry_pt: "PT2"
       isometry: "Isometrie"
       slope: "Gefälle"
+      additional_empty_rows: "Leere Zeilen für Weldlog"
     _form:
       technical_specs: Technische Spezifikationen
       additional_specs: Zusätzliche Spezifikationen

@@ -9,6 +9,7 @@ class WeldingPdfGenerator
   def initialize(isometry)
     @isometry = isometry
     @welds = isometry.weldings
+    @additional_empty_rows = isometry.respond_to?(:additional_empty_rows) ? isometry.additional_empty_rows.to_i : 0
     @page_width = 842  # A4 landscape width
     @page_height = 595 # A4 landscape height
   end
@@ -193,6 +194,71 @@ class WeldingPdfGenerator
       if welds_array.any?
         pdf.start_new_page
         pdf.move_down 0  # Match the initial top margin on new pages
+      end
+    end
+
+    # Append an extra page with empty rows if requested
+    if @additional_empty_rows.positive?
+      pdf.start_new_page
+
+      header_rows = [
+        [
+          { content: "Naht Nr.\nWeld Nr.", rowspan: 2 },
+          { content: "Komponente\nComponent", rowspan: 2 },
+          { content: "Materialdokumentation - Material Documentation", colspan: 4 },
+          { content: "Schweissnahtdoku - Welding Documentation", colspan: 2 },
+          { content: "Prüfung - Dokumentation - Test Documentation", colspan: 4 }
+        ],
+        [
+          "Abmessung\nDimension",
+          "Werkstoff\nMaterial",
+          "Charge\nHeat Nr.",
+          "Zeugnis\nCertificate",
+          "Prozess\nProcess",
+          "Schweisser\nWelder",
+          "RT / Date",
+          "PT / Date",
+          "VT / Date",
+          "Erg\nres"
+        ]
+      ]
+
+      # Build empty data rows (each logical weld takes two table rows)
+      empty_data_rows = []
+      @additional_empty_rows.times do
+        # first row with rowspan cells for first and last column
+        empty_data_rows << [
+          { content: "", rowspan: 2 },           # Weld Nr.
+          "", "", "", "", "", "", "", "", "", "",  # 11 blanks for columns 1-11
+          { content: "", rowspan: 2 }            # Erg / res
+        ]
+
+        # second row (completes the split columns)
+        empty_data_rows << [ "", "", "", "", "", "", "", "", "", "" ]
+      end
+
+      table_data = header_rows + empty_data_rows
+
+      pdf.table(table_data, width: pdf.bounds.width) do |t|
+        t.cells.size = 8
+        t.cells.align = :center
+        t.row(0..1).font_style = :bold
+        t.column_widths = [
+          40,   # Weld Nr.
+          70,   # Component
+          70,   # Dimension
+          70,   # Material
+          70,   # Heat Nr.
+          45,   # Certificate
+          60,   # Process
+          60,   # Welder
+          75,   # RT / Date
+          75,   # PT / Date
+          75,   # VT / Date
+          40    # Erg
+        ]
+        # Ensure empty rows have same height as data rows
+        t.row(2..-1).height = 15 if t.row(2)
       end
     end
   end
