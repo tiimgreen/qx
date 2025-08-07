@@ -6,6 +6,21 @@ require "rqrcode"
 class WeldingPdfGenerator
   include QrCodeable
 
+  COLUMN_WIDTHS = [
+    45,  # Weld Nr.
+    70,  # Component
+    65,  # Dimension
+    60,  # Material
+    65,  # Heat Nr.
+    60,  # Certificate (wider)
+    70,  # Process
+    70,  # Welder
+    75,  # RT / Date
+    75,  # PT / Date
+    75,  # VT / Date
+    40   # Erg
+  ].freeze
+
   def initialize(isometry)
     @isometry = isometry
     @welds = isometry.weldings
@@ -165,20 +180,7 @@ class WeldingPdfGenerator
         )
 
         # Set specific column widths to prevent truncation
-        t.column_widths = [
-          45,   # Naht Nr.
-          70,   # Komponente
-          60,   # Abmessung
-          60,   # Werkstoff
-          70,   # Charge
-          70,   # Zeugnis
-          70,   # Prozess
-          70,   # Schweisser
-          75,   # RT / Date - wider for dates
-          75,   # PT / Date - wider for dates
-          75,   # VT / Date - wider for dates
-          40    # Erg
-        ]
+        t.column_widths = COLUMN_WIDTHS
 
         # Style header rows (first two rows)
         t.row(0..1).style(
@@ -243,20 +245,7 @@ class WeldingPdfGenerator
         t.cells.size = 8
         t.cells.align = :center
         t.row(0..1).font_style = :bold
-        t.column_widths = [
-          40,   # Weld Nr.
-          70,   # Component
-          70,   # Dimension
-          70,   # Material
-          70,   # Heat Nr.
-          45,   # Certificate
-          60,   # Process
-          60,   # Welder
-          75,   # RT / Date
-          75,   # PT / Date
-          75,   # VT / Date
-          40    # Erg
-        ]
+        t.column_widths = COLUMN_WIDTHS
         # Ensure empty rows have same height as data rows
         t.row(2..-1).height = 15 if t.row(2)
       end
