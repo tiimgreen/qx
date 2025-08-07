@@ -34,6 +34,9 @@ class WorkPreparation < ApplicationRecord
     left_joins(:work_location, :user, :isometry, weldings: :isometry)
     .where(
       "work_locations.location_type LIKE :search OR
+       (LOWER(:search) LIKE '%werkstatt%' AND work_locations.location_type = 'workshop') OR
+       (LOWER(:search) LIKE '%vorfertigung%' AND work_locations.location_type = 'prefabrication') OR
+       (LOWER(:search) LIKE '%baustelle%' AND work_locations.location_type = 'construction_site') OR
        work_locations.name LIKE :search OR
        work_locations.key LIKE :search OR
        users.first_name LIKE :search OR
@@ -42,6 +45,8 @@ class WorkPreparation < ApplicationRecord
        work_preparations.on_hold_status LIKE :search OR
        work_preparations.on_hold_comment LIKE :search OR
        REPLACE(LOWER(work_preparations.work_preparation_type), '_', ' ') LIKE LOWER(:search) OR
+       (LOWER(:search) LIKE '%rohre schneiden%' AND work_preparations.work_preparation_type = 'cutting_pipes') OR
+      (LOWER(:search) LIKE '%kleinteile%' AND work_preparations.work_preparation_type = 'small_parts') OR
        isometries.line_id LIKE :search OR
        isometries.page_number LIKE :search OR
        CAST(isometries.revision_number AS TEXT) LIKE :search OR

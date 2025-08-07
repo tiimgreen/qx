@@ -30,6 +30,9 @@ class TestPack < ApplicationRecord
     .joins("LEFT JOIN isometries ON test_packs.isometry_id = isometries.id")
     .where(
       "work_locations.location_type LIKE :search OR
+       (LOWER(:search) LIKE '%werkstatt%' AND work_locations.location_type = 'workshop') OR
+       (LOWER(:search) LIKE '%vorfertigung%' AND work_locations.location_type = 'prefabrication') OR
+       (LOWER(:search) LIKE '%baustelle%' AND work_locations.location_type = 'construction_site') OR
        work_locations.name LIKE :search OR
        work_locations.key LIKE :search OR
        users.first_name LIKE :search OR
