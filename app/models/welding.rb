@@ -24,22 +24,35 @@ class Welding < ApplicationRecord
   # establish the ActiveRecord associations. This enables later logic on the
   # isometry to easily pick up the referenced certificates.
   def assign_material_certificates_from_batch_numbers
-    # Handle first batch number and certificate
-    if batch_number.present?
-      found_cert = MaterialCertificate.find_by(batch_number: batch_number)
-      self.material_certificate_id = found_cert&.id
+    # First set handling
+    if material_certificate_id.present?
+      # If ID is explicitly provided (from autocomplete hidden field), respect it
+      if batch_number.blank?
+        # Optionally sync the batch number if it's blank
+        self.batch_number = material_certificate&.batch_number
+      end
     else
-      # Clear certificate when batch number is removed
-      self.material_certificate_id = nil
+      if batch_number.present?
+        matches = MaterialCertificate.where(batch_number: batch_number)
+        # Only auto-assign when the batch number uniquely identifies a certificate
+        self.material_certificate_id = matches.one? ? matches.first.id : nil
+      else
+        self.material_certificate_id = nil
+      end
     end
 
-    # Handle second batch number and certificate
-    if batch_number1.present?
-      found_cert1 = MaterialCertificate.find_by(batch_number: batch_number1)
-      self.material_certificate1_id = found_cert1&.id
+    # Second set handling
+    if material_certificate1_id.present?
+      if batch_number1.blank?
+        self.batch_number1 = material_certificate1&.batch_number
+      end
     else
-      # Clear certificate when batch number is removed
-      self.material_certificate1_id = nil
+      if batch_number1.present?
+        matches1 = MaterialCertificate.where(batch_number: batch_number1)
+        self.material_certificate1_id = matches1.one? ? matches1.first.id : nil
+      else
+        self.material_certificate1_id = nil
+      end
     end
   end
 end
