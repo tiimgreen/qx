@@ -14,8 +14,9 @@ class Welding < ApplicationRecord
   # Define allowed values for process fields
   RESULT_TYPES = [ "ne", "e" ].freeze
 
-  validates :result, inclusion: { in: RESULT_TYPES }, allow_nil: true
-  validates :result1, inclusion: { in: RESULT_TYPES }, allow_nil: true
+  # Allow blank ("") so the dropdown can be saved empty
+  validates :result, inclusion: { in: RESULT_TYPES }, allow_blank: true
+  validates :result1, inclusion: { in: RESULT_TYPES }, allow_blank: true
 
   private
 

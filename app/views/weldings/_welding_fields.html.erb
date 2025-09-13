@@ -63,7 +63,7 @@
 
     <div class="col-md-1">
       <%= f.label :result, t('activerecord.attributes.isometry.weldings_attributes.result'), class: "form-label" %>
-      <%= f.select :result, Welding::RESULT_TYPES, { include_blank: false }, class: "form-control" %>
+      <%= f.select :result, Welding::RESULT_TYPES, { include_blank: true }, class: "form-control" %>
     </div>
 
     <div class="col-md-2">
