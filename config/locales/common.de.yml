@@ -65,8 +65,8 @@ de:
       "no": "Nein"
       images: "Bilder"
       on_site_images: "On Site Bilder"
-      plant: "Anlagebau"
-      pipeline: "Pipelinebau"
+      plant: "Werkstatt"
+      pipeline: "Baustelle"
     buttons:
       cancel: "Abbrechen"
       delete: "Löschen"
