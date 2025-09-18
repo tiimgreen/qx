@@ -94,7 +94,9 @@ class WeldingPdfGenerator
       end
 
       # Calculate total pages needed (exactly 10 welds per page)
-      total_pages = (@welds.length.to_f / 10).ceil
+      base_pages = (@welds.length.to_f / 10).ceil
+      extra_pages = @additional_empty_rows.positive? ? 1 : 0
+      total_pages = [ 1, base_pages + extra_pages ].max
 
       # Add page numbers
       pdf.number_pages "Seite <page> von #{total_pages}",
