@@ -31,6 +31,9 @@ class IncomingDelivery < ApplicationRecord
         work_locations.key LIKE :search OR
         work_locations.name LIKE :search OR
         work_locations.location_type LIKE :search OR
+        (LOWER(:search) LIKE '%werkstatt%' AND work_locations.location_type = 'workshop') OR
+        (LOWER(:search) LIKE '%vorfertigung%' AND work_locations.location_type = 'prefabrication') OR
+        (LOWER(:search) LIKE '%baustelle%' AND work_locations.location_type = 'construction_site') OR
         users.first_name LIKE :search OR
         users.last_name LIKE :search OR
         delivery_items.tag_number LIKE :search OR
