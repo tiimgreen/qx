@@ -34,6 +34,10 @@ class IncomingDelivery < ApplicationRecord
         (LOWER(:search) LIKE '%werkstatt%' AND work_locations.location_type = 'workshop') OR
         (LOWER(:search) LIKE '%vorfertigung%' AND work_locations.location_type = 'prefabrication') OR
         (LOWER(:search) LIKE '%baustelle%' AND work_locations.location_type = 'construction_site') OR
+        ((LOWER(:search) LIKE '%yes%' OR LOWER(:search) LIKE '%ja%') AND incoming_deliveries.completed = :true_val) OR
+        ((LOWER(:search) LIKE '%no%' OR LOWER(:search) LIKE '%nein%') AND incoming_deliveries.completed = :false_val) OR
+        ((LOWER(:search) LIKE '%yes%' OR LOWER(:search) LIKE '%ja%') AND incoming_deliveries.closed = :true_val) OR
+        ((LOWER(:search) LIKE '%no%' OR LOWER(:search) LIKE '%nein%') AND incoming_deliveries.closed = :false_val) OR
         users.first_name LIKE :search OR
         users.last_name LIKE :search OR
         delivery_items.tag_number LIKE :search OR
@@ -47,7 +51,9 @@ class IncomingDelivery < ApplicationRecord
         delivery_items.vt2_check_status LIKE :search OR
         delivery_items.ra_check_status LIKE :search OR
         delivery_items.on_hold_status LIKE :search",
-        search: term
+        search: term,
+        true_val: true,
+        false_val: false
       ).distinct
   }
 
