@@ -44,3 +44,5 @@ db/*.sqlite3-*
 
 # Video files
 *.mov
+
+.DS_Store
