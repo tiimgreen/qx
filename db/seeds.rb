@@ -11,13 +11,14 @@
 # # This file should ensure the existence of records required to run the application in every environment (production,
 # # development, test). The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
+# Admin.create!(email: "tim@pushcapital.io", password: "k93ufn3n39widfj2w", password_confirmation: "k93ufn3n39widfj2w", name: "Tim Green")
+
 # Admin.create!(email: "nezir.zahirovic@gmail.com", password: "kiGA5#iyFc8$e8&bX123x1", password_confirmation: "kiGA5#iyFc8$e8&bX123x1", name: "Nezir Zahirovic")
 # Admin.create!(email: "iztok.goetsch@qualinox.ch", password: "657$G9BnhQmQBs8hX123X2", password_confirmation: "657$G9BnhQmQBs8hX123X2", name: "Iztok Goetsch")
 # Admin.create!(email: "adnan.kovacevic@qualinox.ch", password: "s&h7Xx9Mzho!yfPd3", password_confirmation: "s&h7Xx9Mzho!yfPd3", name: "Adnan Kovacevic")
 # Admin.create!(email: "marija.grgic@qualinox.ch", password: "#ygNYPp5#msExMAi4", password_confirmation: "#ygNYPp5#msExMAi4", name: "Marija Grgic")
 # puts "added admins"
 #
-
 
 # User.create!(
 #   email: "nezir@qx.com",
@@ -308,3 +309,45 @@
 # end
 
 # assign_all_permissions_to_user(3)
+
+
+
+# new user
+
+# User.create!(
+#   email: "tim@pushcapital.io",
+#   password: "k93ufn3n39widfj2w",
+#   password_confirmation: "k93ufn3n39widfj2w",
+#   first_name: "Tim",
+#   last_name: "Green",
+#   phone: "12345678",
+#   address: "Sample Address 1",
+#   city: "Sample City"
+# )
+
+# ensure the specified user exists and has all resource permissions
+email = "tim@pushcapital.io"
+user = User.find_by(email: email)
+
+# ensure core permission codes exist
+%w[view create edit delete complete].each do |code|
+  Permission.find_by(code: code)
+end
+
+# assign all permissions for all resources
+UserResourcePermission::RESOURCE_NAMES.each do |resource|
+  Permission.find_each do |permission|
+    UserResourcePermission.find_or_create_by!(
+      user_id: user.id,
+      resource_name: resource,
+      permission_id: permission.id
+    )
+  end
+end
+
+# associate user with all sectors
+Sector.find_each do |sector|
+  UserSector.find_or_create_by!(user_id: user.id, sector_id: sector.id)
+end
+
+puts "ensured #{email} has all resource permissions and sector access"
