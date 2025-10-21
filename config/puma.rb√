@@ -1,0 +1,13 @@
+[Unit]
+   Description=Puma HTTP Server for qx.aiplaceltd
+   After=network.target
+
+   [Service]
+   Type=simple
+   User=deploy
+   WorkingDirectory=/home/deploy/qx
+   ExecStart=/home/deploy/.rbenv/shims/bundle exec puma -C /home/deploy/qx/config/puma.rb
+   Restart=always
+
+   [Install]
+   WantedBy=multi-user.target

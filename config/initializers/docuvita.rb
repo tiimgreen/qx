@@ -1,13 +1,19 @@
+docuvita_creds = (Rails.application.credentials.docuvita || {})
+
 DOCUVITA_CONFIG = {
-  base_url: Rails.application.credentials.docuvita[:base_url],
-  session_guid: Rails.application.credentials.docuvita[:session_guid],
-  parent_object_id: Rails.application.credentials.docuvita[:parent_object_id] || 4779, # Default for test environment
-  system_reference: Rails.application.credentials.docuvita[:system_reference] || 1     # Default for test environment
+  base_url: docuvita_creds[:base_url],
+  session_guid: docuvita_creds[:session_guid],
+  parent_object_id: docuvita_creds[:parent_object_id] || 4779, # default for test environment
+  system_reference: docuvita_creds[:system_reference] || 1     # default for test environment
 }
 
-# Validate configuration
-raise "Docuvita base_url not configured" if DOCUVITA_CONFIG[:base_url].nil?
-raise "Docuvita session_guid not configured" if DOCUVITA_CONFIG[:session_guid].nil?
+# only enforce presence checks when not explicitly skipping (e.g., during docker assets precompile)
+unless ENV["SKIP_DOCUVITA_INIT"] == "1"
+  raise "Docuvita base_url not configured" if DOCUVITA_CONFIG[:base_url].nil?
+  raise "Docuvita session_guid not configured" if DOCUVITA_CONFIG[:session_guid].nil?
+end
 
-# Ensure base_url doesn't end with a slash
-DOCUVITA_CONFIG[:base_url] = DOCUVITA_CONFIG[:base_url].chomp("/")
+# ensure base_url doesn't end with a slash if present
+if DOCUVITA_CONFIG[:base_url]
+  DOCUVITA_CONFIG[:base_url] = DOCUVITA_CONFIG[:base_url].chomp("/")
+end
