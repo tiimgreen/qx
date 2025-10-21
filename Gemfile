@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 gem "lazy_high_charts"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.14"
 
 # QR code generation
 gem "rqrcode"
