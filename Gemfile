@@ -79,6 +79,6 @@ gem "devise", "~> 4.9"
 gem "rails_admin", "~> 3.2"
 gem "sass-rails"
 
-gem "pagy", "~> 9.3"
+gem "pagy", "~> 9.4"
 
 gem "active_storage_validations"
