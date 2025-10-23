@@ -71,6 +71,7 @@
           <th><%= t('activerecord.attributes.isometry.ped_category') %></th>
           <th><%= t('activerecord.attributes.isometry.rt_percentage') %></th>
           <th><%= t('activerecord.attributes.isometry.pt2_percentage') %></th>
+          <th><%= t('activerecord.attributes.isometry.vt_pictures') %></th>
           <th>
             <%= link_to t('activerecord.attributes.isometry.work_package_number'),
                 request.params.merge(sort: 'work_package_number', direction: (params[:sort] == 'work_package_number' && params[:direction] == 'asc') ? 'desc' : 'asc') %>
@@ -103,6 +104,7 @@
             <td><%= isometry.ped_category %></td>
             <td><%= isometry.rt %> %</td>
             <td><%= isometry.pt2 %> %</td>
+            <td><%= isometry.vt_pictures %> %</td>
             <td><%= isometry.work_package_number %></td>
             <td>
                 <%= status_label(isometry.on_hold_status)  %>
