@@ -118,7 +118,7 @@ en:
         pid_number: "P&ID Number"
         pid_revision: "P&ID Revision"
         system: "System"
-        ped_category: "PED Category"
+        ped_category: "PED"
         gmp: "GMP"
         gdp: "GDP"
         qr_code: "QR Code"
