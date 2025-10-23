@@ -72,6 +72,7 @@ en:
       confirm_revision: "Are you sure you want to create a new revision? This will mark the current revision as not latest."
       isometries: "Isometries"
       no_isometry_documents: "No documents attached to this isometry"
+      additional_empty_rows: "Additional empty rows"
     create_revision:
       revision_created: "New revision was successfully created"
       revision_failed: "Failed to create new revision"

@@ -72,6 +72,7 @@ de:
       no_qr_code: "Kein QR Code verfügbar"
       isometries: "Isometrie"
       no_isometry_documents: "Keine Dokumente an dieser Isometrie angehaengt"
+      additional_empty_rows: "Zusätzliche leere Zeilen"
     create_revision:
       revision_created: "Neue Revision wurde erfolgreich erstellt"
       revision_failed: "Neue Revision konnte nicht erstellt werden"
