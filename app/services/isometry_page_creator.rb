@@ -48,5 +48,6 @@ class IsometryPageCreator
     new_isometry.rt = @isometry.rt
     new_isometry.vt2 = @isometry.vt2
     new_isometry.pt2 = @isometry.pt2
+    new_isometry.vt_pictures = @isometry.vt_pictures
   end
 end

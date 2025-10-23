@@ -383,7 +383,7 @@ class IsometriesController < ApplicationController
       :revision_number, :revision_letter, :page_number, :page_total, :pipe_class,
       :material, :system, :medium, :work_package_number, :revision_last,
       :dp, :dip, :isolation_required, :approved_for_production, :gmp, :gdp, :ped_category,
-      :slope_if_needed, :rt, :vt2, :pt2, :pipe_length, :workshop_sn,
+      :slope_if_needed, :rt, :vt2, :pt2, :vt_pictures, :pipe_length, :workshop_sn,
       :assembly_sn, :total_sn, :total_supports, :total_spools,
       :on_hold_status, :on_hold_comment, :notes, :qr_position, :draft,
       :new_pdf, :new_pdf_qr_position, :additional_empty_rows,

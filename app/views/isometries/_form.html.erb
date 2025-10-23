@@ -168,6 +168,15 @@
                     </div>
                   </div>
                   <div class="col-md-2 mb-3">
+                    <label class="form-label mb-0"><%= t('.isometry_vt_pictures') %></label>
+                    <div class="flex-grow-1 ms-3">
+                      <div class="input-group">
+                        <%= f.number_field :vt_pictures, class: "form-control", step: "1" %>
+                        <span class="input-group-text">%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
                     <label class="form-label mb-0"><%= t('.isometry_pt') %></label>
                     <div class="flex-grow-1 ms-3">
                       <div class="input-group">
