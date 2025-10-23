@@ -49,7 +49,7 @@ class WeldingPdfGenerator
 
         # Header text content
         pdf.bounding_box([ 0, pdf.bounds.top - 40 ], width: pdf.bounds.width, height: 40) do
-          pdf.text "<b>Isometrie / Isometric:</b> #{@isometry.line_id}", size: 11, inline_format: true
+          pdf.text "<b>Isometrie / Isometric:</b> #{@isometry.line_id}_#{@isometry.page_number}/#{@isometry.page_total}", size: 11, inline_format: true
           pdf.text "<b>Projekt Nr. / Project No.:</b> #{@isometry.project.project_number}", size: 11, inline_format: true
           pdf.text "<b>QXD Dok. Nr. / QXD Doc. No.:</b> 3.40_PP_006V01", size: 11, inline_format: true
         end
