@@ -59,7 +59,7 @@ class IsometriesController < ApplicationController
   def create
     # Remove file upload parameters before creating the isometry
     create_params = isometry_params.except(
-      :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
+      :rt_images, :vt_images, :vt_pictures_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
     )
 
     @isometry = @project.isometries.new(create_params)
@@ -102,7 +102,7 @@ class IsometriesController < ApplicationController
     respond_to do |format|
       format.html do
         update_params = isometry_params.except(
-          :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
+          :rt_images, :vt_images, :vt_pictures_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
         )
 
         if @isometry.update(update_params)
@@ -123,7 +123,7 @@ class IsometriesController < ApplicationController
       format.json do
         # For autosave, only exclude image parameters
         save_params = isometry_params.except(
-          :rt_images, :vt_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
+          :rt_images, :vt_images, :vt_pictures_images, :pt_images, :new_pdf, :new_pdf_qr_position, :on_hold_images
         )
         @isometry.assign_attributes(save_params)
         @isometry.draft = true
@@ -354,6 +354,17 @@ class IsometriesController < ApplicationController
       end
     end
 
+    if params.dig(:isometry, :vt_pictures_images).present?
+      params[:isometry][:vt_pictures_images].each do |file|
+        next unless file.is_a?(ActionDispatch::Http::UploadedFile)
+        if file.content_type == "application/pdf"
+          isometry.upload_pdf_to_docuvita(file, file.original_filename, "vt_pictures_image", "isometry")
+        else
+          isometry.upload_image_to_docuvita(file, file.original_filename, "vt_pictures_image", "isometry")
+        end
+      end
+    end
+
     if params.dig(:isometry, :pt_images).present?
       params[:isometry][:pt_images].each do |file|
         next unless file.is_a?(ActionDispatch::Http::UploadedFile)
@@ -387,7 +398,7 @@ class IsometriesController < ApplicationController
       :assembly_sn, :total_sn, :total_supports, :total_spools,
       :on_hold_status, :on_hold_comment, :notes, :qr_position, :draft,
       :new_pdf, :new_pdf_qr_position, :additional_empty_rows,
-      rt_images: [], vt_images: [], pt_images: [], on_hold_images: [],
+      rt_images: [], vt_images: [], vt_pictures_images: [], pt_images: [], on_hold_images: [],
       material_certificate_ids: [],
       isometry_documents_attributes: [ :id, :qr_position, :_destroy ],
       weldings_attributes: [

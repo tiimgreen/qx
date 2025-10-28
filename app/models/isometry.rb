@@ -177,6 +177,10 @@ class Isometry < ApplicationRecord
     docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "vt_image")
   end
 
+  def vt_pictures_images
+    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "vt_pictures_image")
+  end
+
   def pt_images
     docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "pt_image")
   end

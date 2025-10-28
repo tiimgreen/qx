@@ -256,7 +256,16 @@
                   edit_mode: true,
                   title: t('.vt_images')
                 } %>
+              </div>
 
+              <div class="row">
+                <dt><%= f.label :vt_pictures_percentage %></dt>
+                <%= f.file_field :vt_pictures_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff,application/pdf,application/pdf', class: "form-control my-2 w-100 w-md-50" %>
+                <%= render partial: 'docuvita_documents', locals: {
+                  documents: @isometry.vt_pictures_images,
+                  edit_mode: true,
+                  title: t('.vt_pictures_images')
+                } %>
               </div>
 
               <div class="row">
