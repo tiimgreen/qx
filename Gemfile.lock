@@ -219,7 +219,7 @@ GEM
     nokogiri (1.18.1-x86_64-linux-musl)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    pagy (9.3.3)
+    pagy (9.4.0)
     parallel (1.26.3)
     parser (3.3.6.0)
       ast (~> 2.4.1)
@@ -437,7 +437,7 @@ DEPENDENCIES
   lazy_high_charts
   mini_magick
   multipart-post
-  pagy (~> 9.3)
+  pagy (~> 9.4)
   pdf-reader
   prawn
   prawn-table
