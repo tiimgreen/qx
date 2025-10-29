@@ -22,6 +22,7 @@ namespace :docuvita do
       "pdf",
       "rt_images",
       "vt_images",
+      "vt_pictures_images",
       "pt_images",
       "on_hold_images"
     ]
@@ -61,11 +62,12 @@ namespace :docuvita do
     upload_pdfs = attachment_type.nil? || attachment_type == "pdf"
     upload_rt_images = attachment_type.nil? || attachment_type == "rt_images"
     upload_vt_images = attachment_type.nil? || attachment_type == "vt_images"
+    upload_vt_pictures_images = attachment_type.nil? || attachment_type == "vt_pictures_images"
     upload_pt_images = attachment_type.nil? || attachment_type == "pt_images"
     upload_on_hold_images = attachment_type.nil? || attachment_type == "on_hold_images"
 
     # Display what will be uploaded
-    puts "Will upload: #{upload_pdfs ? 'PDFs ' : ''}#{upload_rt_images ? 'RT images ' : ''}#{upload_vt_images ? 'VT images ' : ''}#{upload_pt_images ? 'PT images ' : ''}#{upload_on_hold_images ? 'On-Hold images' : ''}"
+    puts "Will upload: #{upload_pdfs ? 'PDFs ' : ''}#{upload_rt_images ? 'RT images ' : ''}#{upload_vt_images ? 'VT images ' : ''}#{upload_vt_pictures_images ? 'VT Pictures images ' : ''}#{upload_pt_images ? 'PT images ' : ''}#{upload_on_hold_images ? 'On-Hold images' : ''}"
 
     # Process isometries
     isometries = Isometry.includes(:project, :docuvita_documents)
@@ -111,6 +113,10 @@ namespace :docuvita do
 
         if upload_vt_images
           process_vt_images(isometry, uploaded_count, skipped_count, error_count)
+        end
+
+        if upload_vt_pictures_images
+          process_vt_pictures_images(isometry, uploaded_count, skipped_count, error_count)
         end
 
         if upload_pt_images
@@ -230,6 +236,10 @@ namespace :docuvita do
 
   def process_vt_images(isometry, uploaded_count, skipped_count, error_count)
     process_image_attachments(isometry, "vt_images", "vt_image", uploaded_count, skipped_count, error_count)
+  end
+
+  def process_vt_pictures_images(isometry, uploaded_count, skipped_count, error_count)
+    process_image_attachments(isometry, "vt_pictures_images", "vt_pictures_image", uploaded_count, skipped_count, error_count)
   end
 
   def process_pt_images(isometry, uploaded_count, skipped_count, error_count)

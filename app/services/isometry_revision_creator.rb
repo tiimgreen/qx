@@ -41,7 +41,7 @@ class IsometryRevisionCreator
   private
 
   def copy_attachments(from_iso, to_iso)
-    %i[rt_image vt_image pt_image on_hold_image].each do |doc_type|
+    %i[rt_image vt_image vt_pictures_image pt_image on_hold_image].each do |doc_type|
       from_iso.docuvita_documents.of_type(doc_type.to_s).each do |doc|
         DocuvitaDocument.create!(
           documentable: to_iso,

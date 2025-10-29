@@ -87,6 +87,7 @@ class Isometry < ApplicationRecord
   validates :rt, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
   validates :vt2, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
   validates :pt2, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
+  validates :vt_pictures, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
 
   # Public method for backward compatibility
   def isometry_images
@@ -174,6 +175,10 @@ class Isometry < ApplicationRecord
 
   def vt_images
     docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "vt_image")
+  end
+
+  def vt_pictures_images
+    docuvita_documents.where(documentable_type: "Isometry", document_sub_type: "vt_pictures_image")
   end
 
   def pt_images

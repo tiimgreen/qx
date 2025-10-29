@@ -8,6 +8,7 @@
       <%= text_field_tag :search, params[:search],
                         class: 'form-control',
                         placeholder: t('common.labels.search_placeholder') %>
+      <%= hidden_field_tag :archived, params[:archived] if params.key?(:archived) %>
       <div class="input-group-append">
         <%= submit_tag t('common.labels.search_button'), class: 'btn btn-primary m-1' %>
       </div>

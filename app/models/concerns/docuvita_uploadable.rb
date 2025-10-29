@@ -228,6 +228,8 @@ module DocuvitaUploadable
                 "on_site_image"
     when /rt/i
                 "rt_image"
+    when /vt_pictures/i
+                "vt_pictures_image"
     when /vt/i
                 "vt_image"
     when /pt/i

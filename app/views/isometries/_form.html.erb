@@ -168,6 +168,15 @@
                     </div>
                   </div>
                   <div class="col-md-2 mb-3">
+                    <label class="form-label mb-0"><%= t('.isometry_vt_pictures') %></label>
+                    <div class="flex-grow-1 ms-3">
+                      <div class="input-group">
+                        <%= f.number_field :vt_pictures, class: "form-control", step: "1" %>
+                        <span class="input-group-text">%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 mb-3">
                     <label class="form-label mb-0"><%= t('.isometry_pt') %></label>
                     <div class="flex-grow-1 ms-3">
                       <div class="input-group">
@@ -247,7 +256,16 @@
                   edit_mode: true,
                   title: t('.vt_images')
                 } %>
+              </div>
 
+              <div class="row">
+                <dt><%= f.label :vt_pictures_percentage %></dt>
+                <%= f.file_field :vt_pictures_images, multiple: true, accept: 'image/jpeg,image/png,image/gif,image/bmp,image/tiff,application/pdf,application/pdf', class: "form-control my-2 w-100 w-md-50" %>
+                <%= render partial: 'docuvita_documents', locals: {
+                  documents: @isometry.vt_pictures_images,
+                  edit_mode: true,
+                  title: t('.vt_pictures_images')
+                } %>
               </div>
 
               <div class="row">

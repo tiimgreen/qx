@@ -211,6 +211,7 @@ RailsAdmin.config do |config|
       field :rt
       field :vt2
       field :pt2
+      field :vt_pictures
       field :on_hold_date
       field :on_hold_status
       field :qr_position

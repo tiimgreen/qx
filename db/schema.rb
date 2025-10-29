@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_07_014230) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_23_092144) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -235,6 +235,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_07_014230) do
     t.string "revision_letter"
     t.boolean "approved_for_production", default: true, null: false
     t.integer "additional_empty_rows", default: 0
+    t.integer "vt_pictures"
     t.index ["approved_for_production"], name: "index_isometries_on_approved_for_production"
     t.index ["deleted"], name: "index_isometries_on_deleted"
     t.index ["line_id"], name: "index_isometries_on_line_id"

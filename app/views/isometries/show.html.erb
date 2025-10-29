@@ -75,7 +75,7 @@
       <dt class="col-sm-4"><%= t('.line_id') %></dt>
       <dd class="col-sm-8"><%= @isometry.line_id %></dd>
 
-      <dt class="col-sm-4"><%= t('.dn_measurements') %> </dt>
+      <dt class="col-sm-4"><%= t('.dn_measurements') %></dt>
       <dd class="col-sm-8"><%= @isometry.dn %></dd>
 
       <dt class="col-sm-4"><%= t('.revision') %></dt>
@@ -265,10 +265,20 @@
         modal_group_key: 'vt_images'
       } %>
 
+      <dl class="row mb-3">
+        <dt class="col-sm-2"><%= t('.vt_pictures_percentage') %></dt>
+        <dd class="col-sm-10"><%= @isometry.vt_pictures %> %</dd>
+      </dl>
+      <%= render partial: 'docuvita_documents', locals: {
+        documents: @isometry.vt_pictures_images,
+        title: t('.isometry_documents'),
+        edit_mode: false,
+        modal_group_key: 'vt_pictures_images'
+      } %>
 
       <dl class="row mb-3">
         <dt class="col-sm-2"><%= t('.pt_percentage') %></dt>
-        <dd class="col-sm-10"><%= @isometry.pt2%> %</dd>
+        <dd class="col-sm-10"><%= @isometry.pt2 %> %</dd>
       </dl>
       <%= render partial: 'docuvita_documents', locals: {
         documents: @isometry.pt_images,
