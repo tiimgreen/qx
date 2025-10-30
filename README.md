@@ -1,3 +1,18 @@
+# Qualinox
+
+## Deployment
+
+1. Push code to GitHub repo
+2. ssh into the server
+3. `git status` to check for uncommitted changes
+4. `git fetch --all`
+5. `git diff --stat HEAD..origin/$(git rev-parse --abbrev-ref HEAD)` to check what has changed on remote
+6. `git pull origin main --ff-only`
+7. `bundle check || bundle install --without development test --deployment`
+8. `RAILS_ENV=production bundle exec rails assets:precompile`
+9. `RAILS_ENV=production bundle exec rails db:migrate` (if migrations)
+10. `sudo systemctl restart puma_qx || true`
+
 Sector modal - user must be added into user_sectors table. Also, we need to simulate qr link click.
   # Handle redirect to sector model sector redirections sector modal
   # to see that modal we need to use qr and user who is set in few sectors
